@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "gyoogle",
+      "kind": "github",
+      "repository": "gyoogle/tech-interview-for-developer",
+      "revision": null,
+      "include_globs": [
+        "**/*.md"
+      ],
+      "usage_review": "pending",
+      "enabled": false
+    },
+    {
+      "id": "ossu",
+      "kind": "catalog",
+      "url": "https://cs.ossu.dev/",
+      "follow_external_links": false,
+      "usage_review": "pending",
+      "enabled": false
+    },
+    {
+      "id": "wikipedia-ko",
+      "kind": "mediawiki",
+      "endpoint": "https://ko.wikipedia.org/w/api.php",
+      "max_documents": 100,
+      "max_depth": 1,
+      "usage_review": "pending",
+      "enabled": false
+    },
+    {
+      "id": "official-docs",
+      "kind": "allowlist",
+      "urls": [],
+      "usage_review": "pending",
+      "enabled": false
+    }
+  ]
+}

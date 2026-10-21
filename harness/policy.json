@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "enforcement": "external-supervisor-required",
+  "workspace": {
+    "root": "/workspace",
+    "writable": [
+      "backend/",
+      "frontend/",
+      "docs/"
+    ],
+    "protected": [
+      "Harness.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".clinerules/",
+      "harness/",
+      ".github/",
+      "docs/08_AGENTS.md",
+      "scripts/"
+    ]
+  },
+  "network": {
+    "developer": "none",
+    "collector": "registered HTTPS sources through broker; validate DNS, redirects and paths",
+    "model": "broker only; no provider secrets in executor"
+  },
+  "github": {
+    "default": "read",
+    "write": "task-authorized branch and draft PR only",
+    "default_branch_write": false,
+    "merge": false
+  },
+  "limits": {
+    "max_verification_attempts": 4,
+    "same_failure_limit": 2,
+    "max_task_seconds": 1800,
+    "command_timeout_seconds": 300,
+    "model_cost_limit_usd": 2.0
+  }
+}

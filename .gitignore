@@ -1,0 +1,25 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Generated state / data
+.harness-state/
+state/
+reports/
+data/raw/
+data/processed/
+*.patch
+# Tool output
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+dist/
+.gradle/
+build/
+.DS_Store

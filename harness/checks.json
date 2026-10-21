@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "profiles": {
+    "bootstrap": [
+      {
+        "id": "docs-structure",
+        "cwd": ".",
+        "argv": [
+          "python3",
+          "{harness}/check_docs.py",
+          "--workspace",
+          "{workspace}"
+        ]
+      },
+      {
+        "id": "harness-structure",
+        "cwd": ".",
+        "argv": [
+          "python3",
+          "{harness}/check.py",
+          "--workspace",
+          "{workspace}"
+        ]
+      },
+      {
+        "id": "harness-tests",
+        "cwd": ".",
+        "argv": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "{harness}/tests",
+          "-v"
+        ]
+      }
+    ],
+    "full": [
+      {
+        "id": "docs-structure",
+        "cwd": ".",
+        "argv": [
+          "python3",
+          "{harness}/check_docs.py",
+          "--workspace",
+          "{workspace}"
+        ]
+      },
+      {
+        "id": "harness-structure",
+        "cwd": ".",
+        "argv": [
+          "python3",
+          "{harness}/check.py",
+          "--workspace",
+          "{workspace}"
+        ]
+      },
+      {
+        "id": "backend",
+        "cwd": "backend",
+        "argv": [
+          "./gradlew",
+          "--offline",
+          "--no-daemon",
+          "spotlessCheck",
+          "check"
+        ]
+      },
+      {
+        "id": "frontend",
+        "cwd": "frontend",
+        "argv": [
+          "npm",
+          "run",
+          "verify"
+        ]
+      },
+      {
+        "id": "rag",
+        "cwd": "backend/ai",
+        "argv": [
+          "python3",
+          "-m",
+          "pytest",
+          "-q"
+        ]
+      },
+      {
+        "id": "rag-static",
+        "pending": "Register Ruff format/check and mypy when backend/ai dependencies are locked"
+      },
+      {
+        "id": "rag-integration",
+        "pending": "Register dedicated pgvector integration and idempotency tests"
+      },
+      {
+        "id": "rag-quality",
+        "pending": "Bind reviewed corpus, retrieval evaluation, injection and answer-grounding checks"
+      }
+    ]
+  }
+}

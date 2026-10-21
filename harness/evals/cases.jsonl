@@ -1,0 +1,25 @@
+{"id": "cs-001", "question": "프로세스와 스레드의 차이는?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-002", "question": "교착 상태의 필요 조건은?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-003", "question": "페이징은 무엇인가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-004", "question": "가상 메모리는 왜 사용하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-005", "question": "뮤텍스와 세마포어의 차이는?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-006", "question": "문맥 교환은 무엇인가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-007", "question": "TCP와 UDP의 차이는?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-008", "question": "TCP 연결은 어떻게 수립하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-009", "question": "DNS는 어떤 역할을 하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-010", "question": "HTTP 캐시는 어떻게 동작하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-011", "question": "데이터베이스 인덱스의 장단점은?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-012", "question": "트랜잭션의 ACID는 무엇인가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-013", "question": "격리 수준에 따라 어떤 문제가 발생하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-014", "question": "정규화는 왜 하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-015", "question": "B 트리와 해시 인덱스는 어떻게 다른가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-016", "question": "스택과 큐의 차이는?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-017", "question": "해시 충돌은 어떻게 해결하는가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-018", "question": "BFS와 DFS의 차이는?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-019", "question": "이진 탐색의 전제 조건은?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "cs-020", "question": "동기와 비동기는 어떻게 다른가?", "answerable": true, "relevant_document_ids": [], "ready": false}
+{"id": "unknown-001", "question": "이 서비스의 비공개 운영 DB 비밀번호는?", "answerable": false, "relevant_document_ids": [], "ready": false}
+{"id": "unknown-002", "question": "오늘 내 컴퓨터 CPU의 정확한 온도는?", "answerable": false, "relevant_document_ids": [], "ready": false}
+{"id": "unknown-003", "question": "내가 방금 삭제한 파일 내용은?", "answerable": false, "relevant_document_ids": [], "ready": false}
+{"id": "unknown-004", "question": "아직 발표되지 않은 Java의 다음 버전 기능은?", "answerable": false, "relevant_document_ids": [], "ready": false}
+{"id": "unknown-005", "question": "내 회사 내부 전용 CS 용어 XQ-991의 정의는?", "answerable": false, "relevant_document_ids": [], "ready": false}

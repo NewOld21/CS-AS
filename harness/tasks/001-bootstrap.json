@@ -1,0 +1,22 @@
+{
+  "id": "001-bootstrap",
+  "goal": "프로젝트 서비스 골격과 검증 명령 구축",
+  "allowed_paths": [
+    "backend/",
+    "frontend/",
+    "docs/"
+  ],
+  "acceptance_criteria": [
+    "Vue 질문 입력·로딩·실패 UI",
+    "Spring Boot 입력 검증과 RAG 호출 timeout",
+    "Python RAG API 및 전용 pgvector 통합 테스트",
+    "의존성 버전·lockfile 고정",
+    "Java/Vue/Python 검사 등록 및 full 프로파일 통과",
+    "실제 코퍼스에 연결한 RAG 평가셋과 출처 검증"
+  ],
+  "out_of_scope": [
+    "Graph RAG",
+    "운영 배포",
+    "사용자 인증"
+  ]
+}

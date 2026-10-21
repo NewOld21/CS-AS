@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CS-AS verification state",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "status",
+    "started_at",
+    "attempts",
+    "same_failure_count",
+    "trusted_digest",
+    "workspace",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "initialized",
+        "running",
+        "checks_passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "started_at": {
+      "type": "number"
+    },
+    "updated_at": {
+      "type": "number"
+    },
+    "attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "same_failure_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "trusted_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "candidate_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "workspace": {
+      "type": "string"
+    },
+    "blocker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "exit_code"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "pending",
+              "timeout",
+              "unavailable"
+            ]
+          },
+          "exit_code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

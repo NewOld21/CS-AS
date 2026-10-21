@@ -1,0 +1,24 @@
+# 외부 관리자가 준비한 이미지·후보 복사본을 사용하는 예시. 자동 실행하지 않는다.
+# 의존성은 이미지에 오프라인 준비. Docker 소켓·비밀정보는 마운트하지 않는다.
+services:
+  executor:
+    image: cs-as-executor:locked
+    user: "10001:10001"
+    init: true
+    working_dir: /workspace
+    read_only: true
+    network_mode: none
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 256
+    mem_limit: 4g
+    cpus: 2
+    volumes:
+      - ${CANDIDATE_DIR:?set candidate copy}:/workspace:rw
+      - ${TRUSTED_HARNESS_DIR:?set trusted harness}:/opt/harness:ro
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=512m
+      - /home/agent:rw,nosuid,nodev,size=512m
+    environment:
+      HOME: /home/agent
+# 관리자와 상태 저장은 컨테이너 밖에 둔다. 이 예시만으로 도메인 allowlist가 적용되지는 않는다.
