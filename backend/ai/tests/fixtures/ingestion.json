@@ -1,0 +1,6 @@
+{
+  "github_markdown": "# Deadlock\n\n교착 상태는 자원을 기다리는 상황입니다.\n\n## Example\n\n```python\nlock.acquire()\n```\n\n[Reference](./reference.md) ![diagram](./lock.png)\n",
+  "wikipedia_ko": "<div><h1>교착 상태</h1><p>여러 프로세스가 서로의 자원을 기다리는 상태를 설명하는 모의 문서입니다.</p><a href='/wiki/Process'>프로세스</a></div>",
+  "wikipedia_en": "<div><h1>Deadlock</h1><p>This synthetic example explains resource waiting in an operating system.</p><a href='/wiki/Process'>Process</a></div>",
+  "official_html": "<html><head><title>Memory management</title></head><body><nav>Navigation noise</nav><main><h1>Memory management</h1><p>Synthetic official document fixture. Pages represent virtual memory.</p><pre>allocate(page)</pre><a href='/docs/next.html'>Next topic</a></main><footer>Footer noise</footer></body></html>"
+}
