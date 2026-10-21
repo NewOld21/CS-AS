@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.4.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). 인증 API는 C05~C07에서 순차 구현하며 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05는 `/auth/csrf`와 `/auth/signup`을 구현했다. 로그인/로그아웃은 C06~C07에서 순차 구현하며 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
@@ -37,6 +37,8 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 2차 경로 후보는 [graph-rag.md](api/graph-rag.md)에만 두며 현재 OpenAPI의 구현 대상에 포함하지 않는다.
 
 ## 문맥·정답·페이지
+
+가입은 기존 `/api/v1/auth/signup`을 유지하며 `/register` 별칭은 제공하지 않는다. 이메일은 앞뒤 공백 제거 후 Locale.ROOT 소문자로 정규화한다. 공급자별 점/plus 별칭을 통합하지 않는다. Bean Validation과 DB UNIQUE가 중복을 막고 경합의 제약 위반도 409 EMAIL_ALREADY_EXISTS로 변환한다. 비밀번호는 trim하지 않으며 12~128자·UTF-8 72바이트 상한을 함께 적용한다. nickname은 생략/null 가능하며 입력 시 trim 후 1~40자다. 응답은 UUID id·email·nickname만 반환한다. 알 수 없는 입력 필드는 400으로 거부하고 엔티티/비밀번호/해시는 반환하지 않는다. 가입은 세션 로그인으로 취급하지 않는다.
 
 일반 대화 생성은 `{}`, 문제 대화는 `{quiz_id, attempt_id}`다. 두 ID가 같은 본인 풀이인지 확인하고 문제·선택·정오답·개념은 서버가 복원한다. 생성 이후 재풀이해도 대화의 원래 문맥은 바뀌지 않는다.
 

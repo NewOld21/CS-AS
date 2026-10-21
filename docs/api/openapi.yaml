@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "CS-AS learning platform public API (proposed)",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Proposed phase-one learning loop contract. Graph endpoints are phase two. Cookie sessions and CSRF protection are required. Stored in JSON notation, a YAML subset, for standard-library parsing."
   },
   "servers": [
@@ -88,7 +88,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Credentials"
+                "$ref": "#/components/schemas/SignupRequest"
               }
             }
           }
@@ -907,13 +907,15 @@
           "email": {
             "type": "string",
             "format": "email",
-            "maxLength": 254
+            "maxLength": 254,
+            "description": "Trim surrounding whitespace, then lowercase using Locale.ROOT; no provider-specific alias rewriting"
           },
           "password": {
             "type": "string",
             "minLength": 12,
             "maxLength": 128,
-            "writeOnly": true
+            "writeOnly": true,
+            "description": "12-128 characters and at most 72 UTF-8 bytes; never silently truncated"
           }
         },
         "required": [
@@ -932,11 +934,19 @@
           "email": {
             "type": "string",
             "format": "email"
+          },
+          "nickname": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 40
           }
         },
         "required": [
           "id",
-          "email"
+          "email",
+          "nickname"
         ]
       },
       "Category": {
@@ -1542,6 +1552,37 @@
         "required": [
           "items",
           "next_cursor"
+        ]
+      },
+      "SignupRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "description": "Trim surrounding whitespace, then lowercase using Locale.ROOT; no provider-specific alias rewriting"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 128,
+            "writeOnly": true,
+            "description": "12-128 characters and at most 72 UTF-8 bytes; never silently truncated"
+          },
+          "nickname": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "email",
+          "password"
         ]
       }
     },

@@ -29,7 +29,11 @@ class HealthIntegrationTest {
   @Test
   void migratesOnlyOnceAndServesDatabaseHealth(CapturedOutput output) {
     assertThat(jdbc.queryForObject("SELECT 1", Integer.class)).isEqualTo(1);
-    assertThat(flyway.info().current().getVersion().toString()).isEqualTo("1");
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM csas.flyway_schema_history WHERE version='1' AND success",
+                Integer.class))
+        .isEqualTo(1);
     assertThat(flyway.migrate().migrationsExecuted).isZero();
     var response = http.getForEntity("/health", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
