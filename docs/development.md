@@ -15,6 +15,8 @@ python3 scripts/task.py handoff --state-dir /tmp/csas-run
 전용 상태 경로는 실행 관리자가 소유하며 기존 실행을 지워 예산을 초기화하지 않는다.
 
 ## 서비스 생성 때 결정할 항목
+
+Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 표준 라이브러리만 사용하며 HTTP 서비스·LangChain bootstrap은 후속이다.
 스택과 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md)으로 확정했다. 아래는 버전·실행 설정 결정 항목이며, 22시간 제한은 적용하지 않는다.
 - JDK·Spring Boot·Gradle Wrapper와 포맷·정적 분석 플러그인
 - Node·Vue·TypeScript·패키지 매니저·lockfile

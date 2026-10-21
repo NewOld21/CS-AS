@@ -2,6 +2,8 @@
 
 상태: PostgreSQL 논리 설계 제안. 실제 migration·테이블은 미구현이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
+현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. RAG PostgreSQL 테이블 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
+
 ## 저장소 책임
 
 | 저장소 | 데이터 |

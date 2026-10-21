@@ -1,5 +1,7 @@
 # Current task
 
+현재 추가 작업: [008 CS 데이터 수집](exec-plans/active/008-data-ingestion.md). 오프라인 수집 CLI·출처 81개 등록·모의 샘플·독립 테스트 28개를 구현/검증했다. 전체 출처는 승인 대기·비활성이다. Windows fcntl 부재로 POSIX 공통 검증은 미완료이며 계획을 active에 유지한다. 기존 서비스 bootstrap은 후속이다.
+
 다음 작업: [002 서비스 bootstrap](exec-plans/active/002-service-bootstrap.md) — Status: planned (미착수).
 
 - 최신 완료: [007 문서 이름·참조 정리](exec-plans/completed/007-document-naming.md). 주 문서를 00~14로 구성하고 링크·진입점·검사·보호 경로를 갱신했다.

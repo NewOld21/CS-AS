@@ -62,4 +62,4 @@ Spring은 PostgreSQL 서비스 스키마를 통해 사용자·퀴즈·학습 기
 
 [ERD](06_ERD.md) · [RAG 아키텍처](14_RAG_GUIDE.md) · [공개 API](api/openapi.yaml) · [내부 RAG API](api/internal-rag.md).
 
-source_id/document_id/revision/chunk_id, 코퍼스 manifest, 개념 매핑, 임베딩 모델/차원·청크 설정·인덱스 버전을 보존한다. 검증 전 기존 인덱스를 삭제하지 않는다. 현재 src는 위치 보존 골격이고 실행 가능한 서비스는 미구현이다.
+source_id/document_id/revision/chunk_id, 코퍼스 manifest, 개념 매핑, 임베딩 모델/차원·청크 설정·인덱스 버전을 보존한다. 검증 전 기존 인덱스를 삭제하지 않는다. HTTP 서비스는 미구현이며 Python ingestion 오프라인 CLI는 구현되었다. [수집 계약](domain/ingestion.md)에 책임·저장·확장 경계를 정의한다. 파일 객체와 SQLite catalog는 배치 staging이며 PostgreSQL/pgvector를 대체하지 않는다.
