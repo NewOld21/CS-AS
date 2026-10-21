@@ -1,6 +1,6 @@
 # 문서 수집 도메인
 
-상태: Python 표준 라이브러리 기반 오프라인 수집·파일 staging 구현. PostgreSQL/pgvector 적재와 실제 출처 본문 검증은 후속이다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. OSSU는 등록부·수집 계획에서 제외하며 이전 결정·완료 기록은 보존한다.
+상태: Python 표준 라이브러리 기반 오프라인 수집·파일 staging 구현. ChromaDB 적재와 실제 출처 본문 검증은 후속이다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. OSSU는 등록부·수집 계획에서 제외하며 이전 결정·완료 기록은 보존한다.
 
 ## 승인 및 설정
 
@@ -59,4 +59,4 @@
 
 명령은 [수집 실행 안내](../runbooks/ingestion.md), 증거는 [008 계획](../exec-plans/active/008-data-ingestion.md)을 따른다. 모의 샘플은 라이브 본문 수집 성공으로 보고하지 않는다.
 
-후속 pgvector 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 현재 임베딩 생성·PostgreSQL migration·Graph 연결은 수행하지 않는다.
+후속 ChromaDB 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 현재 임베딩 생성·PostgreSQL migration·Graph 연결은 수행하지 않는다.

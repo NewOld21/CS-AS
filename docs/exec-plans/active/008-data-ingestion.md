@@ -9,7 +9,7 @@ Status: implemented; POSIX common verification pending
 - 원본/정제본/메타데이터, 불변 리비전·청크, 증분·중복·부분 실패 재시도 검증.
 - 출처 등록부 확장, OSSU 현재 수집 정책에서 제거. 승인 대기·비활성 유지.
 - 모의 API 샘플과 단위 검사, 공통 verify 실행 결과·환경 제약 기록.
-- PostgreSQL/pgvector와 Graph 투영은 후속. 서비스 bootstrap 또는 하네스 검증 정책 변경은 범위 밖.
+- PostgreSQL + ChromaDB와 Graph 투영은 후속. 서비스 bootstrap 또는 하네스 검증 정책 변경은 범위 밖.
 
 ## Baseline
 
@@ -55,6 +55,6 @@ Status: implemented; POSIX common verification pending
 2. 관리자가 P0 출처별 라이선스·저작자 표시·약관·robots·버전·CS seed·본문 추출 품질을 검토한 뒤 승인한다. 그 후 라이브 샘플을 실행한다. 현재 승인 없이 라이브 본문 수집을 시도하지 않는다.
 3. 사이트 전용 API가 필요한 경우 Collector adapter를 확장한다. 현재 공식 HTML/Markdown/sitemap/RFC/공개 GitHub 저장소 전략과 모의 샘플 검증만 완료했다.
 4. manifest/objects를 기준으로 PostgreSQL RAG 테이블에 키를 보존해 적재하고 모델·차원·청크 설정별 인덱스를 검증한다. Graph는 같은 concept_id와 chunk_id/revision을 근거로 관계를 검수·투영한다.
-5. 실제 HTTP 서비스 bootstrap의 잠금 의존성·Ruff/mypy·전용 pgvector 통합·RAG 품질 검사는 후속 범위다.
+5. 실제 HTTP 서비스 bootstrap의 잠금 의존성·Ruff/mypy·전용 ChromaDB 통합·RAG 품질 검사는 후속 범위다.
 
 실행 방법과 상세 저장 계약은 [수집 안내](../../runbooks/ingestion.md), [도메인](../../domain/ingestion.md)을 따른다.

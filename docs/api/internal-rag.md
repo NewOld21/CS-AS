@@ -5,11 +5,11 @@
 ## 공통
 
 - 경로: `/internal/v1/answers`, `/internal/v1/quiz-candidates` (POST).
-- 헤더: `X-Request-Id`, 서비스 인증 헤더. 실제 비밀값은 문서에 넣지 않는다.
+- 헤더: `X-Request-Id`, `Authorization: Bearer <runtime-service-token>`. 실제 비밀값은 문서에 넣지 않는다.
 - 본문: `deadline_at`(UTC ISO 8601), `index_version`(명시한 ACTIVE 버전), 요청별 입력.
 - 인증은 서비스 간 자격증명으로 검증한다. 사용자 쿠키를 Python으로 전달하지 않는다.
 - Python은 입력 크기와 남은 deadline을 검사한다. 모델/검색의 재시도 횟수·timeout은 설정으로 고정하고 상위 deadline을 넘지 않는다.
-- 오류: 400 INVALID_INPUT, 401 SERVICE_UNAUTHORIZED, 409 INDEX_VERSION_UNAVAILABLE, 502 PROVIDER_FAILED, 504 DEADLINE_EXCEEDED. 본문은 request_id/code/message다.
+- 오류: 400 INVALID_INPUT, 401 SERVICE_UNAUTHORIZED, 409 INDEX_VERSION_UNAVAILABLE, 502 PROVIDER_FAILED, 504 DEADLINE_EXCEEDED. 본문은 request_id/code/message/timestamp(UTC ISO 8601)다.
 
 ## 답변
 

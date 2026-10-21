@@ -2,18 +2,18 @@
 
 상태: PostgreSQL 논리 설계 제안. 실제 migration·테이블은 미구현이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
-현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. RAG PostgreSQL 테이블 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
+현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. ChromaDB 검색 인덱스 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
 
 ## 저장소 책임
 
 | 저장소 | 데이터 |
 |---|---|
 | PostgreSQL 서비스 스키마 | 사용자·개념·퀴즈/선택지·풀이·복습·대화·생성 검증 이력 |
-| PostgreSQL RAG 스키마 + pgvector | 문서 리비전·청크·임베딩·개념 연결·인덱스 manifest |
+| ChromaDB + 불변 파일 manifest | 문서 리비전·청크·임베딩·개념 연결·인덱스 manifest |
 | 원본 파일 저장소 | source_id/document_id/revision별 원본·정제본, 해시·라이선스 |
 | Graph DB (2차) | 공통 concept_id로 연결한 개념·검증된 관계·근거 투영 |
 
-동일 PostgreSQL 인스턴스를 쓸 수 있지만 서비스 데이터와 검색 데이터의 역할·접근 계정을 분리한다. Vector DB가 채점·학습 이력의 원장이 되지 않는다. 원본 파일 본문을 서비스 테이블에 중복 저장하지 않는다.
+PostgreSQL과 ChromaDB를 별도 저장소로 분리한다. 문서·청크·벡터 행은 ChromaDB/manifest의 논리 모델이며 PostgreSQL migration 대상이 아니다. Vector DB가 채점·학습 이력의 원장이 되지 않는다. 원본 파일 본문을 서비스 테이블에 중복 저장하지 않는다.
 
 ## 1차 ERD
 
@@ -48,7 +48,7 @@ erDiagram
     CHUNKS ||--o{ QUIZ_EVIDENCE : evidence
 ```
 
-그림의 필수 4개 선택지·정답 수 같은 집계 제약은 아래 발행 검증으로 보완한다. 문서·청크 FK는 논리 참조이며 별도 DB 분리 시 수집 완료 manifest로 검증한다.
+그림의 필수 4개 선택지·정답 수 같은 집계 제약은 아래 발행 검증으로 보완한다. 문서·청크와 concept_id의 저장소 간 FK는 논리 참조이며 수집 완료 manifest와 PostgreSQL 개념 원장으로 검증한다. Chroma 문서/메타데이터 및 불변 manifest가 아래 검색 엔터티를 표현한다. embedding_indexes는 파일 manifest의 인덱스 목록이며 별도 PostgreSQL RAG 테이블로 복제하지 않는다.
 
 ## 테이블 정의
 
@@ -76,7 +76,7 @@ erDiagram
 | chunks | id PK, document_revision_id FK, ordinal, text, locator, chunk_config_version | (document_revision_id, chunk_config_version, ordinal) UNIQUE |
 | chunk_concepts | chunk_id FK, concept_id FK | 복합 PK. 문서 태그를 모든 청크에 무조건 전파하지 않음 |
 | embedding_indexes | version PK, model, dimensions, chunk_config_version, corpus_manifest, status | BUILDING/ACTIVE/RETIRED. ACTIVE 검증 후 전환 |
-| embeddings | chunk_id FK, index_version FK, embedding vector | (chunk_id, index_version) PK. 모델 차원별 물리 저장소 분리 |
+| embeddings | chunk_id FK, index_version FK, embedding float array | (chunk_id, index_version) PK. 모델 차원별 물리 저장소 분리 |
 
 개념 연결 테이블은 모두 동일 `concepts.id`를 사용한다. API의 `concept_ids` 배열은 관계 테이블을 읽은 표현이다. 생성 요청의 배열은 요청 당시 입력 스냅샷이다.
 

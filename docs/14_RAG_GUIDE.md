@@ -1,13 +1,13 @@
 # 14. RAG GUIDE — Vector RAG·Graph 확장 가이드
 
-상태: 1차 Vector RAG 설계 제안 / Graph RAG 2차. 기술 스택은 [ADR 0003](13_PHASE0_DECISIONS.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
+상태: 1차 Vector RAG 설계 제안 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
 
 ```mermaid
 flowchart LR
     U[Vue: 퀴즈·질문·복습] --> S[Spring Boot: 인증·문맥·학습 기록]
     S --> P[(PostgreSQL 서비스 데이터)]
     S --> R[Python RAG 내부 HTTP API]
-    R --> V[(PostgreSQL RAG / pgvector)]
+    R --> V[(ChromaDB)]
     R --> L[LLM·임베딩 공급자]
     A[승인된 출처 수집] --> F[원본·정제본 저장소]
     F --> C[정규화·개념 매핑·청킹]
@@ -34,7 +34,7 @@ sequenceDiagram
     participant S as Spring Boot
     participant D as 서비스 DB
     participant R as Python RAG
-    participant P as pgvector / LLM
+    participant P as ChromaDB / LLM
     V->>S: 문제 답안 제출 + Idempotency-Key
     S->>D: 채점·시도·복습 상태 원자 저장
     S-->>V: attempt_id + 정오답 + 해설
