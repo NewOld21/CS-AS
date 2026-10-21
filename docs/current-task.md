@@ -1,5 +1,7 @@
 # Current task
 
+최신 완료: [012 레퍼런스 기반 UI](exec-plans/completed/012-reference-ui.md). 실제 Chrome 레퍼런스 관찰 후 독자적 CS 궤도 지도·Vue 랜딩·인증·본인 계정을 구현했다. 프론트 전체 검사·단위 8개·실제 API 포함 Chrome E2E 8개·Linux 공통 검사를 통과했다. 퀴즈/챗봇/학습 마이페이지는 미구현 상태를 유지하며 [디자인 시스템](design/ui-system.md)에 후속 계획만 기록한다. backend API/DB/인증/RAG는 변경하지 않았다. 다음은 기존 002의 나머지 기반과 004/005 학습 기능이다.
+
 최신 완료: [011 C04~C07 DB migration·사용자 인증](exec-plans/completed/011-c04-c07-auth.md). Spring Boot/Flyway·가입·로그인·세션·로그아웃과 인증 정책을 구현했고 실제 PostgreSQL/HTTP의 17 tests, 포맷·정적 검사·jar 빌드를 통과했다. 세션·CSRF 회전, 유휴/절대 만료, 타인 소유권 거부, 로그아웃 전 쿠키 재전송 401을 확인했다. 실제 학습 기능은 아직 없으며 다음은 002의 남은 서비스 기반이다. 기존 008/002의 미완료 범위는 유지한다.
 
 이전 완료: [009 C02 아키텍처](exec-plans/completed/009-c02-architecture.md), [010 C03 로컬 DB](exec-plans/completed/010-c03-local-db.md). ADR 0004에 따라 PostgreSQL 서비스 DB + ChromaDB 검색 저장소, Spring Security 쿠키 세션을 채택했다. 두 DB의 실제 연결·검색과 restart/down-up 영속성, Linux 공통 검사 19개가 통과했다. 아래 008 수집 작업의 미완료 상태는 유지한다.
