@@ -1,13 +1,13 @@
 # 14. RAG GUIDE — Vector RAG·Graph 확장 가이드
 
-상태: 1차 Vector RAG 설계 제안 / Graph RAG 2차. 기술 스택은 [ADR 0003](13_PHASE0_DECISIONS.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
+상태: 1차 Vector RAG 설계 제안 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
 
 ```mermaid
 flowchart LR
     U[Vue: 퀴즈·질문·복습] --> S[Spring Boot: 인증·문맥·학습 기록]
     S --> P[(PostgreSQL 서비스 데이터)]
     S --> R[Python RAG 내부 HTTP API]
-    R --> V[(PostgreSQL RAG / pgvector)]
+    R --> V[(ChromaDB)]
     R --> L[LLM·임베딩 공급자]
     A[승인된 출처 수집] --> F[원본·정제본 저장소]
     F --> C[정규화·개념 매핑·청킹]
@@ -24,7 +24,7 @@ flowchart LR
 4. 청킹·임베딩 설정별 새 인덱스를 구축하고 중복 적재·검색 평가 후 ACTIVE로 전환한다.
 5. 재수집은 동일 키를 upsert하며 기존 인용의 문서 리비전과 위치를 유지한다.
 
-수집 세부 계약은 [ingestion](domain/ingestion.md)을 따른다. OSSU의 링크 목록 승인은 링크된 강의 본문 승인과 별개다. 이 작업에서는 외부 사이트를 수집하거나 이용 조건을 검증하지 않았다.
+수집 세부 계약은 [ingestion](domain/ingestion.md), 실행은 [수집 안내](runbooks/ingestion.md)를 따른다. GitHub/한·영 Wikipedia/공식 문서 adapter와 원본·정제본·청크 staging, manifest가 구현되어 있다. OSSU는 수집 대상에서 제외했다. 81개 출처는 모두 pending·비활성이며 라이브 본문 수집은 미수행이다. 모의 샘플은 실제 코퍼스·검색 품질 증거와 구분한다.
 
 ## 2. 문제에서 질문까지
 
@@ -34,7 +34,7 @@ sequenceDiagram
     participant S as Spring Boot
     participant D as 서비스 DB
     participant R as Python RAG
-    participant P as pgvector / LLM
+    participant P as ChromaDB / LLM
     V->>S: 문제 답안 제출 + Idempotency-Key
     S->>D: 채점·시도·복습 상태 원자 저장
     S-->>V: attempt_id + 정오답 + 해설

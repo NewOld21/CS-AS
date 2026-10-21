@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "sources": [
     {
       "id": "gyoogle",
@@ -7,18 +7,45 @@
       "repository": "gyoogle/tech-interview-for-developer",
       "revision": null,
       "include_globs": [
-        "**/*.md"
+        "Computer Science/**/*.md",
+        "Algorithm/*.md",
+        "Algorithm/**/*.md",
+        "Design Pattern/*.md",
+        "Design Pattern/**/*.md"
       ],
       "usage_review": "pending",
-      "enabled": false
-    },
-    {
-      "id": "ossu",
-      "kind": "catalog",
-      "url": "https://cs.ossu.dev/",
-      "follow_external_links": false,
-      "usage_review": "pending",
-      "enabled": false
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "category": "computer-science",
+      "language": "ko",
+      "exclude_globs": [
+        "**/README.md",
+        "**/index.md"
+      ],
+      "allowed_urls": [
+        "https://github.com/gyoogle/tech-interview-for-developer/blob/"
+      ],
+      "request_urls": [
+        "https://api.github.com/repos/gyoogle/tech-interview-for-developer/"
+      ],
+      "review_notes": "Repository page reports MIT; retain exact commit license/copyright notice before approval. No body storage authorized."
     },
     {
       "id": "wikipedia-ko",
@@ -27,14 +54,3137 @@
       "max_documents": 100,
       "max_depth": 1,
       "usage_review": "pending",
-      "enabled": false
+      "enabled": false,
+      "priority": 0,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "ko",
+      "category": "computer-science",
+      "seed_titles": [
+        "운영 체제",
+        "컴퓨터 네트워크",
+        "데이터베이스",
+        "자료 구조",
+        "알고리즘",
+        "컴퓨터 구조",
+        "프로그래밍 언어",
+        "소프트웨어 공학",
+        "분산 컴퓨팅",
+        "컴퓨터 보안",
+        "인공지능",
+        "클라우드 컴퓨팅"
+      ],
+      "seed_categories": [],
+      "allowed_urls": [
+        "https://ko.wikipedia.org/wiki/"
+      ],
+      "request_urls": [
+        "https://ko.wikipedia.org/w/api.php"
+      ]
     },
     {
-      "id": "official-docs",
-      "kind": "allowlist",
-      "urls": [],
+      "id": "wikipedia-en",
+      "kind": "mediawiki",
+      "endpoint": "https://en.wikipedia.org/w/api.php",
       "usage_review": "pending",
-      "enabled": false
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "category": "computer-science",
+      "seed_titles": [
+        "Operating system",
+        "Computer network",
+        "Database",
+        "Data structure",
+        "Algorithm",
+        "Computer architecture",
+        "Programming language",
+        "Software engineering",
+        "Distributed computing",
+        "Computer security",
+        "Artificial intelligence",
+        "Cloud computing"
+      ],
+      "seed_categories": [],
+      "allowed_urls": [
+        "https://en.wikipedia.org/wiki/"
+      ],
+      "request_urls": [
+        "https://en.wikipedia.org/w/api.php"
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://docs.oracle.com/en/java/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.oracle.com/en/java/"
+      ],
+      "request_urls": [
+        "https://docs.oracle.com/en/java/",
+        "https://docs.oracle.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "java-language-specification",
+      "name": "Java Language Specification",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://docs.oracle.com/javase/specs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.oracle.com/javase/specs/"
+      ],
+      "request_urls": [
+        "https://docs.oracle.com/javase/specs/",
+        "https://docs.oracle.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://docs.python.org/3/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.python.org/3/"
+      ],
+      "request_urls": [
+        "https://docs.python.org/3/",
+        "https://docs.python.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ],
+      "request_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        "https://developer.mozilla.org/robots.txt"
+      ],
+      "review_notes": "MDN reference; separate from normative ECMAScript specification. Pending approval."
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://www.typescriptlang.org/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.typescriptlang.org/docs/"
+      ],
+      "request_urls": [
+        "https://www.typescriptlang.org/docs/",
+        "https://www.typescriptlang.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "kotlin",
+      "name": "Kotlin",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://kotlinlang.org/docs/home.html",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://kotlinlang.org/docs/home.html"
+      ],
+      "request_urls": [
+        "https://kotlinlang.org/docs/home.html",
+        "https://kotlinlang.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "go",
+      "name": "Go",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://go.dev/doc/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://go.dev/doc/"
+      ],
+      "request_urls": [
+        "https://go.dev/doc/",
+        "https://go.dev/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "rust",
+      "name": "Rust",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://doc.rust-lang.org/book/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://doc.rust-lang.org/book/"
+      ],
+      "request_urls": [
+        "https://doc.rust-lang.org/book/",
+        "https://doc.rust-lang.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "cpp",
+      "name": "C++",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://isocpp.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://isocpp.org/"
+      ],
+      "request_urls": [
+        "https://isocpp.org/",
+        "https://isocpp.org/robots.txt"
+      ],
+      "review_notes": "Public standards information only; do not ingest paywalled ISO language specification. Pending approval."
+    },
+    {
+      "id": "node-js",
+      "name": "Node.js",
+      "kind": "official-docs",
+      "category": "programming-language",
+      "base_url": "https://nodejs.org/docs/latest/api/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://nodejs.org/docs/latest/api/"
+      ],
+      "request_urls": [
+        "https://nodejs.org/docs/latest/api/",
+        "https://nodejs.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "linux-kernel",
+      "name": "Linux Kernel",
+      "kind": "official-docs",
+      "category": "operating-system",
+      "base_url": "https://docs.kernel.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.kernel.org/"
+      ],
+      "request_urls": [
+        "https://docs.kernel.org/",
+        "https://docs.kernel.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "gnu",
+      "name": "GNU",
+      "kind": "official-docs",
+      "category": "operating-system",
+      "base_url": "https://www.gnu.org/software/libc/manual/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.gnu.org/software/libc/manual/"
+      ],
+      "request_urls": [
+        "https://www.gnu.org/software/libc/manual/",
+        "https://www.gnu.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "posix",
+      "name": "POSIX",
+      "kind": "official-docs",
+      "category": "operating-system",
+      "base_url": "https://pubs.opengroup.org/onlinepubs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://pubs.opengroup.org/onlinepubs/"
+      ],
+      "request_urls": [
+        "https://pubs.opengroup.org/onlinepubs/",
+        "https://pubs.opengroup.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "microsoft-windows",
+      "name": "Microsoft Windows",
+      "kind": "official-docs",
+      "category": "operating-system",
+      "base_url": "https://learn.microsoft.com/en-us/windows/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://learn.microsoft.com/en-us/windows/"
+      ],
+      "request_urls": [
+        "https://learn.microsoft.com/en-us/windows/",
+        "https://learn.microsoft.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "ubuntu",
+      "name": "Ubuntu",
+      "kind": "official-docs",
+      "category": "operating-system",
+      "base_url": "https://documentation.ubuntu.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://documentation.ubuntu.com/"
+      ],
+      "request_urls": [
+        "https://documentation.ubuntu.com/",
+        "https://documentation.ubuntu.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "rfc-editor",
+      "name": "RFC Editor",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://www.rfc-editor.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "rfc",
+      "format": "markdown",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.rfc-editor.org/rfc/"
+      ],
+      "request_urls": [
+        "https://www.rfc-editor.org/rfc/",
+        "https://www.rfc-editor.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "ietf-datatracker",
+      "name": "IETF Datatracker",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://datatracker.ietf.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://datatracker.ietf.org/"
+      ],
+      "request_urls": [
+        "https://datatracker.ietf.org/",
+        "https://datatracker.ietf.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "mdn-http",
+      "name": "MDN HTTP",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      ],
+      "request_urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "https://developer.mozilla.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "nginx",
+      "name": "NGINX",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://nginx.org/en/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://nginx.org/en/docs/"
+      ],
+      "request_urls": [
+        "https://nginx.org/en/docs/",
+        "https://nginx.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "apache-http-server",
+      "name": "Apache HTTP Server",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://httpd.apache.org/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://httpd.apache.org/docs/"
+      ],
+      "request_urls": [
+        "https://httpd.apache.org/docs/",
+        "https://httpd.apache.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "grpc",
+      "name": "gRPC",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://grpc.io/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://grpc.io/docs/"
+      ],
+      "request_urls": [
+        "https://grpc.io/docs/",
+        "https://grpc.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "graphql",
+      "name": "GraphQL",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://graphql.org/learn/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://graphql.org/learn/"
+      ],
+      "request_urls": [
+        "https://graphql.org/learn/",
+        "https://graphql.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "openapi",
+      "name": "OpenAPI",
+      "kind": "official-docs",
+      "category": "network",
+      "base_url": "https://spec.openapis.org/oas/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://spec.openapis.org/oas/"
+      ],
+      "request_urls": [
+        "https://spec.openapis.org/oas/",
+        "https://spec.openapis.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://www.postgresql.org/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 0,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.postgresql.org/docs/"
+      ],
+      "request_urls": [
+        "https://www.postgresql.org/docs/",
+        "https://www.postgresql.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://dev.mysql.com/doc/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://dev.mysql.com/doc/"
+      ],
+      "request_urls": [
+        "https://dev.mysql.com/doc/",
+        "https://dev.mysql.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "mariadb",
+      "name": "MariaDB",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://mariadb.com/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://mariadb.com/docs/"
+      ],
+      "request_urls": [
+        "https://mariadb.com/docs/",
+        "https://mariadb.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://www.sqlite.org/docs.html",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.sqlite.org/docs.html"
+      ],
+      "request_urls": [
+        "https://www.sqlite.org/docs.html",
+        "https://www.sqlite.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://www.mongodb.com/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.mongodb.com/docs/"
+      ],
+      "request_urls": [
+        "https://www.mongodb.com/docs/",
+        "https://www.mongodb.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://redis.io/docs/latest/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://redis.io/docs/latest/"
+      ],
+      "request_urls": [
+        "https://redis.io/docs/latest/",
+        "https://redis.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://www.elastic.co/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.elastic.co/docs"
+      ],
+      "request_urls": [
+        "https://www.elastic.co/docs",
+        "https://www.elastic.co/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "apache-cassandra",
+      "name": "Apache Cassandra",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://cassandra.apache.org/doc/latest/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://cassandra.apache.org/doc/latest/"
+      ],
+      "request_urls": [
+        "https://cassandra.apache.org/doc/latest/",
+        "https://cassandra.apache.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "neo4j",
+      "name": "Neo4j",
+      "kind": "official-docs",
+      "category": "database",
+      "base_url": "https://neo4j.com/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://neo4j.com/docs/"
+      ],
+      "request_urls": [
+        "https://neo4j.com/docs/",
+        "https://neo4j.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "spring-framework",
+      "name": "Spring Framework",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://docs.spring.io/spring-framework/reference/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.spring.io/spring-framework/reference/"
+      ],
+      "request_urls": [
+        "https://docs.spring.io/spring-framework/reference/",
+        "https://docs.spring.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "spring-boot",
+      "name": "Spring Boot",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://docs.spring.io/spring-boot/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.spring.io/spring-boot/"
+      ],
+      "request_urls": [
+        "https://docs.spring.io/spring-boot/",
+        "https://docs.spring.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "spring-security",
+      "name": "Spring Security",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://docs.spring.io/spring-security/reference/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.spring.io/spring-security/reference/"
+      ],
+      "request_urls": [
+        "https://docs.spring.io/spring-security/reference/",
+        "https://docs.spring.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "hibernate",
+      "name": "Hibernate",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://hibernate.org/orm/documentation/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://hibernate.org/orm/documentation/"
+      ],
+      "request_urls": [
+        "https://hibernate.org/orm/documentation/",
+        "https://hibernate.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "jakarta-ee",
+      "name": "Jakarta EE",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://jakarta.ee/specifications/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://jakarta.ee/specifications/"
+      ],
+      "request_urls": [
+        "https://jakarta.ee/specifications/",
+        "https://jakarta.ee/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "django",
+      "name": "Django",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://docs.djangoproject.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.djangoproject.com/"
+      ],
+      "request_urls": [
+        "https://docs.djangoproject.com/",
+        "https://docs.djangoproject.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "fastapi",
+      "name": "FastAPI",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://fastapi.tiangolo.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://fastapi.tiangolo.com/"
+      ],
+      "request_urls": [
+        "https://fastapi.tiangolo.com/",
+        "https://fastapi.tiangolo.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "express",
+      "name": "Express",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://expressjs.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://expressjs.com/"
+      ],
+      "request_urls": [
+        "https://expressjs.com/",
+        "https://expressjs.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "nestjs",
+      "name": "NestJS",
+      "kind": "official-docs",
+      "category": "backend",
+      "base_url": "https://docs.nestjs.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.nestjs.com/"
+      ],
+      "request_urls": [
+        "https://docs.nestjs.com/",
+        "https://docs.nestjs.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "apache-kafka",
+      "name": "Apache Kafka",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://kafka.apache.org/documentation/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://kafka.apache.org/documentation/"
+      ],
+      "request_urls": [
+        "https://kafka.apache.org/documentation/",
+        "https://kafka.apache.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "rabbitmq",
+      "name": "RabbitMQ",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://www.rabbitmq.com/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.rabbitmq.com/docs"
+      ],
+      "request_urls": [
+        "https://www.rabbitmq.com/docs",
+        "https://www.rabbitmq.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "apache-flink",
+      "name": "Apache Flink",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://flink.apache.org/what-is-flink/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://flink.apache.org/what-is-flink/"
+      ],
+      "request_urls": [
+        "https://flink.apache.org/what-is-flink/",
+        "https://flink.apache.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "apache-spark",
+      "name": "Apache Spark",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://spark.apache.org/docs/latest/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://spark.apache.org/docs/latest/"
+      ],
+      "request_urls": [
+        "https://spark.apache.org/docs/latest/",
+        "https://spark.apache.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "debezium",
+      "name": "Debezium",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://debezium.io/documentation/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://debezium.io/documentation/"
+      ],
+      "request_urls": [
+        "https://debezium.io/documentation/",
+        "https://debezium.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "temporal",
+      "name": "Temporal",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://docs.temporal.io/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.temporal.io/"
+      ],
+      "request_urls": [
+        "https://docs.temporal.io/",
+        "https://docs.temporal.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "istio",
+      "name": "Istio",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://istio.io/latest/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://istio.io/latest/docs/"
+      ],
+      "request_urls": [
+        "https://istio.io/latest/docs/",
+        "https://istio.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "resilience4j",
+      "name": "Resilience4j",
+      "kind": "official-docs",
+      "category": "distributed-system",
+      "base_url": "https://resilience4j.readme.io/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 2,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://resilience4j.readme.io/docs"
+      ],
+      "request_urls": [
+        "https://resilience4j.readme.io/docs",
+        "https://resilience4j.readme.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://docs.docker.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.docker.com/"
+      ],
+      "request_urls": [
+        "https://docs.docker.com/",
+        "https://docs.docker.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://kubernetes.io/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 1,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://kubernetes.io/docs/"
+      ],
+      "request_urls": [
+        "https://kubernetes.io/docs/",
+        "https://kubernetes.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://docs.aws.amazon.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "request_urls": [
+        "https://docs.aws.amazon.com/",
+        "https://docs.aws.amazon.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "google-cloud",
+      "name": "Google Cloud",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://cloud.google.com/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://cloud.google.com/docs"
+      ],
+      "request_urls": [
+        "https://cloud.google.com/docs",
+        "https://cloud.google.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "microsoft-azure",
+      "name": "Microsoft Azure",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://learn.microsoft.com/en-us/azure/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://learn.microsoft.com/en-us/azure/"
+      ],
+      "request_urls": [
+        "https://learn.microsoft.com/en-us/azure/",
+        "https://learn.microsoft.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "terraform",
+      "name": "Terraform",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://developer.hashicorp.com/terraform/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developer.hashicorp.com/terraform/docs"
+      ],
+      "request_urls": [
+        "https://developer.hashicorp.com/terraform/docs",
+        "https://developer.hashicorp.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "ansible",
+      "name": "Ansible",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://docs.ansible.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.ansible.com/"
+      ],
+      "request_urls": [
+        "https://docs.ansible.com/",
+        "https://docs.ansible.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://git-scm.com/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://git-scm.com/docs"
+      ],
+      "request_urls": [
+        "https://git-scm.com/docs",
+        "https://git-scm.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "github-actions",
+      "name": "GitHub Actions",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://docs.github.com/en/actions",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.github.com/en/actions"
+      ],
+      "request_urls": [
+        "https://docs.github.com/en/actions",
+        "https://docs.github.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://prometheus.io/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://prometheus.io/docs/"
+      ],
+      "request_urls": [
+        "https://prometheus.io/docs/",
+        "https://prometheus.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://grafana.com/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://grafana.com/docs/"
+      ],
+      "request_urls": [
+        "https://grafana.com/docs/",
+        "https://grafana.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "opentelemetry",
+      "name": "OpenTelemetry",
+      "kind": "official-docs",
+      "category": "cloud",
+      "base_url": "https://opentelemetry.io/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://opentelemetry.io/docs/"
+      ],
+      "request_urls": [
+        "https://opentelemetry.io/docs/",
+        "https://opentelemetry.io/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "mdn-web",
+      "name": "HTML / CSS",
+      "kind": "official-docs",
+      "category": "frontend",
+      "base_url": "https://developer.mozilla.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developer.mozilla.org/"
+      ],
+      "request_urls": [
+        "https://developer.mozilla.org/",
+        "https://developer.mozilla.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "vue-js",
+      "name": "Vue.js",
+      "kind": "official-docs",
+      "category": "frontend",
+      "base_url": "https://vuejs.org/guide/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://vuejs.org/guide/"
+      ],
+      "request_urls": [
+        "https://vuejs.org/guide/",
+        "https://vuejs.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "kind": "official-docs",
+      "category": "frontend",
+      "base_url": "https://react.dev/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://react.dev/"
+      ],
+      "request_urls": [
+        "https://react.dev/",
+        "https://react.dev/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "vite",
+      "name": "Vite",
+      "kind": "official-docs",
+      "category": "frontend",
+      "base_url": "https://vite.dev/guide/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://vite.dev/guide/"
+      ],
+      "request_urls": [
+        "https://vite.dev/guide/",
+        "https://vite.dev/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "next-js",
+      "name": "Next.js",
+      "kind": "official-docs",
+      "category": "frontend",
+      "base_url": "https://nextjs.org/docs",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://nextjs.org/docs"
+      ],
+      "request_urls": [
+        "https://nextjs.org/docs",
+        "https://nextjs.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "owasp",
+      "name": "OWASP",
+      "kind": "official-docs",
+      "category": "security",
+      "base_url": "https://owasp.org/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://owasp.org/"
+      ],
+      "request_urls": [
+        "https://owasp.org/",
+        "https://owasp.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "oauth-2-0",
+      "name": "OAuth 2.0",
+      "kind": "official-docs",
+      "category": "security",
+      "base_url": "https://oauth.net/2/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://oauth.net/2/"
+      ],
+      "request_urls": [
+        "https://oauth.net/2/",
+        "https://oauth.net/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "openid-connect",
+      "name": "OpenID Connect",
+      "kind": "official-docs",
+      "category": "security",
+      "base_url": "https://openid.net/developers/specs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://openid.net/developers/specs/"
+      ],
+      "request_urls": [
+        "https://openid.net/developers/specs/",
+        "https://openid.net/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "nist",
+      "name": "NIST",
+      "kind": "official-docs",
+      "category": "security",
+      "base_url": "https://csrc.nist.gov/publications",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://csrc.nist.gov/publications"
+      ],
+      "request_urls": [
+        "https://csrc.nist.gov/publications",
+        "https://csrc.nist.gov/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "lets-encrypt",
+      "name": "Let's Encrypt",
+      "kind": "official-docs",
+      "category": "security",
+      "base_url": "https://letsencrypt.org/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://letsencrypt.org/docs/"
+      ],
+      "request_urls": [
+        "https://letsencrypt.org/docs/",
+        "https://letsencrypt.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "pytorch",
+      "name": "PyTorch",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://docs.pytorch.org/docs/stable/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.pytorch.org/docs/stable/"
+      ],
+      "request_urls": [
+        "https://docs.pytorch.org/docs/stable/",
+        "https://docs.pytorch.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "tensorflow",
+      "name": "TensorFlow",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://www.tensorflow.org/guide",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://www.tensorflow.org/guide"
+      ],
+      "request_urls": [
+        "https://www.tensorflow.org/guide",
+        "https://www.tensorflow.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "scikit-learn",
+      "name": "scikit-learn",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://scikit-learn.org/stable/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://scikit-learn.org/stable/"
+      ],
+      "request_urls": [
+        "https://scikit-learn.org/stable/",
+        "https://scikit-learn.org/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "huggingface-transformers",
+      "name": "Hugging Face Transformers",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://huggingface.co/docs/transformers",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://huggingface.co/docs/transformers"
+      ],
+      "request_urls": [
+        "https://huggingface.co/docs/transformers",
+        "https://huggingface.co/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://docs.langchain.com/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://docs.langchain.com/"
+      ],
+      "request_urls": [
+        "https://docs.langchain.com/",
+        "https://docs.langchain.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "llamaindex",
+      "name": "LlamaIndex",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://developers.llamaindex.ai/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developers.llamaindex.ai/"
+      ],
+      "request_urls": [
+        "https://developers.llamaindex.ai/",
+        "https://developers.llamaindex.ai/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+    },
+    {
+      "id": "openai-api",
+      "name": "OpenAI API",
+      "kind": "official-docs",
+      "category": "artificial-intelligence",
+      "base_url": "https://developers.openai.com/api/docs/",
+      "usage_review": "pending",
+      "enabled": false,
+      "priority": 3,
+      "max_documents": 100,
+      "crawl_depth": 0,
+      "request_delay_ms": 1000,
+      "version": null,
+      "storage_policy": "metadata-only",
+      "license": null,
+      "attribution": null,
+      "review": {
+        "license_url": null,
+        "terms_url": null,
+        "robots_url": null,
+        "reviewed_at": null,
+        "body_storage_allowed": false
+      },
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "concept_mappings": {},
+      "language": "en",
+      "adapter": "html",
+      "format": "html",
+      "seed_urls": [],
+      "allowed_urls": [
+        "https://developers.openai.com/api/docs/"
+      ],
+      "request_urls": [
+        "https://developers.openai.com/api/docs/",
+        "https://developers.openai.com/robots.txt"
+      ],
+      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
     }
   ]
 }

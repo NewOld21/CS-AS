@@ -15,3 +15,7 @@
 
 평가: 실제 코퍼스와 연결한 20개 질문의 정답 근거가 Top 5에 포함되는 비율을 측정한다.
 검색 성공은 답변 의미 정확성을 보장하지 않는다. [답변 도메인](answering.md)의 검증을 함께 수행한다.
+
+## 저장소 경계 (C02)
+
+[ADR 0004](../decisions/0004-stack.md)에 따라 ChromaDB HttpClient를 providers 어댑터 뒤에 둔다. PostgreSQL은 개념 ID 원장이며 Python이 사용자·풀이 테이블을 수정하지 않는다. collection은 인덱스 버전별로 분리하고 ID는 chunk_id, document는 청크 본문, metadata는 source_id/document_id/revision/locator/url/index_version과 검수 개념 연결을 담는다. 복수 개념은 버전 고정 SDK의 지원 타입을 확인해 필터 스키마로 정의한다. 파일 manifest는 모델·차원·청크 설정·코퍼스 digest와 활성 컬렉션을 연결한다. 검색·적재 어댑터는 후속이며 이번 로컬 smoke는 고정 테스트 벡터만 사용한다.

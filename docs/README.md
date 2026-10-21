@@ -30,3 +30,5 @@
 - [결정 이력](decisions/README.md)·[실행 계획](exec-plans/README.md)·[검증/인계 절차](runbooks/README.md).
 
 팀 인원·개인 배정과 Git 운영 설정은 미확정이다. 번호 문서의 제안이 실제 팀 구성이나 원격 설정 변경을 뜻하지 않는다.
+
+C02의 [MVP 아키텍처·API 규칙](architecture.md)과 [스택 ADR 0004](decisions/0004-stack.md)를 현재 결정으로 따른다.

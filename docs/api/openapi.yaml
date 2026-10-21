@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "CS-AS learning platform public API (proposed)",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Proposed phase-one learning loop contract. Graph endpoints are phase two. Cookie sessions and CSRF protection are required. Stored in JSON notation, a YAML subset, for standard-library parsing."
   },
   "servers": [
@@ -1420,12 +1420,18 @@
           },
           "message": {
             "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC error occurrence time"
           }
         },
         "required": [
           "request_id",
           "code",
-          "message"
+          "message",
+          "timestamp"
         ]
       },
       "QuizPage": {
@@ -1546,7 +1552,7 @@
         }
       },
       "Forbidden": {
-        "description": "CSRF_INVALID",
+        "description": "CSRF_INVALID / ACCESS_DENIED",
         "content": {
           "application/json": {
             "schema": {
@@ -1556,7 +1562,7 @@
         }
       },
       "NotFound": {
-        "description": "RESOURCE_NOT_FOUND",
+        "description": "RESOURCE_NOT_FOUND / QUIZ_NOT_FOUND (including resources owned by another user)",
         "content": {
           "application/json": {
             "schema": {

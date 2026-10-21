@@ -1,14 +1,14 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.2.0이다. 1차 학습 루프 전체의 구현 전 제안이며 서버는 아직 없다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.3.0이다. 1차 학습 루프 전체의 구현 전 제안이며 서버는 아직 없다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
 ## 인증·접근
 
-쿠키 세션을 기본안으로 제안한다. Vue와 Spring을 동일 출처의 reverse proxy 뒤에 두고, 로그인 시 CSAS_SESSION 식별자를 회전한다. 쿠키는 HttpOnly·Secure·SameSite=Lax이며 브라우저 저장소에 토큰을 두지 않는다. 로컬 HTTP 예외는 개발 전용 설정에서 명시하고 운영 설정과 분리한다.
+[ADR 0004](decisions/0004-stack.md)에 따라 Spring Security 쿠키 세션을 채택한다. Vue와 Spring을 동일 출처의 reverse proxy 뒤에 두고, 로그인 시 CSAS_SESSION 식별자를 회전한다. 쿠키는 HttpOnly·Secure·SameSite=Lax이며 브라우저 저장소에 토큰을 두지 않는다. 로컬 HTTP 예외는 개발 전용 설정에서 명시하고 운영 설정과 분리한다.
 
-GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든 POST는 가입/로그인도 포함해 X-CSRF-Token을 검증한다. 로그인·로그아웃 후 토큰을 다시 조회한다. 세션 저장 방식·만료 시간·비밀번호 해시 라이브러리와 설정은 bootstrap에서 고정한다. 기본 비밀번호 입력 길이는 12~128자로 제안한다.
+GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든 POST는 가입/로그인도 포함해 X-CSRF-Token을 검증한다. 로그인·로그아웃 후 토큰을 다시 조회한다. 메모리 세션·유휴 30분/최대 12시간·BCrypt cost 12와 UTF-8 72바이트 상한을 채택한다. 비밀번호 문자 길이는 12~128자이며 두 상한을 함께 검증한다. 상세와 CORS·내부 API 보호는 [MVP 아키텍처](architecture.md)를 따른다.
 
 가입/로그인/CSRF와 소개 화면만 익명 접근을 허용한다. 퀴즈·챗봇·생성·개념 탐색·모든 me API는 로그인 필수다. user_id를 본문에서 받아 소유자로 쓰지 않는다. 타인 개인 리소스는 404로 처리한다.
 
@@ -54,7 +54,7 @@ Answer와 대화 메시지에는 등록 원장과 매핑한 concept_ids를 반�
 
 메시지 전송은 동기 처리다. 세션별 동시 전송을 직렬화하고, UI는 전송 중 버튼을 비활성화하며 자동 재전송하지 않는다. 응답이 유실되면 GET messages로 저장 여부를 먼저 확인한다. 본인 요청의 저장 실패는 500이며 저장 성공으로 표시하지 않는다.
 
-공통 오류는 request_id/code/message다. 400 입력 오류, 401 인증, 403 CSRF, 404 리소스 없음/타인 소유, 409 충돌, 429 제한, 500 내부 저장 실패, 502 upstream, 504 deadline이다. 근거 부족은 정상 도메인 상태이며 시스템 오류를 감추는 용도가 아니다.
+공통 오류는 request_id/code/message/timestamp(UTC ISO 8601)다. request_id가 추적 ID다. 400 입력 오류, 401 인증, 403 CSRF, 404 리소스 없음/타인 소유, 409 충돌, 429 제한, 500 내부 저장 실패, 502 upstream, 504 deadline이다. 422 의미 입력 처리 불가와 503 일시적 가용성 장애는 [공통 규칙](architecture.md)의 예약 상태이며 현재 경로 반환 상태는 유지한다. 근거 부족은 정상 도메인 상태이며 시스템 오류를 감추는 용도가 아니다.
 
 ## 계약 변경·검사
 

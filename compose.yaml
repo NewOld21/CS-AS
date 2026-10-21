@@ -1,0 +1,45 @@
+name: csas-local
+
+services:
+  postgres:
+    image: postgres:17.9-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-csas}
+      POSTGRES_USER: ${POSTGRES_USER:-csas}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the root .env}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C.UTF-8
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    networks: [data]
+
+  chroma:
+    image: chromadb/chroma:1.5.3
+    environment:
+      CHROMA_PERSIST_PATH: /data
+    ports:
+      - "127.0.0.1:${CHROMA_PORT:-8000}:8000"
+    volumes:
+      - chroma_data:/data
+      - ./scripts/chroma-healthcheck.sh:/opt/csas/chroma-healthcheck.sh:ro
+    healthcheck:
+      test: [CMD, bash, /opt/csas/chroma-healthcheck.sh]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    networks: [data]
+
+volumes:
+  postgres_data:
+  chroma_data:
+
+networks:
+  data:

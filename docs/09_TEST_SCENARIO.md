@@ -10,11 +10,13 @@
 | 공통 진입점 | python3 scripts/verify.py | 위 항목 실행 |
 | 서비스 전체 | python3 scripts/verify.py --profile full --state-dir /path/to/run | 초기화된 실행 상태의 전체 검사 |
 
-bootstrap 성공은 앱 완료가 아니다. 서비스·빌드·DB는 미구현이고 [checks.json](../harness/checks.json)에 pending이 있다. 기존 full에는 새 학습 기능 검사가 아직 없으므로 [하네스 연계](harness-workflow.md)의 별도 변경으로 확장해야 한다.
+bootstrap 성공은 앱 완료가 아니다. 서비스·빌드·DB 도메인 migration은 미구현이고 [checks.json](../harness/checks.json)에 pending이 있다. 로컬 PostgreSQL·ChromaDB의 연결·영속성은 [개발 안내](development.md)의 별도 smoke로 검사한다. 기존 full에는 새 학습 기능 검사가 아직 없으므로 [하네스 연계](harness-workflow.md)의 별도 변경으로 확장해야 한다.
 
 Linux/POSIX Python 3.11+가 기준이다. Windows에서는 문서/구조 검사를 `python -X utf8`로 실행할 수 있지만 POSIX fcntl이 필요한 하네스 회귀 검사는 WSL/컨테이너/Linux 환경이 필요하다. Windows에서 해당 검사를 건너뛴 결과를 통과로 보고하지 않는다.
 
 ## 1차 서비스에서 등록할 필수 검사
+
+수집 독립 검사: `python3 -m unittest discover -s backend/ai/tests -p 'test_*.py' -v`. GitHub Markdown/안내 제외, 한·영 Wikipedia/oldid, 공식 HTML/sitemap/RFC, 메타데이터·리비전 보존, 멱등·증분·중복, 제한된 retry·실패 격리, 승인·robots·URL/redirect, 문서 수·탐색 깊이를 검사한다. [샘플 실행](runbooks/ingestion.md)은 모의 응답이며 실제 검색 품질·ChromaDB 통합을 대체하지 않는다.
 
 | 대상·기능 | 검증할 결과 |
 |---|---|
@@ -28,7 +30,7 @@ Linux/POSIX Python 3.11+가 기준이다. Windows에서는 문서/구조 검사�
 | FR-08 생성 | 근거 검색·JSON/단일 정답·독립 의미/근거 검증·불량 후보 비노출·멱등 생성·개인 문제 접근 |
 | FR-09/10 복습 | 시도 0건 accuracy=null·재풀이 포함 통계·오답→정답→오답 상태·해결 필터·과거 해설 |
 | 장애 | LLM/검색 장애 중 기존 문제/해설/이력·재풀이 가능, 오류와 근거 부족 구분 |
-| 통합 | 전용 PostgreSQL/pgvector DB의 수집→멱등 적재→검색→답변, 채점→기록→복습 |
+| 통합 | 전용 PostgreSQL + ChromaDB DB의 수집→멱등 적재→검색→답변, 채점→기록→복습 |
 
 ## 실제 RAG·생성 품질
 
