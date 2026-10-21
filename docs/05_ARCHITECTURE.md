@@ -1,6 +1,6 @@
 # 05. ARCHITECTURE — 서비스·프로젝트 구조
 
-상태: C04~C07 Java migration·health·인증 API는 구현했다. Vue·학습·Python HTTP는 후속 설계다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB는 확정했다. Java 버전과 검사·실행은 [개발 안내](development.md), 나머지는 bootstrap에서 고정한다. 아래 추가 경로는 생성할 모듈 설계이며, 모든 폴더가 이미 존재한다는 뜻은 아니다.
+상태: C04~C07 Java migration·health·인증 API는 구현했다. Vue 소개·인증 UI도 012에서 구현했다. 학습·Python HTTP는 후속 설계다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB는 확정했다. Java 버전과 검사·실행은 [개발 안내](development.md), 나머지는 bootstrap에서 고정한다. 아래 추가 경로는 생성할 모듈 설계이며, 모든 폴더가 이미 존재한다는 뜻은 아니다.
 
 ## 서비스 경계
 

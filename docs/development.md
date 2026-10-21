@@ -1,5 +1,28 @@
 # Development
 
+## Vue 로컬 UI (012)
+
+Node 22.12+(검증 24.18.0)/npm, 설치는 frontend/에서 `npm ci`다. 버전은 package.json/package-lock.json으로 고정한다. 루트 공통 명령:
+
+```sh
+python scripts/frontend.py dev
+python scripts/frontend.py check
+python scripts/frontend.py e2e
+```
+
+개발 주소는 http://localhost:5173 이다. Vite가 같은 출처의 `/api/v1`을 기본 localhost:8080 Spring으로 프록시한다. 서버 API·세션·CSRF·인증 정책을 변경하지 않는다. `CSAS_API_TARGET`은 개발 서버 측 프록시 대상을 바꾸는 선택 설정이며 브라우저 번들에 비밀값을 넣지 않는다. 프론트 상태와 CSRF는 메모리만 사용하고 쿠키는 HttpOnly 서버 쿠키를 그대로 전송한다. 토큰/비밀번호를 localStorage에 저장하거나 출력하지 않는다. 변경 POST는 자동 재전송하지 않는다.
+
+실제 인증 E2E는 **전용 테스트 DB**를 사용한다. 기존 compose.backend-test.yaml의 PostgreSQL/checks를 그대로 사용해 별도 앱 포트를 연다. 테스트 회원을 개발/운영 DB에 만들지 않는다.
+
+```sh
+docker compose -f compose.backend-test.yaml run --rm -d --name csas-ui-auth-check --publish 127.0.0.1:18080:8080 checks gradle --no-daemon bootRun
+# 앱 readiness 후 POSIX: CSAS_E2E_API=http://localhost:18080 python scripts/frontend.py e2e
+# PowerShell: $env:CSAS_E2E_API='http://localhost:18080'; python scripts/frontend.py e2e
+docker stop csas-ui-auth-check
+```
+
+Playwright는 기본 설치된 Chrome을 사용한다. 다른 환경에서는 `PLAYWRIGHT_CHANNEL=chromium` 및 해당 Playwright 브라우저 설치를 사용한다. 실제 API E2E는 CSAS_E2E_API가 없으면 명시적으로 skip하므로 일반 7개 UI 검사만으로 인증 연결 성공을 보고하지 않는다. 012에서는 해당 값을 지정해 실제 API 포함 **8개 모두 실행**했다. UI 오류 fixture는 실제 API 회귀 검사와 구분한다. 결과·스크린샷은 Git 제외 reports/ui-qa/에 저장한다.
+
 ## Java backend (C04~C07)
 
 호스트 실행은 JDK 21과 backend/의 Gradle Wrapper 8.14.3을 사용한다. Spring Boot 3.5.16, Flyway와 PostgreSQL 드라이버는 BOM 및 gradle.lockfile로 고정한다. `DB_URL`, `DB_USER`, `DB_PASSWORD`를 지정하고 `cd backend && ./gradlew bootRun`으로 실행한다. Windows는 `gradlew.bat`을 사용한다. `.env` 파일을 Spring이 자동 로드하지 않으며 backend의 기존 AI 공급자 환경 파일도 읽지 않는다.
