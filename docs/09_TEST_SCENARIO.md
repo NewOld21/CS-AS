@@ -10,7 +10,7 @@
 | 공통 진입점 | python3 scripts/verify.py | 위 항목 실행 |
 | 서비스 전체 | python3 scripts/verify.py --profile full --state-dir /path/to/run | 초기화된 실행 상태의 전체 검사 |
 
-bootstrap 성공은 앱 완료가 아니다. 서비스·빌드·DB는 미구현이고 [checks.json](../harness/checks.json)에 pending이 있다. 기존 full에는 새 학습 기능 검사가 아직 없으므로 [하네스 연계](harness-workflow.md)의 별도 변경으로 확장해야 한다.
+bootstrap 성공은 앱 완료가 아니다. 서비스·빌드·DB 도메인 migration은 미구현이고 [checks.json](../harness/checks.json)에 pending이 있다. 로컬 PostgreSQL·ChromaDB의 연결·영속성은 [개발 안내](development.md)의 별도 smoke로 검사한다. 기존 full에는 새 학습 기능 검사가 아직 없으므로 [하네스 연계](harness-workflow.md)의 별도 변경으로 확장해야 한다.
 
 Linux/POSIX Python 3.11+가 기준이다. Windows에서는 문서/구조 검사를 `python -X utf8`로 실행할 수 있지만 POSIX fcntl이 필요한 하네스 회귀 검사는 WSL/컨테이너/Linux 환경이 필요하다. Windows에서 해당 검사를 건너뛴 결과를 통과로 보고하지 않는다.
 

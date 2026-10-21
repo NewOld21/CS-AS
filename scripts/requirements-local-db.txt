@@ -1,0 +1,2 @@
+# Smoke client only; the application dependency lock belongs to bootstrap.
+chromadb-client==1.5.3

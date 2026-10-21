@@ -17,7 +17,7 @@ CS/AS는 CS 퀴즈로 이해도를 확인하고, 모르는 개념을 근거 기�
 
 | 항목 | 기준 |
 |---|---|
-| 기술 스택 | 사용자 확정: Vue/TypeScript + Spring Boot + 별도 Python/LangChain RAG + PostgreSQL/pgvector |
+| 기술 스택 | Vue/TypeScript + Spring Boot + 별도 Python/LangChain RAG + PostgreSQL 서비스 DB + ChromaDB 검색 저장소 ([ADR 0004](decisions/0004-stack.md)) |
 | 개발 시간 | 사용자 확정: 기존 22시간 제한 해제 |
 | 1차 개발 | 기본 인증부터 AI 관련 퀴즈·오답노트·마이페이지까지 학습 루프 전체 |
 | 2차 개발 | Neo4j 후보 검토, 개념·관계·근거 추출, 지식 지도와 Graph RAG |
