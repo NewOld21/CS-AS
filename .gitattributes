@@ -1,1 +1,2 @@
 scripts/chroma-healthcheck.sh text eol=lf
+backend/gradlew text eol=lf

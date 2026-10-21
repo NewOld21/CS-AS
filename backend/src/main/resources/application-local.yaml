@@ -1,0 +1,6 @@
+# Only explicit local HTTP development may send a non-Secure cookie.
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false

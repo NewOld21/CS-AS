@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: csas-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/csas}
+    username: ${DB_USER:csas}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 1000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: csas
+  flyway:
+    schemas: csas
+    default-schema: csas
+    clean-disabled: true
+    validate-on-migrate: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  servlet:
+    session:
+      timeout: 30m
+      tracking-modes: cookie
+      cookie:
+        name: CSAS_SESSION
+        http-only: true
+        secure: true
+        same-site: lax
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+  health:
+    diskspace:
+      enabled: false
+logging:
+  level:
+    org.springframework.boot.actuate.jdbc: ERROR

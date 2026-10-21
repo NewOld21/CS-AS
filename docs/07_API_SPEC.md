@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.3.0이다. 1차 학습 루프 전체의 구현 전 제안이며 서버는 아직 없다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.4.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). 인증 API는 C05~C07에서 순차 구현하며 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 

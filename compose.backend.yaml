@@ -1,0 +1,22 @@
+# Optional Java service; root Compose continues to own local PostgreSQL/Chroma.
+services:
+  backend:
+    image: gradle:8.14.3-jdk21
+    working_dir: /workspace/backend
+    command: [gradle, --no-daemon, bootRun]
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-csas}
+      DB_USER: ${POSTGRES_USER:-csas}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      SPRING_PROFILES_ACTIVE: local
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - ./backend:/workspace/backend
+      - gradle_cache:/home/gradle/.gradle
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [data]
+volumes:
+  gradle_cache:

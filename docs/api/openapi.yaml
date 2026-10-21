@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "CS-AS learning platform public API (proposed)",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "Proposed phase-one learning loop contract. Graph endpoints are phase two. Cookie sessions and CSRF protection are required. Stored in JSON notation, a YAML subset, for standard-library parsing."
   },
   "servers": [
@@ -834,6 +834,21 @@
           },
           "500": {
             "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Database readiness; no credentials or component details",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "UP"
+          },
+          "503": {
+            "description": "DOWN (database unavailable)"
           }
         }
       }
