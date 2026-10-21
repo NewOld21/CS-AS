@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05는 `/auth/csrf`와 `/auth/signup`을 구현했다. 로그인/로그아웃은 C06~C07에서 순차 구현하며 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05~C06의 `/auth/csrf`·`/auth/signup`·`/auth/login`·`/auth/me`를 구현했다. 로그아웃은 C07이며 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
@@ -13,6 +13,8 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 가입/로그인/CSRF와 소개 화면만 익명 접근을 허용한다. 퀴즈·챗봇·생성·개념 탐색·모든 me API는 로그인 필수다. user_id를 본문에서 받아 소유자로 쓰지 않는다. 타인 개인 리소스는 404로 처리한다.
 
 ## 1차 경로
+
+로그인 실패는 계정 없음/비밀번호 불일치 모두 401 INVALID_CREDENTIALS와 같은 메시지다. 계정이 없어도 동일 cost의 dummy BCrypt hash를 검증한다. 성공 시 사용자 ID만 담은 SecurityContext를 서버 세션에 저장하고 세션 ID와 CSRF 토큰을 회전한다. `/auth/me`는 세션의 본인 ID로 사용자 정보를 조회하며 요청 파라미터로 타인 ID를 받지 않는다. 익명·위조·만료 쿠키는 401이다. 세션 유휴 제한은 Tomcat 30분, 인증 시각 기준 절대 제한은 애플리케이션에서 12시간으로 집행한다. 재로그인은 새 인증 시각을 설정하며 서버 재시작 시 모든 메모리 세션을 잃는다.
 
 아래 경로에 `/api/v1` 접두사를 붙인다.
 
