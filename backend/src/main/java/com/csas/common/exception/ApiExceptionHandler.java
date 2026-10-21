@@ -1,8 +1,10 @@
 package com.csas.common.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,9 +36,20 @@ public class ApiExceptionHandler {
         .body(errors.error(request, "RESOURCE_NOT_FOUND", "Resource not found."));
   }
 
+  @ExceptionHandler(AccessDeniedException.class)
+  ResponseEntity<ApiError> forbidden(HttpServletRequest request) {
+    return ResponseEntity.status(403)
+        .body(errors.error(request, "ACCESS_DENIED", "Access denied."));
+  }
+
   @ExceptionHandler(Exception.class)
   ResponseEntity<ApiError> unexpected(Exception ex, HttpServletRequest request) {
     // Never echo exception messages: validation and persistence errors may contain secrets.
+    LoggerFactory.getLogger(ApiExceptionHandler.class)
+        .error(
+            "request_id={} failure={}",
+            request.getAttribute("request_id"),
+            ex.getClass().getSimpleName());
     return ResponseEntity.internalServerError()
         .body(errors.error(request, "INTERNAL_ERROR", "Internal server error."));
   }

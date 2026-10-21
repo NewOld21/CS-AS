@@ -12,7 +12,15 @@ services:
     ports:
       - "127.0.0.1:${BACKEND_PORT:-8080}:8080"
     volumes:
-      - ./backend:/workspace/backend
+      # Mount only build inputs/outputs; never expose backend/.env or AI keys.
+      - ./backend/src:/workspace/backend/src
+      - ./backend/config:/workspace/backend/config:ro
+      - ./backend/build.gradle:/workspace/backend/build.gradle:ro
+      - ./backend/settings.gradle:/workspace/backend/settings.gradle:ro
+      - ./backend/gradle.lockfile:/workspace/backend/gradle.lockfile:ro
+      - ./backend/gradle:/workspace/backend/gradle:ro
+      - ./backend/gradlew:/workspace/backend/gradlew:ro
+      - ./backend/build:/workspace/backend/build
       - gradle_cache:/home/gradle/.gradle
     depends_on:
       postgres:

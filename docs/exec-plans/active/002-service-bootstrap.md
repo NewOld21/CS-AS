@@ -23,6 +23,6 @@ Status: planned
 
 ## 검증·인계
 
-현재 미실행이다. 기존 machine-readable task는 [하네스 연계](../../harness-workflow.md)의 전환 항목을 확인한 뒤 사용한다. 서비스 기반 완료는 1차 제품 완료와 다르다. 기능 검사는 004/005까지 계속 확장한다.
+Java JDK 21/Gradle 8.14.3/Spring Boot 3.5.16·Flyway·health·인증은 [011 C04~C07](../completed/011-c04-c07-auth.md)에서 선행 구현했다. 로컬 DB는 010에서 완료했다. 이 계획의 나머지 Vue·Python HTTP·프록시·내부 통신·호출 제한·하네스 등록은 미완료다. 기존 machine-readable task는 [하네스 연계](../../harness-workflow.md)의 전환 항목을 확인한 뒤 사용한다. 서비스 기반 완료는 1차 제품 완료와 다르다. 기능 검사는 004/005까지 계속 확장한다.
 
 실제 명령·결과·버전·미해결 항목을 남긴 뒤 completed/로 이동한다. 다음은 [004 핵심 학습](004-core-learning.md)이다.

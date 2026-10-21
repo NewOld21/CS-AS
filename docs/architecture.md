@@ -1,6 +1,6 @@
 # MVP 아키텍처와 API 규칙 (C02)
 
-상태: 2026-10-21 결정 채택, 서비스 구현은 후속. [구조 기준](05_ARCHITECTURE.md), [스택 ADR](decisions/0004-stack.md), [API 계약](api/openapi.yaml)을 함께 따른다. 기존 ADR 0001과 번호가 충돌하므로 요청된 `0001-stack.md` 대신 0004를 사용한다.
+상태: 2026-10-21 결정 채택. C04~C07에서 Java migration·health·사용자 인증을 구현했으며 학습 서비스는 후속이다. [구조 기준](05_ARCHITECTURE.md), [스택 ADR](decisions/0004-stack.md), [API 계약](api/openapi.yaml)을 함께 따른다. 기존 ADR 0001과 번호가 충돌하므로 요청된 `0001-stack.md` 대신 0004를 사용한다.
 
 ## 서비스와 데이터 흐름
 

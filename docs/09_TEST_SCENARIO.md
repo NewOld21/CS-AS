@@ -16,6 +16,8 @@ Linux/POSIX Python 3.11+가 기준이다. Windows에서는 문서/구조 검사�
 
 ## 1차 서비스에서 등록할 필수 검사
 
+C04~C07 Java 검사: `python scripts/backend.py check` 또는 [개발 안내](development.md)의 전용 PostgreSQL Compose를 사용한다. Spotless·Checkstyle·Java 컴파일과 실제 랜덤 포트 HTTP의 migration/health·가입/중복/동시성·해시·로그인/세션 회전·만료·학습 URL 보호·CSRF·소유권/역할·로그아웃 쿠키 재전송·Secure 플래그·CORS를 검사한다. 학습 데이터 소유권 검사는 테스트 fixture이며 미구현 학습 기능의 완료 증거가 아니다. DB 통합 검사에 H2를 사용하지 않는다. 결과는 backend/build/reports/와 [011 계획](exec-plans/completed/011-c04-c07-auth.md)에 기록한다.
+
 수집 독립 검사: `python3 -m unittest discover -s backend/ai/tests -p 'test_*.py' -v`. GitHub Markdown/안내 제외, 한·영 Wikipedia/oldid, 공식 HTML/sitemap/RFC, 메타데이터·리비전 보존, 멱등·증분·중복, 제한된 retry·실패 격리, 승인·robots·URL/redirect, 문서 수·탐색 깊이를 검사한다. [샘플 실행](runbooks/ingestion.md)은 모의 응답이며 실제 검색 품질·ChromaDB 통합을 대체하지 않는다.
 
 | 대상·기능 | 검증할 결과 |

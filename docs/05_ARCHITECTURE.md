@@ -1,6 +1,6 @@
 # 05. ARCHITECTURE — 서비스·프로젝트 구조
 
-상태: 구현 전 설계. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB는 확정했다. 버전·라이브러리·실행 설정은 bootstrap에서 고정한다. 아래 추가 경로는 생성할 모듈 설계이며, 모든 폴더가 이미 존재한다는 뜻은 아니다.
+상태: C04~C07 Java migration·health·인증 API는 구현했다. Vue·학습·Python HTTP는 후속 설계다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB는 확정했다. Java 버전과 검사·실행은 [개발 안내](development.md), 나머지는 bootstrap에서 고정한다. 아래 추가 경로는 생성할 모듈 설계이며, 모든 폴더가 이미 존재한다는 뜻은 아니다.
 
 ## 서비스 경계
 
@@ -62,6 +62,6 @@ Spring은 PostgreSQL 서비스 스키마를 통해 사용자·퀴즈·학습 기
 
 [ERD](06_ERD.md) · [RAG 아키텍처](14_RAG_GUIDE.md) · [공개 API](api/openapi.yaml) · [내부 RAG API](api/internal-rag.md).
 
-source_id/document_id/revision/chunk_id, 코퍼스 manifest, 개념 매핑, 임베딩 모델/차원·청크 설정·인덱스 버전을 보존한다. 검증 전 기존 인덱스를 삭제하지 않는다. HTTP 서비스는 미구현이며 Python ingestion 오프라인 CLI는 구현되었다. [수집 계약](domain/ingestion.md)에 책임·저장·확장 경계를 정의한다. 파일 객체와 SQLite catalog는 배치 staging이며 PostgreSQL + ChromaDB를 대체하지 않는다.
+source_id/document_id/revision/chunk_id, 코퍼스 manifest, 개념 매핑, 임베딩 모델/차원·청크 설정·인덱스 버전을 보존한다. 검증 전 기존 인덱스를 삭제하지 않는다. Java 인증 HTTP와 Python ingestion 오프라인 CLI는 구현되었다. Python HTTP·실제 검색 어댑터는 후속이다. [수집 계약](domain/ingestion.md)에 책임·저장·확장 경계를 정의한다. 파일 객체와 SQLite catalog는 배치 staging이며 PostgreSQL + ChromaDB를 대체하지 않는다.
 
 C02 결정과 API·인증 규칙은 [MVP 아키텍처](architecture.md), pgvector 선택의 변경 근거는 [ADR 0004](decisions/0004-stack.md)를 따른다.
