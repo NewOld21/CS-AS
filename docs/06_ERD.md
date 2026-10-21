@@ -1,6 +1,6 @@
 # 06. ERD — 데이터 모델과 관계
 
-상태: PostgreSQL 논리 설계 제안. 실제 migration·테이블은 미구현이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
+상태: 사용자 테이블은 C05의 Flyway V2로 구현했다. 나머지는 PostgreSQL 논리 설계 제안이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
 현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. ChromaDB 검색 인덱스 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
 
@@ -56,7 +56,7 @@ erDiagram
 
 | 테이블 | 주요 컬럼·키 | 제약·책임 |
 |---|---|---|
-| users | id PK, email_normalized, password_hash, created_at | email_normalized UNIQUE. 암호 원문 저장 금지 |
+| users | id UUID PK, email_normalized varchar(254), password_hash varchar(60), nickname varchar(40) nullable, created_at/updated_at timestamptz | email_normalized UNIQUE + lower/trim CHECK. BCrypt cost 12 CHECK. nickname 선택 입력, trim 후 1~40자. 암호 원문 저장 금지 |
 | concepts | id PK, slug UNIQUE, name_ko, name_en, domain | 예: `concept:database-index`. 표시 이름 변경에도 ID 유지 |
 | concept_aliases | alias_normalized, language, concept_id FK | (alias_normalized, language, concept_id) UNIQUE. 충돌 별칭은 자동 병합하지 않음 |
 | quizzes | id PK, family_id, version, stem, category, difficulty, origin, status, owner_user_id FK?, explanation, created_at | (family_id, version) UNIQUE. origin=CURATED/AI_GENERATED, status=DRAFT/READY/RETIRED |

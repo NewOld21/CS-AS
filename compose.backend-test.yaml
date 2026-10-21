@@ -1,0 +1,41 @@
+# Isolated integration DB: never uses the development database or its volume.
+name: csas-auth-test
+services:
+  postgres-test:
+    image: postgres:17.9-bookworm
+    environment:
+      POSTGRES_DB: csas_auth_test
+      POSTGRES_USER: csas_test
+      POSTGRES_PASSWORD: test-only-not-a-secret
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C.UTF-8
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, csas_test, -d, csas_auth_test]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  checks:
+    image: gradle:8.14.3-jdk21
+    working_dir: /workspace/backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres-test:5432/csas_auth_test
+      DB_USER: csas_test
+      DB_PASSWORD: test-only-not-a-secret
+      SPRING_PROFILES_ACTIVE: local
+    volumes:
+      - ./backend/src:/workspace/backend/src
+      - ./backend/config:/workspace/backend/config:ro
+      - ./backend/build.gradle:/workspace/backend/build.gradle:ro
+      - ./backend/settings.gradle:/workspace/backend/settings.gradle:ro
+      - ./backend/gradle.lockfile:/workspace/backend/gradle.lockfile:ro
+      - ./backend/gradle:/workspace/backend/gradle:ro
+      - ./backend/gradlew:/workspace/backend/gradlew:ro
+      - ./backend/build:/workspace/backend/build
+      - gradle_cache:/home/gradle/.gradle
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+    command: [gradle, --no-daemon, check, bootJar]
+volumes:
+  gradle_cache:

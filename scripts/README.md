@@ -1,5 +1,7 @@
 # 공통 명령
 
+Java 앱과 전용 PostgreSQL 통합 검사: `python scripts/backend.py up`, `python scripts/backend.py check`. Docker 설정 파일 접근이 제한된 환경은 `--docker-config /path/to/config`를 선택할 수 있다. 실행·CSRF·쿠키·DB 구분은 [개발 안내](../docs/development.md)를 따른다. 기존 공통 하네스와 Java 검사는 별개이며 full 등록은 후속 하네스 변경 작업이다.
+
 저장소 루트 기준. Python 3.11+, Linux/POSIX 환경을 사용한다.
 
 ```sh

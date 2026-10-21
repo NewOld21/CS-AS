@@ -1,5 +1,30 @@
 # Development
 
+## Java backend (C04~C07)
+
+호스트 실행은 JDK 21과 backend/의 Gradle Wrapper 8.14.3을 사용한다. Spring Boot 3.5.16, Flyway와 PostgreSQL 드라이버는 BOM 및 gradle.lockfile로 고정한다. `DB_URL`, `DB_USER`, `DB_PASSWORD`를 지정하고 `cd backend && ./gradlew bootRun`으로 실행한다. Windows는 `gradlew.bat`을 사용한다. `.env` 파일을 Spring이 자동 로드하지 않으며 backend의 기존 AI 공급자 환경 파일도 읽지 않는다.
+
+```sh
+# 공통 실행 진입점 (아래 Compose 명령과 동일)
+python scripts/backend.py up
+python scripts/backend.py check
+# 루트 .env의 로컬 DB와 연동, HTTP 개발 쿠키 프로필 명시
+docker compose -f compose.yaml -f compose.backend.yaml up -d backend
+# DB 포함 readiness: 정상 200 {"status":"UP"}, DB 장애 503 {"status":"DOWN"}
+curl --fail http://localhost:8080/health
+# 별도 PostgreSQL tmpfs 테스트 DB; 개발 DB/volume과 분리
+docker compose -f compose.backend-test.yaml up -d --wait postgres-test
+docker compose -f compose.backend-test.yaml run --rm checks
+```
+
+정적 타입 검사는 Java 컴파일러, formatter는 Spotless/google-java-format, 정적 검사는 Checkstyle이다. `./gradlew spotlessApply`로 포맷하고 `./gradlew check bootJar`로 검사한다. backend/build/reports/tests/test/index.html과 checkstyle 보고서에 결과를 기록한다. Wrapper와 dependency lock은 버전을 변경할 때만 갱신한다.
+
+Flyway는 csas schema의 flyway_schema_history에서 적용 이력을 관리하며 앱 기동 시 migration/검증 후 서버를 연다. Hibernate는 `validate`만 수행하며 ddl-auto create/update·Flyway clean·baseline-on-migrate는 사용하지 않는다. 적용된 SQL은 수정하지 않고 새 Vn migration을 추가한다. 실패 시 로그의 버전/SQLSTATE를 확인하고 데이터를 지우지 않은 채 원인을 수정한다. `/health`는 익명 공개이며 DB URL·암호·컴포넌트 상세를 반환하지 않는다. 프로세스가 살아 있어도 DB 연결 실패는 DOWN이다.
+
+테스트 DB 암호는 compose.backend-test.yaml의 공개 테스트 전용 값이며 호스트 포트를 열지 않는다. 테스트 DB 데이터는 tmpfs이고 이 전용 Compose를 down하면 사라진다. 루트 개발 DB 볼륨에는 영향이 없다. 컨테이너에는 src/·빌드 설정·출력만 개별 마운트해 backend/.env 및 AI 공급자 키를 노출하지 않는다. 일반 서버 설정은 Secure=true이고 명시한 local 프로필에서만 HTTP 쿠키 예외와 localhost:5173 CORS를 허용한다. 임의 Origin/와일드카드 credentials를 허용하지 않는다.
+
+가입·로그인 전 `GET /api/v1/auth/csrf`의 token과 CSAS_SESSION 쿠키를 함께 유지한다. POST에 `X-CSRF-Token`을 보내고 로그인 성공 후 토큰을 다시 받는다. 가입은 `/api/v1/auth/signup`(201), 로그인은 `/api/v1/auth/login`(200), 본인 조회는 `/api/v1/auth/me`(200), 로그아웃은 `/api/v1/auth/logout`(204)이다. 로그아웃 후 재접근/중복 로그아웃은 401이다. 가입/로그인 예시는 [API 계약](api/openapi.yaml)을 따른다. 비밀번호/쿠키/token을 출력하거나 공유 로그에 남기지 않는다.
+
 ## 현재 실행 가능한 명령
 Linux/POSIX, Python 3.11 이상을 사용한다. 하네스 런타임은 Python 표준 라이브러리만 사용한다.
 저장소 루트에서 실행한다.

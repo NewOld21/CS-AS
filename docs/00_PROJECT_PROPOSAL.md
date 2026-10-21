@@ -28,4 +28,4 @@ Graph RAG·지식 지도는 2차, 학습 이력 기반 관계 추천은 후속�
 
 ## 확정 사항과 현재 상태
 
-기존 Vue + Spring Boot + 별도 Python RAG 선택과 22시간 제한 해제는 유지한다. C02/C03 요청에 따라 서비스 DB는 PostgreSQL, 검색 저장소는 ChromaDB로 변경했다([ADR 0004](decisions/0004-stack.md)). 서비스와 DB는 아직 미구현이며 코드 경로는 골격이다. [PRD](01_PRD.md)가 범위 기준이고, 구현 순서는 [로드맵](10_IMPLEMENTATION_PLAN.md), 설계 결정은 [ADR 0003](13_PHASE0_DECISIONS.md)을 따른다.
+기존 Vue + Spring Boot + 별도 Python RAG 선택과 22시간 제한 해제는 유지한다. C02/C03 요청에 따라 서비스 DB는 PostgreSQL, 검색 저장소는 ChromaDB로 변경했다([ADR 0004](decisions/0004-stack.md)). 로컬 DB와 C04~C07 Java migration·health·사용자 인증은 구현했다. Vue·학습 기능·Python HTTP/RAG 연결은 후속이다. [PRD](01_PRD.md)가 범위 기준이고, 구현 순서는 [로드맵](10_IMPLEMENTATION_PLAN.md), 제품 범위 결정은 [ADR 0003](13_PHASE0_DECISIONS.md)을 따른다.

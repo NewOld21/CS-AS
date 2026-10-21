@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.3.0이다. 1차 학습 루프 전체의 구현 전 제안이며 서버는 아직 없다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05~C07의 `/auth/csrf`·`/auth/signup`·`/auth/login`·`/auth/me`·`/auth/logout`을 구현했다. 학습 API는 설계 상태이며 인증 정책만 적용했다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
@@ -13,6 +13,12 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 가입/로그인/CSRF와 소개 화면만 익명 접근을 허용한다. 퀴즈·챗봇·생성·개념 탐색·모든 me API는 로그인 필수다. user_id를 본문에서 받아 소유자로 쓰지 않는다. 타인 개인 리소스는 404로 처리한다.
 
 ## 1차 경로
+
+로그인 실패는 계정 없음/비밀번호 불일치 모두 401 INVALID_CREDENTIALS와 같은 메시지다. 계정이 없어도 동일 cost의 dummy BCrypt hash를 검증한다. 성공 시 사용자 ID만 담은 SecurityContext를 서버 세션에 저장하고 세션 ID와 CSRF 토큰을 회전한다. `/auth/me`는 세션의 본인 ID로 사용자 정보를 조회하며 요청 파라미터로 타인 ID를 받지 않는다. 익명·위조·만료 쿠키는 401이다. 세션 유휴 제한은 Tomcat 30분, 인증 시각 기준 절대 제한은 애플리케이션에서 12시간으로 집행한다. 재로그인은 새 인증 시각을 설정하며 서버 재시작 시 모든 메모리 세션을 잃는다.
+
+로그아웃은 인증과 새 CSRF가 있는 POST만 허용하며 204를 반환한다. 서버 세션 무효화·SecurityContext 제거·CSAS_SESSION 쿠키 만료를 수행한다. 이전 쿠키 재사용과 중복 로그아웃은 401이다. 익명 학습 요청은 POST에 CSRF가 없어도 401이며 공개 가입/로그인의 CSRF 실패와 인증된 요청의 CSRF 실패는 403 CSRF_INVALID다. 역할 부족은 403 ACCESS_DENIED, 타인 개인 리소스는 404다. 오류의 request_id는 서버에서 발급하고 X-Request-Id 응답 헤더와 일치시킨다.
+
+미구현 학습 경로는 익명 401/인증 후 404이며 빈 성공 응답을 꾸미지 않는다. 후속 학습 구현은 조회를 세션 사용자 범위로 제한하고 저장소에서 읽은 소유자로 `CurrentUser.requireOwner`를 호출해야 한다. 현재 사용자 API는 세션 본인 ID만 사용한다. 소유권·역할 거부 검사는 테스트 전용 리소스로 검증하며 실제 퀴즈/대화 저장 구현을 의미하지 않는다.
 
 아래 경로에 `/api/v1` 접두사를 붙인다.
 
@@ -37,6 +43,8 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 2차 경로 후보는 [graph-rag.md](api/graph-rag.md)에만 두며 현재 OpenAPI의 구현 대상에 포함하지 않는다.
 
 ## 문맥·정답·페이지
+
+가입은 기존 `/api/v1/auth/signup`을 유지하며 `/register` 별칭은 제공하지 않는다. 이메일은 앞뒤 공백 제거 후 Locale.ROOT 소문자로 정규화한다. 공급자별 점/plus 별칭을 통합하지 않는다. Bean Validation과 DB UNIQUE가 중복을 막고 경합의 제약 위반도 409 EMAIL_ALREADY_EXISTS로 변환한다. 비밀번호는 trim하지 않으며 12~128자·UTF-8 72바이트 상한을 함께 적용한다. nickname은 생략/null 가능하며 입력 시 trim 후 1~40자다. 응답은 UUID id·email·nickname만 반환한다. 알 수 없는 입력 필드는 400으로 거부하고 엔티티/비밀번호/해시는 반환하지 않는다. 가입은 세션 로그인으로 취급하지 않는다.
 
 일반 대화 생성은 `{}`, 문제 대화는 `{quiz_id, attempt_id}`다. 두 ID가 같은 본인 풀이인지 확인하고 문제·선택·정오답·개념은 서버가 복원한다. 생성 이후 재풀이해도 대화의 원래 문맥은 바뀌지 않는다.
 
