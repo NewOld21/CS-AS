@@ -22,8 +22,7 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
     for (var category : response.body()) {
       total += category.get("quiz_count").asInt();
       assertThat(category.size()).isEqualTo(3);
-      assertThat(category.has("id") && category.has("name") && category.has("quiz_count"))
-          .isTrue();
+      assertThat(category.has("id") && category.has("name") && category.has("quiz_count")).isTrue();
     }
     assertThat(total)
         .isEqualTo(
@@ -36,8 +35,7 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
   void listSupportsFiltersStableCursorAndBoundedLimit() throws Exception {
     var browser = account();
     var filtered =
-        browser.request(
-            "GET", "/api/v1/quizzes?category=DATABASE&difficulty=MEDIUM", null, false);
+        browser.request("GET", "/api/v1/quizzes?category=DATABASE&difficulty=MEDIUM", null, false);
     assertThat(filtered.status()).isEqualTo(200);
     assertThat(filtered.body().get("items")).hasSize(2);
     filtered
@@ -53,18 +51,14 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
     assertThat(first.status()).isEqualTo(200);
     assertThat(first.body().get("items")).hasSize(2);
     String cursor = first.body().get("next_cursor").asText();
-    var second =
-        browser.request("GET", "/api/v1/quizzes?limit=2&cursor=" + cursor, null, false);
+    var second = browser.request("GET", "/api/v1/quizzes?limit=2&cursor=" + cursor, null, false);
     assertThat(second.status()).isEqualTo(200);
     assertThat(second.body().get("items").get(0).get("id"))
         .isNotEqualTo(first.body().get("items").get(0).get("id"));
     assertThat(
             browser
                 .request(
-                    "GET",
-                    "/api/v1/quizzes?limit=2&category=NETWORK&cursor=" + cursor,
-                    null,
-                    false)
+                    "GET", "/api/v1/quizzes?limit=2&category=NETWORK&cursor=" + cursor, null, false)
                 .status())
         .isEqualTo(400);
     assertThat(browser.request("GET", "/api/v1/quizzes?limit=101", null, false).status())
@@ -80,7 +74,14 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
     assertThat(response.body().size()).isEqualTo(8);
     for (String field :
         java.util.List.of(
-            "id", "version", "stem", "category", "difficulty", "origin", "concept_ids", "options")) {
+            "id",
+            "version",
+            "stem",
+            "category",
+            "difficulty",
+            "origin",
+            "concept_ids",
+            "options")) {
       assertThat(response.body().has(field)).as(field).isTrue();
     }
     assertThat(response.body().get("options")).hasSize(4);
@@ -93,7 +94,8 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
               assertThat(option.has("id") && option.has("position") && option.has("text")).isTrue();
             });
     assertThat(response.body().toString())
-        .doesNotContain("is_correct", "correct_option_id", "explanation", "source_url", "reviewed_at");
+        .doesNotContain(
+            "is_correct", "correct_option_id", "explanation", "source_url", "reviewed_at");
   }
 
   @Test
@@ -110,18 +112,14 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
         draft);
     assertThat(browser.request("GET", "/api/v1/quizzes/" + draft, null, false).status())
         .isEqualTo(404);
-    assertThat(
-            browser
-                .request("GET", "/api/v1/quizzes/" + UUID.randomUUID(), null, false)
-                .status())
+    assertThat(browser.request("GET", "/api/v1/quizzes/" + UUID.randomUUID(), null, false).status())
         .isEqualTo(404);
   }
 
   private Browser account() throws Exception {
     var browser = browser();
     browser.refreshCsrf();
-    var credentials =
-        Map.of("email", UUID.randomUUID() + "@example.com", "password", PASSWORD);
+    var credentials = Map.of("email", UUID.randomUUID() + "@example.com", "password", PASSWORD);
     assertThat(browser.request("POST", "/api/v1/auth/signup", credentials, true).status())
         .isEqualTo(201);
     assertThat(browser.request("POST", "/api/v1/auth/login", credentials, true).status())

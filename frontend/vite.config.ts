@@ -5,6 +5,7 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    allowedHosts: ['frontend'],
     proxy: {
       '/api': {
         target: process.env.CSAS_API_TARGET ?? 'http://localhost:8080',

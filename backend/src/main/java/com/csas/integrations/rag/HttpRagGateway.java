@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,21 +22,31 @@ public class HttpRagGateway implements RagGateway {
   private final URI endpoint;
   private final String token;
   private final String activeIndex;
+  private final int requestTimeoutSeconds;
 
   public HttpRagGateway(
       ObjectMapper mapper,
       @Value("${csas.rag.base-url:http://127.0.0.1:8090}") String baseUrl,
       @Value("${csas.rag.service-token:}") String token,
-      @Value("${csas.rag.active-index:cs-v1}") String activeIndex) {
+      @Value("${csas.rag.active-index:cs-v1}") String activeIndex,
+      @Value("${csas.rag.request-timeout-seconds:30}") int requestTimeoutSeconds) {
+    if (requestTimeoutSeconds < 5 || requestTimeoutSeconds > 120) {
+      throw new IllegalArgumentException("RAG request timeout must be between 5 and 120 seconds");
+    }
     this.mapper = mapper;
     this.token = token;
     this.activeIndex = activeIndex;
+    this.requestTimeoutSeconds = requestTimeoutSeconds;
     this.endpoint = URI.create(baseUrl + "/internal/v1/answers");
     this.http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(2)).build();
   }
 
   public String activeIndex() {
     return activeIndex;
+  }
+
+  public String deadlineAt() {
+    return Instant.now().plusSeconds(requestTimeoutSeconds - 2L).toString();
   }
 
   @Override
@@ -46,7 +57,7 @@ public class HttpRagGateway implements RagGateway {
     try {
       HttpRequest httpRequest =
           HttpRequest.newBuilder(endpoint)
-              .timeout(Duration.ofSeconds(12))
+              .timeout(Duration.ofSeconds(requestTimeoutSeconds))
               .header("Content-Type", "application/json")
               .header("X-Request-Id", request.requestId())
               .header("Authorization", "Bearer " + token)

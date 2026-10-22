@@ -40,6 +40,13 @@ def handler(service, token: str, active_index: str):
             self.send_json(status, {"request_id": request_id, "code": code, "message": message,
                                     "timestamp": utc_now()})
 
+        def do_GET(self):
+            if self.path == "/health":
+                self.send_json(200, {"status": "UP", "index_version": active_index})
+                return
+            self.error(404, self.headers.get("X-Request-Id", "unknown"),
+                       "NOT_FOUND", "Internal endpoint not found")
+
         def do_POST(self):
             request_id = self.headers.get("X-Request-Id", "unknown")
             if self.path != "/internal/v1/answers":

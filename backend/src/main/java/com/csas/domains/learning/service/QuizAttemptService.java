@@ -100,8 +100,7 @@ public class QuizAttemptService {
     var rows =
         jdbc.query(
             "SELECT id, is_correct FROM csas.quiz_options WHERE quiz_id=? AND id=?",
-            (rs, row) ->
-                new OptionRow(rs.getObject("id", UUID.class), rs.getBoolean("is_correct")),
+            (rs, row) -> new OptionRow(rs.getObject("id", UUID.class), rs.getBoolean("is_correct")),
             quizId,
             optionId);
     if (rows.isEmpty()) {
@@ -185,7 +184,11 @@ public class QuizAttemptService {
 
   private String hash(UUID quizId, AttemptRequest request) {
     String normalized =
-        quizId + ":" + request.selected_option_id() + ":" + String.valueOf(request.retry_of_attempt_id());
+        quizId
+            + ":"
+            + request.selected_option_id()
+            + ":"
+            + String.valueOf(request.retry_of_attempt_id());
     try {
       return HexFormat.of()
           .formatHex(

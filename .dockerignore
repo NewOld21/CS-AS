@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+!.env.example
+.venv
+**/__pycache__
+**/*.pyc
+**/node_modules
+**/dist
+**/build
+reports
+data/raw
+data/processed
+.vscode
+backend/bin

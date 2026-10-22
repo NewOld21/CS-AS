@@ -114,6 +114,18 @@ class AnsweringTests(unittest.TestCase):
             server.shutdown()
             server.server_close()
 
+    def test_internal_health_endpoint_reports_active_index(self):
+        service = AnswerService(Retriever(), Generator())
+        server = ThreadingHTTPServer(("127.0.0.1", 0), handler(service, "service-secret", "cs-test-v1"))
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            with urlopen(f"http://127.0.0.1:{server.server_port}/health") as response:
+                self.assertEqual(json.load(response), {"status": "UP", "index_version": "cs-test-v1"})
+        finally:
+            server.shutdown()
+            server.server_close()
+
 
 if __name__ == "__main__":
     unittest.main()

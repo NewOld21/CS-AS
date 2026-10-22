@@ -16,7 +16,7 @@ def main():
         command += ['--config', str(args.docker_config.resolve())]
     command += ['compose']
     if args.action == 'up':
-        command += ['-f', 'compose.yaml', '-f', 'compose.backend.yaml', 'up', '-d', 'backend']
+        command += ['up', '-d', 'backend']
         return subprocess.call(command, cwd=root)
     command += ['-f', 'compose.backend-test.yaml']
     subprocess.run(command + ['up', '-d', '--wait', 'postgres-test'], cwd=root, check=True)

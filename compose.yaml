@@ -37,9 +37,104 @@ services:
       start_period: 15s
     networks: [data]
 
+  ai:
+    build:
+      context: .
+      dockerfile: backend/ai/Dockerfile
+    env_file:
+      - ./backend/.env
+    environment:
+      CHROMA_HOST: chroma
+      CHROMA_PORT: 8000
+      RAG_DEV_PROVIDER: ${RAG_DEV_PROVIDER:-gms}
+      RAG_ACTIVE_INDEX: ${RAG_ACTIVE_INDEX:-gms-live-dev-v1}
+      RAG_INDEX_MANIFEST: /workspace/data/processed/indexes/${RAG_ACTIVE_INDEX:-gms-live-dev-v1}.json
+      RAG_SERVICE_TOKEN: ${RAG_SERVICE_TOKEN:-local-development-rag-token-change-before-production}
+    ports:
+      - "127.0.0.1:${AI_PORT:-8090}:8090"
+    volumes:
+      - ./backend/ai/src:/workspace/backend/ai/src:ro
+      - ./backend/ai/fixtures:/workspace/backend/ai/fixtures:ro
+      - ./docs:/workspace/docs:ro
+      - ./scripts:/workspace/scripts:ro
+      - ./data:/workspace/data
+      - ./reports:/workspace/reports
+    depends_on:
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health', timeout=2)"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks: [data]
+
+  backend:
+    image: gradle:8.14.3-jdk21
+    working_dir: /workspace/backend
+    command: [gradle, --no-daemon, bootRun]
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-csas}
+      DB_USER: ${POSTGRES_USER:-csas}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      SPRING_PROFILES_ACTIVE: local
+      RAG_BASE_URL: http://ai:8090
+      RAG_ACTIVE_INDEX: ${RAG_ACTIVE_INDEX:-gms-live-dev-v1}
+      RAG_SERVICE_TOKEN: ${RAG_SERVICE_TOKEN:-local-development-rag-token-change-before-production}
+      RAG_TIMEOUT_SECONDS: ${RAG_TIMEOUT_SECONDS:-60}
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - ./backend/src:/workspace/backend/src
+      - ./backend/config:/workspace/backend/config:ro
+      - ./backend/build.gradle:/workspace/backend/build.gradle:ro
+      - ./backend/settings.gradle:/workspace/backend/settings.gradle:ro
+      - ./backend/gradle.lockfile:/workspace/backend/gradle.lockfile:ro
+      - ./backend/gradle:/workspace/backend/gradle:ro
+      - ./backend/gradlew:/workspace/backend/gradlew:ro
+      - ./backend/build:/workspace/backend/build
+      - gradle_cache:/home/gradle/.gradle
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD-SHELL, "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080'"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 30s
+    networks: [data]
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      CSAS_API_TARGET: http://backend:8080
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-5173}:5173"
+    volumes:
+      - ./frontend:/workspace/frontend
+      - frontend_node_modules:/workspace/frontend/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:5173').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks: [data]
+
 volumes:
   postgres_data:
   chroma_data:
+  gradle_cache:
+  frontend_node_modules:
 
 networks:
   data:

@@ -109,7 +109,8 @@ public class QuizCatalogService {
             SELECT id, version, stem, category, difficulty, origin
               FROM csas.quizzes
              WHERE id=? AND status IN %s AND (origin='CURATED' OR owner_user_id=?)
-            """.formatted(statuses),
+            """
+                .formatted(statuses),
             (rs, row) ->
                 new QuizHeader(
                     rs.getObject("id", UUID.class),
@@ -161,8 +162,7 @@ public class QuizCatalogService {
       return null;
     }
     try {
-      String decoded =
-          new String(Base64.getUrlDecoder().decode(cursor), StandardCharsets.UTF_8);
+      String decoded = new String(Base64.getUrlDecoder().decode(cursor), StandardCharsets.UTF_8);
       String[] parts = decoded.split("\\n", -1);
       if (parts.length != 4
           || !parts[0].equals(value(category))

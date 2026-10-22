@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -83,7 +82,7 @@ public class ChatService {
         rag.answer(
             new RagGateway.AnswerRequest(
                 requestId,
-                Instant.now().plus(10, ChronoUnit.SECONDS).toString(),
+                ragConfiguration.deadlineAt(),
                 ragConfiguration.activeIndex(),
                 question.question().trim(),
                 history,

@@ -1,0 +1,122 @@
+[
+  {
+    "document_id": "local:os-thread",
+    "title": "POSIX threads",
+    "source_url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
+    "category": "OPERATING_SYSTEM",
+    "concept_id": "concept:os-thread",
+    "content": "프로세스는 독립된 주소 공간과 자원을 가진 실행 단위이고, 같은 프로세스의 스레드는 전역 메모리와 열린 파일을 공유하되 각자 별도의 스택을 가진다. 프로세스 격리는 한 프로세스의 장애가 다른 프로세스로 번지는 위험을 줄이지만 생성과 문맥 전환 비용이 크다. 스레드는 웹 서버의 동시 요청 처리처럼 자원을 공유해 가볍게 병렬 작업을 수행할 수 있지만 동기화 오류가 공유 상태를 손상시킬 수 있다."
+  },
+  {
+    "document_id": "local:os-fork",
+    "title": "fork",
+    "source_url": "https://man7.org/linux/man-pages/man2/fork.2.html",
+    "category": "OPERATING_SYSTEM",
+    "concept_id": "concept:os-fork",
+    "content": "fork 뒤 부모와 자식은 별도 주소 공간을 가지며, 일반적으로 페이지는 쓰기 시 복사 방식으로 관리된다."
+  },
+  {
+    "document_id": "local:os-mutex",
+    "title": "POSIX mutex",
+    "source_url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html",
+    "category": "OPERATING_SYSTEM",
+    "concept_id": "concept:os-mutex",
+    "content": "pthread_mutex_trylock은 뮤텍스를 즉시 얻을 수 없으면 기다리지 않고 실패 상태를 반환한다."
+  },
+  {
+    "document_id": "local:network-tcp",
+    "title": "TCP",
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "category": "NETWORK",
+    "concept_id": "concept:network-tcp",
+    "content": "TCP는 연결 지향이며 신뢰성과 순서를 보장하는 바이트 스트림 전송 서비스를 제공한다."
+  },
+  {
+    "document_id": "local:network-udp",
+    "title": "UDP",
+    "source_url": "https://www.rfc-editor.org/rfc/rfc768.html",
+    "category": "NETWORK",
+    "concept_id": "concept:network-udp",
+    "content": "UDP는 목적지 포트와 길이, 체크섬을 제공하지만 전달과 중복 방지를 보장하지 않는다."
+  },
+  {
+    "document_id": "local:network-http",
+    "title": "HTTP semantics",
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "category": "NETWORK",
+    "concept_id": "concept:network-http",
+    "content": "HEAD 응답은 메시지 본문을 보내지 않으며 GET 응답과 같은 헤더 의미를 유지한다."
+  },
+  {
+    "document_id": "local:database-transaction",
+    "title": "PostgreSQL transactions",
+    "source_url": "https://www.postgresql.org/docs/current/glossary.html",
+    "category": "DATABASE",
+    "concept_id": "concept:database-transaction",
+    "content": "트랜잭션은 여러 데이터베이스 작업을 하나의 원자적 단위로 묶어 모두 반영하거나 모두 취소한다."
+  },
+  {
+    "document_id": "local:database-isolation",
+    "title": "PostgreSQL transaction isolation",
+    "source_url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "category": "DATABASE",
+    "concept_id": "concept:database-isolation",
+    "content": "READ COMMITTED에서는 각 명령이 시작할 때 새 스냅샷을 사용하므로 한 트랜잭션 안의 두 SELECT 결과가 달라질 수 있다."
+  },
+  {
+    "document_id": "local:database-index",
+    "title": "PostgreSQL index types",
+    "source_url": "https://www.postgresql.org/docs/current/indexes-types.html",
+    "category": "DATABASE",
+    "concept_id": "concept:database-index",
+    "content": "B-tree 인덱스는 정렬 가능한 데이터에 대한 동등 비교와 범위 비교 질의를 지원한다."
+  },
+  {
+    "document_id": "local:data-structure-stack",
+    "title": "Stack",
+    "source_url": "https://xlinux.nist.gov/dads/HTML/stack.html",
+    "category": "DATA_STRUCTURE",
+    "concept_id": "concept:data-structure-stack",
+    "content": "스택은 가장 최근에 추가된 항목을 먼저 제거하는 LIFO 자료구조다."
+  },
+  {
+    "document_id": "local:data-structure-queue",
+    "title": "Queue",
+    "source_url": "https://xlinux.nist.gov/dads/HTML/queue.html",
+    "category": "DATA_STRUCTURE",
+    "concept_id": "concept:data-structure-queue",
+    "content": "큐는 먼저 추가된 항목을 먼저 제거하는 FIFO 자료구조다."
+  },
+  {
+    "document_id": "local:algorithm-binary-search",
+    "title": "Binary search",
+    "source_url": "https://xlinux.nist.gov/dads/HTML/binarySearch.html",
+    "category": "ALGORITHM",
+    "concept_id": "concept:algorithm-binary-search",
+    "content": "이진 탐색은 정렬된 배열에서 중간 원소와 비교하며 탐색 구간을 반복해서 절반으로 줄인다."
+  },
+  {
+    "document_id": "local:algorithm-stable-sort",
+    "title": "Stable sort",
+    "source_url": "https://xlinux.nist.gov/dads/HTML/stable.html",
+    "category": "ALGORITHM",
+    "concept_id": "concept:algorithm-stable-sort",
+    "content": "안정 정렬은 키가 같은 원소들의 입력 상대 순서를 결과에서도 보존한다."
+  },
+  {
+    "document_id": "local:architecture-load-store",
+    "title": "RISC-V load-store architecture",
+    "source_url": "https://docs.riscv.org/reference/isa/unpriv/rv32.html",
+    "category": "COMPUTER_ARCHITECTURE",
+    "concept_id": "concept:architecture-load-store",
+    "content": "로드-스토어 구조에서는 load와 store만 메모리에 접근하고 산술 연산은 레지스터를 대상으로 수행한다."
+  },
+  {
+    "document_id": "local:architecture-branch",
+    "title": "RISC-V conditional branches",
+    "source_url": "https://docs.riscv.org/reference/isa/unpriv/rv32.html",
+    "category": "COMPUTER_ARCHITECTURE",
+    "concept_id": "concept:architecture-branch",
+    "content": "RISC-V의 BEQ 명령은 두 소스 레지스터 값이 같을 때 분기한다."
+  }
+]

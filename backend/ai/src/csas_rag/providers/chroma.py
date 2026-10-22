@@ -63,6 +63,15 @@ class ChromaVectorStore:
             metadatas=[self.metadata(chunk, index_version) for chunk in chunks],
         )
 
+    def has_chunks(self, chunk_ids: list[str]) -> bool:
+        if not chunk_ids:
+            return True
+        saved = self.collection.get(ids=chunk_ids, include=[])
+        return set(saved["ids"]) == set(chunk_ids)
+
+    def count(self) -> int:
+        return self.collection.count()
+
     def query(self, embedding: list[float], limit: int, where: dict | None = None) -> list[dict]:
         result = self.collection.query(
             query_embeddings=[embedding], n_results=limit, where=where, include=["documents", "metadatas", "distances"]

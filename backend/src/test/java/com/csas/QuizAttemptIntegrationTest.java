@@ -48,8 +48,7 @@ class QuizAttemptIntegrationTest extends HttpTestSupport {
     assertThat(submit(account.browser(), QUIZ, OTHER_QUIZ_OPTION, UUID.randomUUID()).status())
         .isEqualTo(400);
     assertThat(
-            submit(
-                    account.browser(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())
+            submit(account.browser(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())
                 .status())
         .isEqualTo(404);
 
@@ -148,8 +147,7 @@ class QuizAttemptIntegrationTest extends HttpTestSupport {
   private Account account() throws Exception {
     var browser = browser();
     browser.refreshCsrf();
-    var credentials =
-        Map.of("email", UUID.randomUUID() + "@example.com", "password", PASSWORD);
+    var credentials = Map.of("email", UUID.randomUUID() + "@example.com", "password", PASSWORD);
     var signup = browser.request("POST", "/api/v1/auth/signup", credentials, true);
     assertThat(signup.status()).isEqualTo(201);
     assertThat(browser.request("POST", "/api/v1/auth/login", credentials, true).status())

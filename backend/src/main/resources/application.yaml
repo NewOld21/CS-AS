@@ -59,3 +59,4 @@ csas:
     base-url: ${RAG_BASE_URL:http://127.0.0.1:8090}
     service-token: ${RAG_SERVICE_TOKEN:}
     active-index: ${RAG_ACTIVE_INDEX:cs-v1}
+    request-timeout-seconds: ${RAG_TIMEOUT_SECONDS:60}
