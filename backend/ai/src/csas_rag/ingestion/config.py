@@ -14,20 +14,46 @@ def load_registry(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if data["version"] not in (1, 2):
         raise ValueError("Unsupported registry version")
+    configured_defaults = data.get("defaults", {})
+    if not isinstance(configured_defaults, dict):
+        raise ValueError("Registry defaults must be an object")
+    defaults = {"max_retries": 3, "timeout_seconds": 15, **configured_defaults}
     sources = data["sources"]
     seen = set()
-    for s in sources:
+    for configured in sources:
+        if not isinstance(configured, dict):
+            raise ValueError("Registry sources must be objects")
+        s = {**defaults, **configured}
+        configured.clear()
+        configured.update(s)
         if not re.fullmatch(r"[a-z0-9-]+", s["id"]) or s["id"] in seen:
             raise ValueError("Invalid or duplicate source id")
+        if "ossu" in s["id"] or "ossu" in s.get("repository", "").lower():
+            raise ValueError("OSSU sources are outside the CS-AS collection scope")
         seen.add(s["id"])
         if s["kind"] not in ("github", "mediawiki", "official-docs"):
             raise ValueError("Unsupported source kind")
         if type(s["enabled"]) is not bool:
             raise ValueError("enabled must be boolean")
         for field, low, high in (("max_documents", 1, 10000), ("crawl_depth", 0, 5),
-                                 ("request_delay_ms", 0, 60000), ("priority", 0, 3)):
+                                 ("request_delay_ms", 0, 60000), ("max_retries", 0, 10),
+                                 ("timeout_seconds", 1, 120), ("priority", 0, 3)):
             if type(s.get(field)) is not int or not low <= s[field] <= high:
                 raise ValueError(f"Invalid {field}: {s['id']}")
+        if not isinstance(s.get("allowed_urls"), list) or not isinstance(s.get("request_urls"), list):
+            raise ValueError(f"Missing URL scopes: {s['id']}")
+        if s["kind"] == "github" and not (s.get("repository") and s.get("include_globs")):
+            raise ValueError(f"Incomplete GitHub source: {s['id']}")
+        if s["kind"] == "mediawiki":
+            if not s.get("endpoint") or s.get("language") not in ("ko", "en"):
+                raise ValueError(f"Incomplete MediaWiki source: {s['id']}")
+            if not isinstance(s.get("seed_titles"), list) or not isinstance(s.get("seed_categories"), list):
+                raise ValueError(f"Invalid MediaWiki seeds: {s['id']}")
+            if not isinstance(s.get("excluded_categories", []), list):
+                raise ValueError(f"Invalid MediaWiki exclusions: {s['id']}")
+        if s["kind"] == "official-docs":
+            if not s.get("base_url") or s.get("adapter") not in ("html", "markdown", "sitemap", "rfc", "github"):
+                raise ValueError(f"Incomplete official documentation source: {s['id']}")
         if s["enabled"]:
             require_approved(s)
     return sources

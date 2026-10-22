@@ -35,6 +35,8 @@ Status: implemented; POSIX common verification pending
 
 2026-10-22 C14 증거: 커밋 `9c12bfc`, 공통 `normalized.jsonl`·`chunks.jsonl` 원자 export 추가, Python 전체 29개 통과. 등록부 81개가 모두 pending이므로 라이브 문서 수집 0건을 유지했다.
 
+2026-10-22 C18: 등록부 v2에 공통 재시도·timeout 기본값을 추가하고 GitHub·한/영 MediaWiki·공식 문서별 필수 설정을 fail-closed 검증한다. OSSU ID·저장소 설정은 로더에서 거부한다. 저장소와 `data/`에서 기존 OSSU 수집 데이터는 발견되지 않았으며 어떤 데이터도 삭제하지 않았다.
+
 모의 결과:
 
 | 출처 | 신규 | 재수집 중복 | 변경 | 실패 | 정책 제외 |

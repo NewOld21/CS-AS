@@ -17,6 +17,7 @@ def fixture_source(kind="official-docs", language="en"):
               "license": "CC0-1.0 (synthetic fixture)", "attribution": "CSAS synthetic test authors",
               "language": language, "priority": 0, "max_documents": 10, "crawl_depth": 0,
               "request_delay_ms": 0, "version": "fixture-v1", "category": "operating-system",
+              "base_url": "https://example.org/docs/",
               "review": {"license_url": "https://example.org/license", "terms_url": "https://example.org/terms",
                          "robots_url": "https://example.org/robots.txt", "reviewed_at": "2026-10-21",
                          "body_storage_allowed": True}, "include_patterns": [], "exclude_patterns": [],

@@ -198,7 +198,19 @@ class IngestionTests(unittest.TestCase):
         sources = load_registry(path)
         self.assertGreaterEqual(len(sources), 80)
         self.assertFalse(any(s["enabled"] or s["usage_review"] != "pending" for s in sources))
-        self.assertNotIn("ossu", {s["id"] for s in sources})
+        self.assertFalse(any("ossu" in json.dumps(s).lower() for s in sources))
+        self.assertTrue(all((s["max_retries"], s["timeout_seconds"]) == (3, 15) for s in sources))
+        self.assertEqual({s["kind"] for s in sources}, {"github", "mediawiki", "official-docs"})
+
+    def test_registry_rejects_ossu_source(self):
+        path = self.root / "ossu.json"
+        source = fixture_source("github")
+        source["id"] = "ossu-courses"
+        path.write_text(json.dumps({"version": 2, "defaults": {"max_retries": 3,
+                                                                 "timeout_seconds": 15},
+                                    "sources": [source]}), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "outside"):
+            load_registry(path)
 
     def test_cli_pending_and_dry_run_do_not_create_catalog(self):
         path = Path(__file__).resolve().parents[3] / "docs/data-sources.json"

@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "defaults": {
+    "max_retries": 3,
+    "timeout_seconds": 15
+  },
   "sources": [
     {
       "id": "gyoogle",
@@ -52,7 +56,6 @@
       "kind": "mediawiki",
       "endpoint": "https://ko.wikipedia.org/w/api.php",
       "max_documents": 100,
-      "max_depth": 1,
       "usage_review": "pending",
       "enabled": false,
       "priority": 0,
@@ -89,6 +92,7 @@
         "클라우드 컴퓨팅"
       ],
       "seed_categories": [],
+      "excluded_categories": [],
       "allowed_urls": [
         "https://ko.wikipedia.org/wiki/"
       ],
@@ -137,6 +141,7 @@
         "Cloud computing"
       ],
       "seed_categories": [],
+      "excluded_categories": [],
       "allowed_urls": [
         "https://en.wikipedia.org/wiki/"
       ],
