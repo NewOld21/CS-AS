@@ -23,3 +23,8 @@
 ## 저장소 경계 (C02)
 
 [ADR 0004](../decisions/0004-stack.md)에 따라 ChromaDB HttpClient를 providers 어댑터 뒤에 둔다. PostgreSQL은 개념 ID 원장이며 Python이 사용자·풀이 테이블을 수정하지 않는다. collection은 인덱스 버전별로 분리하고 ID는 chunk_id, document는 청크 본문, metadata는 source_id/document_id/revision/locator/url/index_version과 JSON 직렬화한 검수 개념 연결을 담는다. 파일 manifest는 모델·차원·청크 설정·코퍼스 digest와 collection을 연결하며 검증 결과가 있어야 ACTIVE로 전환한다.
+
+manifest schema v2는 문서별 content hash와 chunk embedding key, indexed/last-seen 시각,
+마지막 동기화 통계를 추가한다. manifest와 실제 Chroma 문서 청크 ID가 다르면 동일 문서도 복구
+대상으로 분류한다. 부분 실패는 `last_run.failures`와 문서 `indexing_status`에 자격증명·응답 본문 없이
+기록한다.

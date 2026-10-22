@@ -54,14 +54,33 @@ class ChromaVectorStore:
         saved = self.collection.get(where={"document_id": document_id})
         current_ids = {chunk["chunk_id"] for chunk in chunks}
         stale = [identifier for identifier in saved["ids"] if identifier not in current_ids]
-        if stale:
-            self.collection.delete(ids=stale)
+        # Upsert before deleting old chunks: provider/store failure leaves the last known-good
+        # document searchable and a retry remains idempotent.
         self.collection.upsert(
             ids=[chunk["chunk_id"] for chunk in chunks],
             embeddings=embeddings,
             documents=[chunk["content"] for chunk in chunks],
             metadatas=[self.metadata(chunk, index_version) for chunk in chunks],
         )
+        if stale:
+            self.collection.delete(ids=stale)
+
+    def document_chunk_ids(self, document_id: str) -> list[str]:
+        return list(self.collection.get(where={"document_id": document_id}, include=[])["ids"])
+
+    def get_embeddings(self, chunk_ids: list[str]) -> dict[str, list[float]]:
+        if not chunk_ids:
+            return {}
+        saved = self.collection.get(ids=chunk_ids, include=["embeddings"])
+        embeddings = saved.get("embeddings")
+        if embeddings is None:
+            return {}
+        return {identifier: list(vector) for identifier, vector in zip(saved["ids"], embeddings)}
+
+    def remove_document(self, document_id: str) -> None:
+        ids = self.document_chunk_ids(document_id)
+        if ids:
+            self.collection.delete(ids=ids)
 
     def has_chunks(self, chunk_ids: list[str]) -> bool:
         if not chunk_ids:

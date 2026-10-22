@@ -68,3 +68,17 @@ HTTP 429/500/502/503/504와 네트워크/timeout만 지수 backoff와 0~0.5초 j
 명령은 [수집 실행 안내](../runbooks/ingestion.md), 증거는 [완료된 008 계획](../exec-plans/completed/008-data-ingestion.md)을 따른다. 모의 샘플은 라이브 본문 수집 성공으로 보고하지 않는다.
 
 ChromaDB 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 실코퍼스 임베딩과 Chroma ACTIVE 전환은 완료했으며 PostgreSQL 원장 자동 동기화·Graph 연결은 수행하지 않는다.
+
+## 증분 인덱싱 (C21)
+
+`scripts/rag_index.py --mode incremental`은 인덱스 manifest v2의 문서별 `content_hash`, source revision,
+chunk ID/content hash, 청킹 버전, 임베딩 모델·차원, index version을 현재 JSONL·Chroma 상태와 비교한다.
+동일 문서는 임베딩과 upsert를 생략하고 수정 문서 안에서도 동일 `embedding_key` 청크의 기존 벡터를
+재사용한다. 새 청크 upsert 성공 뒤에만 이전 청크를 제거하며 실패 시 마지막 정상 청크와 manifest
+레코드를 유지해 다음 실행에서 재시도한다.
+
+삭제는 완전 수집을 확인한 출처를 `--complete-source <source_id>`로 명시한 경우만 수행한다.
+문서 상한·샘플·부분 category 탐색·실패가 있는 수집 결과에는 이 옵션을 사용하지 않는다.
+`--dry-run`은 NEW/MODIFIED/UNCHANGED/DELETED와 대상 ID만 계산하고 임베딩·Chroma·manifest를
+변경하지 않는다. 모델·차원 또는 청킹 설정 변경은 재처리 대상이며, Chroma 차원이 바뀌면 새
+index version/collection을 사용한다.

@@ -1,5 +1,7 @@
 # Current task
 
+현재 작업: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/active/016-c21-c23-operational-rag.md). C21 증분 인덱싱, C22 실제 코퍼스 20문항 검색 평가, C23 사용자별 대화 조회·복원·장애/멱등 처리를 각각 검증하고 별도 커밋한다.
+
 최신 완료 마일스톤: [015 승인 출처 라이브 코퍼스와 Docker RAG 전환](exec-plans/completed/015-approved-live-corpus.md). 5개 승인 출처에서 36문서/794 staging 청크를 수집하고 `text-embedding-3-small` 기반 1,024청크 `csas-live-20261023-v4`를 ACTIVE로 전환했다. 5개 검색 probe와 Vue→Spring→Python→Chroma/GMS 퀴즈 오답 E2E가 통과했으며 Docker 전체 스택이 이 인덱스를 사용한다. 다음은 C21 증분 인덱싱과 C22 15~20문항 검색 평가다.
 
 최신 완료 마일스톤: [014 GMS 라이브 RAG 검증](exec-plans/completed/014-gms-live-rag-validation.md). Docker 전체 스택에서 `backend/.env`를 통해 GMS `text-embedding-3-large`(3072차원)와 `gpt-5-mini`를 실제 호출하고 Chroma 적재·검색·인용·근거 부족 및 Vue→Spring→Python 퀴즈 AS E2E를 확인했다. 등록부 81개는 모두 승인 대기라 실제 수집/JSONL은 0건이며, 별도 `csas-gms-live-dev-v1`의 15 fixture 청크를 운영 코퍼스와 구분한다. Python 54개(실제 Chroma 포함)와 Vue 10개가 통과했다.
