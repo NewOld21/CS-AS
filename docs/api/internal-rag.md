@@ -1,6 +1,6 @@
 # 내부 RAG HTTP 계약
 
-상태: 구현 전 제안. Spring Boot → Python 전용이며 공개 API가 아니다. 버전 고정·DTO·timeout·서비스 인증 검사는 [002 계획](../exec-plans/active/002-service-bootstrap.md)에서 구현한다.
+상태: `/internal/v1/answers`와 Spring 클라이언트 구현. `/internal/v1/quiz-candidates`는 제안 상태다. Spring Boot → Python 전용이며 공개 API가 아니다. 답변 경로는 버전·DTO·deadline·서비스 Bearer 인증과 오류 변환을 검사한다.
 
 ## 공통
 

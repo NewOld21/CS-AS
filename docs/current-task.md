@@ -1,6 +1,6 @@
 # Current task
 
-최신 완료 마일스톤: [004 핵심 학습](exec-plans/active/004-core-learning.md)의 C09~C13 정적 문제 은행 구간. 인증 회귀, V3~V5 개념/퀴즈/선택지/시도 스키마, 공식 문서로 검수한 15문항, 인증된 카테고리·목록·상세, 서버 채점과 사용자 범위 DB 멱등성을 구현했다. PostgreSQL 통합 테스트 32개 범위와 Checkstyle을 통과했다. 004의 review_states·대화/Vector RAG가 남아 있어 계획은 active다.
+최신 완료 마일스톤: [013 C14~C17 Vector 학습 루프](exec-plans/completed/013-c14-c17-vector-learning-loop.md). 수집 JSONL, 구조 청킹·Chroma 인덱스, 근거 답변 내부 API, Spring 문맥 대화와 Vue 퀴즈·AS 화면을 구현했다. Python 41개, 실제 Chroma 통합 1개, Spring/PostgreSQL 35개, Vue 단위 10개와 Playwright UI 8개가 통과했다. 전체 출처 81개가 승인 대기라 실제 문서·운영 청크·외부 LLM 호출은 0이며 ACTIVE 인덱스 품질 평가는 후속이다.
 
 최신 완료: [012 레퍼런스 기반 UI](exec-plans/completed/012-reference-ui.md). 실제 Chrome 레퍼런스 관찰 후 독자적 CS 궤도 지도·Vue 랜딩·인증·본인 계정을 구현했다. 프론트 전체 검사·단위 8개·실제 API 포함 Chrome E2E 8개·Linux 공통 검사를 통과했다. 퀴즈/챗봇/학습 마이페이지는 미구현 상태를 유지하며 [디자인 시스템](design/ui-system.md)에 후속 계획만 기록한다. backend API/DB/인증/RAG는 변경하지 않았다. 다음은 기존 002의 나머지 기반과 004/005 학습 기능이다.
 
@@ -8,9 +8,9 @@
 
 이전 완료: [009 C02 아키텍처](exec-plans/completed/009-c02-architecture.md), [010 C03 로컬 DB](exec-plans/completed/010-c03-local-db.md). ADR 0004에 따라 PostgreSQL 서비스 DB + ChromaDB 검색 저장소, Spring Security 쿠키 세션을 채택했다. 두 DB의 실제 연결·검색과 restart/down-up 영속성, Linux 공통 검사 19개가 통과했다. 아래 008 수집 작업의 미완료 상태는 유지한다.
 
-현재 추가 작업: [008 CS 데이터 수집](exec-plans/active/008-data-ingestion.md). 오프라인 수집 CLI·출처 81개 등록·모의 샘플·독립 테스트 28개를 구현/검증했다. 전체 출처는 승인 대기·비활성이다. Windows fcntl 부재로 POSIX 공통 검증은 미완료이며 계획을 active에 유지한다. 기존 서비스 bootstrap은 후속이다.
+현재 추가 작업: [008 CS 데이터 수집](exec-plans/active/008-data-ingestion.md). 오프라인 수집 CLI·출처 81개 등록·JSONL export·모의 샘플을 구현/검증했다. 전체 출처는 승인 대기·비활성이므로 계획은 active에 유지한다.
 
-다음 작업: [002 서비스 bootstrap](exec-plans/active/002-service-bootstrap.md) — Java/DB/인증 일부 선행 완료, Vue·Python HTTP·내부 통신·하네스 등록은 미착수.
+다음 작업: 출처 이용조건 승인과 소량 실코퍼스 수집 → 실제 임베딩/검색 평가 → ACTIVE 인덱스 전환. 이어서 대화 GET 복원, review_states·학습 이력과 [005](exec-plans/active/005-complete-learning-loop.md)의 관련 문제 생성을 진행한다.
 
 - 최신 완료: [007 문서 이름·참조 정리](exec-plans/completed/007-document-naming.md). 주 문서를 00~14로 구성하고 링크·진입점·검사·보호 경로를 갱신했다.
 - 기준: [PRD](01_PRD.md), [ADR 0003](13_PHASE0_DECISIONS.md), [ADR 0004](decisions/0004-stack.md). 22시간 제한 없이 학습 루프 전체가 1차 목표다.

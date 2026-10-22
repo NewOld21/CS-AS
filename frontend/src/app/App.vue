@@ -44,7 +44,8 @@ watch(
       >
         <RouterLink to="/#explore">학습 지도</RouterLink
         ><RouterLink to="/#journey">학습 여정</RouterLink>
-        <span class="nav-divider" aria-hidden="true"></span
+        <RouterLink v-if="auth.user" to="/learn">퀴즈 · AS</RouterLink
+        ><span class="nav-divider" aria-hidden="true"></span
         ><RouterLink v-if="auth.user" to="/account">내 계정</RouterLink
         ><RouterLink v-else to="/login">로그인</RouterLink
         ><RouterLink to="/signup" class="nav-join"

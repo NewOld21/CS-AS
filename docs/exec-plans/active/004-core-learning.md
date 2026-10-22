@@ -1,6 +1,6 @@
 # 004 인증·퀴즈·학습 기록·Vector RAG
 
-Status: in progress — C09~C13 curated quiz milestone implemented
+Status: in progress — C09~C17 quiz, Vector RAG and contextual chat path implemented
 
 ## 목표·범위
 - FR-01~07: 로그인한 사용자가 퀴즈를 풀고 결과를 보존하며, 그 문맥으로 AS에게 질문한다.
@@ -27,3 +27,5 @@ Status: in progress — C09~C13 curated quiz milestone implemented
 ## 검증·인계
 기준: [testing](../../09_TEST_SCENARIO.md), 계약: [OpenAPI](../../api/openapi.yaml), 설계: [learning](../../domain/learning.md).
 C09~C13 증거(2026-10-22): PostgreSQL 17.9 전용 tmpfs DB에서 인증 17개, 스키마 3개, 시드 3개, 조회 4개, 채점/멱등성 5개 통합 테스트를 통과했다. Checkstyle main/test도 통과했다. 전체 `check bootJar`는 기존 CRLF 파일에 대한 Spotless 위반 때문에 테스트 전에 중단되어 최종 인계에 구분 기록한다. review_states·대화/RAG·하네스 등록은 아직 미구현이므로 이 계획은 active에 유지한다. 다음은 이 계획의 남은 범위이며, 이후 [005](005-complete-learning-loop.md)로 진행한다.
+
+C14~C17 증거(2026-10-22): [013 완료 계획](../completed/013-c14-c17-vector-learning-loop.md)의 수집 JSONL·Chroma 인덱스·내부 답변·풀이 문맥 대화 경로와 검증 결과를 따른다. 대화 생성/질문 POST는 구현했으나 대화 GET 복원, review_states·통계·실코퍼스 평가는 남아 있어 이 계획은 active다.

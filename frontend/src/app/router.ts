@@ -20,6 +20,11 @@ export const router = createRouter({
       meta: { title: '내 계정' },
     },
     {
+      path: '/learn',
+      component: () => import('../domains/quiz/QuizPage.vue'),
+      meta: { title: 'CS 퀴즈와 AS' },
+    },
+    {
       path: '/:pathMatch(.*)*',
       component: () => import('./pages/NotFoundPage.vue'),
       meta: { title: '페이지를 찾을 수 없어요' },

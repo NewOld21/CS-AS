@@ -34,12 +34,16 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
     clearTimeout(timeout)
   }
 }
-export async function post<T>(path: string, body?: unknown): Promise<T> {
+export async function post<T>(
+  path: string,
+  body?: unknown,
+  headers: Record<string, string> = {},
+): Promise<T> {
   if (!csrf) csrf = (await request<{ token: string }>('/auth/csrf')).token
   try {
     return await request<T>(path, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, ...headers },
       body: body === undefined ? undefined : JSON.stringify(body),
     })
   } catch (error) {

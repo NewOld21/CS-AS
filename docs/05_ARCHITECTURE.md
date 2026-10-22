@@ -1,6 +1,6 @@
 # 05. ARCHITECTURE — 서비스·프로젝트 구조
 
-상태: C04~C07 Java migration·health·인증 API는 구현했다. Vue 소개·인증 UI도 012에서 구현했다. 학습·Python HTTP는 후속 설계다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB는 확정했다. Java 버전과 검사·실행은 [개발 안내](development.md), 나머지는 bootstrap에서 고정한다. 아래 추가 경로는 생성할 모듈 설계이며, 모든 폴더가 이미 존재한다는 뜻은 아니다.
+상태: C04~C13의 인증·정적 퀴즈·채점에 이어 C14~C17의 수집 JSONL, 버전별 Chroma 인덱싱, Python 내부 답변 API, Spring 대화 저장/문맥 복원, Vue 퀴즈·AS 화면을 구현했다. 실제 승인 코퍼스·ACTIVE 인덱스·외부 모델 자격증명은 아직 공급하지 않았으므로 운영 RAG 활성화와 품질 평가는 남아 있다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB 경계는 유지한다.
 
 ## 서비스 경계
 

@@ -9,7 +9,7 @@ Status: implemented; POSIX common verification pending
 - 원본/정제본/메타데이터, 불변 리비전·청크, 증분·중복·부분 실패 재시도 검증.
 - 출처 등록부 확장, OSSU 현재 수집 정책에서 제거. 승인 대기·비활성 유지.
 - 모의 API 샘플과 단위 검사, 공통 verify 실행 결과·환경 제약 기록.
-- PostgreSQL + ChromaDB와 Graph 투영은 후속. 서비스 bootstrap 또는 하네스 검증 정책 변경은 범위 밖.
+- ChromaDB 인덱싱 경로는 C15에서 구현했다. 승인 코퍼스 적재와 Graph 투영은 후속이며 서비스 PostgreSQL을 수집 staging으로 사용하지 않는다.
 
 ## Baseline
 
@@ -32,6 +32,8 @@ Status: implemented; POSIX common verification pending
 | python -X utf8 backend/ai/tests/sample_ingestion.py --output data/processed/ingestion-sample-v1 | 아래 모의 샘플 저장·재수집 성공 |
 | python -X utf8 scripts/ingest.py collect --priority 0 --sample --dry-run | P0 10개 출처 승인 게이트 제외, 문서·네트워크·쓰기 0 |
 | CLI collect --sample 전체 실행 | 81개 출처 승인 게이트 제외, 문서·실패 0, catalog 생성 없음 |
+
+2026-10-22 C14 증거: 커밋 `9c12bfc`, 공통 `normalized.jsonl`·`chunks.jsonl` 원자 export 추가, Python 전체 29개 통과. 등록부 81개가 모두 pending이므로 라이브 문서 수집 0건을 유지했다.
 
 모의 결과:
 

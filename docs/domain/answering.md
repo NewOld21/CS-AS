@@ -1,6 +1,6 @@
 # 질문·답변 도메인
 
-상태: 1차 개발 설계 제안, 미구현. 공개 필드 기준은 [API 계약](../api/openapi.yaml), 내부 문맥은 [RAG 계약](../api/internal-rag.md)이다.
+상태: Python 검색→생성→인용 ID 검증과 인증된 내부 HTTP, Spring 풀이 문맥 복원·대화/인용 저장, Vue 퀴즈 연계 AS 패널 구현. 공개 필드 기준은 [API 계약](../api/openapi.yaml), 내부 문맥은 [RAG 계약](../api/internal-rag.md)이다. 대화 GET 복원과 외부 모델 실평가는 후속이다.
 Spring Boot는 질문 입력 검증과 요청 ID·timeout·오류 변환을 담당한다.
 Python은 검색 증거를 바탕으로 답변을 생성하고 출처를 검증한다.
 Vue는 질문·로딩·답변·근거 부족·오류·출처를 표시한다.

@@ -22,6 +22,9 @@ export function errorMessage(error: unknown) {
     NETWORK_ERROR: '서버에 연결할 수 없어요. 연결 상태를 확인한 뒤 다시 시도해 주세요.',
     TIMEOUT: '응답이 늦어지고 있어요. 잠시 후 다시 시도해 주세요.',
     RATE_LIMITED: '요청이 잠시 몰렸어요. 잠시 후 다시 시도해 주세요.',
+    RAG_FAILED: 'AS가 근거를 확인하지 못했어요. 답변은 저장되지 않았습니다.',
+    RAG_UNAVAILABLE: 'AS가 아직 연결되지 않았어요. 퀴즈와 해설은 계속 이용할 수 있습니다.',
+    RAG_TIMEOUT: 'AS의 문서 검색이 늦어지고 있어요. 잠시 후 다시 질문해 주세요.',
   }
   return messages[error.code] ?? '요청을 완료하지 못했어요. 잠시 후 다시 시도해 주세요.'
 }

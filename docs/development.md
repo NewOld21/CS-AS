@@ -1,6 +1,6 @@
 # Development
 
-## Vue 로컬 UI (012)
+## Vue 로컬 UI (012, C17)
 
 Node 22.12+(검증 24.18.0)/npm, 설치는 frontend/에서 `npm ci`다. 버전은 package.json/package-lock.json으로 고정한다. 루트 공통 명령:
 
@@ -21,9 +21,9 @@ docker compose -f compose.backend-test.yaml run --rm -d --name csas-ui-auth-chec
 docker stop csas-ui-auth-check
 ```
 
-Playwright는 기본 설치된 Chrome을 사용한다. 다른 환경에서는 `PLAYWRIGHT_CHANNEL=chromium` 및 해당 Playwright 브라우저 설치를 사용한다. 실제 API E2E는 CSAS_E2E_API가 없으면 명시적으로 skip하므로 일반 7개 UI 검사만으로 인증 연결 성공을 보고하지 않는다. 012에서는 해당 값을 지정해 실제 API 포함 **8개 모두 실행**했다. UI 오류 fixture는 실제 API 회귀 검사와 구분한다. 결과·스크린샷은 Git 제외 reports/ui-qa/에 저장한다.
+Playwright는 기본 설치된 Chrome을 사용한다. 다른 환경에서는 `PLAYWRIGHT_CHANNEL=chromium` 및 해당 Playwright 브라우저 설치를 사용한다. 실제 API E2E는 CSAS_E2E_API가 없으면 명시적으로 skip한다. C17의 fixture 브라우저 검사는 퀴즈→채점→문맥 세션→답변/출처 UI를 재현하며, Spring/PostgreSQL 문맥·저장은 별도 통합 검사로 검증한다. UI fixture를 외부 LLM/실제 코퍼스 성공으로 보고하지 않는다. 결과·스크린샷은 Git 제외 reports/ui-qa/에 저장한다.
 
-## Java backend (C04~C13)
+## Java backend (C04~C17)
 
 호스트 실행은 JDK 21과 backend/의 Gradle Wrapper 8.14.3을 사용한다. Spring Boot 3.5.16, Flyway와 PostgreSQL 드라이버는 BOM 및 gradle.lockfile로 고정한다. `DB_URL`, `DB_USER`, `DB_PASSWORD`를 지정하고 `cd backend && ./gradlew bootRun`으로 실행한다. Windows는 `gradlew.bat`을 사용한다. `.env` 파일을 Spring이 자동 로드하지 않으며 backend의 기존 AI 공급자 환경 파일도 읽지 않는다.
 
@@ -66,7 +66,7 @@ python3 scripts/task.py handoff --state-dir /tmp/csas-run
 
 ## 서비스 생성 때 결정할 항목
 
-Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 표준 라이브러리만 사용하며 HTTP 서비스·LangChain bootstrap은 후속이다.
+Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 승인 수집 후 `python3 scripts/rag_index.py --index-version <version>`으로 BUILDING Chroma 인덱스를 만들며, 통과한 검색 평가 JSON을 `--activate-evaluation`으로 명시해야 ACTIVE가 된다. `RAG_SERVICE_TOKEN`과 공급자 환경변수를 주입한 뒤 `python3 scripts/rag_service.py --manifest <active-manifest>`로 loopback 내부 API를 실행한다. 결정론 임베딩은 테스트 전용이고 실제 인덱스에는 사용하지 않는다.
 스택과 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md)으로 확정했다. 아래는 버전·실행 설정 결정 항목이며, 22시간 제한은 적용하지 않는다.
 - JDK·Spring Boot·Gradle Wrapper와 포맷·정적 분석 플러그인
 - Node·Vue·TypeScript·패키지 매니저·lockfile

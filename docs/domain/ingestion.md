@@ -1,6 +1,6 @@
 # 문서 수집 도메인
 
-상태: Python 표준 라이브러리 기반 오프라인 수집·파일 staging 구현. ChromaDB 적재와 실제 출처 본문 검증은 후속이다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. OSSU는 등록부·수집 계획에서 제외하며 이전 결정·완료 기록은 보존한다.
+상태: Python 표준 라이브러리 기반 오프라인 수집·파일 staging과 공통 `normalized.jsonl`/`chunks.jsonl` export 구현. ChromaDB 적재기는 별도 indexing 계층에 구현했으며 실제 출처 본문 승인·검증은 후속이다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. OSSU는 등록부·수집 계획에서 제외하며 이전 결정·완료 기록은 보존한다.
 
 ## 승인 및 설정
 

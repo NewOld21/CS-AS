@@ -1,6 +1,6 @@
 # 검색 도메인
 
-상태: 1차 개발 설계 제안, 미구현.
+상태: 구조 청킹·임베딩 공급자·버전별 ChromaDB 적재/검색·manifest 활성화 gate 구현. 승인 코퍼스 20문항 Top 5 평가는 미실행이다.
 입력은 검증된 CS 질문과 사용할 인덱스 버전, 선택적 concept_ids·서버가 확인한 문제 문맥이다.
 질문 임베딩 → 벡터 검색 → 메타데이터 필터 → 제한된 청크 선택 → 검색 증거를 반환한다.
 
@@ -18,4 +18,4 @@
 
 ## 저장소 경계 (C02)
 
-[ADR 0004](../decisions/0004-stack.md)에 따라 ChromaDB HttpClient를 providers 어댑터 뒤에 둔다. PostgreSQL은 개념 ID 원장이며 Python이 사용자·풀이 테이블을 수정하지 않는다. collection은 인덱스 버전별로 분리하고 ID는 chunk_id, document는 청크 본문, metadata는 source_id/document_id/revision/locator/url/index_version과 검수 개념 연결을 담는다. 복수 개념은 버전 고정 SDK의 지원 타입을 확인해 필터 스키마로 정의한다. 파일 manifest는 모델·차원·청크 설정·코퍼스 digest와 활성 컬렉션을 연결한다. 검색·적재 어댑터는 후속이며 이번 로컬 smoke는 고정 테스트 벡터만 사용한다.
+[ADR 0004](../decisions/0004-stack.md)에 따라 ChromaDB HttpClient를 providers 어댑터 뒤에 둔다. PostgreSQL은 개념 ID 원장이며 Python이 사용자·풀이 테이블을 수정하지 않는다. collection은 인덱스 버전별로 분리하고 ID는 chunk_id, document는 청크 본문, metadata는 source_id/document_id/revision/locator/url/index_version과 JSON 직렬화한 검수 개념 연결을 담는다. 파일 manifest는 모델·차원·청크 설정·코퍼스 digest와 collection을 연결하며 검증 결과가 있어야 ACTIVE로 전환한다.

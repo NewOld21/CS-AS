@@ -1,8 +1,8 @@
 # 06. ERD — 데이터 모델과 관계
 
-상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5)는 구현했다. review_states와 대화·생성·검색 모델은 논리 설계 제안이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
+상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5), chat_sessions·chat_messages·message_citations(V6)를 구현했다. review_states와 생성 모델은 논리 설계 제안이며, 문서·청크·임베딩은 파일 manifest와 ChromaDB가 관리한다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
-현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. ChromaDB 검색 인덱스 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
+현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. 버전별 ChromaDB BUILDING 인덱스 적재·검색 어댑터도 구현했지만 승인 코퍼스 평가 전 ACTIVE로 전환하지 않는다.
 
 ## 저장소 책임
 

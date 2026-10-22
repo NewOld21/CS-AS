@@ -54,3 +54,8 @@ management:
 logging:
   level:
     org.springframework.boot.actuate.jdbc: ERROR
+csas:
+  rag:
+    base-url: ${RAG_BASE_URL:http://127.0.0.1:8090}
+    service-token: ${RAG_SERVICE_TOKEN:}
+    active-index: ${RAG_ACTIVE_INDEX:cs-v1}

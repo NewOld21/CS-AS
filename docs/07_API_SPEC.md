@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05~C07의 인증 API와 C12~C13의 카테고리·READY 문제 조회·서버 채점/시도 저장 API를 구현했다. 대화·생성·me 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`, C05~C07의 인증 API, C12~C13의 카테고리·READY 문제 조회·서버 채점/시도 저장, C17의 대화 생성·질문 API를 구현했다. 대화 목록/복원 GET과 생성·me 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
@@ -18,7 +18,7 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 
 로그아웃은 인증과 새 CSRF가 있는 POST만 허용하며 204를 반환한다. 서버 세션 무효화·SecurityContext 제거·CSAS_SESSION 쿠키 만료를 수행한다. 이전 쿠키 재사용과 중복 로그아웃은 401이다. 익명 학습 요청은 POST에 CSRF가 없어도 401이며 공개 가입/로그인의 CSRF 실패와 인증된 요청의 CSRF 실패는 403 CSRF_INVALID다. 역할 부족은 403 ACCESS_DENIED, 타인 개인 리소스는 404다. 오류의 request_id는 서버에서 발급하고 X-Request-Id 응답 헤더와 일치시킨다.
 
-구현된 퀴즈 경로는 세션 사용자 범위에서 CURATED 또는 본인 소유 READY 문제만 조회한다. 답안 제출의 user_id는 세션에서만 얻고 선택지 소속과 문제 상태를 서버가 확인한다. 아직 구현하지 않은 대화·생성·me 경로는 익명 401/인증 후 404이며 빈 성공 응답을 꾸미지 않는다.
+구현된 퀴즈 경로는 세션 사용자 범위에서 CURATED 또는 본인 소유 READY 문제만 조회한다. 답안 제출의 user_id는 세션에서만 얻고 선택지 소속과 문제 상태를 서버가 확인한다. 대화 POST는 본인 attempt와 quiz의 일치를 확인하고 DB에서 문제·선택지·채점 문맥을 복원한다. Python에는 사용자 쿠키/식별정보를 전달하지 않으며 인용은 검색 결과 집합에서 다시 검증해 snapshot으로 저장한다. 아직 구현하지 않은 생성·me 및 대화 GET 경로는 익명 401/인증 후 404다.
 
 아래 경로에 `/api/v1` 접두사를 붙인다.
 

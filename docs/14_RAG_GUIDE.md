@@ -1,6 +1,6 @@
 # 14. RAG GUIDE — Vector RAG·Graph 확장 가이드
 
-상태: 1차 Vector RAG 설계 제안 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
+상태: 1차 Vector RAG 코드 경로 구현 / 승인 코퍼스·모델 실평가 대기 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
 
 ```mermaid
 flowchart LR
@@ -25,6 +25,8 @@ flowchart LR
 5. 재수집은 동일 키를 upsert하며 기존 인용의 문서 리비전과 위치를 유지한다.
 
 수집 세부 계약은 [ingestion](domain/ingestion.md), 실행은 [수집 안내](runbooks/ingestion.md)를 따른다. GitHub/한·영 Wikipedia/공식 문서 adapter와 원본·정제본·청크 staging, manifest가 구현되어 있다. OSSU는 수집 대상에서 제외했다. 81개 출처는 모두 pending·비활성이며 라이브 본문 수집은 미수행이다. 모의 샘플은 실제 코퍼스·검색 품질 증거와 구분한다.
+
+C14~C16은 `normalized.jsonl`·`chunks.jsonl`, Markdown 구조 청킹, OpenAI 호환 임베딩/답변 공급자, 결정론 테스트 임베딩, 버전별 Chroma collection, BUILDING→평가→ACTIVE gate와 `/internal/v1/answers`를 구현했다. 결정론 임베딩은 테스트 전용이며 운영 인덱스에 사용하지 않는다.
 
 ## 2. 문제에서 질문까지
 

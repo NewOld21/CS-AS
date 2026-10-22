@@ -99,3 +99,92 @@ test('account distinguishes offline loading from login expiry and renders no fak
   await page.getByRole('button', { name: '다시 불러오기' }).click()
   await expect(page).toHaveURL(/\/login$/)
 })
+
+test('quiz submission opens an owned contextual AS chat and renders trusted sources', async ({
+  page,
+}) => {
+  const quiz = {
+    id: 'quiz-1',
+    version: 1,
+    stem: '데이터베이스 인덱스의 단점은?',
+    category: 'DATABASE',
+    difficulty: 'EASY',
+    origin: 'CURATED',
+    concept_ids: ['concept:database-index'],
+    options: [
+      { id: 'option-1', position: 0, text: '쓰기 유지 비용이 든다' },
+      { id: 'option-2', position: 1, text: '항상 저장 공간을 줄인다' },
+    ],
+  }
+  await page.route('**/api/v1/auth/me', (route) =>
+    route.fulfill({ json: { id: 'user-1', email: 'learner@example.com', nickname: '탐험가' } }),
+  )
+  await page.route('**/api/v1/auth/csrf', (route) => route.fulfill({ json: { token: 'csrf' } }))
+  await page.route('**/api/v1/quiz/categories', (route) =>
+    route.fulfill({ json: [{ id: 'DATABASE', name: '데이터베이스', quiz_count: 1 }] }),
+  )
+  await page.route('**/api/v1/quizzes?*', (route) =>
+    route.fulfill({ json: { items: [quiz], next_cursor: null } }),
+  )
+  await page.route('**/api/v1/quizzes/quiz-1/attempts', async (route) => {
+    expect(route.request().postDataJSON()).toEqual({ selected_option_id: 'option-2' })
+    expect(route.request().headers()['idempotency-key']).toBeTruthy()
+    await route.fulfill({
+      json: {
+        id: 'attempt-1',
+        quiz,
+        selected_option_id: 'option-2',
+        correct_option_id: 'option-1',
+        is_correct: false,
+        explanation: '인덱스는 쓰기 시 함께 갱신해야 합니다.',
+        sources: [],
+        submitted_at: '2026-10-22T00:00:00Z',
+      },
+    })
+  })
+  await page.route('**/api/v1/chat/sessions', async (route) => {
+    expect(route.request().postDataJSON()).toEqual({ quiz_id: 'quiz-1', attempt_id: 'attempt-1' })
+    await route.fulfill({
+      json: {
+        id: 'chat-1',
+        quiz_id: 'quiz-1',
+        attempt_id: 'attempt-1',
+        created_at: '2026-10-22T00:00:00Z',
+      },
+    })
+  })
+  await page.route('**/api/v1/chat/sessions/chat-1/messages', (route) =>
+    route.fulfill({
+      json: {
+        request_id: 'req-1',
+        message_id: 'message-1',
+        status: 'answered',
+        answer: '인덱스는 읽기를 빠르게 하지만 쓰기 때 유지 비용이 듭니다.',
+        sources: [
+          {
+            source_id: 'postgres',
+            document_id: 'doc-1',
+            revision: '18',
+            chunk_id: 'chunk-1',
+            index_version: 'cs-v1',
+            title: 'PostgreSQL Indexes',
+            url: 'https://www.postgresql.org/docs/current/indexes.html',
+            locator: '11.1',
+          },
+        ],
+        concept_ids: ['concept:database-index'],
+      },
+    }),
+  )
+  await page.goto('/learn')
+  await page.getByText('항상 저장 공간을 줄인다').click()
+  await page.getByRole('button', { name: '답안 제출' }).click()
+  await expect(page.getByText('다시 연결해 볼 지점이에요.')).toBeVisible()
+  await page.getByRole('button', { name: 'AS에게 질문하기' }).click()
+  await page.getByRole('button', { name: '질문 보내기' }).click()
+  await expect(page.getByText('인덱스는 읽기를 빠르게 하지만')).toBeVisible()
+  await expect(page.getByRole('link', { name: /PostgreSQL Indexes/ })).toHaveAttribute(
+    'href',
+    'https://www.postgresql.org/docs/current/indexes.html',
+  )
+})

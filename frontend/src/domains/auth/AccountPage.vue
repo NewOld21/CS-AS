@@ -62,12 +62,9 @@ onMounted(load)
       </section>
       <section class="account-next">
         <span class="eyebrow">NEXT CHAPTER</span>
-        <h2>학습 기록이 쌓일 공간을 준비하고 있어요.</h2>
-        <p>
-          퀴즈, AI 질문, 오답 복습은 아직 준비 중입니다.<br />지금은 계정 기능을 이용하고, 학습
-          지도에서 CS 분야를 살펴볼 수 있어요.
-        </p>
-        <RouterLink to="/#explore" class="button button--primary">학습 지도 살펴보기 ↗</RouterLink>
+        <h2>퀴즈에서 발견한 빈틈을 바로 질문해 보세요.</h2>
+        <p>분야를 고르고 문제를 푼 뒤, 왜 틀렸는지 출처가 있는 답변으로 확인할 수 있어요.</p>
+        <RouterLink to="/learn" class="button button--primary">퀴즈 시작하기 ↗</RouterLink>
       </section></template
     >
   </main>
