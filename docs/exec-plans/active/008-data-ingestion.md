@@ -37,6 +37,8 @@ Status: implemented; POSIX common verification pending
 
 2026-10-22 C18: 등록부 v2에 공통 재시도·timeout 기본값을 추가하고 GitHub·한/영 MediaWiki·공식 문서별 필수 설정을 fail-closed 검증한다. OSSU ID·저장소 설정은 로더에서 거부한다. 저장소와 `data/`에서 기존 OSSU 수집 데이터는 발견되지 않았으며 어떤 데이터도 삭제하지 않았다.
 
+2026-10-22 C19: 한/영 Wikipedia의 categorymembers continuation·BFS·깊이/건수/제외 category를 구현했다. SQLite discovery_states에 run ID, queue/cursor, 방문 category, 처리 문서 ID, 마지막 성공과 실패 위치를 저장한다. HTTP transport는 설정 timeout, 429/5xx/네트워크 제한 재시도, 지수 backoff+jitter와 Retry-After를 적용하고 다른 4xx는 재시도하지 않는다. 공식 MediaWiki categorymembers/continuation/API etiquette/rate-limit 문서를 기준으로 `maxlag=5`와 식별 User-Agent를 적용했다.
+
 모의 결과:
 
 | 출처 | 신규 | 재수집 중복 | 변경 | 실패 | 정책 제외 |

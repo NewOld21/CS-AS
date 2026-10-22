@@ -3,9 +3,11 @@ import io
 import json
 import tempfile
 import unittest
+from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
+from urllib.parse import parse_qs, urlsplit
 
 from support import COMMIT, FIXTURES, FixtureClient, fixture_factory, fixture_source
 from csas_rag.ingestion.cli import main
@@ -173,11 +175,57 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual((result["excluded_policy"], result["success"]), (1, 0))
 
     def test_http_retries_are_bounded(self):
-        client = Client(fixture_source())
+        source = fixture_source()
+        source["max_retries"] = 2
+        client = Client(source)
         with patch.object(client.opener, "open", side_effect=URLError("down")) as request, patch("time.sleep"):
             with self.assertRaises(URLError):
                 client.get("https://example.org/docs/a")
         self.assertEqual(request.call_count, 3)
+
+    def test_http_429_honors_retry_after_and_timeout(self):
+        source = fixture_source()
+        source.update(max_retries=1, timeout_seconds=9)
+        client = Client(source)
+        headers = Message()
+        headers["Retry-After"] = "7"
+        error = HTTPError("https://example.org/docs/a", 429, "limited", headers, None)
+
+        class Response:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_):
+                return False
+
+            def read(self, _):
+                return b"ok"
+
+        with patch.object(client.opener, "open", side_effect=[error, Response()]) as request, \
+                patch("csas_rag.ingestion.http.random.uniform", return_value=0.25), \
+                patch("csas_rag.ingestion.http.time.sleep") as sleep:
+            self.assertEqual(client.get("https://example.org/docs/a"), b"ok")
+        self.assertEqual(request.call_count, 2)
+        self.assertTrue(all(call.kwargs["timeout"] == 9 for call in request.call_args_list))
+        sleep.assert_any_call(7.0)
+
+    def test_http_non_retryable_4xx_is_not_retried(self):
+        client = Client(fixture_source())
+        error = HTTPError("https://example.org/docs/a", 403, "forbidden", Message(), None)
+        with patch.object(client.opener, "open", side_effect=error) as request:
+            with self.assertRaises(HTTPError):
+                client.get("https://example.org/docs/a")
+        self.assertEqual(request.call_count, 1)
+
+    def test_http_timeout_is_retried_with_a_bound(self):
+        source = fixture_source()
+        source["max_retries"] = 1
+        client = Client(source)
+        with patch.object(client.opener, "open", side_effect=TimeoutError("timed out")) as request, \
+                patch("csas_rag.ingestion.http.time.sleep"):
+            with self.assertRaises(TimeoutError):
+                client.get("https://example.org/docs/a")
+        self.assertEqual(request.call_count, 2)
 
     def test_http_checks_scope_before_request(self):
         client = Client(fixture_source())
@@ -248,6 +296,90 @@ class IngestionTests(unittest.TestCase):
         result = collect(source, self.store, limit=1, factory=lambda s: create_collector(s, client))
         self.assertEqual(result["success"], 1)
         self.assertEqual(sum("categorymembers" in url for url in client.calls), 1)
+
+    def test_wikipedia_category_pagination_bfs_deduplicates_and_excludes(self):
+        source = fixture_source("mediawiki")
+        source.update(seed_titles=[], seed_categories=["Category:CS"], crawl_depth=1,
+                      excluded_categories=["Category:Blocked*"])
+
+        class CategoryClient(FixtureClient):
+            def json(self, url):
+                params = parse_qs(urlsplit(url).query)
+                if params.get("list") != ["categorymembers"]:
+                    return super().json(url)
+                self.calls.append(url)
+                category = params["cmtitle"][0]
+                if category == "Category:CS" and "cmcontinue" not in params:
+                    return {"continue": {"continue": "-||", "cmcontinue": "next"}, "query": {
+                        "categorymembers": [{"pageid": 1, "ns": 0, "title": "One"},
+                                            {"pageid": 10, "ns": 14, "title": "Category:Child"},
+                                            {"pageid": 11, "ns": 14, "title": "Category:Blocked people"}]}}
+                if category == "Category:CS":
+                    return {"query": {"categorymembers": [{"pageid": 1, "ns": 0, "title": "One"},
+                                                               {"pageid": 2, "ns": 0, "title": "Two"}]}}
+                return {"query": {"categorymembers": [{"pageid": 3, "ns": 0, "title": "Three"},
+                                                           {"pageid": 12, "ns": 14, "title": "Category:Too deep"}]}}
+
+        saved = []
+        collector = create_collector(source, CategoryClient(source))
+        found = []
+        for item in collector.discover(10, save_state=lambda state: saved.append(state)):
+            found.append(item["title"])
+            collector.ack(item)
+        self.assertEqual(found, ["One", "Two", "Three"])
+        self.assertTrue(saved[-1]["complete"])
+        self.assertEqual(saved[-1]["processed_document_ids"], ["1", "2", "3"])
+        calls = collector.client.calls
+        self.assertTrue(any("cmcontinue=next" in url for url in calls))
+        self.assertTrue(any("Category%3AChild" in url for url in calls))
+        self.assertFalse(any("Blocked" in url or "Too+deep" in url for url in calls))
+
+    def test_wikipedia_discovery_resumes_from_persisted_continuation(self):
+        source = fixture_source("mediawiki")
+        source.update(seed_titles=[], seed_categories=["Category:CS"], crawl_depth=0,
+                      excluded_categories=[])
+
+        class Interrupted(FixtureClient):
+            def json(self, url):
+                params = parse_qs(urlsplit(url).query)
+                if params.get("list") != ["categorymembers"]:
+                    return super().json(url)
+                self.calls.append(url)
+                if "cmcontinue" in params:
+                    raise URLError("interrupted")
+                return {"continue": {"continue": "-||", "cmcontinue": "resume-token"},
+                        "query": {"categorymembers": [{"pageid": 1, "ns": 0, "title": "One"}]}}
+
+        first = create_collector(source, Interrupted(source))
+        with self.assertRaises(URLError):
+            for item in first.discover(10, save_state=lambda state: self.store.save_discovery_state(
+                    source["id"], state)):
+                first.ack(item)
+        saved = self.store.discovery_state(source["id"])
+        run_id = saved["run_id"]
+        self.assertEqual(saved["continuation"]["cmcontinue"], "resume-token")
+
+        class Resumed(FixtureClient):
+            def json(self, url):
+                params = parse_qs(urlsplit(url).query)
+                if params.get("list") == ["categorymembers"]:
+                    self.calls.append(url)
+                    self.assert_resume = params.get("cmcontinue") == ["resume-token"]
+                    return {"query": {"categorymembers": [{"pageid": 2, "ns": 0, "title": "Two"}]}}
+                return super().json(url)
+
+        client = Resumed(source)
+        resumed = create_collector(source, client)
+        titles = []
+        for item in resumed.discover(10, resume_state=saved,
+                                     save_state=lambda state: self.store.save_discovery_state(source["id"], state)):
+            titles.append(item["title"])
+            resumed.ack(item)
+        self.assertEqual(titles, ["Two"])
+        self.assertTrue(client.assert_resume)
+        final = self.store.discovery_state(source["id"])
+        self.assertEqual(final["run_id"], run_id)
+        self.assertTrue(final["complete"])
 
     def test_sitemap_does_not_follow_unregistered_urls(self):
         source = fixture_source()

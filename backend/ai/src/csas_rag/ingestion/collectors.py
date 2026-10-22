@@ -1,7 +1,9 @@
 """Source-specific discovery/fetch adapters. All traversal is bounded."""
 import base64
+import copy
 import fnmatch
 import re
+import uuid
 from collections import deque
 from typing import Protocol
 from urllib.parse import quote, urlencode, urljoin, urlsplit
@@ -61,36 +63,147 @@ class GitHubCollector:
 class WikipediaCollector:
     def __init__(self, source: dict, client: Client):
         self.s, self.client = source, client
+        self.state = None
+        self._save_state = None
 
     def query(self, **params):
-        data = self.client.json(self.s["endpoint"] + "?" + urlencode({"format": "json", "formatversion": 2, **params}))
+        data = self.client.json(self.s["endpoint"] + "?" + urlencode({
+            "format": "json", "formatversion": 2, "maxlag": self.s.get("maxlag_seconds", 5), **params
+        }))
         if "error" in data:
             raise ValueError("MediaWiki API error: " + data["error"]["code"])
         return data
 
-    def discover(self, limit: int):
+    def _new_state(self, limit: int):
+        titles = list(dict.fromkeys(self.s.get("seed_titles", [])))[:limit]
+        return {
+            "schema_version": 1,
+            "run_id": str(uuid.uuid4()),
+            "source_id": self.s["id"],
+            "start_categories": list(self.s.get("seed_categories", [])),
+            "current_category": None,
+            "current_depth": None,
+            "continuation": None,
+            "queue": [{"category": category, "depth": 0, "continuation": None}
+                      for category in self.s.get("seed_categories", [])],
+            "pending_documents": [{"key": title, "title": title, "page_id": None}
+                                  for title in titles],
+            "visited_categories": [],
+            "processed_document_ids": [],
+            "processed_keys": [],
+            "last_success": None,
+            "failures": [],
+            "emitted_count": 0,
+            "limit": limit,
+            "complete": False,
+        }
+
+    def _snapshot(self):
+        return copy.deepcopy(self.state)
+
+    def _persist(self):
+        if self._save_state:
+            self._save_state(self._snapshot())
+
+    def _excluded(self, category: str) -> bool:
+        return any(fnmatch.fnmatchcase(category, pattern)
+                   for pattern in self.s.get("excluded_categories", []))
+
+    def discover(self, limit: int, resume_state=None, save_state=None):
         require_approved(self.s)
-        titles = list(self.s.get("seed_titles", []))[:limit]
-        # Category expansion has a separate bound; no related-page traversal.
-        queue = deque((x, 0) for x in self.s.get("seed_categories", [])[:limit])
-        seen = set()
-        while queue and len(titles) < limit and len(seen) < limit:
-            category, depth = queue.popleft()
-            if category in seen:
+        if (not resume_state or resume_state.get("complete")
+                or resume_state.get("source_id") != self.s["id"]):
+            self.state = self._new_state(limit)
+        else:
+            self.state = copy.deepcopy(resume_state)
+        self._save_state = save_state
+        target = min(limit, self.state["limit"])
+        self._persist()
+        origin = "https://" + urlsplit(self.s["endpoint"]).hostname
+        while not self.state["complete"]:
+            if self.state["emitted_count"] >= target:
+                self.state["complete"] = True
+                self._persist()
+                break
+            if self.state["pending_documents"]:
+                pending = self.state["pending_documents"][0]
+                title = pending["title"]
+                url = origin + "/wiki/" + quote(title.replace(" ", "_"))
+                if not document_allowed(self.s, url):
+                    self.ack({"key": pending["key"], "page_id": pending.get("page_id")})
+                    continue
+                yield {"key": title, "title": title, "url": url, "format": "html",
+                       "page_id": pending.get("page_id"), "_discovery_key": pending["key"]}
                 continue
-            seen.add(category)
-            data = self.query(action="query", list="categorymembers", cmtitle=category,
-                              cmlimit=min(500, limit - len(titles)), cmtype="page|subcat")
+            if not self.state["queue"]:
+                self.state["complete"] = True
+                self.state["current_category"] = None
+                self.state["current_depth"] = None
+                self.state["continuation"] = None
+                self._persist()
+                break
+            cursor = self.state["queue"][0]
+            category, depth = cursor["category"], cursor["depth"]
+            if category in self.state["visited_categories"] or self._excluded(category):
+                self.state["queue"].pop(0)
+                self._persist()
+                continue
+            self.state.update(current_category=category, current_depth=depth,
+                              continuation=cursor.get("continuation"))
+            params = {"action": "query", "list": "categorymembers", "cmtitle": category,
+                      "cmlimit": min(500, target), "cmtype": "page|subcat",
+                      "cmprop": "ids|title|type"}
+            params.update(cursor.get("continuation") or {})
+            try:
+                data = self.query(**params)
+            except Exception as error:
+                self.state["failures"].append({"category": category, "depth": depth,
+                                               "continuation": cursor.get("continuation"),
+                                               "error": type(error).__name__})
+                self._persist()
+                raise
+            known_keys = set(self.state["processed_keys"])
+            known_keys.update(x["key"] for x in self.state["pending_documents"])
+            queued_categories = {x["category"] for x in self.state["queue"]}
             for member in data["query"]["categorymembers"]:
                 if member["ns"] == 0:
-                    titles.append(member["title"])
-                elif member["ns"] == 14 and depth < self.s["crawl_depth"]:
-                    queue.append((member["title"], depth + 1))
-        origin = "https://" + urlsplit(self.s["endpoint"]).hostname
-        for title in list(dict.fromkeys(titles))[:limit]:
-            url = origin + "/wiki/" + quote(title.replace(" ", "_"))
-            if document_allowed(self.s, url):
-                yield {"key": title, "title": title, "url": url, "format": "html"}
+                    key = str(member.get("pageid") or member["title"])
+                    if key not in known_keys and key not in self.state["processed_document_ids"]:
+                        self.state["pending_documents"].append(
+                            {"key": key, "title": member["title"], "page_id": member.get("pageid")})
+                        known_keys.add(key)
+                elif (member["ns"] == 14 and depth < self.s["crawl_depth"]
+                      and member["title"] not in queued_categories
+                      and member["title"] not in self.state["visited_categories"]
+                      and not self._excluded(member["title"])):
+                    self.state["queue"].append({"category": member["title"], "depth": depth + 1,
+                                                "continuation": None})
+                    queued_categories.add(member["title"])
+            continuation = data.get("continue")
+            cursor["continuation"] = continuation
+            self.state["continuation"] = continuation
+            self.state["last_success"] = {"category": category, "depth": depth,
+                                          "continuation": continuation}
+            if not continuation:
+                self.state["visited_categories"].append(category)
+                self.state["queue"].pop(0)
+            self._persist()
+
+    def ack(self, item: dict):
+        if not self.state:
+            return
+        key = str(item.get("_discovery_key") or item["key"])
+        if self.state["pending_documents"] and self.state["pending_documents"][0]["key"] == key:
+            self.state["pending_documents"].pop(0)
+        if key not in self.state["processed_keys"]:
+            self.state["processed_keys"].append(key)
+            self.state["emitted_count"] += 1
+        page_id = item.get("page_id") or item.get("metadata", {}).get("page_id")
+        if page_id is not None and str(page_id) not in self.state["processed_document_ids"]:
+            self.state["processed_document_ids"].append(str(page_id))
+        if self.state["emitted_count"] >= self.state["limit"]:
+            self.state["complete"] = True
+        self._persist()
 
     def fetch(self, item: dict):
         data = self.query(action="query", titles=item["title"], prop="revisions|pageprops",

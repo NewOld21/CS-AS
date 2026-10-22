@@ -17,7 +17,8 @@ def load_registry(path: Path) -> list[dict]:
     configured_defaults = data.get("defaults", {})
     if not isinstance(configured_defaults, dict):
         raise ValueError("Registry defaults must be an object")
-    defaults = {"max_retries": 3, "timeout_seconds": 15, **configured_defaults}
+    defaults = {"max_retries": 3, "timeout_seconds": 15, "maxlag_seconds": 5,
+                **configured_defaults}
     sources = data["sources"]
     seen = set()
     for configured in sources:
@@ -37,7 +38,8 @@ def load_registry(path: Path) -> list[dict]:
             raise ValueError("enabled must be boolean")
         for field, low, high in (("max_documents", 1, 10000), ("crawl_depth", 0, 5),
                                  ("request_delay_ms", 0, 60000), ("max_retries", 0, 10),
-                                 ("timeout_seconds", 1, 120), ("priority", 0, 3)):
+                                 ("timeout_seconds", 1, 120), ("maxlag_seconds", 0, 60),
+                                 ("priority", 0, 3)):
             if type(s.get(field)) is not int or not low <= s[field] <= high:
                 raise ValueError(f"Invalid {field}: {s['id']}")
         if not isinstance(s.get("allowed_urls"), list) or not isinstance(s.get("request_urls"), list):

@@ -2,7 +2,8 @@
   "version": 2,
   "defaults": {
     "max_retries": 3,
-    "timeout_seconds": 15
+    "timeout_seconds": 15,
+    "maxlag_seconds": 5
   },
   "sources": [
     {
@@ -59,7 +60,7 @@
       "usage_review": "pending",
       "enabled": false,
       "priority": 0,
-      "crawl_depth": 0,
+      "crawl_depth": 2,
       "request_delay_ms": 1000,
       "version": null,
       "storage_policy": "metadata-only",
@@ -91,8 +92,13 @@
         "인공지능",
         "클라우드 컴퓨팅"
       ],
-      "seed_categories": [],
-      "excluded_categories": [],
+      "seed_categories": [
+        "분류:컴퓨터 과학"
+      ],
+      "excluded_categories": [
+        "분류:나라별 컴퓨터 과학",
+        "분류:컴퓨터 과학자*"
+      ],
       "allowed_urls": [
         "https://ko.wikipedia.org/wiki/"
       ],
@@ -108,7 +114,7 @@
       "enabled": false,
       "priority": 0,
       "max_documents": 100,
-      "crawl_depth": 0,
+      "crawl_depth": 2,
       "request_delay_ms": 1000,
       "version": null,
       "storage_policy": "metadata-only",
@@ -140,8 +146,13 @@
         "Artificial intelligence",
         "Cloud computing"
       ],
-      "seed_categories": [],
-      "excluded_categories": [],
+      "seed_categories": [
+        "Category:Computer science"
+      ],
+      "excluded_categories": [
+        "Category:Computer scientists*",
+        "Category:Computer science organizations*"
+      ],
       "allowed_urls": [
         "https://en.wikipedia.org/wiki/"
       ],

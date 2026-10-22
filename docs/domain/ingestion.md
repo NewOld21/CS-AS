@@ -13,11 +13,12 @@
 | priority | 0~3. P0 기초 → P1 백엔드 → P2 분산 → P3 심화. 관리자 수정 가능 |
 | max_documents | 출처별 문서 상한. CLI 상한과 작은 값 적용 |
 | crawl_depth | 0~5. 공식 문서 링크·Wiki 하위 카테고리 탐색 깊이 |
-| request_delay_ms | 최소 요청 간격. HTTP timeout 20초, 네트워크 시도 최대 3회 |
+| request_delay_ms / timeout_seconds | 최소 요청 간격과 요청 timeout. 기본 1000ms/15초 |
+| max_retries | 최초 요청 이후 일시 오류 재시도 상한. 기본 3회 |
 | allowed_urls / request_urls | 문서 / API·robots·sitemap의 HTTPS host/path 허용 목록 |
 | include_patterns / exclude_patterns | 디코딩한 URL 경로의 glob 필터 |
 | version | 기술 버전/검토한 snapshot. latest라면 실제 버전도 기록 |
-| seed_titles / seed_categories | Wikipedia 초기 CS 개념·카테고리 |
+| seed_titles / seed_categories / excluded_categories | Wikipedia 초기 CS 개념·카테고리와 제외 category glob |
 | seed_urls / sitemap_url | 검토한 공식 설명 문서·urlset sitemap |
 | concept_mappings | native page ID/파일 경로/URL → 검수한 concept ID 목록 |
 
@@ -28,7 +29,7 @@
 `backend/ai/src/csas_rag/ingestion/collectors.py`의 Collector(discover/fetch) 프로토콜이 확장 경계다.
 
 - GitHub: commit SHA 고정 → tree → CS 경로 Markdown blob. README/CONTRIBUTING/index/라이선스 안내 제외, truncated tree 실패. commit·blob SHA·파일·분야 경로 보존. 저장한 문서/SHA는 blob 다운로드를 생략하며 새 SHA는 새 리비전이다.
-- Wikipedia: 한·영 seed와 query/revisions API로 page ID/revision/timestamp/Wikidata ID 수집, parse oldid로 같은 리비전 본문·카테고리·관련 문서·언어 연결 보존. 관련 링크를 재귀 방문하지 않는다. 카테고리 깊이·문서 수 제한, continuation을 무한히 따라가지 않는다. Wikidata ID는 개념 후보 근거이며 자동 승인하지 않는다.
+- Wikipedia: 한·영 seed와 query/revisions API로 page ID/revision/timestamp/Wikidata ID 수집, parse oldid로 같은 리비전 본문·카테고리·관련 문서·언어 연결 보존. `categorymembers`의 page/subcat을 BFS로 순회하고 반환된 continuation 필드 전체를 다음 요청에 전달한다. 방문 category·문서 ID를 중복 제거하며 깊이·문서 수·제외 category로 범위를 제한한다. 관련 링크는 재귀 방문하지 않는다. Wikidata ID는 개념 후보 근거이며 자동 승인하지 않는다.
 - 공식 문서: 명시적 seed의 html/markdown, 제한된 urlset sitemap, RFC 텍스트 adapter. github adapter는 공개 문서 저장소 Collector를 재사용한다. 사이트마다 adapter·허용 경로·버전·깊이·CS seed를 검토한다. 전용 공식 API가 필요한 사이트는 프로토콜에 adapter를 추가한다. 모든 공식 사이트의 전용 파서를 구현했다는 뜻이 아니다.
 - RFC: 번호·Category/Status·Obsoletes/Updates 원문 보존. 후대 RFC의 대체 관계·현재 상태 검증 전에는 current_status_verified=false이며 최신 표준으로 취급하지 않는다.
 
@@ -52,6 +53,10 @@
 ## 실패·통계
 
 문서/discovery 실패를 catalog의 failures에 보존한다. 이유는 예외 클래스/정책 코드만 남기며 응답 원문·자격증명을 로그에 넣지 않는다. 다른 문서·출처는 계속 수행한다. retry-failed는 실패 문서만 재시도하고 discovery 실패는 제한된 재탐색을 수행한다. 빈 실패 목록은 다운로드하지 않는다. 미해결 실패가 남으면 checkpoint를 전진시키지 않는다. checkpoint는 마지막 처리 리비전이며 전체 사이트 동기화 완료를 뜻하지 않는다.
+
+Wikipedia 탐색 커서는 catalog의 `discovery_states`에 source별 JSON으로 저장한다. run_id, 시작/current category와 깊이, continuation, BFS queue, pending 문서, 방문 category, 처리 page ID/native key, 마지막 성공 위치와 오류 종류를 포함한다. API 페이지를 받은 뒤와 문서를 처리한 뒤 각각 트랜잭션 저장한다. 중단 시 같은 run_id와 continuation에서 재개하며, 처리 확인 전 중단된 문서는 다시 전달될 수 있으나 불변 revision 저장이 duplicate로 흡수한다. 설정 상한 도달 또는 queue 소진 시 complete로 닫고 다음 일반 실행은 새 run을 만든다.
+
+HTTP 429/500/502/503/504와 네트워크/timeout만 지수 backoff와 0~0.5초 jitter로 제한 재시도한다. `Retry-After`가 더 길면 이를 우선하고 다른 4xx는 즉시 실패한다. MediaWiki 요청은 순차 실행하고 `maxlag=5`와 식별 가능한 User-Agent를 보낸다. 근거: [categorymembers](https://www.mediawiki.org/wiki/API:Categorymembers), [continuation](https://www.mediawiki.org/wiki/API:Continue), [API 예절](https://www.mediawiki.org/wiki/API:Etiquette), [Wikimedia rate limits](https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits).
 
 통계: documents, 신규 success, changed, 재수집 duplicate, failed, 문서 정책 제외 excluded_policy, 출처 승인 제외 excluded_sources, elapsed_seconds, last_revision. pending 출처는 documents=0/excluded_sources=1이며 제외 문서 수를 추측하지 않는다.
 

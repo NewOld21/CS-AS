@@ -28,6 +28,8 @@ class Store:
                 reason TEXT NOT NULL, PRIMARY KEY(source_id, item_key));
             CREATE TABLE IF NOT EXISTS checkpoints (
                 source_id TEXT PRIMARY KEY, revision TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS discovery_states (
+                source_id TEXT PRIMARY KEY, state TEXT NOT NULL, updated_at TEXT NOT NULL);
         """)
 
     def close(self):
@@ -102,6 +104,15 @@ class Store:
     def last_revision(self, source_id: str):
         row = self.db.execute("SELECT revision FROM checkpoints WHERE source_id=?", (source_id,)).fetchone()
         return row[0] if row else None
+
+    def discovery_state(self, source_id: str):
+        row = self.db.execute("SELECT state FROM discovery_states WHERE source_id=?", (source_id,)).fetchone()
+        return json.loads(row[0]) if row else None
+
+    def save_discovery_state(self, source_id: str, state: dict):
+        with self.db:
+            self.db.execute("INSERT OR REPLACE INTO discovery_states VALUES (?, ?, ?)",
+                            (source_id, json.dumps(state, ensure_ascii=False), utc_now()))
 
     def manifest(self, registry_hash: str) -> dict:
         entries = [{"source_id": s, "document_id": d, "revision": r, "content_hash": h, "object_path": p}

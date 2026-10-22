@@ -18,6 +18,8 @@ python3 scripts/ingest.py collect --source postgresql --retry-failed
 
 별도 incremental 플래그 없이 매번 기존 리비전·해시를 비교한다. sample은 출처당 최대 3개, max-documents와 출처 상한 중 작은 값을 적용한다. output으로 출력 경로, registry로 별도 검토 설정을 지정한다. 기본 [등록부](../data-sources.json)는 승인 게이트를 유지한다. [수집 계약](../domain/ingestion.md)의 근거·버전·seed·허용 URL 검토 후 별도 승인한다. 현재 81개 후보의 이용 조건·robots 검토는 미완료다.
 
+Wikipedia category 탐색은 같은 output의 catalog에 continuation과 BFS queue를 저장한다. discovery 실패 뒤 `--retry-failed`를 사용하면 마지막 성공 API 페이지 다음 continuation에서 재개한다. catalog를 삭제하거나 다른 output을 지정하면 이어받기 상태도 달라진다. 완료되지 않은 실행을 복구하려고 기존 output을 지우지 않는다. 429/일시 서버 오류는 `Retry-After`, 지수 backoff, jitter와 등록부의 `max_retries`/`timeout_seconds` 범위에서만 재시도한다.
+
 ## 오프라인 모의 샘플
 
 ```sh
