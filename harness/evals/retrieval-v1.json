@@ -1,0 +1,130 @@
+{
+  "version": "retrieval-v1",
+  "description": "Approved live corpus retrieval evaluation: four questions in each of five CS categories.",
+  "questions": [
+    {
+      "id": "os-01", "category": "operating-system",
+      "question": "운영체제는 컴퓨터에서 어떤 역할을 하며 어떤 자원을 관리하나요?",
+      "relevant_documents": [{"document_id": "doc:03783c3d246d9df1949676dd0c1e8f3a7b19f5c005256d560518dd368359e605", "source_url": "https://ko.wikipedia.org/wiki/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "os-02", "category": "operating-system",
+      "question": "컴퓨터 과학에서 스레드는 무엇이며 프로세스의 자원을 어떻게 공유하나요?",
+      "relevant_documents": [{"document_id": "doc:62c50558715f67778c0d23d5b9ba95efab99b40fa15b68384c033f6a2019471e", "source_url": "https://ko.wikipedia.org/wiki/%EC%8A%A4%EB%A0%88%EB%93%9C_%28%EC%BB%B4%ED%93%A8%ED%8C%85%29"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "os-03", "category": "operating-system",
+      "question": "유닉스 계열 운영체제에서 fork 시스템 호출은 무엇을 생성하나요?",
+      "relevant_documents": [{"document_id": "doc:487e19f6b2082ff0c5c234a91bb4098f13f16f3e4f5d43e1189621231a6c290b", "source_url": "https://ko.wikipedia.org/wiki/%ED%8F%AC%ED%81%AC_%28%EC%8B%9C%EC%8A%A4%ED%85%9C_%ED%98%B8%EC%B6%9C%29"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "os-04", "category": "operating-system",
+      "question": "동시 실행되는 스레드가 공유 자원에 접근할 때 락은 어떤 문제를 방지하나요?",
+      "relevant_documents": [{"document_id": "doc:f5cb1802eff34946bb0eefef73d04ea5986d5e69875b5f1f87e8d49f3f2ff5ac", "source_url": "https://ko.wikipedia.org/wiki/%EB%9D%BD_%28%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99%29"}],
+      "relevant_chunk_ids": []
+    },
+
+    {
+      "id": "network-01", "category": "network",
+      "question": "HTTP 의미론에서 안전한 메서드와 멱등 메서드는 어떻게 구분되나요?",
+      "relevant_documents": [{"document_id": "doc:e89694421dacb61eccd285c0341d1690fd47bbd4da3024b2c65c7168278da938", "source_url": "https://www.rfc-editor.org/rfc/rfc9110.txt"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "network-02", "category": "network",
+      "question": "HTTP 콘텐츠 협상에서 서버 주도 협상은 Accept 헤더를 어떻게 사용하나요?",
+      "relevant_documents": [{"document_id": "doc:161655605cbe6e844c18e09a02efeff46c1052537364281ea82950d420b87765", "source_url": "https://github.com/mdn/content/blob/4f62576d552b13a897c03ae8d4caeb58ccd01392/files/en-us/web/http/guides/content_negotiation/index.md"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "network-03", "category": "network",
+      "question": "HTTP 캐시에는 어떤 종류가 있으며 private cache와 shared cache는 어떻게 다른가요?",
+      "relevant_documents": [{"document_id": "doc:1afaa19833f182f93781daa79a2ffef3473b88bb1581b64aece32bbd958fd364", "source_url": "https://github.com/mdn/content/blob/4f62576d552b13a897c03ae8d4caeb58ccd01392/files/en-us/web/http/guides/caching/index.md"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "network-04", "category": "network",
+      "question": "HTTP 조건부 요청에서 ETag와 If-None-Match는 캐시 검증에 어떻게 쓰이나요?",
+      "relevant_documents": [{"document_id": "doc:5a27755fd96b5dbced535535e0d2f1de0dc73d5ccbbd14a02f8c982da493d063", "source_url": "https://github.com/mdn/content/blob/4f62576d552b13a897c03ae8d4caeb58ccd01392/files/en-us/web/http/guides/conditional_requests/index.md"}],
+      "relevant_chunk_ids": []
+    },
+
+    {
+      "id": "database-01", "category": "database",
+      "question": "PostgreSQL의 MVCC는 여러 세션이 동시에 데이터를 읽고 쓸 때 어떤 이점을 제공하나요?",
+      "relevant_documents": [{"document_id": "doc:a7def2896b4651e297e50b5a476c959289bba2f2cf63a72961e05c5e1eb875b2", "source_url": "https://www.postgresql.org/docs/17/mvcc-intro.html"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "database-02", "category": "database",
+      "question": "PostgreSQL Read Committed 격리 수준에서 각 SELECT 문은 어떤 스냅샷을 보나요?",
+      "relevant_documents": [{"document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308", "source_url": "https://www.postgresql.org/docs/17/transaction-iso.html"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "database-03", "category": "database",
+      "question": "PostgreSQL Repeatable Read에서 허용되지 않는 동시성 이상 현상은 무엇인가요?",
+      "relevant_documents": [{"document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308", "source_url": "https://www.postgresql.org/docs/17/transaction-iso.html"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "database-04", "category": "database",
+      "question": "PostgreSQL Serializable 트랜잭션에서 serialization failure가 나면 애플리케이션은 어떻게 처리해야 하나요?",
+      "relevant_documents": [{"document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308", "source_url": "https://www.postgresql.org/docs/17/transaction-iso.html"}],
+      "relevant_chunk_ids": []
+    },
+
+    {
+      "id": "algorithm-01", "category": "data-structure-algorithm",
+      "question": "그래프 탐색에서 DFS와 BFS는 탐색 순서와 사용하는 자료구조가 어떻게 다른가요?",
+      "relevant_documents": [{"document_id": "doc:0101cbe46f05f27a4967d2ca3d2dd09d10423b6c82ded0b917ff57b0a1ae81ac", "source_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/DFS%20%26%20BFS.md"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "algorithm-02", "category": "data-structure-algorithm",
+      "question": "이분 탐색의 전제 조건과 시간 복잡도는 무엇인가요?",
+      "relevant_documents": [{"document_id": "doc:c7369e51ebc05518319b85386076ac832cb49413e449542e460fee70bd62d7db", "source_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Binary%20Search.md"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "algorithm-03", "category": "data-structure-algorithm",
+      "question": "해시 테이블은 키 충돌을 어떻게 다루며 탐색 비용을 어떻게 줄이나요?",
+      "relevant_documents": [{"document_id": "doc:3bb8db6d93c655d2912321634d2ff77610041c3bb144b4d79d872180bcbbc73a", "source_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Hash%20Table%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "algorithm-04", "category": "data-structure-algorithm",
+      "question": "병합 정렬의 분할 정복 과정과 시간 복잡도를 설명해 주세요.",
+      "relevant_documents": [{"document_id": "doc:e2808fa2d0da5dfe5329a1ef7b804f404cafb9c1b6d00490aa0d187098f08304", "source_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/MergeSort.md"}],
+      "relevant_chunk_ids": []
+    },
+
+    {
+      "id": "software-01", "category": "software-distributed-systems",
+      "question": "소프트웨어 공학은 소프트웨어 개발과 유지보수에 어떤 체계적 접근을 적용하나요?",
+      "relevant_documents": [{"document_id": "doc:328ffa41b446d227c3cc30ea113fc6e1be3c9cafb429e6bf0593eddbb3ab9fa0", "source_url": "https://ko.wikipedia.org/wiki/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4_%EA%B3%B5%ED%95%99"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "software-02", "category": "software-distributed-systems",
+      "question": "분산 컴퓨팅은 여러 컴퓨터를 사용해 하나의 문제를 어떻게 해결하나요?",
+      "relevant_documents": [{"document_id": "doc:596c313e7b213e2d84457b250ffd8753479504f74857d646c8f4874877cd16db", "source_url": "https://ko.wikipedia.org/wiki/%EB%B6%84%EC%82%B0_%EC%BB%B4%ED%93%A8%ED%8C%85"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "software-03", "category": "software-distributed-systems",
+      "question": "프로그래밍 언어는 컴퓨터에 수행할 일을 표현하기 위해 어떤 구성 요소를 사용하나요?",
+      "relevant_documents": [{"document_id": "doc:ea0480bf72aee378e6ae814d3fdb651242786f8c57419c7f1f14fb4ce18d6809", "source_url": "https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D_%EC%96%B8%EC%96%B4"}],
+      "relevant_chunk_ids": []
+    },
+    {
+      "id": "software-04", "category": "software-distributed-systems",
+      "question": "컴퓨터 보안이 보호하려는 기밀성, 무결성, 가용성은 각각 무엇인가요?",
+      "relevant_documents": [{"document_id": "doc:26415689e64d22c328ebeb0674d118434dd2d6b16c16ee294f9bcfe2ac37127d", "source_url": "https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%93%A8%ED%84%B0_%EB%B3%B4%EC%95%88"}],
+      "relevant_chunk_ids": []
+    }
+  ]
+}

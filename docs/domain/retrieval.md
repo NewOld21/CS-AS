@@ -1,5 +1,19 @@
 # 검색 도메인
 
+## C22 검색 품질 평가
+
+`harness/evals/retrieval-v1.json`은 승인 코퍼스의 실제 문서 ID와 원문 URL을 사용한다. 운영체제,
+네트워크, 데이터베이스, 자료구조·알고리즘, 소프트웨어·분산 시스템에서 각각 4문항을 관리한다.
+정답 문서가 Top-K **청크 결과** 안에 나타나는지를 문서 단위 Hit Rate/Recall/MRR로 계산한다.
+청크 정답 라벨이 없는 v1은 청크 지표를 0점으로 오인하지 않도록 `not_evaluated`로 기록한다.
+
+평가 보고서는 데이터셋 버전, 코퍼스 digest, 임베딩 모델·차원, collection, 청킹 설정과 개별
+검색 순위·거리·누락 근거를 함께 남긴다. Top-5 누락은 `relevant_document_not_in_top_k`로 분류해
+임베딩 순위, 청킹, 메타데이터와 필터를 후속 점검할 수 있게 한다.
+
+실행 명령은 `python scripts/rag_retrieval_eval.py --index-version <active-index>`이며 결과는 기본적으로
+`reports/retrieval-evaluation.json`에 저장된다.
+
 상태: 구조 청킹·임베딩 공급자·버전별 ChromaDB 적재/검색·manifest 활성화 gate를 구현했다. 승인 실코퍼스의 5개 activation probe와 퀴즈 문맥 E2E는 통과했으며, C22의 15~20문항 Top 5 평가는 후속이다.
 입력은 검증된 CS 질문과 사용할 인덱스 버전, 선택적 concept_ids·서버가 확인한 문제 문맥이다.
 질문 임베딩 → 벡터 검색 → 메타데이터 필터 → 제한된 청크 선택 → 검색 증거를 반환한다.

@@ -1,5 +1,15 @@
 # Development
 
+## Retrieval 평가 실행
+
+```sh
+docker compose run --rm --no-deps ai python scripts/rag_retrieval_eval.py \
+  --index-version csas-live-20261023-v5 \
+  --output reports/retrieval-evaluation-v5.json
+```
+
+AI 테스트도 호스트 Python 대신 Docker에서 `python -m unittest discover -s backend/ai/tests -v`로 실행한다.
+
 ## Docker 전체 개발 스택
 
 일상 개발 실행은 저장소 루트의 Compose를 기준으로 한다. 호스트에 Node.js·JDK·Python을 설치하지 않아도 frontend, Spring Boot backend, 로컬 RAG adapter, PostgreSQL, ChromaDB가 함께 실행된다.

@@ -1,5 +1,18 @@
 # 14. RAG GUIDE — Vector RAG·Graph 확장 가이드
 
+## C22 반복 가능한 Retrieval 평가
+
+승인 코퍼스를 인덱싱하고 ACTIVE 승격한 뒤 다음 명령을 실행한다.
+
+```sh
+docker compose run --rm --no-deps ai python scripts/rag_retrieval_eval.py \
+  --index-version "$RAG_ACTIVE_INDEX" \
+  --output reports/retrieval-evaluation.json
+```
+
+보고서의 점수는 동일한 dataset version, corpus digest, embedding model/dimension, collection과 chunk
+configuration끼리만 비교한다. `reports/`는 실행 산출물이므로 커밋하지 않는다.
+
 상태: 1차 Vector RAG 코드 경로, GMS 호환 provider, 승인 실코퍼스 ACTIVE 전환과 퀴즈 E2E 완료 / C22 정식 검색 평가 대기 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
 
 ```mermaid

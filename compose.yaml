@@ -55,7 +55,9 @@ services:
     volumes:
       - ./backend/ai/src:/workspace/backend/ai/src:ro
       - ./backend/ai/fixtures:/workspace/backend/ai/fixtures:ro
+      - ./backend/ai/tests:/workspace/backend/ai/tests:ro
       - ./docs:/workspace/docs:ro
+      - ./harness/evals:/workspace/harness/evals:ro
       - ./scripts:/workspace/scripts:ro
       - ./data:/workspace/data
       - ./reports:/workspace/reports

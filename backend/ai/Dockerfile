@@ -9,6 +9,7 @@ COPY backend/ai/src /workspace/backend/ai/src
 COPY backend/ai/fixtures /workspace/backend/ai/fixtures
 COPY backend/ai/tests /workspace/backend/ai/tests
 COPY docs/data-sources.json /workspace/docs/data-sources.json
+COPY harness/evals /workspace/harness/evals
 COPY scripts /workspace/scripts
 
 EXPOSE 8090

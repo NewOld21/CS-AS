@@ -1,5 +1,15 @@
 # 공통 명령
 
+## RAG 검색 품질 평가
+
+`rag_retrieval_eval.py`는 `harness/evals/retrieval-v1.json`과 지정한 ACTIVE 인덱스를 사용해 문서
+Hit Rate@1/3/5, Recall@1/3/5, MRR 및 개별 누락 근거를 JSON으로 저장한다.
+
+```sh
+docker compose run --rm --no-deps ai python scripts/rag_retrieval_eval.py \
+  --index-version "$RAG_ACTIVE_INDEX"
+```
+
 Docker 전체 개발 스택은 `docker compose up -d --build --wait --wait-timeout 240`으로 실행한다. `backend/.env`의 GMS 설정을 사용한 제한 라이브 검증은 다음처럼 일반 회귀와 분리한다.
 
 ```sh

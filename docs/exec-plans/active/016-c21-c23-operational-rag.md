@@ -14,7 +14,7 @@ Status: in-progress
 ## 완료 조건
 
 - [x] C21 단위·실제 Chroma 통합 검사 후 `feat(ingest): implement incremental indexing` 커밋
-- [ ] C22 20문항 데이터셋·평가 실행·테스트 후 `test(rag): add a retrieval evaluation dataset` 커밋
+- [x] C22 20문항 데이터셋·평가 실행·테스트 후 `test(rag): add a retrieval evaluation dataset` 커밋
 - [ ] C23 DB/API/UI·두 사용자 통합 검사 후 `feat(chat): persist user conversations` 커밋
 - [ ] Python, Spring/PostgreSQL, Vue, 공통 검사와 Docker E2E 증거 기록
 - [ ] 완료 후 이 계획을 completed로 이동하고 current-task를 갱신
@@ -30,4 +30,9 @@ Status: in-progress
 
 - C21 단위 11개와 실제 Chroma 통합 2개 통과.
 - ACTIVE v4 dry-run: 전체 36, 신규 0, 수정 0, 동일/skip 36, 삭제·임베딩·실패 0.
-- 커밋 해시는 커밋 생성 후 기록한다.
+- C21 커밋: `ffac332 feat(ingest): implement incremental indexing`.
+- 요구 모델로 v5를 새로 구축하고 activation probe 5/5 통과: 36문서, 1,024청크,
+  `text-embedding-3-large` 3,072차원. 이어진 증분 실행은 36문서 skip, 임베딩·실패 0건이다.
+- C22 단위 5개 통과. v5 실제 20문항 평가는 Hit/Recall@1 0.90, @3 0.90, @5 0.95,
+  MRR 0.9125다. `network-04` 조건부 요청 문서가 Top-5에서 누락됐고 청크 라벨은 아직 없다.
+- C22 커밋 해시는 커밋 생성 후 기록한다.

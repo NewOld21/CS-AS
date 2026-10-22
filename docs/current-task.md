@@ -1,6 +1,10 @@
 # Current task
 
-현재 작업: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/active/016-c21-c23-operational-rag.md). C21 증분 인덱싱, C22 실제 코퍼스 20문항 검색 평가, C23 사용자별 대화 조회·복원·장애/멱등 처리를 각각 검증하고 별도 커밋한다.
+현재 작업: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/active/016-c21-c23-operational-rag.md). C21 증분 인덱싱과 C22 실제 코퍼스 20문항 검색 평가를 완료했다. 현재 C23 사용자별 대화 조회·복원·장애/멱등 처리를 검증하고 별도 커밋한다.
+
+C22 운영 상태: `csas-live-20261023-v5`는 36문서/1,024청크, `text-embedding-3-large`
+3,072차원 ACTIVE 인덱스다. 20문항 문서 평가는 Hit/Recall@1 0.90, @3 0.90, @5 0.95,
+MRR 0.9125이며 조건부 HTTP 요청 1문항이 Top-5에서 누락됐다.
 
 최신 완료 마일스톤: [015 승인 출처 라이브 코퍼스와 Docker RAG 전환](exec-plans/completed/015-approved-live-corpus.md). 5개 승인 출처에서 36문서/794 staging 청크를 수집하고 `text-embedding-3-small` 기반 1,024청크 `csas-live-20261023-v4`를 ACTIVE로 전환했다. 5개 검색 probe와 Vue→Spring→Python→Chroma/GMS 퀴즈 오답 E2E가 통과했으며 Docker 전체 스택이 이 인덱스를 사용한다. 다음은 C21 증분 인덱싱과 C22 15~20문항 검색 평가다.
 
