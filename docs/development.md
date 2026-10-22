@@ -23,7 +23,7 @@ docker stop csas-ui-auth-check
 
 Playwright는 기본 설치된 Chrome을 사용한다. 다른 환경에서는 `PLAYWRIGHT_CHANNEL=chromium` 및 해당 Playwright 브라우저 설치를 사용한다. 실제 API E2E는 CSAS_E2E_API가 없으면 명시적으로 skip하므로 일반 7개 UI 검사만으로 인증 연결 성공을 보고하지 않는다. 012에서는 해당 값을 지정해 실제 API 포함 **8개 모두 실행**했다. UI 오류 fixture는 실제 API 회귀 검사와 구분한다. 결과·스크린샷은 Git 제외 reports/ui-qa/에 저장한다.
 
-## Java backend (C04~C07)
+## Java backend (C04~C13)
 
 호스트 실행은 JDK 21과 backend/의 Gradle Wrapper 8.14.3을 사용한다. Spring Boot 3.5.16, Flyway와 PostgreSQL 드라이버는 BOM 및 gradle.lockfile로 고정한다. `DB_URL`, `DB_USER`, `DB_PASSWORD`를 지정하고 `cd backend && ./gradlew bootRun`으로 실행한다. Windows는 `gradlew.bat`을 사용한다. `.env` 파일을 Spring이 자동 로드하지 않으며 backend의 기존 AI 공급자 환경 파일도 읽지 않는다.
 
@@ -47,6 +47,8 @@ Flyway는 csas schema의 flyway_schema_history에서 적용 이력을 관리하�
 테스트 DB 암호는 compose.backend-test.yaml의 공개 테스트 전용 값이며 호스트 포트를 열지 않는다. 테스트 DB 데이터는 tmpfs이고 이 전용 Compose를 down하면 사라진다. 루트 개발 DB 볼륨에는 영향이 없다. 컨테이너에는 src/·빌드 설정·출력만 개별 마운트해 backend/.env 및 AI 공급자 키를 노출하지 않는다. 일반 서버 설정은 Secure=true이고 명시한 local 프로필에서만 HTTP 쿠키 예외와 localhost:5173 CORS를 허용한다. 임의 Origin/와일드카드 credentials를 허용하지 않는다.
 
 가입·로그인 전 `GET /api/v1/auth/csrf`의 token과 CSAS_SESSION 쿠키를 함께 유지한다. POST에 `X-CSRF-Token`을 보내고 로그인 성공 후 토큰을 다시 받는다. 가입은 `/api/v1/auth/signup`(201), 로그인은 `/api/v1/auth/login`(200), 본인 조회는 `/api/v1/auth/me`(200), 로그아웃은 `/api/v1/auth/logout`(204)이다. 로그아웃 후 재접근/중복 로그아웃은 401이다. 가입/로그인 예시는 [API 계약](api/openapi.yaml)을 따른다. 비밀번호/쿠키/token을 출력하거나 공유 로그에 남기지 않는다.
+
+로그인 후 `GET /api/v1/quiz/categories`, `GET /api/v1/quizzes`, `GET /api/v1/quizzes/{quiz_id}`로 검수 문제를 조회한다. 목록은 기본 limit 20·최대 100이며 반환 cursor를 같은 필터에만 재사용한다. 제출은 새 CSRF와 사용자 범위 UUID `Idempotency-Key`를 포함해 `POST /api/v1/quizzes/{quiz_id}/attempts`에 `selected_option_id`를 보낸다. 동일 키·동일 요청은 같은 결과를 재생하고 다른 요청은 409다.
 
 ## 현재 실행 가능한 명령
 Linux/POSIX, Python 3.11 이상을 사용한다. 하네스 런타임은 Python 표준 라이브러리만 사용한다.

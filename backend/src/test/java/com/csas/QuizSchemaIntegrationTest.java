@@ -120,6 +120,7 @@ class QuizSchemaIntegrationTest extends HttpTestSupport {
         """
         INSERT INTO csas.concepts(id, slug, name_ko, name_en, category, description)
         VALUES (?, 'test-publication', '테스트', 'Test', 'DATABASE', 'Schema test concept')
+        ON CONFLICT DO NOTHING
         """,
         id);
   }

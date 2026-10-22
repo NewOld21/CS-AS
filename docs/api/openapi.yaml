@@ -201,6 +201,33 @@
         }
       }
     },
+    "/api/v1/quiz/categories": {
+      "get": {
+        "operationId": "listQuizCategories",
+        "summary": "List categories with accessible READY quiz counts",
+        "responses": {
+          "200": {
+            "description": "Category summaries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizCategorySummary"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
     "/api/v1/quizzes": {
       "get": {
         "operationId": "listQuizzes",
@@ -956,8 +983,31 @@
           "NETWORK",
           "DATABASE",
           "DATA_STRUCTURE",
-          "ALGORITHM"
+          "ALGORITHM",
+          "COMPUTER_ARCHITECTURE"
         ]
+      },
+      "QuizCategorySummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z]+(?:-[a-z]+)*$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quiz_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "quiz_count"
+        ],
+        "additionalProperties": false
       },
       "Difficulty": {
         "type": "string",

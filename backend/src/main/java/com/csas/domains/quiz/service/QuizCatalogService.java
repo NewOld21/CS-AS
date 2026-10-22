@@ -90,17 +90,26 @@ public class QuizCatalogService {
   }
 
   public QuizResponse get(UUID userId, UUID quizId) {
-    return loadAccessible(userId, quizId);
+    return loadAccessible(userId, quizId, false);
   }
 
   private QuizResponse loadAccessible(UUID userId, UUID quizId) {
+    return loadAccessible(userId, quizId, false);
+  }
+
+  public QuizResponse getForRecordedAttempt(UUID userId, UUID quizId) {
+    return loadAccessible(userId, quizId, true);
+  }
+
+  private QuizResponse loadAccessible(UUID userId, UUID quizId, boolean includeRetired) {
+    String statuses = includeRetired ? "('READY','RETIRED')" : "('READY')";
     var quizzes =
         jdbc.query(
             """
             SELECT id, version, stem, category, difficulty, origin
               FROM csas.quizzes
-             WHERE id=? AND status='READY' AND (origin='CURATED' OR owner_user_id=?)
-            """,
+             WHERE id=? AND status IN %s AND (origin='CURATED' OR owner_user_id=?)
+            """.formatted(statuses),
             (rs, row) ->
                 new QuizHeader(
                     rs.getObject("id", UUID.class),

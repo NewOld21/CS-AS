@@ -1,6 +1,6 @@
 # 06. ERD — 데이터 모델과 관계
 
-상태: 사용자 테이블은 C05의 Flyway V2로 구현했다. 나머지는 PostgreSQL 논리 설계 제안이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
+상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5)는 구현했다. review_states와 대화·생성·검색 모델은 논리 설계 제안이다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
 현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. ChromaDB 검색 인덱스 적재 전 단계이며 서비스 데이터 저장소 결정을 변경하지 않는다.
 
@@ -57,12 +57,12 @@ erDiagram
 | 테이블 | 주요 컬럼·키 | 제약·책임 |
 |---|---|---|
 | users | id UUID PK, email_normalized varchar(254), password_hash varchar(60), nickname varchar(40) nullable, created_at/updated_at timestamptz | email_normalized UNIQUE + lower/trim CHECK. BCrypt cost 12 CHECK. nickname 선택 입력, trim 후 1~40자. 암호 원문 저장 금지 |
-| concepts | id PK, slug UNIQUE, name_ko, name_en, domain | 예: `concept:database-index`. 표시 이름 변경에도 ID 유지 |
+| concepts | id PK, slug UNIQUE, name_ko, name_en, category, description, created_at/updated_at | 예: `concept:database-index`. 표시 이름 변경에도 ID 유지. V3 구현 |
 | concept_aliases | alias_normalized, language, concept_id FK | (alias_normalized, language, concept_id) UNIQUE. 충돌 별칭은 자동 병합하지 않음 |
-| quizzes | id PK, family_id, version, stem, category, difficulty, origin, status, owner_user_id FK?, explanation, created_at | (family_id, version) UNIQUE. origin=CURATED/AI_GENERATED, status=DRAFT/READY/RETIRED |
-| quiz_options | id PK, quiz_id FK, position, text, is_correct | (quiz_id, position) UNIQUE, (quiz_id, id) UNIQUE. 정답은 서버 전용 |
-| quiz_concepts | quiz_id FK, concept_id FK, is_primary | 복합 PK, 대표 개념 1개와 추가 개념 허용 |
-| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, is_correct, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택지와 문제의 복합 FK 필수 |
+| quizzes | id PK, family_id, version, stem, category, difficulty, origin, status, owner_user_id FK?, explanation, source_url, reviewed_at, created_at/updated_at | (family_id, version) UNIQUE. origin=CURATED/AI_GENERATED, status=DRAFT/READY/RETIRED. V3 구현 |
+| quiz_options | id PK, quiz_id FK, position, text, is_correct | (quiz_id, position) UNIQUE, (quiz_id, id) UNIQUE. 정답은 서버 전용. V3 구현 |
+| quiz_concepts | quiz_id FK, concept_id FK, is_primary | 복합 PK, 대표 개념 1개와 추가 개념 허용. V3 구현 |
+| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, correct_option_id, is_correct, explanation/source URL snapshot, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택/정답 선택지와 문제의 복합 FK. V5 구현 |
 | review_states | user_id FK, quiz_id FK, status, latest_attempt_id FK, last_reviewed_at? | (user_id, quiz_id) PK. NEEDS_REVIEW/RESOLVED |
 | chat_sessions | id PK, user_id FK, context_attempt_id FK?, created_at | 문제 문맥은 본인 풀이만. 일반 대화는 문맥 null |
 | chat_messages | id PK, session_id FK, role, content, status?, concept_ids, request_id, model_version?, index_version?, created_at | USER/ASSISTANT. answered/insufficient_evidence 상태. concept_ids는 원장 검증된 메시지 시점 스냅샷. 대화 순서는 created_at, id |

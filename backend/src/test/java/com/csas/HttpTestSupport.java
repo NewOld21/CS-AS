@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -38,6 +39,12 @@ abstract class HttpTestSupport {
     }
 
     Result request(String method, String path, Object body, boolean withCsrf) throws Exception {
+      return request(method, path, body, withCsrf, Map.of());
+    }
+
+    Result request(
+        String method, String path, Object body, boolean withCsrf, Map<String, String> headers)
+        throws Exception {
       var builder =
           HttpRequest.newBuilder(URI.create("http://localhost:" + port + path))
               .timeout(Duration.ofSeconds(30));
@@ -47,6 +54,7 @@ abstract class HttpTestSupport {
       if (body != null) {
         builder.header("Content-Type", "application/json");
       }
+      headers.forEach(builder::header);
       var response =
           client.send(
               builder

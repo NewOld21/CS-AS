@@ -1,6 +1,6 @@
 # 07. API SPEC — 공개·내부 API 명세 안내
 
-기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05~C07의 `/auth/csrf`·`/auth/signup`·`/auth/login`·`/auth/me`·`/auth/logout`을 구현했다. 학습 API는 설계 상태이며 인증 정책만 적용했다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
+기준은 [openapi.yaml](api/openapi.yaml) v0.5.0이다. C04의 익명 `GET /health`는 DB readiness를 반환한다(UP=200, DOWN=503, 상세 비노출). C05~C07의 인증 API와 C12~C13의 카테고리·READY 문제 조회·서버 채점/시도 저장 API를 구현했다. 대화·생성·me 학습 API는 설계 상태다. 표준 라이브러리로 참조를 확인할 수 있도록 YAML의 부분집합인 JSON 표기로 저장했다.
 
 기존 `/api/v1/questions` 단독 초안은 대화 기반 API로 대체했다. 기존 동작 서비스는 없으므로 호환 endpoint를 추가하지 않는다. 모든 공개 경로는 `/api/v1`로 통일한다. Python API는 [내부 계약](api/internal-rag.md)으로 분리한다.
 
@@ -18,7 +18,7 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 
 로그아웃은 인증과 새 CSRF가 있는 POST만 허용하며 204를 반환한다. 서버 세션 무효화·SecurityContext 제거·CSAS_SESSION 쿠키 만료를 수행한다. 이전 쿠키 재사용과 중복 로그아웃은 401이다. 익명 학습 요청은 POST에 CSRF가 없어도 401이며 공개 가입/로그인의 CSRF 실패와 인증된 요청의 CSRF 실패는 403 CSRF_INVALID다. 역할 부족은 403 ACCESS_DENIED, 타인 개인 리소스는 404다. 오류의 request_id는 서버에서 발급하고 X-Request-Id 응답 헤더와 일치시킨다.
 
-미구현 학습 경로는 익명 401/인증 후 404이며 빈 성공 응답을 꾸미지 않는다. 후속 학습 구현은 조회를 세션 사용자 범위로 제한하고 저장소에서 읽은 소유자로 `CurrentUser.requireOwner`를 호출해야 한다. 현재 사용자 API는 세션 본인 ID만 사용한다. 소유권·역할 거부 검사는 테스트 전용 리소스로 검증하며 실제 퀴즈/대화 저장 구현을 의미하지 않는다.
+구현된 퀴즈 경로는 세션 사용자 범위에서 CURATED 또는 본인 소유 READY 문제만 조회한다. 답안 제출의 user_id는 세션에서만 얻고 선택지 소속과 문제 상태를 서버가 확인한다. 아직 구현하지 않은 대화·생성·me 경로는 익명 401/인증 후 404이며 빈 성공 응답을 꾸미지 않는다.
 
 아래 경로에 `/api/v1` 접두사를 붙인다.
 
@@ -29,6 +29,7 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 | POST | /auth/login | 세션 생성/회전 |
 | POST | /auth/logout | 세션 무효화·쿠키 만료 |
 | GET | /auth/me | 현재 사용자 |
+| GET | /quiz/categories | 접근 가능한 READY 문제의 분야별 수 |
 | GET | /quizzes | 분야·난이도·개념 필터, 접근 가능한 READY 목록 |
 | GET | /quizzes/{quiz_id} | 정답 없는 문제/선택지 |
 | POST | /quizzes/{quiz_id}/attempts | 서버 채점·시도 저장·복습 갱신 |
@@ -48,7 +49,7 @@ GET `/auth/csrf`는 인증 전에도 허용하며 토큰을 반환한다. 모든
 
 일반 대화 생성은 `{}`, 문제 대화는 `{quiz_id, attempt_id}`다. 두 ID가 같은 본인 풀이인지 확인하고 문제·선택·정오답·개념은 서버가 복원한다. 생성 이후 재풀이해도 대화의 원래 문맥은 바뀌지 않는다.
 
-문제 응답 Quiz에는 정답·해설·is_correct·근거가 없다. AttemptResult에서만 이를 공개한다. AI 생성 문제도 같은 정책을 적용하고 개인 소유권을 검사한다. RETIRED 문제는 과거 결과로만 조회하며 새 제출은 409다.
+문제 응답 Quiz에는 정답·해설·is_correct·근거가 없다. AttemptResult에서만 이를 공개한다. 답안 제출은 정확히 한 트랜잭션에서 채점과 시도를 저장하고 저장 실패 시 500으로 롤백한다. AI 생성 문제도 같은 정책을 적용하고 개인 소유권을 검사한다. RETIRED 문제는 과거 결과로만 조회하며 새 제출은 409다.
 
 페이지 기본 limit=20, 최대 100이다. cursor는 불투명 문자열이고 필터/정렬 범위에 묶는다. 문제는 ID 오름차순, 대화/시도는 생성 시각·ID 내림차순, 메시지는 시간·ID 오름차순, 오답은 최신 시도 시각·ID 내림차순으로 제안한다. 빈 목록은 items=[], next_cursor=null이다.
 
