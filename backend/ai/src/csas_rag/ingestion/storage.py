@@ -115,4 +115,45 @@ class Store:
         tmp = path.with_suffix(".tmp")
         tmp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         tmp.replace(path)
+        self.export_jsonl(entries)
         return manifest
+
+    def export_jsonl(self, entries: list[dict]) -> None:
+        """Export committed objects only; never expose an uncommitted raw/parser result."""
+        documents = self.root / "normalized.jsonl"
+        chunk_file = self.root / "chunks.jsonl"
+        document_tmp = documents.with_suffix(".tmp")
+        chunk_tmp = chunk_file.with_suffix(".tmp")
+        with document_tmp.open("w", encoding="utf-8", newline="\n") as doc_out, chunk_tmp.open(
+            "w", encoding="utf-8", newline="\n"
+        ) as chunk_out:
+            for entry in entries:
+                payload = json.loads((self.root / entry["object_path"]).read_text(encoding="utf-8"))
+                document = payload["document"]
+                normalized = {
+                    "source_id": document["source_id"],
+                    "document_id": document["document_id"],
+                    "revision": document["revision"],
+                    "title": document["title"],
+                    "content": document["text"],
+                    "source_url": document["url"],
+                    "locator": document["locator"],
+                    "category": document["category"],
+                    "concept_ids": document["concept_ids"],
+                    "language": document["language"],
+                    "license": document["license"],
+                    "attribution": document["attribution"],
+                    "content_hash": document["content_hash"],
+                    "collected_at": document["fetched_at"],
+                    "metadata": {
+                        **document["metadata"],
+                        "version": document["version"],
+                        "headings": document["headings"],
+                        "raw_uri": document["raw_uri"],
+                    },
+                }
+                doc_out.write(json.dumps(normalized, ensure_ascii=False, sort_keys=True) + "\n")
+                for chunk in payload["chunks"]:
+                    chunk_out.write(json.dumps(chunk, ensure_ascii=False, sort_keys=True) + "\n")
+        document_tmp.replace(documents)
+        chunk_tmp.replace(chunk_file)

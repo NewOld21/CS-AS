@@ -12,7 +12,7 @@ from csas_rag.ingestion.cli import main
 from csas_rag.ingestion.collectors import create_collector
 from csas_rag.ingestion.config import PolicyError, allowed_url, load_registry
 from csas_rag.ingestion.http import Client, NoRedirect
-from csas_rag.ingestion.parsing import chunks, normalize, parse
+from csas_rag.ingestion.parsing import chunks, digest, normalize, parse
 from csas_rag.ingestion.pipeline import collect
 from csas_rag.ingestion.storage import Store
 
@@ -276,6 +276,22 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual(result["failed"], 1)
         self.assertEqual(len(list((self.store.root / "raw").glob("*.txt"))), 1)
         self.assertEqual(self.store.manifest("x")["documents"], [])
+
+    def test_manifest_exports_committed_normalized_and_chunk_jsonl(self):
+        source = fixture_source("github")
+        collect(source, self.store, factory=fixture_factory)
+        self.store.manifest("registry-hash")
+        normalized = [json.loads(line) for line in (self.store.root / "normalized.jsonl").read_text(
+            encoding="utf-8"
+        ).splitlines()]
+        exported_chunks = [json.loads(line) for line in (self.store.root / "chunks.jsonl").read_text(
+            encoding="utf-8"
+        ).splitlines()]
+        self.assertEqual(len(normalized), 1)
+        self.assertEqual(normalized[0]["source_id"], source["id"])
+        self.assertTrue(normalized[0]["source_url"].endswith("/CS/deadlock.md"))
+        self.assertEqual(normalized[0]["content_hash"], digest(normalized[0]["content"]))
+        self.assertEqual(exported_chunks[0]["document_id"], normalized[0]["document_id"])
 
 
 if __name__ == "__main__":
