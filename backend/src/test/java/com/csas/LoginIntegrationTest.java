@@ -79,6 +79,12 @@ class LoginIntegrationTest extends HttpTestSupport {
     assertThat(missing.status()).isEqualTo(401);
     assertThat(wrong.body().get("code")).isEqualTo(missing.body().get("code"));
     assertThat(wrong.body().get("message")).isEqualTo(missing.body().get("message"));
+    assertThat(wrong.body().size()).isEqualTo(4);
+    assertThat(missing.body().size()).isEqualTo(4);
+    assertThat(wrong.body().hasNonNull("request_id")).isTrue();
+    assertThat(wrong.body().hasNonNull("timestamp")).isTrue();
+    assertThat(wrong.body().toString()).doesNotContain(email, PASSWORD, "incorrect-password");
+    assertThat(missing.body().toString()).doesNotContain(PASSWORD);
     assertThat(browser.request("GET", "/api/v1/auth/me", null, false).status()).isEqualTo(401);
   }
 
