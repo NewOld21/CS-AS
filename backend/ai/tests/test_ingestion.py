@@ -17,6 +17,8 @@ from csas_rag.ingestion.http import Client, NoRedirect
 from csas_rag.ingestion.parsing import chunks, digest, normalize, parse
 from csas_rag.ingestion.pipeline import collect
 from csas_rag.ingestion.storage import Store
+from csas_rag.indexing.pipeline import build_index, load_jsonl
+from csas_rag.providers.embeddings import DeterministicTestEmbedding
 
 
 class IngestionTests(unittest.TestCase):
@@ -133,7 +135,76 @@ class IngestionTests(unittest.TestCase):
         self.assertNotIn("Navigation noise", doc["text"])
         self.assertNotIn("Footer noise", doc["text"])
         self.assertIn("allocate(page)", doc["text"])
+        self.assertEqual(doc["headings"], ["Memory management"])
+        self.assertEqual(doc["code_blocks"], ["allocate(page)"])
         self.assertIn("교착", parse(FIXTURES["wikipedia_ko"], "html", "https://example.org/")["text"])
+
+    def test_official_markdown_adapter_preserves_structure_and_metadata(self):
+        source = fixture_source()
+        source.update(adapter="markdown", format="markdown", version="docs-2.1")
+        markdown = ("---\ntitle: \"Transaction Guide\"\n---\n\n# Transactions\n\n## Isolation\n\n"
+                    "```sql\nBEGIN;\n```\n\n[Locks](locks.md)\n")
+
+        class MarkdownClient(FixtureClient):
+            def get(self, url):
+                return markdown.encode()
+
+        result = collect(source, self.store,
+                         factory=lambda s: create_collector(s, MarkdownClient(s)))
+        self.assertEqual(result["success"], 1)
+        row = self.store.manifest("x")["documents"][0]
+        doc = json.loads((self.store.root / row["object_path"]).read_text(encoding="utf-8"))["document"]
+        self.assertEqual(doc["title"], "Transaction Guide")
+        self.assertEqual(doc["headings"], ["Transactions", "Isolation"])
+        self.assertEqual(doc["code_blocks"], ["BEGIN;\n"])
+        self.assertEqual((doc["version"], doc["license"], doc["url"]),
+                         ("docs-2.1", source["license"], source["seed_urls"][0]))
+        self.assertEqual(doc["metadata"]["adapter"], "markdown")
+        self.assertEqual(doc["metadata"]["configured_version"], "docs-2.1")
+
+    def test_official_content_change_creates_a_new_revision(self):
+        source = fixture_source()
+        source.update(adapter="markdown", format="markdown")
+
+        class MarkdownClient(FixtureClient):
+            def __init__(self, configured, body):
+                super().__init__(configured)
+                self.body = body
+
+            def get(self, url):
+                return self.body.encode()
+
+        first = collect(source, self.store,
+                        factory=lambda s: create_collector(s, MarkdownClient(s, "# Version one")))
+        second = collect(source, self.store,
+                         factory=lambda s: create_collector(s, MarkdownClient(s, "# Version two")))
+        self.assertEqual((first["success"], second["changed"]), (1, 1))
+        self.assertEqual(len(self.store.manifest("x")["documents"]), 2)
+
+    def test_official_jsonl_is_accepted_by_existing_index_pipeline(self):
+        source = fixture_source()
+        source.update(adapter="markdown", format="markdown")
+
+        class MarkdownClient(FixtureClient):
+            def get(self, url):
+                return b"# Memory\n\nVirtual memory maps pages for a process."
+
+        collect(source, self.store, factory=lambda s: create_collector(s, MarkdownClient(s)))
+        manifest = self.store.manifest("registry")
+        documents = load_jsonl(self.store.root / "normalized.jsonl")
+
+        class IndexStore:
+            def __init__(self):
+                self.rows = []
+
+            def replace_document(self, chunks, embeddings, index_version):
+                self.rows.extend(chunks)
+
+        index_store = IndexStore()
+        index = build_index(documents, index_store, DeterministicTestEmbedding(8),
+                            "official-test-v1", manifest["corpus_digest"])
+        self.assertEqual((index["document_count"], index["chunk_count"]), (1, 1))
+        self.assertEqual(index_store.rows[0]["source_url"], source["seed_urls"][0])
 
     def test_failure_is_persistent_retry_succeeds(self):
         source = fixture_source()
@@ -249,6 +320,10 @@ class IngestionTests(unittest.TestCase):
         self.assertFalse(any("ossu" in json.dumps(s).lower() for s in sources))
         self.assertTrue(all((s["max_retries"], s["timeout_seconds"]) == (3, 15) for s in sources))
         self.assertEqual({s["kind"] for s in sources}, {"github", "mediawiki", "official-docs"})
+        ready = {s["id"] for s in sources if s.get("implementation_status") == "adapter-ready"}
+        self.assertEqual(ready, {"rfc-editor", "mdn-http", "postgresql"})
+        self.assertTrue(all(s["implementation_status"] in ("registered", "adapter-ready")
+                            for s in sources if s["kind"] == "official-docs"))
 
     def test_registry_rejects_ossu_source(self):
         path = self.root / "ossu.json"

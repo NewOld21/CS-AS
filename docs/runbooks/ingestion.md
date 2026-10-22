@@ -20,6 +20,8 @@ python3 scripts/ingest.py collect --source postgresql --retry-failed
 
 Wikipedia category 탐색은 같은 output의 catalog에 continuation과 BFS queue를 저장한다. discovery 실패 뒤 `--retry-failed`를 사용하면 마지막 성공 API 페이지 다음 continuation에서 재개한다. catalog를 삭제하거나 다른 output을 지정하면 이어받기 상태도 달라진다. 완료되지 않은 실행을 복구하려고 기존 output을 지우지 않는다. 429/일시 서버 오류는 `Retry-After`, 지수 backoff, jitter와 등록부의 `max_retries`/`timeout_seconds` 범위에서만 재시도한다.
 
+공식 문서는 `implementation_status=adapter-ready`여도 승인 게이트를 통과하지 않는다. 현재 제한 후보는 rfc-editor(RFC 텍스트), mdn-http(공식 저장소 Markdown), postgresql(버전 17 HTML)이며 모두 pending이므로 위 명령은 본문을 요청하지 않는다. 승인 작업에서는 candidate_version을 불변 version/commit으로 확정하고 license·attribution·terms·robots 증거와 허용 URL을 함께 검토한다. parser v2 결과는 기존 v1 staging에 섞지 말고 새 `--output`과 새 BUILDING 인덱스를 사용한다.
+
 ## 오프라인 모의 샘플
 
 ```sh

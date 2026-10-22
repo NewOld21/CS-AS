@@ -6,12 +6,12 @@ import re
 import uuid
 from collections import deque
 from typing import Protocol
-from urllib.parse import quote, urlencode, urljoin, urlsplit
-from xml.etree import ElementTree
+from urllib.parse import quote, urlencode, urlsplit
 
+from .adapters import SitemapAdapter, content_adapter
 from .config import PolicyError, document_allowed, require_approved
 from .http import Client
-from .parsing import HTMLText, digest
+from .parsing import digest
 
 
 class Collector(Protocol):
@@ -236,13 +236,9 @@ class OfficialCollector:
         if self.s.get("adapter") == "sitemap":
             sitemap = self.s["sitemap_url"]
             self.client.check_robots(sitemap)
-            root = ElementTree.fromstring(self.client.get(sitemap))
-            # Sitemap indexes are deliberately not recursively followed.
-            if root.tag.rsplit("}", 1)[-1] != "urlset":
-                raise ValueError("Only explicit urlset sitemaps supported")
-            for node in root.findall("{*}url/{*}loc"):
-                if node.text and document_allowed(self.s, node.text):
-                    queue.append((node.text, 0))
+            for url in SitemapAdapter().urls(self.client.get(sitemap)):
+                if document_allowed(self.s, url):
+                    queue.append((url, 0))
                 if len(queue) >= limit:
                     break
         seen = set()
@@ -261,23 +257,15 @@ class OfficialCollector:
     def fetch(self, item: dict):
         self.client.check_robots(item["url"])
         raw = self.client.get(item["url"]).decode("utf-8")
-        parser = HTMLText()
-        if item["format"] == "html":
-            parser.feed(raw)
-        item["discovered_links"] = [urljoin(item["url"], x).split("#")[0] for x in parser.links
-                                    if document_allowed(self.s, urljoin(item["url"], x))]
         adapter = self.s.get("adapter", "html")
-        if adapter not in ("html", "markdown", "sitemap", "rfc"):
-            raise ValueError("Unregistered official adapter")
-        metadata = {}
-        if adapter == "rfc":
-            # Preserve evidence without guessing present-day standard status.
-            metadata = {"rfc_number": re.findall(r"rfc(\d+)", item["url"], re.I),
-                        "status": re.findall(r"(?:Category|Status):\s*([^\n<]+)", raw),
-                        "obsoletes": re.findall(r"Obsoletes:\s*([^\n<]+)", raw),
-                        "updates": re.findall(r"Updates:\s*([^\n<]+)", raw),
-                        "current_status_verified": False}
-        return {**item, "revision": digest(raw), "metadata": metadata}, raw
+        extracted = content_adapter(adapter).extract(raw, item["url"])
+        item["discovered_links"] = [url.split("#")[0] for url in extracted.links
+                                    if document_allowed(self.s, url.split("#")[0])]
+        metadata = {**item.get("metadata", {}), **extracted.metadata,
+                    "configured_version": self.s.get("version")}
+        title = extracted.metadata.get("extracted_title") or item.get("title")
+        return {**item, "title": title, "format": extracted.format, "revision": digest(extracted.raw),
+                "metadata": metadata}, extracted.raw
 
 
 def create_collector(source: dict, client=None) -> Collector:

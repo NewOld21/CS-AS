@@ -772,9 +772,13 @@
       "exclude_patterns": [],
       "concept_mappings": {},
       "language": "en",
+      "implementation_status": "adapter-ready",
+      "candidate_version": "RFC 9110 (June 2022)",
       "adapter": "rfc",
       "format": "markdown",
-      "seed_urls": [],
+      "seed_urls": [
+        "https://www.rfc-editor.org/rfc/rfc9110.txt"
+      ],
       "allowed_urls": [
         "https://www.rfc-editor.org/rfc/"
       ],
@@ -850,15 +854,22 @@
       "exclude_patterns": [],
       "concept_mappings": {},
       "language": "en",
-      "adapter": "html",
-      "format": "html",
-      "seed_urls": [],
+      "implementation_status": "adapter-ready",
+      "candidate_version": "main; pin a reviewed commit before approval",
+      "adapter": "markdown",
+      "format": "markdown",
+      "seed_urls": [
+        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/index.md"
+      ],
       "allowed_urls": [
-        "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/"
       ],
       "request_urls": [
         "https://developer.mozilla.org/en-US/docs/Web/HTTP",
-        "https://developer.mozilla.org/robots.txt"
+        "https://developer.mozilla.org/robots.txt",
+        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/",
+        "https://raw.githubusercontent.com/robots.txt"
       ],
       "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
     },
@@ -1084,9 +1095,14 @@
       "exclude_patterns": [],
       "concept_mappings": {},
       "language": "en",
+      "implementation_status": "adapter-ready",
+      "candidate_version": "17",
       "adapter": "html",
       "format": "html",
-      "seed_urls": [],
+      "seed_urls": [
+        "https://www.postgresql.org/docs/17/mvcc-intro.html",
+        "https://www.postgresql.org/docs/17/transaction-iso.html"
+      ],
       "allowed_urls": [
         "https://www.postgresql.org/docs/"
       ],

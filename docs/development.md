@@ -66,7 +66,7 @@ python3 scripts/task.py handoff --state-dir /tmp/csas-run
 
 ## 서비스 생성 때 결정할 항목
 
-Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 승인 수집 후 `python3 scripts/rag_index.py --index-version <version>`으로 BUILDING Chroma 인덱스를 만들며, 통과한 검색 평가 JSON을 `--activate-evaluation`으로 명시해야 ACTIVE가 된다. `RAG_SERVICE_TOKEN`과 공급자 환경변수를 주입한 뒤 `python3 scripts/rag_service.py --manifest <active-manifest>`로 loopback 내부 API를 실행한다. 결정론 임베딩은 테스트 전용이고 실제 인덱스에는 사용하지 않는다.
+Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·Wikipedia 이어받기·공식 문서 adapter·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 승인 수집 후 `python3 scripts/rag_index.py --index-version <version>`으로 BUILDING Chroma 인덱스를 만들며, 통과한 검색 평가 JSON을 `--activate-evaluation`으로 명시해야 ACTIVE가 된다. `RAG_SERVICE_TOKEN`과 공급자 환경변수를 주입한 뒤 `python3 scripts/rag_service.py --manifest <active-manifest>`로 loopback 내부 API를 실행한다. 결정론 임베딩은 테스트 전용이고 실제 인덱스에는 사용하지 않는다.
 스택과 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md)으로 확정했다. 아래는 버전·실행 설정 결정 항목이며, 22시간 제한은 적용하지 않는다.
 - JDK·Spring Boot·Gradle Wrapper와 포맷·정적 분석 플러그인
 - Node·Vue·TypeScript·패키지 매니저·lockfile

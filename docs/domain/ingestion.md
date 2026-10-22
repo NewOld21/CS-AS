@@ -20,6 +20,7 @@
 | version | 기술 버전/검토한 snapshot. latest라면 실제 버전도 기록 |
 | seed_titles / seed_categories / excluded_categories | Wikipedia 초기 CS 개념·카테고리와 제외 category glob |
 | seed_urls / sitemap_url | 검토한 공식 설명 문서·urlset sitemap |
+| implementation_status | 공식 문서 `registered` 또는 제한 URL까지 준비된 `adapter-ready`. 승인 상태와 별개 |
 | concept_mappings | native page ID/파일 경로/URL → 검수한 concept ID 목록 |
 
 모든 HTTP redirect는 따라가기 전에 거부한다. 다른 host, 경로 접두어 위장, 자격증명 포함 URL, 인코딩된 경로 탈출을 거부한다. HTML/Markdown 다운로드 전 robots.txt를 확인하며 robots 접근 실패·거부도 성공으로 처리하지 않는다. GitHub/MediaWiki는 검토한 공식 API 범위를 사용한다. 외부 링크·이미지는 메타데이터만 보존하며 자동 다운로드하지 않는다. 원문 명령문은 데이터이며 shell로 실행하지 않는다. 네트워크 격리는 기존 외부 실행 관리자가 집행한다.
@@ -30,10 +31,10 @@
 
 - GitHub: commit SHA 고정 → tree → CS 경로 Markdown blob. README/CONTRIBUTING/index/라이선스 안내 제외, truncated tree 실패. commit·blob SHA·파일·분야 경로 보존. 저장한 문서/SHA는 blob 다운로드를 생략하며 새 SHA는 새 리비전이다.
 - Wikipedia: 한·영 seed와 query/revisions API로 page ID/revision/timestamp/Wikidata ID 수집, parse oldid로 같은 리비전 본문·카테고리·관련 문서·언어 연결 보존. `categorymembers`의 page/subcat을 BFS로 순회하고 반환된 continuation 필드 전체를 다음 요청에 전달한다. 방문 category·문서 ID를 중복 제거하며 깊이·문서 수·제외 category로 범위를 제한한다. 관련 링크는 재귀 방문하지 않는다. Wikidata ID는 개념 후보 근거이며 자동 승인하지 않는다.
-- 공식 문서: 명시적 seed의 html/markdown, 제한된 urlset sitemap, RFC 텍스트 adapter. github adapter는 공개 문서 저장소 Collector를 재사용한다. 사이트마다 adapter·허용 경로·버전·깊이·CS seed를 검토한다. 전용 공식 API가 필요한 사이트는 프로토콜에 adapter를 추가한다. 모든 공식 사이트의 전용 파서를 구현했다는 뜻이 아니다.
+- 공식 문서: 명시적 seed의 HTML/Markdown, 제한된 urlset sitemap, RFC 텍스트 adapter. `adapters.py`의 공통 계약이 원문 형식·링크·추출 메타데이터를 반환하고 Collector가 허용 URL·robots·깊이·건수와 저장을 담당한다. github adapter는 공개 문서 저장소 Collector를 재사용한다. 사이트마다 adapter·허용 경로·버전·깊이·CS seed를 검토한다. 전용 공식 API가 필요한 사이트만 별도 adapter를 추가한다. 모든 공식 사이트의 전용 파서를 구현했다는 뜻이 아니다.
 - RFC: 번호·Category/Status·Obsoletes/Updates 원문 보존. 후대 RFC의 대체 관계·현재 상태 검증 전에는 current_status_verified=false이며 최신 표준으로 취급하지 않는다.
 
-공식 출처 seed_urls는 의도적으로 비어 있다. P0부터 정확한 버전·설명 문서·본문 추출 품질과 이용 조건을 검토한다. C++ 공개 안내와 유료 ISO 명세, MDN JavaScript와 규범 ECMAScript 명세를 구분한다.
+공식 출처 중 RFC 9110 텍스트, MDN HTTP 공식 저장소 Markdown, PostgreSQL 17 MVCC/transaction isolation HTML만 `adapter-ready` 후보 URL로 제한했다. 셋 모두 usage_review=pending, enabled=false, storage_policy=metadata-only이며 실제 본문 수집 승인이 아니다. MDN `main` 후보는 승인 전 검토한 commit으로 고정해야 한다. 나머지 75개 공식 출처는 `registered`이고 seed가 비어 있다. 정확한 버전·본문 추출 품질·license/attribution·terms·robots를 출처별로 검토한다. C++ 공개 안내와 유료 ISO 명세, MDN 문서와 규범 명세를 구분한다.
 
 ## 파이프라인·저장 계약
 
@@ -44,7 +45,7 @@
 - document_id: source_id와 native key(파일 경로, Wiki page ID, 공식 URL)의 안정된 해시. concept_id와 별개다.
 - revision: GitHub commit SHA, Wiki revision ID, 공식 원본 콘텐츠 SHA-256. 기술 version은 별도 필드다.
 - 문서: source_id/document_id/revision/url/title/locator/language/license/attribution/content_hash/raw_hash/fetched_at/version/category/concept_ids/개념 매핑 버전/parser_version 및 출처별 metadata 보존.
-- Markdown: 제목·소제목·코드 블록·이미지·링크 보존. HTML: main/article 우선, script/style/nav/header/footer 제거. 복잡한 사이트는 승인 전 표본 검토한다.
+- Markdown: 원문과 제목·소제목·코드 블록·이미지·링크 보존. HTML: main/article 우선, script/style/nav/header/footer 제거 후 제목·소제목·pre/code를 보존한다. 복잡한 사이트는 승인 전 표본 검토한다. 이 변경의 parser_version은 `html-markdown-v2`이며 v1 staging/인덱스를 제자리 수정하지 않고 새 output/index에서 재구축한다.
 - chunk_id: 문서·리비전·parser/청크 설정·순번의 안정된 해시. chars-1200-v1은 index 준비용이며 정제본 start_char/end_char 위치를 보존한다. 검색 품질이 검증된 토큰 청킹은 후속이다.
 - 문서 concept_mappings는 등록 concepts 원장과 대조한 검수 결과만 입력한다. 청크 concept_ids는 빈 배열로 준비하며 문서 태그를 무조건 전파하지 않는다. 자동 개념 추출·DB 원장 동기화는 미구현이다.
 - 같은 document/revision 재수집은 duplicate다. 동일 revision의 원문 충돌은 실패한다. 다른 문서의 같은 본문은 exact_duplicate_content 표시와 함께 출처별로 보존한다. 같은 개념의 다른 설명을 제거하지 않는다.
@@ -62,6 +63,6 @@ HTTP 429/500/502/503/504와 네트워크/timeout만 지수 backoff와 0~0.5초 j
 
 ## 검증·확장
 
-명령은 [수집 실행 안내](../runbooks/ingestion.md), 증거는 [008 계획](../exec-plans/active/008-data-ingestion.md)을 따른다. 모의 샘플은 라이브 본문 수집 성공으로 보고하지 않는다.
+명령은 [수집 실행 안내](../runbooks/ingestion.md), 증거는 [완료된 008 계획](../exec-plans/completed/008-data-ingestion.md)을 따른다. 모의 샘플은 라이브 본문 수집 성공으로 보고하지 않는다.
 
 후속 ChromaDB 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 현재 임베딩 생성·PostgreSQL migration·Graph 연결은 수행하지 않는다.

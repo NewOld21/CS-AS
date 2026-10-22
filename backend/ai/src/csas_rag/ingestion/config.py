@@ -54,8 +54,15 @@ def load_registry(path: Path) -> list[dict]:
             if not isinstance(s.get("excluded_categories", []), list):
                 raise ValueError(f"Invalid MediaWiki exclusions: {s['id']}")
         if s["kind"] == "official-docs":
+            s.setdefault("implementation_status", "registered")
+            configured["implementation_status"] = s["implementation_status"]
+            if s["implementation_status"] not in ("registered", "adapter-ready"):
+                raise ValueError(f"Invalid official implementation status: {s['id']}")
             if not s.get("base_url") or s.get("adapter") not in ("html", "markdown", "sitemap", "rfc", "github"):
                 raise ValueError(f"Incomplete official documentation source: {s['id']}")
+            if s["implementation_status"] == "adapter-ready" and not (
+                    s.get("seed_urls") or s.get("sitemap_url") or s.get("repository")):
+                raise ValueError(f"Adapter-ready source has no reviewed candidate scope: {s['id']}")
         if s["enabled"]:
             require_approved(s)
     return sources

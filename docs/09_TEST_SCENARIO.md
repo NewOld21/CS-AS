@@ -22,7 +22,7 @@ C04~C07 Java 검사: `python scripts/backend.py check` 또는 [개발 안내](de
 
 C09~C13 Java 검사는 같은 전용 PostgreSQL에서 V3~V5 migration, 15문항/60선택지 분포와 단일 정답, 카테고리·필터·cursor·상세, 정답/해설 비노출, 서버 채점, 다른 문제 선택지 거부, DRAFT/RETIRED, 사용자별 시도, 동일 키 재생/충돌, 동시 재전송 단일 저장과 강제 DB 실패 롤백을 검사한다. `QuizSchemaIntegrationTest`, `QuizSeedIntegrationTest`, `QuizCatalogIntegrationTest`, `QuizAttemptIntegrationTest`가 이 범위의 직접 증거다.
 
-C14~C17 검사는 Python 41개(라이브 Chroma 조건부 1개 제외), 실제 ChromaDB 1.5.3 upsert/query 1개, Spring/PostgreSQL 전체 35개, Vue 단위 10개와 Playwright UI 8개를 수행한다. 수집 JSONL·안정 청크·인덱스 재적재, 모델/차원 불일치, 위조 인용·근거 부족·내부 인증/deadline, 본인 풀이 문맥 복원·타인 404·메시지/인용 저장, 퀴즈→채점→AS→HTTPS 출처 표시를 각각 검증한다. 외부 LLM·승인 코퍼스 품질 평가는 이 mock/fixture 검사로 대체하지 않는다.
+C14~C20 검사는 Python 50개(라이브 Chroma 조건부 1개 제외), 실제 ChromaDB 1.5.3 upsert/query 1개, Spring/PostgreSQL 전체 35개, Vue 단위 10개와 Playwright UI 8개를 수행한다. 수집 JSONL·Wikipedia 복구 탐색·공식 문서 adapter·안정 청크·인덱스 재적재, 모델/차원 불일치, 위조 인용·근거 부족·내부 인증/deadline, 본인 풀이 문맥 복원·타인 404·메시지/인용 저장, 퀴즈→채점→AS→HTTPS 출처 표시를 각각 검증한다. 외부 LLM·승인 코퍼스 품질 평가는 이 mock/fixture 검사로 대체하지 않는다.
 
 Python 독립 검사: `python3 -m unittest discover -s backend/ai/tests -p 'test_*.py' -v`. 수집 정책·JSONL 외에도 Wikipedia BFS/continuation/깊이·건수·제외 범위·중복·이어받기, HTTP 429/Retry-After/timeout/비재시도 4xx, 구조 청킹·인덱스·검색·근거 답변·내부 HTTP를 검사한다. 외부 API 검사는 mock과 별도이며 기본 검사에서 라이브 호출하지 않는다. `CSAS_CHROMA_INTEGRATION=1`은 고정 클라이언트와 실제 ChromaDB가 필요하다. [샘플 실행](runbooks/ingestion.md)은 모의 응답이며 실제 코퍼스 검색 품질을 대체하지 않는다.
 

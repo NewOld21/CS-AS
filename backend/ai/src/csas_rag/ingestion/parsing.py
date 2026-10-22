@@ -6,7 +6,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin
 
 CHUNK_VERSION = "chars-1200-v1"
-PARSER_VERSION = "html-markdown-v1"
+PARSER_VERSION = "html-markdown-v2"
 
 
 def digest(value: str) -> str:
@@ -21,9 +21,18 @@ class HTMLText(HTMLParser):
         self.in_main = 0
         self.skip = 0
         self.links = []
+        self.main_links = []
         self.images = []
+        self.main_images = []
         self.title = []
         self.in_title = False
+        self.heading = None
+        self.headings = []
+        self.main_headings = []
+        self.code_depth = 0
+        self.code = []
+        self.code_blocks = []
+        self.main_code_blocks = []
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -35,10 +44,20 @@ class HTMLText(HTMLParser):
             self.in_title = True
         if self.skip:
             return
+        if re.fullmatch(r"h[1-6]", tag):
+            self.heading = []
+        if tag in ("pre", "code"):
+            if self.code_depth == 0:
+                self.code = []
+            self.code_depth += 1
         if tag == "a" and a.get("href"):
             self.links.append(a["href"])
+            if self.in_main:
+                self.main_links.append(a["href"])
         if tag == "img" and a.get("src"):
             self.images.append({"url": a["src"], "alt": a.get("alt", "")})
+            if self.in_main:
+                self.main_images.append({"url": a["src"], "alt": a.get("alt", "")})
         if tag in ("p", "br", "div", "li", "pre", "tr") or re.fullmatch(r"h[1-6]", tag):
             self.handle_data("\n")
 
@@ -53,12 +72,31 @@ class HTMLText(HTMLParser):
             self.in_main = max(0, self.in_main - 1)
         if tag == "title":
             self.in_title = False
+        if re.fullmatch(r"h[1-6]", tag) and self.heading is not None:
+            heading = "".join(self.heading).strip()
+            if heading:
+                self.headings.append(heading)
+                if self.in_main:
+                    self.main_headings.append(heading)
+            self.heading = None
+        if tag in ("pre", "code") and self.code_depth:
+            self.code_depth -= 1
+            if self.code_depth == 0:
+                code = "".join(self.code).strip()
+                if code:
+                    self.code_blocks.append(code)
+                    if self.in_main:
+                        self.main_code_blocks.append(code)
         if tag in ("p", "div", "li", "pre") or re.fullmatch(r"h[1-6]", tag):
             self.handle_data("\n")
 
     def handle_data(self, data):
         if self.in_title:
             self.title.append(data)
+        if self.heading is not None:
+            self.heading.append(data)
+        if self.code_depth:
+            self.code.append(data)
         if not self.skip and not self.in_title:
             self.parts.append(data)
             if self.in_main:
@@ -70,11 +108,11 @@ def parse(raw: str, fmt: str, url: str) -> dict:
         parser = HTMLText()
         parser.feed(raw)
         text = "".join(parser.main or parser.parts)
-        links = parser.links
-        images = parser.images
+        links = parser.main_links if parser.main else parser.links
+        images = parser.main_images if parser.main else parser.images
         title = "".join(parser.title).strip()
-        headings = []
-        code = []
+        headings = parser.main_headings if parser.main else parser.headings
+        code = parser.main_code_blocks if parser.main else parser.code_blocks
     else:
         text = raw
         headings = re.findall(r"^#{1,6}\s+(.+)$", raw, re.M)
