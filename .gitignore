@@ -23,3 +23,8 @@ dist/
 .gradle/
 build/
 .DS_Store
+# IDE
+.vscode/
+
+# Java IDE/compiler output
+backend/bin/
