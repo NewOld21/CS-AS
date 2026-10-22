@@ -1,6 +1,8 @@
 # Current task
 
-현재 작업: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/active/016-c21-c23-operational-rag.md). C21 증분 인덱싱과 C22 실제 코퍼스 20문항 검색 평가를 완료했다. 현재 C23 사용자별 대화 조회·복원·장애/멱등 처리를 검증하고 별도 커밋한다.
+현재 작업: C21~C23을 완료했으며 다음 구현 범위는 [005 학습 루프 완성](exec-plans/active/005-complete-learning-loop.md)의 복습 상태·학습 이력·관련 문제 생성이다.
+
+최신 완료 마일스톤: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/completed/016-c21-c23-operational-rag.md). content hash 기반 증분 인덱싱, 실제 코퍼스 20문항 검색 평가, 사용자별 일반/퀴즈 대화 목록·복원과 멱등·실패 처리를 구현했다. Docker 전체 스택에서 Spring 통합 검사, Vue 단위·브라우저 검사와 실제 RAG E2E를 검증했다.
 
 C22 운영 상태: `csas-live-20261023-v5`는 36문서/1,024청크, `text-embedding-3-large`
 3,072차원 ACTIVE 인덱스다. 20문항 문서 평가는 Hit/Recall@1 0.90, @3 0.90, @5 0.95,
@@ -20,7 +22,7 @@ MRR 0.9125이며 조건부 HTTP 요청 1문항이 Top-5에서 누락됐다.
 
 이전 완료: [009 C02 아키텍처](exec-plans/completed/009-c02-architecture.md), [010 C03 로컬 DB](exec-plans/completed/010-c03-local-db.md). ADR 0004에 따라 PostgreSQL 서비스 DB + ChromaDB 검색 저장소, Spring Security 쿠키 세션을 채택했다. 두 DB의 실제 연결·검색과 restart/down-up 영속성, Linux 공통 검사 19개가 통과했다. 아래 008 수집 작업의 미완료 상태는 유지한다.
 
-다음 작업: C21 변경·삭제 기반 증분 인덱싱 → C22 15~20문항 검색 평가 데이터셋 → C23 사용자 대화 영속·접근 격리 보강. 이어서 review_states·학습 이력과 [005](exec-plans/active/005-complete-learning-loop.md)의 관련 문제 생성을 진행한다.
+다음 작업: review_states·학습 이력과 [005](exec-plans/active/005-complete-learning-loop.md)의 관련 문제 생성을 진행한다.
 
 - 최신 완료: [007 문서 이름·참조 정리](exec-plans/completed/007-document-naming.md). 주 문서를 00~14로 구성하고 링크·진입점·검사·보호 경로를 갱신했다.
 - 기준: [PRD](01_PRD.md), [ADR 0003](13_PHASE0_DECISIONS.md), [ADR 0004](decisions/0004-stack.md). 22시간 제한 없이 학습 루프 전체가 1차 목표다.

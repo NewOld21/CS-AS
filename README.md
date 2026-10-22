@@ -6,7 +6,7 @@
 
 CS/AS는 퀴즈를 푼 뒤 모르는 개념을 근거 기반 AI에게 질문하고, 관련 문제와 복습으로 학습을 이어가는 CS 학습 플랫폼입니다. 퀴즈와 챗봇을 별도 기능으로 끝내지 않고 **퀴즈 → 질문 → 이해 → 추가 퀴즈 → 복습**을 하나의 학습 문맥과 이력으로 연결하는 것이 목표입니다.
 
-현재 인증, 검수 퀴즈 조회·채점, 문제 문맥 기반 AS 대화, Vector RAG 코드 경로, Vue 학습 화면, CS 문서 수집·정규화 파이프라인까지 구현되어 있습니다. 실제 서비스용 코퍼스와 ACTIVE 인덱스는 출처 이용 조건 검토 및 검색 품질 평가 후 활성화합니다.
+현재 인증, 검수 퀴즈 조회·채점, 사용자별 대화 저장·복원, Vector RAG, Vue 학습 화면, CS 문서 수집·정규화·증분 인덱싱과 검색 품질 평가까지 구현되어 있습니다. 승인된 실제 코퍼스와 평가를 거친 ACTIVE 인덱스를 Docker 전체 스택에서 사용합니다.
 
 ## 핵심 기능
 
@@ -14,12 +14,12 @@ CS/AS는 퀴즈를 푼 뒤 모르는 개념을 근거 기반 AI에게 질문하�
 |---|---|---|
 | 인증 | 회원가입, 로그인, 로그아웃, 세션·CSRF, 사용자별 접근 제어 | 구현 |
 | CS 퀴즈 | 분야/목록/상세 조회, 정답 비노출, 서버 채점, 풀이 시도 멱등 저장 | 구현 |
-| 문제 연계 AS | 서버가 문제·선택 답안·정오답·해설·개념 문맥을 복원해 RAG에 전달 | 구현 |
-| Vector RAG | 구조 기반 청킹, 버전별 Chroma 인덱스, 검색 근거·인용 검증, 근거 부족 처리 | 코드 경로 구현·실코퍼스 평가 대기 |
-| 학습 UI | 랜딩, 가입·로그인, 계정, 퀴즈 풀이·결과, 문맥 AS 채팅·출처 표시 | 구현 |
+| 문제 연계 AS | 문제 문맥 RAG, 일반/퀴즈 대화 저장·목록·복원, 요청 멱등성과 실패 상태 | 구현 |
+| Vector RAG | 구조 기반 청킹, 증분 Chroma 인덱스, 검색 근거·인용 검증, 20문항 품질 평가 | 구현 |
+| 학습 UI | 랜딩, 인증, 계정, 퀴즈 풀이·결과, 문맥 AS 채팅·출처·이전 대화 복원 | 구현 |
 | 데이터 수집 | GitHub, 한·영 Wikipedia, 공식 HTML/Markdown/RFC/sitemap 수집·정규화 | 구현·출처 승인 대기 |
 | AI 관련 문제 | 검색 근거 기반 생성·독립 검증·개인 문제 저장 | 후속 |
-| 복습·마이페이지 | 통계, 오답 상태, 재풀이, 대화 복원 | 후속 |
+| 복습·마이페이지 | 대화 복원 구현; 통계, 오답 상태와 재풀이는 후속 | 일부 구현 |
 | Graph RAG | 개념 관계·근거 기반 지식 지도와 하이브리드 검색 | 2차 확장 |
 
 ## 동작 구조
@@ -91,7 +91,7 @@ docker compose down
 
 `down`은 PostgreSQL·Chroma named volume과 frontend/Gradle 캐시를 보존합니다. 데이터를 명시적으로 폐기하는 경우가 아니라면 `--volumes`를 사용하지 않습니다.
 
-> 기본 `ai` 컨테이너는 `backend/.env`의 GMS Chat/Embedding을 실제 호출하되, 아직 승인 코퍼스가 없어 15개 로컬 검증 문서를 별도 `gms-live-dev-v1` 컬렉션에 저장합니다. 외부 호출 없이 UI만 개발하려면 루트 `.env`에서 `RAG_DEV_PROVIDER=deterministic-test`, `RAG_ACTIVE_INDEX=local-dev-v1`을 사용합니다. 실제 운영은 승인된 코퍼스와 평가를 통과한 ACTIVE 인덱스가 필요하며, 로컬 fixture 결과를 운영 품질로 간주하지 않습니다.
+> 기본 `ai` 컨테이너는 `backend/.env`의 GMS Chat/Embedding을 실제 호출합니다. 현재 ACTIVE 인덱스 `csas-live-20261023-v5`는 승인된 36문서의 1,024청크를 `text-embedding-3-large` 3,072차원으로 구축했습니다. 외부 호출 없이 UI만 개발하려면 루트 `.env`에서 `RAG_DEV_PROVIDER=deterministic-test`, `RAG_ACTIVE_INDEX=local-dev-v1`을 사용합니다.
 
 ## 주요 API
 
@@ -102,7 +102,7 @@ docker compose down
 | 로그인·현재 사용자 | `POST /api/v1/auth/login`, `GET /api/v1/auth/me` |
 | 퀴즈 | `GET /api/v1/quiz/categories`, `GET /api/v1/quizzes`, `GET /api/v1/quizzes/{quizId}` |
 | 답안 제출 | `POST /api/v1/quizzes/{quizId}/attempts` |
-| AS 대화 | `POST /api/v1/chat/sessions`, `POST /api/v1/chat/sessions/{sessionId}/messages` |
+| AS 대화 | `GET/POST /api/v1/chat/sessions`, `GET /api/v1/chat/sessions/{sessionId}/messages`, `POST /api/v1/chat/sessions/{sessionId}/messages` |
 
 전체 요청·응답 계약은 [API 명세](docs/07_API_SPEC.md)와 [OpenAPI](docs/api/openapi.yaml)를 참고하세요.
 
@@ -114,7 +114,7 @@ docker compose down
 - 한국어 Wikipedia의 제한된 CS 문서와 category BFS(영어판은 승인 대기)
 - 공식 기술 문서의 HTML, Markdown, RFC 텍스트 및 제한된 sitemap
 
-OSSU는 현재 수집 대상과 등록부에서 제외되어 있으며 OSSU 과목·링크도 수집하지 않습니다. 출처는 `enabled=true`, `usage_review=approved`, 라이선스·저작자 표시·약관·robots 검토가 모두 충족되어야 본문을 수집할 수 있습니다. 현재 Gyoogle, 한국어 Wikipedia, RFC 9110, MDN HTTP, PostgreSQL 17의 5개 출처가 승인됐고 나머지 76개는 대기 상태입니다. 실코퍼스 36문서를 `csas-live-20261023-v4` ACTIVE 인덱스로 서비스합니다.
+OSSU는 현재 수집 대상과 등록부에서 제외되어 있으며 OSSU 과목·링크도 수집하지 않습니다. 출처는 `enabled=true`, `usage_review=approved`, 라이선스·저작자 표시·약관·robots 검토가 모두 충족되어야 본문을 수집할 수 있습니다. 현재 Gyoogle, 한국어 Wikipedia, RFC 9110, MDN HTTP, PostgreSQL 17의 5개 출처가 승인됐고 나머지 76개는 대기 상태입니다. 실코퍼스 36문서·1,024청크를 `csas-live-20261023-v5` ACTIVE 인덱스로 서비스합니다.
 
 ```sh
 # 등록부 확인

@@ -42,9 +42,21 @@ export interface Attempt {
 }
 export interface ChatSession {
   id: string
+  title: string
   quiz_id: string | null
   attempt_id: string | null
   created_at: string
+  updated_at: string
+}
+export interface ChatMessage {
+  id: string
+  role: 'USER' | 'ASSISTANT'
+  content: string | null
+  status: 'pending' | 'answered' | 'insufficient_evidence' | 'failed' | null
+  created_at: string
+  request_id: string | null
+  concept_ids: string[]
+  sources: Source[]
 }
 export interface ChatAnswer {
   request_id: string
@@ -67,9 +79,23 @@ export const submitAttempt = (quizId: string, optionId: string) =>
     { 'Idempotency-Key': crypto.randomUUID() },
   )
 export const createContextChat = (quizId: string, attemptId: string) =>
-  post<ChatSession>('/chat/sessions', { quiz_id: quizId, attempt_id: attemptId })
+  post<ChatSession>('/chat/sessions', { title: null, quiz_id: quizId, attempt_id: attemptId })
+export const createGeneralChat = (title?: string) =>
+  post<ChatSession>('/chat/sessions', { title: title ?? null, quiz_id: null, attempt_id: null })
+export const listChatSessions = (page = 0, limit = 20) =>
+  request<{ items: ChatSession[]; next_page: number | null }>(
+    `/chat/sessions?page=${page}&limit=${limit}`,
+  )
+export const getChatMessages = (sessionId: string, page = 0, limit = 50) =>
+  request<{ items: ChatMessage[]; next_page: number | null }>(
+    `/chat/sessions/${sessionId}/messages?page=${page}&limit=${limit}`,
+  )
 export const ask = (sessionId: string, question: string) =>
-  post<ChatAnswer>(`/chat/sessions/${sessionId}/messages`, { question })
+  post<ChatAnswer>(
+    `/chat/sessions/${sessionId}/messages`,
+    { question },
+    { 'Idempotency-Key': crypto.randomUUID() },
+  )
 
 export function safeSourceUrl(value: string): string | null {
   try {

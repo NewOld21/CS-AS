@@ -1,6 +1,6 @@
 # 05. ARCHITECTURE — 서비스·프로젝트 구조
 
-상태: C04~C13의 인증·정적 퀴즈·채점에 이어 C14~C17의 수집 JSONL, 버전별 Chroma 인덱싱, Python 내부 답변 API, Spring 대화 저장/문맥 복원, Vue 퀴즈·AS 화면을 구현했다. 실제 승인 코퍼스·ACTIVE 인덱스·외부 모델 자격증명은 아직 공급하지 않았으므로 운영 RAG 활성화와 품질 평가는 남아 있다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB 경계는 유지한다.
+상태: C04~C20의 인증·퀴즈·수집·RAG에 이어 C21 증분 인덱싱, C22 검색 평가, C23 사용자별 대화 저장·복원을 구현했다. Spring은 USER/pending 메시지를 짧은 트랜잭션으로 먼저 저장하고 외부 Python RAG 호출 후 답변·인용을 별도 트랜잭션으로 확정한다. Vue + Spring Boot + Python RAG + PostgreSQL + ChromaDB 경계는 유지한다.
 
 ## 서비스 경계
 

@@ -103,6 +103,8 @@ test('account distinguishes offline loading from login expiry and renders no fak
 test('quiz submission opens an owned contextual AS chat and renders trusted sources', async ({
   page,
 }) => {
+  let sessionCreated = false
+  let answerStored = false
   const quiz = {
     id: 'quiz-1',
     version: 1,
@@ -142,19 +144,73 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
       },
     })
   })
+  const session = {
+    id: 'chat-1',
+    title: '데이터베이스 인덱스의 단점은?',
+    quiz_id: 'quiz-1',
+    attempt_id: 'attempt-1',
+    created_at: '2026-10-22T00:00:00Z',
+    updated_at: '2026-10-22T00:00:00Z',
+  }
+  await page.route('**/api/v1/chat/sessions?*', (route) =>
+    route.fulfill({ json: { items: sessionCreated ? [session] : [], next_page: null } }),
+  )
   await page.route('**/api/v1/chat/sessions', async (route) => {
-    expect(route.request().postDataJSON()).toEqual({ quiz_id: 'quiz-1', attempt_id: 'attempt-1' })
-    await route.fulfill({
-      json: {
-        id: 'chat-1',
-        quiz_id: 'quiz-1',
-        attempt_id: 'attempt-1',
-        created_at: '2026-10-22T00:00:00Z',
-      },
+    expect(route.request().postDataJSON()).toEqual({
+      title: null,
+      quiz_id: 'quiz-1',
+      attempt_id: 'attempt-1',
     })
+    sessionCreated = true
+    await route.fulfill({ json: session })
   })
-  await page.route('**/api/v1/chat/sessions/chat-1/messages', (route) =>
-    route.fulfill({
+  await page.route('**/api/v1/chat/sessions/chat-1/messages*', async (route) => {
+    if (route.request().method() === 'GET') {
+      await route.fulfill({
+        json: {
+          items: answerStored
+            ? [
+                {
+                  id: 'user-message-1',
+                  role: 'USER',
+                  content: '왜 틀렸어?',
+                  status: null,
+                  created_at: '2026-10-22T00:00:00Z',
+                  request_id: null,
+                  concept_ids: [],
+                  sources: [],
+                },
+                {
+                  id: 'message-1',
+                  role: 'ASSISTANT',
+                  content: '인덱스는 읽기를 빠르게 하지만 쓰기 때 유지 비용이 듭니다.',
+                  status: 'answered',
+                  created_at: '2026-10-22T00:00:01Z',
+                  request_id: 'req-1',
+                  concept_ids: ['concept:database-index'],
+                  sources: [
+                    {
+                      source_id: 'postgres',
+                      document_id: 'doc-1',
+                      revision: '18',
+                      chunk_id: 'chunk-1',
+                      index_version: 'cs-v1',
+                      title: 'PostgreSQL Indexes',
+                      url: 'https://www.postgresql.org/docs/current/indexes.html',
+                      locator: '11.1',
+                    },
+                  ],
+                },
+              ]
+            : [],
+          next_page: null,
+        },
+      })
+      return
+    }
+    expect(route.request().headers()['idempotency-key']).toBeTruthy()
+    answerStored = true
+    await route.fulfill({
       json: {
         request_id: 'req-1',
         message_id: 'message-1',
@@ -174,8 +230,8 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
         ],
         concept_ids: ['concept:database-index'],
       },
-    }),
-  )
+    })
+  })
   await page.goto('/learn')
   await page.getByText('항상 저장 공간을 줄인다').click()
   await page.getByRole('button', { name: '답안 제출' }).click()
@@ -187,4 +243,7 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
     'href',
     'https://www.postgresql.org/docs/current/indexes.html',
   )
+  await page.reload()
+  await page.getByRole('button', { name: '이전 대화' }).click()
+  await expect(page.getByText('인덱스는 읽기를 빠르게 하지만')).toBeVisible()
 })

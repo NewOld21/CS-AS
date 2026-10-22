@@ -4,6 +4,7 @@ WORKDIR /workspace/frontend
 
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npx playwright install --with-deps chromium
 
 COPY . .
 

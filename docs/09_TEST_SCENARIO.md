@@ -1,5 +1,14 @@
 # 09. TEST SCENARIO — 검증 기준·테스트 시나리오
 
+## C23 사용자별 대화 영속화
+
+- 일반/퀴즈 문맥 세션 생성과 title·updated_at 저장을 확인한다.
+- USER → ASSISTANT 순서를 DB sequence로 보장하고 답변·citation 복원을 확인한다.
+- 목록·상세·메시지 조회 및 쓰기에서 타 사용자 접근이 모두 404인지 확인한다.
+- 같은 Idempotency-Key·질문은 저장 응답을 재생하고 다른 질문은 409인지 확인한다.
+- RAG timeout은 ASSISTANT failed로 남고 같은 키 재시도에서 USER 메시지가 중복되지 않는지 확인한다.
+- Vue가 이전 세션을 선택해 메시지·citation·실패 상태를 새로고침 후 복원하는지 확인한다.
+
 ## C22 Retrieval evaluation
 
 - `retrieval-v1`이 20문항이며 5개 분야에 4문항씩 배분됐는지 검사한다.

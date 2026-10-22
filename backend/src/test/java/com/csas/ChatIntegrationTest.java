@@ -2,9 +2,12 @@ package com.csas;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.csas.common.exception.ApiException;
 import com.csas.integrations.rag.HttpRagGateway;
 import com.csas.integrations.rag.RagGateway;
 import java.util.List;
@@ -27,8 +30,7 @@ class ChatIntegrationTest extends HttpTestSupport {
   @BeforeEach
   void configureRag() {
     when(rag.activeIndex()).thenReturn("cs-test-v1");
-    when(rag.answer(any()))
-        .thenAnswer(
+    doAnswer(
             invocation -> {
               RagGateway.AnswerRequest request = invocation.getArgument(0);
               var chunk =
@@ -50,7 +52,9 @@ class ChatIntegrationTest extends HttpTestSupport {
                   "cs-test-v1",
                   "mock-v1",
                   "answer-v1");
-            });
+            })
+        .when(rag)
+        .answer(any());
   }
 
   @Test
@@ -75,7 +79,8 @@ class ChatIntegrationTest extends HttpTestSupport {
                 "POST",
                 "/api/v1/chat/sessions/" + sessionId + "/messages",
                 Map.of("question", "왜 틀렸어?"),
-                true);
+                true,
+                Map.of("Idempotency-Key", UUID.randomUUID().toString()));
     assertThat(answer.status()).isEqualTo(200);
     assertThat(answer.body().get("status").asText()).isEqualTo("answered");
     assertThat(answer.body().get("sources").get(0).get("chunk_id").asText())
@@ -99,6 +104,112 @@ class ChatIntegrationTest extends HttpTestSupport {
                 Integer.class,
                 UUID.fromString(answer.body().get("message_id").asText())))
         .isEqualTo(1);
+  }
+
+  @Test
+  void listsAndRestoresOwnedGeneralConversationWithStableOrder() throws Exception {
+    var account = account();
+    var created =
+        account
+            .browser()
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "운영체제 질문"), true);
+    UUID sessionId = UUID.fromString(created.body().get("id").asText());
+    String key = UUID.randomUUID().toString();
+    account
+        .browser()
+        .request(
+            "POST",
+            "/api/v1/chat/sessions/" + sessionId + "/messages",
+            Map.of("question", "스레드가 뭐야?"),
+            true,
+            Map.of("Idempotency-Key", key));
+
+    var sessions =
+        account.browser().request("GET", "/api/v1/chat/sessions?page=0&limit=20", null, false);
+    assertThat(sessions.status()).isEqualTo(200);
+    assertThat(sessions.body().get("items").get(0).get("title").asText()).isEqualTo("운영체제 질문");
+    assertThat(sessions.body().get("items").get(0).get("quiz_id").isNull()).isTrue();
+
+    var messages =
+        account
+            .browser()
+            .request(
+                "GET",
+                "/api/v1/chat/sessions/" + sessionId + "/messages?page=0&limit=50",
+                null,
+                false);
+    assertThat(messages.status()).isEqualTo(200);
+    assertThat(messages.body().get("items")).hasSize(2);
+    assertThat(messages.body().get("items").get(0).get("role").asText()).isEqualTo("USER");
+    assertThat(messages.body().get("items").get(1).get("role").asText()).isEqualTo("ASSISTANT");
+    assertThat(messages.body().get("items").get(1).get("sources").get(0).get("chunk_id").asText())
+        .isEqualTo("chunk:index");
+  }
+
+  @Test
+  void duplicateMessageRequestReplaysWithoutDuplicateRows() throws Exception {
+    var account = account();
+    UUID sessionId = createGeneral(account.browser());
+    String key = UUID.randomUUID().toString();
+    var first = ask(account.browser(), sessionId, "인덱스란?", key);
+    var replay = ask(account.browser(), sessionId, "인덱스란?", key);
+    assertThat(replay.status()).isEqualTo(200);
+    assertThat(replay.body().get("message_id").asText())
+        .isEqualTo(first.body().get("message_id").asText());
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM csas.chat_messages WHERE session_id=?",
+                Integer.class,
+                sessionId))
+        .isEqualTo(2);
+  }
+
+  @Test
+  void messageIdempotencyKeyIsRequiredAndCannotChangeQuestion() throws Exception {
+    var account = account();
+    UUID sessionId = createGeneral(account.browser());
+    assertThat(
+            account
+                .browser()
+                .request(
+                    "POST",
+                    "/api/v1/chat/sessions/" + sessionId + "/messages",
+                    Map.of("question", "키 없음"),
+                    true)
+                .status())
+        .isEqualTo(400);
+    String key = UUID.randomUUID().toString();
+    assertThat(ask(account.browser(), sessionId, "첫 질문", key).status()).isEqualTo(200);
+    assertThat(ask(account.browser(), sessionId, "다른 질문", key).status()).isEqualTo(409);
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM csas.chat_messages WHERE session_id=?",
+                Integer.class,
+                sessionId))
+        .isEqualTo(2);
+  }
+
+  @Test
+  void ragFailureIsStoredAndSameKeyRetriesWithoutDuplicateUserMessage() throws Exception {
+    var account = account();
+    UUID sessionId = createGeneral(account.browser());
+    String key = UUID.randomUUID().toString();
+    doThrow(new ApiException(504, "RAG_TIMEOUT", "timeout")).when(rag).answer(any());
+    assertThat(ask(account.browser(), sessionId, "실패 후 재시도", key).status()).isEqualTo(504);
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT status FROM csas.chat_messages WHERE session_id=? AND role='ASSISTANT'",
+                String.class,
+                sessionId))
+        .isEqualTo("failed");
+    configureRag();
+    assertThat(ask(account.browser(), sessionId, "실패 후 재시도", key).status()).isEqualTo(200);
+    assertThat(
+            jdbc.queryForObject(
+                "SELECT count(*) FROM csas.chat_messages WHERE session_id=?",
+                Integer.class,
+                sessionId))
+        .isEqualTo(2);
   }
 
   @Test
@@ -132,7 +243,18 @@ class ChatIntegrationTest extends HttpTestSupport {
                     "POST",
                     "/api/v1/chat/sessions/" + session.body().get("id").asText() + "/messages",
                     Map.of("question", "steal context"),
-                    true)
+                    true,
+                    Map.of("Idempotency-Key", UUID.randomUUID().toString()))
+                .status())
+        .isEqualTo(404);
+    assertThat(
+            stranger
+                .browser()
+                .request(
+                    "GET",
+                    "/api/v1/chat/sessions/" + session.body().get("id").asText() + "/messages",
+                    null,
+                    false)
                 .status())
         .isEqualTo(404);
   }
@@ -170,6 +292,25 @@ class ChatIntegrationTest extends HttpTestSupport {
             .body()
             .get("id")
             .asText());
+  }
+
+  private UUID createGeneral(Browser browser) throws Exception {
+    return UUID.fromString(
+        browser
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "일반 질문"), true)
+            .body()
+            .get("id")
+            .asText());
+  }
+
+  private Result ask(Browser browser, UUID sessionId, String question, String key)
+      throws Exception {
+    return browser.request(
+        "POST",
+        "/api/v1/chat/sessions/" + sessionId + "/messages",
+        Map.of("question", question),
+        true,
+        Map.of("Idempotency-Key", key));
   }
 
   private Account account() throws Exception {

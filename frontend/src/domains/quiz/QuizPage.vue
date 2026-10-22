@@ -9,6 +9,9 @@ import StatusMessage from '../../shared/ui/StatusMessage.vue'
 import {
   ask,
   createContextChat,
+  createGeneralChat,
+  getChatMessages,
+  listChatSessions,
   listCategories,
   listQuizzes,
   safeSourceUrl,
@@ -16,6 +19,7 @@ import {
   type Attempt,
   type Category,
   type ChatAnswer,
+  type ChatSession,
   type Quiz,
 } from './api'
 
@@ -35,7 +39,15 @@ const chatSession = ref('')
 const chatQuestion = ref('왜 틀렸어?')
 const chatBusy = ref(false)
 const chatFailure = ref('')
-const messages = ref<Array<{ role: 'user' | 'assistant'; text: string; answer?: ChatAnswer }>>([])
+const chatSessions = ref<ChatSession[]>([])
+const messages = ref<
+  Array<{
+    role: 'user' | 'assistant'
+    text: string
+    status?: 'pending' | 'answered' | 'insufficient_evidence' | 'failed' | null
+    answer?: ChatAnswer
+  }>
+>([])
 const quiz = computed(() => quizzes.value[index.value] ?? null)
 
 async function start() {
@@ -86,12 +98,61 @@ async function openChat() {
   if (!quiz.value || !result.value) return
   chatOpen.value = true
   chatFailure.value = ''
-  if (!chatSession.value) {
-    try {
-      chatSession.value = (await createContextChat(quiz.value.id, result.value.id)).id
-    } catch (error) {
-      chatFailure.value = errorMessage(error)
-    }
+  try {
+    await loadSessions()
+    const existing = chatSessions.value.find((session) => session.attempt_id === result.value?.id)
+    if (existing) await selectChat(existing)
+    else await selectChat(await createContextChat(quiz.value.id, result.value.id))
+    await loadSessions()
+  } catch (error) {
+    chatFailure.value = errorMessage(error)
+  }
+}
+async function openHistory() {
+  chatOpen.value = true
+  chatFailure.value = ''
+  try {
+    await loadSessions()
+    if (chatSessions.value[0]) await selectChat(chatSessions.value[0])
+  } catch (error) {
+    chatFailure.value = errorMessage(error)
+  }
+}
+async function loadSessions() {
+  chatSessions.value = (await listChatSessions()).items
+}
+async function selectChat(session: ChatSession) {
+  chatSession.value = session.id
+  const saved = (await getChatMessages(session.id)).items
+  messages.value = saved.map((message) => ({
+    role: message.role === 'USER' ? 'user' : 'assistant',
+    text:
+      message.content ??
+      (message.status === 'failed'
+        ? '답변 생성에 실패했습니다. 같은 질문을 다시 보내 주세요.'
+        : '답변을 생성하고 있습니다.'),
+    status: message.status,
+    answer:
+      message.role === 'ASSISTANT'
+        ? {
+            request_id: message.request_id ?? '',
+            message_id: message.id,
+            status:
+              message.status === 'insufficient_evidence' ? 'insufficient_evidence' : 'answered',
+            answer: message.content,
+            sources: message.sources,
+            concept_ids: message.concept_ids,
+          }
+        : undefined,
+  }))
+}
+async function newGeneralChat() {
+  chatFailure.value = ''
+  try {
+    await selectChat(await createGeneralChat())
+    await loadSessions()
+  } catch (error) {
+    chatFailure.value = errorMessage(error)
   }
 }
 async function sendQuestion() {
@@ -110,8 +171,15 @@ async function sendQuestion() {
     })
   } catch (error) {
     chatFailure.value = errorMessage(error)
+    try {
+      const session = chatSessions.value.find((item) => item.id === chatSession.value)
+      if (session) await selectChat(session)
+    } catch {
+      // Keep the original provider/persistence error visible.
+    }
   } finally {
     chatBusy.value = false
+    await loadSessions().catch(() => undefined)
   }
 }
 function next() {
@@ -182,6 +250,7 @@ onMounted(start)
             <p>{{ result.explanation }}</p>
           </div>
           <div class="quiz-actions">
+            <BaseButton variant="secondary" @click="openHistory">이전 대화</BaseButton>
             <BaseButton v-if="!result" :disabled="!selected" :loading="busy" @click="submit"
               >답안 제출</BaseButton
             >
@@ -200,8 +269,24 @@ onMounted(start)
             <button aria-label="채팅 닫기" @click="chatOpen = false">×</button>
           </div>
           <p class="chat-context">
-            현재 문제와 선택한 답은 서버가 풀이 기록에서 안전하게 복원합니다.
+            퀴즈 대화의 문제와 선택한 답은 서버가 풀이 기록에서 안전하게 복원합니다.
           </p>
+          <nav class="chat-history" aria-label="이전 대화">
+            <div class="chat-history-heading">
+              <strong>내 대화</strong>
+              <button type="button" @click="newGeneralChat">새 일반 대화</button>
+            </div>
+            <button
+              v-for="session in chatSessions"
+              :key="session.id"
+              type="button"
+              :class="{ active: chatSession === session.id }"
+              @click="selectChat(session)"
+            >
+              <span>{{ session.title }}</span>
+              <small>{{ session.attempt_id ? '퀴즈 AS' : '일반 질문' }}</small>
+            </button>
+          </nav>
           <div class="message-list" aria-live="polite">
             <div v-if="!messages.length" class="chat-empty">
               “왜 틀렸어?”처럼 짧게 물어도 지금 문제의 문맥과 함께 검색해요.
@@ -209,7 +294,7 @@ onMounted(start)
             <article
               v-for="(message, messageIndex) in messages"
               :key="messageIndex"
-              :class="['message', message.role]"
+              :class="['message', message.role, { failed: message.status === 'failed' }]"
             >
               <span class="mono">{{ message.role === 'user' ? 'YOU' : 'AS' }}</span
               ><SafeAnswer :content="message.text" />

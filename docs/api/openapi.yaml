@@ -256,10 +256,14 @@
         "description": "Only accessible READY quizzes. Answer, explanation and evidence are excluded.",
         "parameters": [
           {
-            "$ref": "#/components/parameters/Cursor"
+            "name": "page",
+            "in": "query",
+            "schema": {"type": "integer", "minimum": 0, "default": 0}
           },
           {
-            "$ref": "#/components/parameters/Limit"
+            "name": "limit",
+            "in": "query",
+            "schema": {"type": "integer", "minimum": 1, "maximum": 50, "default": 50}
           },
           {
             "name": "category",
@@ -431,10 +435,14 @@
         },
         "parameters": [
           {
-            "$ref": "#/components/parameters/Cursor"
+            "name": "page",
+            "in": "query",
+            "schema": {"type": "integer", "minimum": 0, "default": 0}
           },
           {
-            "$ref": "#/components/parameters/Limit"
+            "name": "limit",
+            "in": "query",
+            "schema": {"type": "integer", "minimum": 1, "maximum": 50, "default": 20}
           }
         ]
       },
@@ -480,33 +488,27 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "oneOf": [
-                  {
-                    "properties": {},
-                    "maxProperties": 0
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "quiz_id": {
-                        "type": "string",
-                        "format": "uuid"
-                      },
-                      "attempt_id": {
-                        "type": "string",
-                        "format": "uuid"
-                      }
-                    },
-                    "required": [
-                      "quiz_id",
-                      "attempt_id"
-                    ],
-                    "additionalProperties": false
-                  }
-                ]
+                "properties": {
+                  "title": {"type": "string", "maxLength": 200, "nullable": true},
+                  "quiz_id": {"type": "string", "format": "uuid", "nullable": true},
+                  "attempt_id": {"type": "string", "format": "uuid", "nullable": true}
+                },
+                "additionalProperties": false
               }
             }
           }
+        }
+      }
+    },
+    "/api/v1/chat/sessions/{session_id}": {
+      "get": {
+        "operationId": "getChatSession",
+        "summary": "Get one owned chat session",
+        "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}],
+        "responses": {
+          "200": {"description": "Owned chat session", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ChatSession"}}}},
+          "401": {"$ref": "#/components/responses/Unauthorized"},
+          "404": {"$ref": "#/components/responses/NotFound"}
         }
       }
     },
@@ -599,6 +601,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
           },
           {
             "name": "session_id",
@@ -1185,6 +1190,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "title": {
+            "type": "string"
+          },
           "quiz_id": {
             "type": "string",
             "format": "uuid",
@@ -1198,13 +1206,19 @@
           "created_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
           "id",
+          "title",
           "quiz_id",
           "attempt_id",
-          "created_at"
+          "created_at",
+          "updated_at"
         ]
       },
       "ChatMessage": {
@@ -1229,8 +1243,10 @@
             "type": "string",
             "nullable": true,
             "enum": [
+              "pending",
               "answered",
               "insufficient_evidence",
+              "failed",
               null
             ]
           },
@@ -1243,6 +1259,10 @@
           "created_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "request_id": {
+            "type": "string",
+            "nullable": true
           },
           "concept_ids": {
             "type": "array",
@@ -1259,6 +1279,7 @@
           "status",
           "sources",
           "created_at",
+          "request_id",
           "concept_ids"
         ]
       },
@@ -1556,14 +1577,14 @@
               "$ref": "#/components/schemas/ChatSession"
             }
           },
-          "next_cursor": {
-            "type": "string",
+          "next_page": {
+            "type": "integer",
             "nullable": true
           }
         },
         "required": [
           "items",
-          "next_cursor"
+          "next_page"
         ]
       },
       "ChatMessagePage": {
@@ -1575,14 +1596,14 @@
               "$ref": "#/components/schemas/ChatMessage"
             }
           },
-          "next_cursor": {
-            "type": "string",
+          "next_page": {
+            "type": "integer",
             "nullable": true
           }
         },
         "required": [
           "items",
-          "next_cursor"
+          "next_page"
         ]
       },
       "ReviewItemPage": {

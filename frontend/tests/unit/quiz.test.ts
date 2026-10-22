@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { safeSourceUrl, submitAttempt } from '../../src/domains/quiz/api'
+import { ask, safeSourceUrl, submitAttempt } from '../../src/domains/quiz/api'
 import { resetCsrf } from '../../src/shared/api/client'
 
 afterEach(() => {
@@ -29,5 +29,21 @@ describe('quiz and citation client policy', () => {
       'X-CSRF-Token': 'csrf',
     })
     expect(init.body).toBe(JSON.stringify({ selected_option_id: 'option-2' }))
+  })
+
+  it('uses an idempotency key for persisted chat messages', async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ token: 'csrf' }), { status: 200 }))
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ message_id: 'message-1' }), { status: 200 }),
+      )
+    vi.stubGlobal('fetch', fetch)
+    vi.stubGlobal('crypto', { randomUUID: () => '00000000-0000-4000-8000-000000000002' })
+    await ask('session-1', '스레드가 뭐야?')
+    const init = fetch.mock.calls[1]![1] as RequestInit
+    expect(init.headers).toMatchObject({
+      'Idempotency-Key': '00000000-0000-4000-8000-000000000002',
+    })
   })
 })

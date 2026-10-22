@@ -75,7 +75,9 @@ def main(argv=None) -> int:
     if session_status != 201:
         raise RuntimeError("Context chat creation failed")
     answer_status, answer = browser.post(
-        "/chat/sessions/" + session["id"] + "/messages", {"question": "왜 틀렸어?"}
+        "/chat/sessions/" + session["id"] + "/messages",
+        {"question": "왜 틀렸어?"},
+        {"Idempotency-Key": str(uuid4())},
     )
     sources = answer.get("sources", []) if isinstance(answer, dict) else []
     passed = (answer_status == 200 and answer.get("status") == "answered" and answer.get("answer")
