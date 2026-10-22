@@ -1,10 +1,12 @@
 # 문서 수집 도메인
 
-상태: Python 표준 라이브러리 기반 오프라인 수집·파일 staging과 공통 `normalized.jsonl`/`chunks.jsonl` export 구현. ChromaDB 적재기는 별도 indexing 계층에 구현했으며 실제 출처 본문 승인·검증은 후속이다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. 등록부 공통 기본값은 출처별 설정에 병합하며 출처별 값이 우선한다. OSSU는 등록부·수집 계획에서 제외하고 로더도 OSSU ID·저장소를 거부하지만, 이전 결정·완료 기록은 보존한다.
+상태: Python 표준 라이브러리 기반 수집·파일 staging과 공통 `normalized.jsonl`/`chunks.jsonl` export를 구현했다. 승인된 5개 출처의 실제 본문을 수집하고 별도 indexing 계층으로 ChromaDB ACTIVE 인덱스까지 검증했다. 기준 입력은 [출처 등록부](../data-sources.json) v2다. 등록부 공통 기본값은 출처별 설정에 병합하며 출처별 값이 우선한다. OSSU는 등록부·수집 계획에서 제외하고 로더도 OSSU ID·저장소를 거부하지만, 이전 결정·완료 기록은 보존한다.
+
+2026-10-23 실측: 등록부 81개 중 Gyoogle, 한국어 Wikipedia, RFC Editor, MDN HTTP, PostgreSQL 17만 `approved`, `enabled`, `full-text`다. `data/processed/ingestion-live-v3`에는 36문서(10/13/1/10/2), staging 청크 794건이 있고 실패는 없다. 나머지 76개 출처는 승인 대기 상태로 수집하지 않는다.
 
 ## 승인 및 설정
 
-현재 81개 출처(gyoogle, Wikipedia 한·영, 공식 문서 78개)는 모두 enabled=false, usage_review=pending, storage_policy=metadata-only다. 등록 URL은 사용자 제시 후보이며 이용 조건·URL 유효성 검증을 모두 완료했다는 뜻이 아니다.
+현재 81개 출처 중 위 5개만 검토 근거·고정 버전·attribution과 함께 승인했다. 영어 Wikipedia와 나머지 공식 문서는 `enabled=false`, `usage_review=pending`, `metadata-only`를 유지한다. 등록 URL은 후보이며 승인되지 않은 항목의 이용 조건·URL 유효성 검증을 완료했다는 뜻이 아니다.
 
 본문 수집에는 enabled=true, usage_review=approved, storage_policy=full-text, license, attribution과 review의 license_url/terms_url/robots_url/reviewed_at/body_storage_allowed=true가 필요하다. 공식 문서는 검토한 version 또는 snapshot 라벨도 필수다. 관리자가 근거를 검토한 뒤 별도 작업으로 승인하며 CLI에는 승인 우회 옵션이 없다. 공개 접근·라이선스 이름·robots 허용만으로 저장·재사용·재배포 허용을 판단하지 않는다. 본문 저장이 불가하면 metadata-only를 유지한다.
 
@@ -34,7 +36,7 @@
 - 공식 문서: 명시적 seed의 HTML/Markdown, 제한된 urlset sitemap, RFC 텍스트 adapter. `adapters.py`의 공통 계약이 원문 형식·링크·추출 메타데이터를 반환하고 Collector가 허용 URL·robots·깊이·건수와 저장을 담당한다. github adapter는 공개 문서 저장소 Collector를 재사용한다. 사이트마다 adapter·허용 경로·버전·깊이·CS seed를 검토한다. 전용 공식 API가 필요한 사이트만 별도 adapter를 추가한다. 모든 공식 사이트의 전용 파서를 구현했다는 뜻이 아니다.
 - RFC: 번호·Category/Status·Obsoletes/Updates 원문 보존. 후대 RFC의 대체 관계·현재 상태 검증 전에는 current_status_verified=false이며 최신 표준으로 취급하지 않는다.
 
-공식 출처 중 RFC 9110 텍스트, MDN HTTP 공식 저장소 Markdown, PostgreSQL 17 MVCC/transaction isolation HTML만 `adapter-ready` 후보 URL로 제한했다. 셋 모두 usage_review=pending, enabled=false, storage_policy=metadata-only이며 실제 본문 수집 승인이 아니다. MDN `main` 후보는 승인 전 검토한 commit으로 고정해야 한다. 나머지 75개 공식 출처는 `registered`이고 seed가 비어 있다. 정확한 버전·본문 추출 품질·license/attribution·terms·robots를 출처별로 검토한다. C++ 공개 안내와 유료 ISO 명세, MDN 문서와 규범 명세를 구분한다.
+공식 출처 중 RFC 9110 텍스트, 고정 commit의 MDN HTTP 저장소 Markdown, PostgreSQL 17 MVCC/transaction isolation HTML을 승인·수집했다. 나머지 75개 공식 출처는 `registered`이고 seed가 비어 있다. 정확한 버전·본문 추출 품질·license/attribution·terms·robots를 출처별로 검토하기 전에는 활성화하지 않는다. C++ 공개 안내와 유료 ISO 명세, MDN 문서와 규범 명세를 구분한다.
 
 ## 파이프라인·저장 계약
 
@@ -65,4 +67,4 @@ HTTP 429/500/502/503/504와 네트워크/timeout만 지수 backoff와 0~0.5초 j
 
 명령은 [수집 실행 안내](../runbooks/ingestion.md), 증거는 [완료된 008 계획](../exec-plans/completed/008-data-ingestion.md)을 따른다. 모의 샘플은 라이브 본문 수집 성공으로 보고하지 않는다.
 
-후속 ChromaDB 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 현재 임베딩 생성·PostgreSQL migration·Graph 연결은 수행하지 않는다.
+ChromaDB 배치는 manifest의 objects에서 문서·리비전·청크를 [ERD](../06_ERD.md)의 같은 키로 upsert한다. 모델·차원·청크 버전별 BUILDING 인덱스를 만들고 실제 코퍼스 검색·인용 평가 후 ACTIVE 전환한다. Graph는 동일 concept_id, chunk_id/revision을 근거로 검수한 관계를 투영한다. 매핑·관계 버전과 corpus_digest를 함께 남긴다. 실코퍼스 임베딩과 Chroma ACTIVE 전환은 완료했으며 PostgreSQL 원장 자동 동기화·Graph 연결은 수행하지 않는다.

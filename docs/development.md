@@ -1,5 +1,29 @@
 # Development
 
+## Docker 전체 개발 스택
+
+일상 개발 실행은 저장소 루트의 Compose를 기준으로 한다. 호스트에 Node.js·JDK·Python을 설치하지 않아도 frontend, Spring Boot backend, 로컬 RAG adapter, PostgreSQL, ChromaDB가 함께 실행된다.
+
+```sh
+docker compose up -d --build --wait --wait-timeout 240
+docker compose ps
+docker compose logs -f frontend backend ai
+```
+
+브라우저 주소는 http://localhost:5173 이다. Vite의 `/api` 프록시는 Compose 내부의 `backend:8080`을 사용하고, backend는 `ai:8090`, AI는 `chroma:8000`을 사용한다. 모든 호스트 포트는 loopback에만 바인딩한다. 일반 종료는 볼륨을 보존하는 `docker compose down`을 사용한다.
+
+기본 AI는 `backend/.env`의 GMS 설정과 루트 `.env`의 `RAG_ACTIVE_INDEX`를 읽는다. 해당 ACTIVE manifest가 있으면 그 manifest에 기록된 임베딩 모델·차원을 그대로 사용하며 fixture를 적재하지 않는다. manifest가 없는 개발 인덱스에서만 `backend/ai/fixtures/local_documents.json`을 seed한다. 현재 Docker 기본값은 승인 실코퍼스 `csas-live-20261023-v4`다.
+
+```sh
+# 비밀값 없는 라이브 진단 결과는 reports/에 저장한다.
+docker compose run --rm --no-deps ai python scripts/rag_diagnostics.py \
+  --output reports/rag-live-diagnostics.json
+docker compose run --rm --no-deps ai python scripts/rag_e2e.py \
+  --output reports/rag-live-e2e.json
+```
+
+외부 호출 없는 개발은 루트 `.env`에 `RAG_DEV_PROVIDER=deterministic-test`, `RAG_ACTIVE_INDEX=local-dev-v1`을 지정한다. GMS 키, 요청 Authorization, 전체 환경변수는 출력하지 않는다.
+
 ## Vue 로컬 UI (012, C17)
 
 Node 22.12+(검증 24.18.0)/npm, 설치는 frontend/에서 `npm ci`다. 버전은 package.json/package-lock.json으로 고정한다. 루트 공통 명령:
@@ -32,7 +56,7 @@ Playwright는 기본 설치된 Chrome을 사용한다. 다른 환경에서는 `P
 python scripts/backend.py up
 python scripts/backend.py check
 # 루트 .env의 로컬 DB와 연동, HTTP 개발 쿠키 프로필 명시
-docker compose -f compose.yaml -f compose.backend.yaml up -d backend
+docker compose up -d backend
 # DB 포함 readiness: 정상 200 {"status":"UP"}, DB 장애 503 {"status":"DOWN"}
 curl --fail http://localhost:8080/health
 # 별도 PostgreSQL tmpfs 테스트 DB; 개발 DB/volume과 분리
@@ -64,7 +88,7 @@ python3 scripts/task.py handoff --state-dir /tmp/csas-run
 긴 작업은 /tmp 대신 저장소 밖 영속 볼륨을 사용한다. Windows에서는 Docker/WSL의 Linux 환경에서 실행한다.
 전용 상태 경로는 실행 관리자가 소유하며 기존 실행을 지워 예산을 초기화하지 않는다.
 
-## 서비스 생성 때 결정할 항목
+## 서비스별 운영 경로
 
 Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 출처·샘플·증분·Wikipedia 이어받기·공식 문서 adapter·재시도·독립 검사는 [수집 안내](runbooks/ingestion.md)를 따른다. 승인 수집 후 `python3 scripts/rag_index.py --index-version <version>`으로 BUILDING Chroma 인덱스를 만들며, 통과한 검색 평가 JSON을 `--activate-evaluation`으로 명시해야 ACTIVE가 된다. `RAG_SERVICE_TOKEN`과 공급자 환경변수를 주입한 뒤 `python3 scripts/rag_service.py --manifest <active-manifest>`로 loopback 내부 API를 실행한다. 결정론 임베딩은 테스트 전용이고 실제 인덱스에는 사용하지 않는다.
 스택과 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md)으로 확정했다. 아래는 버전·실행 설정 결정 항목이며, 22시간 제한은 적용하지 않는다.
@@ -74,9 +98,9 @@ Python 오프라인 수집은 `python3 scripts/ingest.py list`로 실행한다. 
 - 내부 HTTP API·timeout·오류 계약
 - 세션/CSRF·해시·만료 정책의 구현과 모델/임베딩 공급자·호출 제한 ([C02 결정](architecture.md))
 - PostgreSQL·ChromaDB 앱 어댑터·마이그레이션·전용 테스트 DB
-- 앱 이미지와 Compose 합류. DB용 Compose는 아래 C03 구성이다.
+- 앱 이미지와 Compose 전체 개발 스택
 
-실행되지 않는 가짜 빌드 파일은 만들지 않는다. 버전 결정과 생성은 [다음 서비스 계획](exec-plans/active/002-service-bootstrap.md)에서 수행한다.
+Docker 개발 adapter와 운영 provider 경로를 구분하며 로컬 fixture 결과를 운영 품질 증거로 사용하지 않는다.
 공통 명령 설명은 [scripts/README.md](../scripts/README.md), 상태·신뢰 경계는 [하네스 안내](../harness/README.md)를 따른다.
 
 기존 `harness/tasks/001-bootstrap.json`은 이전 RAG 단독 범위다. 신규 학습 기능 실행 전 [하네스 연계](harness-workflow.md)의 task·검사 등록 전환이 필요하다. 현재 명령을 신규 제품 전체 검증으로 보고하지 않는다.
@@ -89,7 +113,7 @@ Docker Engine + Compose v2 이상이 필요하다. 루트 [.env.example](../.env
 
 ```sh
 docker compose config --quiet
-docker compose up -d --wait --wait-timeout 120
+docker compose up -d --build --wait --wait-timeout 240
 docker compose ps
 docker compose exec postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
 curl --fail http://localhost:8000/api/v2/heartbeat
@@ -102,7 +126,7 @@ PostgreSQL `postgres:17.9-bookworm`과 Chroma `chromadb/chroma:1.5.3` 공식 이
 | 개발 호스트 | localhost:POSTGRES_PORT (기본 5432) | CHROMA_HOST=localhost, CHROMA_PORT=8000 |
 | Compose data 네트워크 | postgres:5432 | chroma:8000 |
 
-포트 충돌은 루트 `.env`의 공개 포트로 조정한다. 컨테이너 내부 포트는 바뀌지 않는다. 후속 Python 컨테이너는 같은 data 네트워크에 연결하고 CHROMA_HOST=chroma/CHROMA_PORT=8000을 명시하며 `depends_on: chroma: condition: service_healthy` 형태로 준비 상태를 기다린다. 현재 Compose에는 DB 두 개만 있다. host loopback 공개는 로컬 개발용이며 운영 공개/인증 구성이 아니다.
+포트 충돌은 루트 `.env`의 공개 포트로 조정한다. 컨테이너 내부 포트는 바뀌지 않는다. AI 컨테이너는 같은 data 네트워크에서 CHROMA_HOST=chroma/CHROMA_PORT=8000을 사용하며 Chroma health를 기다린다. host loopback 공개는 로컬 개발용이며 운영 공개/인증 구성이 아니다.
 
 ### 실제 읽기·쓰기와 영속성 검사
 

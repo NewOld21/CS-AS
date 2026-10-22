@@ -18,3 +18,5 @@ Vue는 질문·로딩·답변·근거 부족·오류·출처를 표시한다.
 공격 문서가 환경변수·shell·외부 호출을 요구해도 실행하지 않는다.
 
 검사: 입력 길이·빈 입력, 위조 출처 거부, 근거 부족, timeout, UI 상태 전환, 대표 답변 사람 검토.
+
+2026-10-22 GMS `gpt-5-mini` 라이브 답변은 검색된 `POSIX threads`와 `fork` 두 청크 ID만 인용했고 URL은 Chroma 메타데이터에서 구성했다. 존재하지 않는 concept 필터는 `insufficient_evidence`를 반환했다. 전용 로컬 사용자로 Vue proxy→Spring→Python→Chroma/GMS 경로의 오답 제출과 “왜 틀렸어?” 답변·HTTPS 출처 저장을 확인했다. 이 결과는 로컬 fixture 연동 증거이며 승인 코퍼스의 의미 품질 증거는 아니다.

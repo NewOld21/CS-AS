@@ -62,55 +62,36 @@ flowchart LR
 ### 요구 환경
 
 - Docker Engine 및 Docker Compose v2
-- Python 3.11 이상
-- 프론트엔드 개발 시 Node.js 22.12 이상과 npm
-- 호스트에서 백엔드를 직접 실행하려면 JDK 21
+- 호스트 Python·Node.js·JDK는 기본 개발 실행에 필요하지 않습니다.
 
 ### 1. 환경 설정
 
 ```sh
 cp .env.example .env
+cp backend/.env.example backend/.env
 ```
 
-`.env`의 `POSTGRES_PASSWORD`를 로컬 개발용 값으로 지정합니다. 실제 비밀값과 `.env` 파일은 커밋하지 않습니다. 루트 `.env`는 PostgreSQL/Chroma 실행용이며 AI provider 자격증명과 혼용하지 않습니다.
+루트 `.env`의 `POSTGRES_PASSWORD`를 로컬 개발용 값으로 지정하고, `backend/.env`의 `GMS_KEY`를 채웁니다. 실제 비밀값과 `.env` 파일은 커밋하지 않습니다. 루트 `.env`는 Compose/DB 설정, `backend/.env`는 GMS provider 설정으로 분리합니다.
 
-### 2. PostgreSQL·ChromaDB 실행
+### 2. 전체 개발 스택 실행
 
 ```sh
-docker compose up -d --wait --wait-timeout 120
+docker compose up -d --build --wait --wait-timeout 240
 docker compose ps
 ```
 
-기본 주소는 PostgreSQL `localhost:5432`, ChromaDB `localhost:8000`입니다. named volume을 보존하려면 일반 종료 시 `docker compose down`을 사용하고, 데이터 삭제 목적이 아니라면 `--volumes`를 사용하지 않습니다.
+브라우저에서 `http://localhost:5173`에 접속합니다. 기본 주소는 frontend `5173`, backend `8080`, 로컬 RAG `8090`, PostgreSQL `5432`, ChromaDB `8000`이며 모두 loopback에만 공개됩니다. 소스 변경 후 이미지를 갱신하려면 같은 명령을 다시 실행합니다.
 
-### 3. Spring Boot 실행
-
-```sh
-python scripts/backend.py up
-curl --fail http://localhost:8080/health
-```
-
-또는 JDK 21 환경에서 다음처럼 직접 실행할 수 있습니다.
+로그와 종료 명령은 다음과 같습니다.
 
 ```sh
-cd backend
-./gradlew bootRun
+docker compose logs -f frontend backend ai
+docker compose down
 ```
 
-Windows에서는 `gradlew.bat`을 사용합니다.
+`down`은 PostgreSQL·Chroma named volume과 frontend/Gradle 캐시를 보존합니다. 데이터를 명시적으로 폐기하는 경우가 아니라면 `--volumes`를 사용하지 않습니다.
 
-### 4. Vue 개발 서버 실행
-
-```sh
-cd frontend
-npm ci
-cd ..
-python scripts/frontend.py dev
-```
-
-브라우저에서 `http://localhost:5173`에 접속합니다. Vite는 `/api/v1` 요청을 기본적으로 `localhost:8080`의 Spring Boot로 전달합니다.
-
-> AS 답변을 실제로 제공하려면 승인된 코퍼스, 평가를 통과한 ACTIVE Chroma 인덱스, 내부 서비스 토큰과 모델 provider 설정이 추가로 필요합니다. 준비되지 않은 RAG를 정상 서비스처럼 우회 활성화하지 않습니다.
+> 기본 `ai` 컨테이너는 `backend/.env`의 GMS Chat/Embedding을 실제 호출하되, 아직 승인 코퍼스가 없어 15개 로컬 검증 문서를 별도 `gms-live-dev-v1` 컬렉션에 저장합니다. 외부 호출 없이 UI만 개발하려면 루트 `.env`에서 `RAG_DEV_PROVIDER=deterministic-test`, `RAG_ACTIVE_INDEX=local-dev-v1`을 사용합니다. 실제 운영은 승인된 코퍼스와 평가를 통과한 ACTIVE 인덱스가 필요하며, 로컬 fixture 결과를 운영 품질로 간주하지 않습니다.
 
 ## 주요 API
 
@@ -130,10 +111,10 @@ python scripts/frontend.py dev
 수집 대상은 다음 세 종류입니다.
 
 - `gyoogle/tech-interview-for-developer`의 검토된 CS Markdown
-- 한국어·영어 Wikipedia의 제한된 CS 문서와 category BFS
+- 한국어 Wikipedia의 제한된 CS 문서와 category BFS(영어판은 승인 대기)
 - 공식 기술 문서의 HTML, Markdown, RFC 텍스트 및 제한된 sitemap
 
-OSSU는 현재 수집 대상과 등록부에서 제외되어 있으며 OSSU 과목·링크도 수집하지 않습니다. 출처는 `enabled=true`, `usage_review=approved`, 라이선스·저작자 표시·약관·robots 검토가 모두 충족되어야 본문을 수집할 수 있습니다. 현재 등록된 81개 출처는 모두 승인 대기 상태라 라이브 본문 수집 건수는 0입니다.
+OSSU는 현재 수집 대상과 등록부에서 제외되어 있으며 OSSU 과목·링크도 수집하지 않습니다. 출처는 `enabled=true`, `usage_review=approved`, 라이선스·저작자 표시·약관·robots 검토가 모두 충족되어야 본문을 수집할 수 있습니다. 현재 Gyoogle, 한국어 Wikipedia, RFC 9110, MDN HTTP, PostgreSQL 17의 5개 출처가 승인됐고 나머지 76개는 대기 상태입니다. 실코퍼스 36문서를 `csas-live-20261023-v4` ACTIVE 인덱스로 서비스합니다.
 
 ```sh
 # 등록부 확인
@@ -199,8 +180,8 @@ CS-AS/
 │   └── runbooks/               # 실행·운영 절차
 ├── scripts/                    # 공통 개발·수집·인덱싱 진입점
 ├── harness/                    # 검증 정책·평가셋·실행 상태
-├── compose.yaml                # PostgreSQL·ChromaDB
-└── compose.backend.yaml        # Spring Boot 개발 서비스
+├── compose.yaml                # frontend·backend·AI·PostgreSQL·ChromaDB 전체 개발 스택
+└── compose.backend.yaml        # 이전 backend 전용 명령 호환 overlay
 ```
 
 ## 설계 원칙

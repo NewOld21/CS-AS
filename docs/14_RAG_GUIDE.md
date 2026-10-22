@@ -1,6 +1,6 @@
 # 14. RAG GUIDE — Vector RAG·Graph 확장 가이드
 
-상태: 1차 Vector RAG 코드 경로 구현 / 승인 코퍼스·모델 실평가 대기 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
+상태: 1차 Vector RAG 코드 경로, GMS 호환 provider, 승인 실코퍼스 ACTIVE 전환과 퀴즈 E2E 완료 / C22 정식 검색 평가 대기 / Graph RAG 2차. 제품 범위는 [ADR 0003](13_PHASE0_DECISIONS.md), 현재 기술 스택은 [ADR 0004](decisions/0004-stack.md), 데이터 키는 [ERD](06_ERD.md)가 기준이다.
 
 ```mermaid
 flowchart LR
@@ -18,15 +18,17 @@ flowchart LR
 
 ## 1. 데이터 준비
 
-1. [출처 등록부](data-sources.json)에서 승인·활성화된 출처만 수집한다. 현재 모두 비활성인 상태를 이 문서가 변경하지 않는다.
+1. [출처 등록부](data-sources.json)에서 승인·활성화된 출처만 수집한다. 현재 5개만 활성이고 나머지 76개는 승인 대기다.
 2. source_id/document_id/revision와 원문 URL·제목·위치·라이선스·저작자·해시를 보존한다.
 3. 문서/청크에 검수한 `concept_ids`를 연결한다. 한·영 별칭은 concepts 원장에 매핑하고 불확실한 후보는 분리한다.
 4. 청킹·임베딩 설정별 새 인덱스를 구축하고 중복 적재·검색 평가 후 ACTIVE로 전환한다.
 5. 재수집은 동일 키를 upsert하며 기존 인용의 문서 리비전과 위치를 유지한다.
 
-수집 세부 계약은 [ingestion](domain/ingestion.md), 실행은 [수집 안내](runbooks/ingestion.md)를 따른다. GitHub/한·영 Wikipedia/공식 HTML·Markdown·RFC·sitemap adapter와 원본·정제본·청크 staging, manifest가 구현되어 있다. OSSU는 수집 대상에서 제외했다. 81개 출처는 모두 pending·비활성이며 라이브 본문 수집은 미수행이다. 공식 문서 3개는 제한 URL까지 adapter-ready지만 승인은 아니다. 모의 샘플은 실제 코퍼스·검색 품질 증거와 구분한다.
+수집 세부 계약은 [ingestion](domain/ingestion.md), 실행은 [수집 안내](runbooks/ingestion.md)를 따른다. GitHub/한·영 Wikipedia/공식 HTML·Markdown·RFC·sitemap adapter와 원본·정제본·청크 staging, manifest가 구현되어 있다. OSSU는 수집 대상에서 제외했다. Gyoogle, 한국어 Wikipedia, RFC 9110, MDN HTTP, PostgreSQL 17만 승인했으며 영어 Wikipedia와 나머지 후보는 비활성이다. 모의 샘플은 실제 코퍼스·검색 품질 증거와 구분한다.
 
 C14~C16은 `normalized.jsonl`·`chunks.jsonl`, Markdown 구조 청킹, OpenAI 호환 임베딩/답변 공급자, 결정론 테스트 임베딩, 버전별 Chroma collection, BUILDING→평가→ACTIVE gate와 `/internal/v1/answers`를 구현했다. 결정론 임베딩은 테스트 전용이며 운영 인덱스에 사용하지 않는다.
+
+2026-10-22 첫 라이브 검증은 로컬 fixture 15청크로 GMS 연결만 확인했다. 2026-10-23에는 승인 실코퍼스 36문서를 수집해 `text-embedding-3-small` 1,536차원의 `csas-live-20261023-v4`(1,024청크)를 ACTIVE로 전환했다. 5개 activation probe와 실제 퀴즈 오답→근거 인용 답변 E2E는 통과했으며 C22의 15~20문항 품질 평가는 후속이다.
 
 ## 2. 문제에서 질문까지
 

@@ -4,6 +4,7 @@
 
 ## 공통
 
+- readiness: `GET /health`는 `{"status":"UP","index_version":"..."}`만 반환하며 자격증명·provider 상세를 노출하지 않는다.
 - 경로: `/internal/v1/answers`, `/internal/v1/quiz-candidates` (POST).
 - 헤더: `X-Request-Id`, `Authorization: Bearer <runtime-service-token>`. 실제 비밀값은 문서에 넣지 않는다.
 - 본문: `deadline_at`(UTC ISO 8601), `index_version`(명시한 ACTIVE 버전), 요청별 입력.

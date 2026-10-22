@@ -1,5 +1,14 @@
 # 공통 명령
 
+Docker 전체 개발 스택은 `docker compose up -d --build --wait --wait-timeout 240`으로 실행한다. `backend/.env`의 GMS 설정을 사용한 제한 라이브 검증은 다음처럼 일반 회귀와 분리한다.
+
+```sh
+docker compose run --rm --no-deps ai python scripts/rag_diagnostics.py --output reports/rag-live-diagnostics.json
+docker compose run --rm --no-deps ai python scripts/rag_e2e.py --output reports/rag-live-e2e.json
+```
+
+두 결과에는 API 키·Authorization·쿠키를 기록하지 않는다. 실제 수집 코퍼스가 없으면 corpus는 SKIP이며 fixture 결과로 대체하지 않는다.
+
 Vue UI: `python scripts/frontend.py dev`, 전체 프론트 검사 `python scripts/frontend.py check`, Chrome E2E `python scripts/frontend.py e2e`. 먼저 frontend/에서 `npm ci`를 수행한다. 실제 API E2E의 전용 PostgreSQL·CSAS_E2E_API 설정과 미실행 구분은 [개발 안내](../docs/development.md)를 따른다.
 
 Java 앱과 전용 PostgreSQL 통합 검사: `python scripts/backend.py up`, `python scripts/backend.py check`. Docker 설정 파일 접근이 제한된 환경은 `--docker-config /path/to/config`를 선택할 수 있다. 실행·CSRF·쿠키·DB 구분은 [개발 안내](../docs/development.md)를 따른다. 기존 공통 하네스와 Java 검사는 별개이며 full 등록은 후속 하네스 변경 작업이다.

@@ -1,5 +1,9 @@
 # Current task
 
+최신 완료 마일스톤: [015 승인 출처 라이브 코퍼스와 Docker RAG 전환](exec-plans/completed/015-approved-live-corpus.md). 5개 승인 출처에서 36문서/794 staging 청크를 수집하고 `text-embedding-3-small` 기반 1,024청크 `csas-live-20261023-v4`를 ACTIVE로 전환했다. 5개 검색 probe와 Vue→Spring→Python→Chroma/GMS 퀴즈 오답 E2E가 통과했으며 Docker 전체 스택이 이 인덱스를 사용한다. 다음은 C21 증분 인덱싱과 C22 15~20문항 검색 평가다.
+
+최신 완료 마일스톤: [014 GMS 라이브 RAG 검증](exec-plans/completed/014-gms-live-rag-validation.md). Docker 전체 스택에서 `backend/.env`를 통해 GMS `text-embedding-3-large`(3072차원)와 `gpt-5-mini`를 실제 호출하고 Chroma 적재·검색·인용·근거 부족 및 Vue→Spring→Python 퀴즈 AS E2E를 확인했다. 등록부 81개는 모두 승인 대기라 실제 수집/JSONL은 0건이며, 별도 `csas-gms-live-dev-v1`의 15 fixture 청크를 운영 코퍼스와 구분한다. Python 54개(실제 Chroma 포함)와 Vue 10개가 통과했다.
+
 최신 완료 마일스톤: [008 C18~C20 수집 파이프라인 고도화](exec-plans/completed/008-data-ingestion.md). OSSU 없는 등록부 계약, Wikipedia categorymembers BFS/continuation/영속 이어받기, Retry-After 기반 재시도, 공식 HTML·Markdown·RFC·sitemap adapter와 C15 JSONL 인덱싱 호환을 구현했다. Python은 총 50개 중 49개가 통과했고 실제 Chroma 조건부 1개는 skip했으며, Linux 공통 검증 19개가 통과했다. 81개 출처는 모두 pending·비활성이므로 라이브 본문은 0건이며, RFC/MDN HTTP/PostgreSQL 제한 후보의 이용 조건 승인과 실제 corpus 평가는 후속이다.
 
 최신 완료 마일스톤: [013 C14~C17 Vector 학습 루프](exec-plans/completed/013-c14-c17-vector-learning-loop.md). 수집 JSONL, 구조 청킹·Chroma 인덱스, 근거 답변 내부 API, Spring 문맥 대화와 Vue 퀴즈·AS 화면을 구현했다. Python 41개, 실제 Chroma 통합 1개, Spring/PostgreSQL 35개, Vue 단위 10개와 Playwright UI 8개가 통과했다. 전체 출처 81개가 승인 대기라 실제 문서·운영 청크·외부 LLM 호출은 0이며 ACTIVE 인덱스 품질 평가는 후속이다.
@@ -10,7 +14,7 @@
 
 이전 완료: [009 C02 아키텍처](exec-plans/completed/009-c02-architecture.md), [010 C03 로컬 DB](exec-plans/completed/010-c03-local-db.md). ADR 0004에 따라 PostgreSQL 서비스 DB + ChromaDB 검색 저장소, Spring Security 쿠키 세션을 채택했다. 두 DB의 실제 연결·검색과 restart/down-up 영속성, Linux 공통 검사 19개가 통과했다. 아래 008 수집 작업의 미완료 상태는 유지한다.
 
-다음 작업: 출처 이용조건 승인과 소량 실코퍼스 수집 → 실제 임베딩/검색 평가 → ACTIVE 인덱스 전환. 이어서 대화 GET 복원, review_states·학습 이력과 [005](exec-plans/active/005-complete-learning-loop.md)의 관련 문제 생성을 진행한다.
+다음 작업: C21 변경·삭제 기반 증분 인덱싱 → C22 15~20문항 검색 평가 데이터셋 → C23 사용자 대화 영속·접근 격리 보강. 이어서 review_states·학습 이력과 [005](exec-plans/active/005-complete-learning-loop.md)의 관련 문제 생성을 진행한다.
 
 - 최신 완료: [007 문서 이름·참조 정리](exec-plans/completed/007-document-naming.md). 주 문서를 00~14로 구성하고 링크·진입점·검사·보호 경로를 갱신했다.
 - 기준: [PRD](01_PRD.md), [ADR 0003](13_PHASE0_DECISIONS.md), [ADR 0004](decisions/0004-stack.md). 22시간 제한 없이 학습 루프 전체가 1차 목표다.
