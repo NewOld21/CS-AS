@@ -15,8 +15,24 @@ class VectorRetriever:
         if not question or len(question) > 2000 or not 1 <= limit <= 20:
             raise ValueError("Invalid retrieval request")
         vector = self.embedding.embed([question])[0]
-        where = None
-        if concept_ids:
-            # Chroma stores the reviewed array as canonical JSON because metadata values are scalar.
-            where = {"concept_ids": json.dumps(sorted(concept_ids), separators=(",", ":"))}
-        return self.store.query(vector, limit, where)
+        if not concept_ids:
+            return self.store.query(vector, limit)
+        # Chroma metadata is scalar, so reviewed concept arrays are stored as JSON. Fetch a
+        # bounded semantic candidate set, rank membership matches first, then fill from the
+        # global results. This implements concept-first retrieval without turning an absent or
+        # partial mapping into an empty answer.
+        candidates = self.store.query(vector, min(20, max(limit * 4, limit)))
+        requested = set(concept_ids)
+
+        def concepts(row: dict) -> set[str]:
+            value = row.get("metadata", {}).get("concept_ids", [])
+            if isinstance(value, str):
+                try:
+                    value = json.loads(value)
+                except json.JSONDecodeError:
+                    value = []
+            return set(value) if isinstance(value, list) else set()
+
+        matched = [row for row in candidates if requested & concepts(row)]
+        fallback = [row for row in candidates if not requested & concepts(row)]
+        return (matched + fallback)[:limit]

@@ -31,15 +31,31 @@ class GitHubCollector:
         sha = commit["sha"]
         if not re.fullmatch(r"[a-f0-9]{40}", sha):
             raise ValueError("Invalid commit SHA")
-        tree = self.client.json(self.api + f"/git/trees/{sha}?recursive=1")
+        tree_sha = sha
+        tree_root = self.s.get("tree_root", "").strip("/")
+        if tree_root:
+            tree_sha = commit.get("commit", {}).get("tree", {}).get("sha")
+            if not tree_sha:
+                raise ValueError("GitHub commit response is missing its root tree")
+            for component in tree_root.split("/"):
+                level = self.client.json(self.api + "/git/trees/" + quote(tree_sha, safe=""))
+                match = next((entry for entry in level.get("tree", [])
+                              if entry.get("type") == "tree" and entry.get("path") == component), None)
+                if not match:
+                    raise ValueError("Configured GitHub tree_root does not exist")
+                tree_sha = match["sha"]
+        tree = self.client.json(self.api + f"/git/trees/{tree_sha}?recursive=1")
         if tree.get("truncated"):
             raise ValueError("Truncated GitHub tree; narrow source before collecting")
         count = 0
         for entry in tree["tree"]:
-            path = entry["path"]
+            path = "/".join(part for part in (tree_root, entry["path"]) if part)
             name = path.rsplit("/", 1)[-1].lower()
+            excluded_names = {"readme.md", "contributing.md", "license.md"}
+            if not self.s.get("include_index_files"):
+                excluded_names.add("index.md")
             if (entry["type"] != "blob" or not path.lower().endswith(".md")
-                    or name in ("readme.md", "contributing.md", "license.md", "index.md")
+                    or name in excluded_names
                     or not any(fnmatch.fnmatch(path, p) for p in self.s["include_globs"])
                     or any(fnmatch.fnmatch(path, p) for p in self.s.get("exclude_globs", []))):
                 continue
@@ -206,8 +222,9 @@ class WikipediaCollector:
         self._persist()
 
     def fetch(self, item: dict):
-        data = self.query(action="query", titles=item["title"], prop="revisions|pageprops",
-                          rvprop="ids|timestamp", rvlimit=1, ppprop="wikibase_item")
+        data = self.query(action="query", titles=item["title"], redirects=1,
+                          prop="revisions|pageprops", rvprop="ids|timestamp", rvlimit=1,
+                          ppprop="wikibase_item")
         page = data["query"]["pages"][0]
         if "missing" in page or page.get("ns", 0) != 0:
             raise ValueError("Missing or non-article Wikipedia page")
@@ -216,12 +233,15 @@ class WikipediaCollector:
         body = parsed["text"]
         if not isinstance(body, str):
             body = body["*"]
-        return {**item, "key": str(page["pageid"]), "revision": str(rev["revid"]),
+        origin = "https://" + urlsplit(self.s["endpoint"]).hostname
+        resolved_url = origin + "/wiki/" + quote(page["title"].replace(" ", "_"))
+        return {**item, "key": str(page["pageid"]), "title": page["title"], "url": resolved_url,
+                "revision": str(rev["revid"]),
                 "metadata": {"page_id": page["pageid"], "updated_at": rev["timestamp"],
                              "seed_title": item["title"], "wikidata_id": page.get("pageprops", {}).get("wikibase_item"),
                              "categories": parsed.get("categories", []), "related_documents": parsed.get("links", []),
                              "langlinks": parsed.get("langlinks", []),
-                             "history_url": item["url"] + "?action=history"}}, body
+                             "history_url": resolved_url + "?action=history"}}, body
 
 
 class OfficialCollector:

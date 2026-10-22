@@ -67,6 +67,19 @@ class IndexingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             VectorRetriever(store, DeterministicTestEmbedding(16), manifest)
 
+    def test_concept_search_prioritizes_matches_and_falls_back_to_global_rows(self):
+        store = MemoryStore()
+        embedding = DeterministicTestEmbedding(32)
+        mapped = document("# Thread\n\nThread memory and scheduling.")
+        unrelated = {**document("# Other\n\nThread memory overview."),
+                     "document_id": "doc:other", "concept_ids": [], "locator": "other.md"}
+        manifest = build_index([unrelated, mapped], store, embedding, "cs-test-v1", "corpus-1")
+        retriever = VectorRetriever(store, embedding, manifest)
+        matched = retriever.search("thread memory", limit=2, concept_ids=["concept:process"])
+        self.assertEqual(matched[0]["metadata"]["document_id"], "doc:process")
+        fallback = retriever.search("thread memory", limit=2, concept_ids=["concept:not-mapped"])
+        self.assertEqual(len(fallback), 2)
+
     def test_manifest_starts_building_and_is_written_atomically(self):
         store = MemoryStore()
         manifest = build_index([document()], store, DeterministicTestEmbedding(8), "cs-test-v1", "digest")

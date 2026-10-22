@@ -312,11 +312,42 @@ class IngestionTests(unittest.TestCase):
         client.json = lambda url: {"truncated": True} if "/trees/" in url else original(url)
         self.assertEqual(collect(source, self.store, factory=lambda s: create_collector(s, client))["failed"], 1)
 
-    def test_registry_keeps_all_sources_pending_and_ossu_absent(self):
+    def test_github_tree_root_limits_large_repository_discovery(self):
+        source = fixture_source("github")
+        source.update(tree_root="files/en-us/web/http",
+                      include_index_files=True,
+                      include_globs=["files/en-us/web/http/**/*.md"])
+
+        class RootedTreeClient(FixtureClient):
+            def json(self, url):
+                if "/commits/" in url:
+                    return {"sha": COMMIT, "commit": {"tree": {"sha": "1" * 40}}}
+                if "/git/trees/" + "1" * 40 in url:
+                    return {"tree": [{"type": "tree", "path": "files", "sha": "2" * 40}]}
+                if "/git/trees/" + "2" * 40 in url:
+                    return {"tree": [{"type": "tree", "path": "en-us", "sha": "3" * 40}]}
+                if "/git/trees/" + "3" * 40 in url:
+                    return {"tree": [{"type": "tree", "path": "web", "sha": "4" * 40}]}
+                if "/git/trees/" + "4" * 40 in url:
+                    return {"tree": [{"type": "tree", "path": "http", "sha": "5" * 40}]}
+                if "/git/trees/" + "5" * 40 in url:
+                    return {"truncated": False, "tree": [
+                        {"type": "blob", "path": "guides/index.md", "sha": "b" * 40}]}
+                return super().json(url)
+
+        collector = create_collector(source, RootedTreeClient(source))
+        item = next(iter(collector.discover(1)))
+        self.assertEqual(item["key"], "files/en-us/web/http/guides/index.md")
+
+    def test_registry_approves_selected_sources_and_keeps_ossu_absent(self):
         path = Path(__file__).resolve().parents[3] / "docs/data-sources.json"
         sources = load_registry(path)
         self.assertGreaterEqual(len(sources), 80)
-        self.assertFalse(any(s["enabled"] or s["usage_review"] != "pending" for s in sources))
+        approved = {s["id"] for s in sources if s["enabled"] and s["usage_review"] == "approved"}
+        self.assertEqual(approved, {"gyoogle", "wikipedia-ko", "rfc-editor", "mdn-http", "postgresql"})
+        self.assertTrue(all(s["storage_policy"] == "full-text" for s in sources if s["id"] in approved))
+        self.assertTrue(all(not s["enabled"] and s["usage_review"] == "pending"
+                            for s in sources if s["id"] not in approved))
         self.assertFalse(any("ossu" in json.dumps(s).lower() for s in sources))
         self.assertTrue(all((s["max_retries"], s["timeout_seconds"]) == (3, 15) for s in sources))
         self.assertEqual({s["kind"] for s in sources}, {"github", "mediawiki", "official-docs"})
@@ -335,13 +366,17 @@ class IngestionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "outside"):
             load_registry(path)
 
-    def test_cli_pending_and_dry_run_do_not_create_catalog(self):
+    def test_cli_dry_run_with_approved_sources_does_not_create_catalog(self):
         path = Path(__file__).resolve().parents[3] / "docs/data-sources.json"
         output = self.root / "not-created"
         with contextlib.redirect_stdout(io.StringIO()) as stdout:
-            self.assertEqual(main(["collect", "--registry", str(path), "--output", str(output), "--sample"]), 0)
+            self.assertEqual(main(["collect", "--registry", str(path), "--output", str(output),
+                                   "--sample", "--dry-run"]), 0)
         self.assertFalse(output.exists())
-        self.assertTrue(all(r["excluded_sources"] == 1 for r in json.loads(stdout.getvalue())["sources"]))
+        results = json.loads(stdout.getvalue())["sources"]
+        self.assertEqual(len(results), 81)
+        self.assertTrue(all(row.get("reason") == "dry_run_no_network_or_writes"
+                            for row in results if not row["excluded_sources"]))
 
     def test_registry_rejects_enabled_pending(self):
         path = self.root / "bad.json"
@@ -356,6 +391,34 @@ class IngestionTests(unittest.TestCase):
         client = FixtureClient(source)
         collect(source, self.store, factory=lambda s: create_collector(s, client))
         self.assertTrue(any("oldid=101" in url for url in client.calls))
+        self.assertTrue(any("redirects=1" in url for url in client.calls))
+
+    def test_wikipedia_redirect_uses_canonical_page_identity_and_url(self):
+        source = fixture_source("mediawiki")
+
+        class RedirectClient(FixtureClient):
+            def json(self, url):
+                params = parse_qs(urlsplit(url).query)
+                if params.get("action") == ["query"] and params.get("titles"):
+                    self.calls.append(url)
+                    return {"query": {"redirects": [{"from": "Operating system",
+                                                       "to": "Operating System"}],
+                                      "pages": [{"pageid": 778, "ns": 0,
+                                                 "title": "Operating System",
+                                                 "revisions": [{"revid": 101,
+                                                                "timestamp": "2026-01-01T00:00:00Z"}],
+                                                 "pageprops": {"wikibase_item": "Q9135"}}]}}
+                return super().json(url)
+
+        client = RedirectClient(source)
+        result = collect(source, self.store, factory=lambda s: create_collector(s, client))
+        self.assertEqual(result["success"], 1)
+        document = json.loads((self.store.root / self.store.manifest("x")["documents"][0]["object_path"])
+                              .read_text(encoding="utf-8"))["document"]
+        self.assertEqual(document["metadata"]["page_id"], 778)
+        self.assertEqual(document["title"], "Operating System")
+        self.assertIn("/wiki/Operating_System", document["url"])
+        self.assertIn("/wiki/Operating_System?action=history", document["metadata"]["history_url"])
 
     def test_wikipedia_category_expansion_has_depth_and_document_cap(self):
         source = fixture_source("mediawiki")

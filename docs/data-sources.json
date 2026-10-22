@@ -10,7 +10,7 @@
       "id": "gyoogle",
       "kind": "github",
       "repository": "gyoogle/tech-interview-for-developer",
-      "revision": null,
+      "revision": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
       "include_globs": [
         "Computer Science/**/*.md",
         "Algorithm/*.md",
@@ -18,26 +18,33 @@
         "Design Pattern/*.md",
         "Design Pattern/**/*.md"
       ],
-      "usage_review": "pending",
-      "enabled": false,
+      "usage_review": "approved",
+      "enabled": true,
       "priority": 0,
       "max_documents": 100,
       "crawl_depth": 0,
       "request_delay_ms": 1000,
-      "version": null,
-      "storage_policy": "metadata-only",
-      "license": null,
-      "attribution": null,
+      "version": "commit 41a7e91356adae7ee598d5ee3c27438449ce55d8",
+      "storage_policy": "full-text",
+      "license": "MIT",
+      "attribution": "Copyright (c) 2019 Gyuseok Kim; source file URL and commit retained",
       "review": {
-        "license_url": null,
-        "terms_url": null,
-        "robots_url": null,
-        "reviewed_at": null,
-        "body_storage_allowed": false
+        "license_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/LICENSE",
+        "terms_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+        "robots_url": "https://github.com/robots.txt",
+        "reviewed_at": "2026-10-22",
+        "body_storage_allowed": true
       },
       "include_patterns": [],
       "exclude_patterns": [],
-      "concept_mappings": {},
+      "concept_mappings": {
+        "Algorithm/Binary Search.md": [
+          "concept:algorithm-binary-search"
+        ],
+        "Algorithm/Sort_Counting.md": [
+          "concept:algorithm-stable-sort"
+        ]
+      },
       "category": "computer-science",
       "language": "ko",
       "exclude_globs": [
@@ -50,36 +57,71 @@
       "request_urls": [
         "https://api.github.com/repos/gyoogle/tech-interview-for-developer/"
       ],
-      "review_notes": "Repository page reports MIT; retain exact commit license/copyright notice before approval. No body storage authorized."
+      "review_notes": "Approved for bounded API collection at the pinned commit. MIT notice, commit and per-file source URL must be retained."
     },
     {
       "id": "wikipedia-ko",
       "kind": "mediawiki",
       "endpoint": "https://ko.wikipedia.org/w/api.php",
       "max_documents": 100,
-      "usage_review": "pending",
-      "enabled": false,
+      "usage_review": "approved",
+      "enabled": true,
       "priority": 0,
       "crawl_depth": 2,
       "request_delay_ms": 1000,
       "version": null,
-      "storage_policy": "metadata-only",
-      "license": null,
-      "attribution": null,
+      "storage_policy": "full-text",
+      "license": "CC BY-SA 4.0; page-specific exceptions may apply",
+      "attribution": "Korean Wikipedia contributors; article URL, revision ID and history URL retained; modifications indicated by CS-AS parsing/chunking",
       "review": {
-        "license_url": null,
-        "terms_url": null,
-        "robots_url": null,
-        "reviewed_at": null,
-        "body_storage_allowed": false
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
+        "robots_url": "https://ko.wikipedia.org/robots.txt",
+        "reviewed_at": "2026-10-22",
+        "body_storage_allowed": true
       },
       "include_patterns": [],
       "exclude_patterns": [],
-      "concept_mappings": {},
+      "concept_mappings": {
+        "3214": [
+          "concept:os-thread"
+        ],
+        "193595": [
+          "concept:os-fork"
+        ],
+        "1929380": [
+          "concept:os-mutex"
+        ],
+        "3910364": [
+          "concept:network-tcp",
+          "concept:network-udp",
+          "concept:network-http"
+        ],
+        "38001": [
+          "concept:database-transaction",
+          "concept:database-isolation",
+          "concept:database-index"
+        ],
+        "43480": [
+          "concept:data-structure-stack",
+          "concept:data-structure-queue"
+        ],
+        "727": [
+          "concept:algorithm-binary-search",
+          "concept:algorithm-stable-sort"
+        ],
+        "146962": [
+          "concept:architecture-load-store",
+          "concept:architecture-branch"
+        ]
+      },
       "language": "ko",
       "category": "computer-science",
       "seed_titles": [
-        "운영 체제",
+        "스레드 (컴퓨팅)",
+        "포크 (시스템 호출)",
+        "뮤텍스",
+        "운영체제",
         "컴퓨터 네트워크",
         "데이터베이스",
         "자료 구조",
@@ -104,7 +146,8 @@
       ],
       "request_urls": [
         "https://ko.wikipedia.org/w/api.php"
-      ]
+      ],
+      "review_notes": "Approved for serial, bounded Action API collection with maxlag and an identifying User-Agent. Text only; page revision/history attribution is retained and media is not downloaded."
     },
     {
       "id": "wikipedia-en",
@@ -751,26 +794,30 @@
       "kind": "official-docs",
       "category": "network",
       "base_url": "https://www.rfc-editor.org/",
-      "usage_review": "pending",
-      "enabled": false,
+      "usage_review": "approved",
+      "enabled": true,
       "priority": 0,
       "max_documents": 100,
       "crawl_depth": 0,
       "request_delay_ms": 1000,
-      "version": null,
-      "storage_policy": "metadata-only",
-      "license": null,
-      "attribution": null,
+      "version": "RFC 9110 (June 2022)",
+      "storage_policy": "full-text",
+      "license": "IETF Trust Legal Provisions",
+      "attribution": "RFC 9110 authors and IETF Trust; original RFC URL and embedded copyright notice retained",
       "review": {
-        "license_url": null,
-        "terms_url": null,
-        "robots_url": null,
-        "reviewed_at": null,
-        "body_storage_allowed": false
+        "license_url": "https://trustee.ietf.org/documents/trust-legal-provisions/tlp-5/",
+        "terms_url": "https://www.rfc-editor.org/series/rfc-use/",
+        "robots_url": "https://www.rfc-editor.org/robots.txt",
+        "reviewed_at": "2026-10-22",
+        "body_storage_allowed": true
       },
       "include_patterns": [],
       "exclude_patterns": [],
-      "concept_mappings": {},
+      "concept_mappings": {
+        "https://www.rfc-editor.org/rfc/rfc9110.txt": [
+          "concept:network-http"
+        ]
+      },
       "language": "en",
       "implementation_status": "adapter-ready",
       "candidate_version": "RFC 9110 (June 2022)",
@@ -786,7 +833,7 @@
         "https://www.rfc-editor.org/rfc/",
         "https://www.rfc-editor.org/robots.txt"
       ],
-      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+      "review_notes": "Approved for the unmodified RFC 9110 text only. Parsing and chunk locators are derivative indexing metadata; the stored raw text and RFC notices remain intact."
     },
     {
       "id": "ietf-datatracker",
@@ -833,45 +880,58 @@
       "kind": "official-docs",
       "category": "network",
       "base_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
-      "usage_review": "pending",
-      "enabled": false,
+      "usage_review": "approved",
+      "enabled": true,
       "priority": 0,
       "max_documents": 100,
       "crawl_depth": 0,
       "request_delay_ms": 1000,
-      "version": null,
-      "storage_policy": "metadata-only",
-      "license": null,
-      "attribution": null,
+      "version": "commit 4f62576d552b13a897c03ae8d4caeb58ccd01392",
+      "storage_policy": "full-text",
+      "license": "CC BY-SA 2.5 or later for prose; code samples CC0 or MIT as described by MDN",
+      "attribution": "MDN Web Docs by Mozilla Contributors; source file URL and commit retained; CS-AS parsing/chunking noted",
       "review": {
-        "license_url": null,
-        "terms_url": null,
-        "robots_url": null,
-        "reviewed_at": null,
-        "body_storage_allowed": false
+        "license_url": "https://github.com/mdn/content/blob/4f62576d552b13a897c03ae8d4caeb58ccd01392/LICENSE.md",
+        "terms_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+        "robots_url": "https://github.com/robots.txt",
+        "reviewed_at": "2026-10-22",
+        "body_storage_allowed": true
       },
       "include_patterns": [],
       "exclude_patterns": [],
-      "concept_mappings": {},
+      "concept_mappings": {
+        "files/en-us/web/http/guides/content_negotiation/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/caching/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/content_negotiation/list_of_default_accept_values/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/connection_management_in_http_1.x/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/conditional_requests/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/compression_dictionary_transport/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/authentication/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/compression/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/browser_detection_using_the_user_agent/index.md": ["concept:network-http"],
+        "files/en-us/web/http/guides/client_hints/index.md": ["concept:network-http"]
+      },
       "language": "en",
       "implementation_status": "adapter-ready",
       "candidate_version": "main; pin a reviewed commit before approval",
-      "adapter": "markdown",
+      "adapter": "github",
       "format": "markdown",
-      "seed_urls": [
-        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/index.md"
+      "repository": "mdn/content",
+      "revision": "4f62576d552b13a897c03ae8d4caeb58ccd01392",
+      "tree_root": "files/en-us/web/http",
+      "include_index_files": true,
+      "include_globs": [
+        "files/en-us/web/http/*.md",
+        "files/en-us/web/http/**/*.md"
       ],
+      "exclude_globs": [],
       "allowed_urls": [
-        "https://developer.mozilla.org/en-US/docs/Web/HTTP",
-        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/"
+        "https://github.com/mdn/content/blob/"
       ],
       "request_urls": [
-        "https://developer.mozilla.org/en-US/docs/Web/HTTP",
-        "https://developer.mozilla.org/robots.txt",
-        "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/http/",
-        "https://raw.githubusercontent.com/robots.txt"
+        "https://api.github.com/repos/mdn/content/"
       ],
-      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+      "review_notes": "Approved for HTTP Markdown files from the official repository at the pinned commit. Preserve Mozilla Contributors attribution, license, source file URL and modification notice."
     },
     {
       "id": "nginx",
@@ -1074,26 +1134,35 @@
       "kind": "official-docs",
       "category": "database",
       "base_url": "https://www.postgresql.org/docs/",
-      "usage_review": "pending",
-      "enabled": false,
+      "usage_review": "approved",
+      "enabled": true,
       "priority": 0,
       "max_documents": 100,
       "crawl_depth": 0,
       "request_delay_ms": 1000,
-      "version": null,
-      "storage_policy": "metadata-only",
-      "license": null,
-      "attribution": null,
+      "version": "17",
+      "storage_policy": "full-text",
+      "license": "PostgreSQL License",
+      "attribution": "Portions Copyright 1996-2026 PostgreSQL Global Development Group; Portions Copyright 1994 University of California; source URL retained",
       "review": {
-        "license_url": null,
-        "terms_url": null,
-        "robots_url": null,
-        "reviewed_at": null,
-        "body_storage_allowed": false
+        "license_url": "https://www.postgresql.org/about/licence/",
+        "terms_url": "https://www.postgresql.org/about/policies/",
+        "robots_url": "https://www.postgresql.org/robots.txt",
+        "reviewed_at": "2026-10-22",
+        "body_storage_allowed": true
       },
       "include_patterns": [],
       "exclude_patterns": [],
-      "concept_mappings": {},
+      "concept_mappings": {
+        "https://www.postgresql.org/docs/17/mvcc-intro.html": [
+          "concept:database-transaction",
+          "concept:database-isolation"
+        ],
+        "https://www.postgresql.org/docs/17/transaction-iso.html": [
+          "concept:database-transaction",
+          "concept:database-isolation"
+        ]
+      },
       "language": "en",
       "implementation_status": "adapter-ready",
       "candidate_version": "17",
@@ -1110,7 +1179,7 @@
         "https://www.postgresql.org/docs/",
         "https://www.postgresql.org/robots.txt"
       ],
-      "review_notes": "Pending site-specific license, terms, robots, version and CS seed review; registration does not permit body storage."
+      "review_notes": "Approved for the two explicit PostgreSQL 17 documentation pages. PostgreSQL License notice and per-page source URL must be retained."
     },
     {
       "id": "mysql",
