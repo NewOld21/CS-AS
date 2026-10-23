@@ -71,9 +71,9 @@ export interface ChatAnswer {
 }
 
 export const listCategories = () => request<Category[]>('/quiz/categories')
-export const listQuizzes = (category: string) =>
+export const listQuizzes = (category: string, difficulty = '') =>
   request<{ items: Quiz[]; next_cursor: string | null }>(
-    `/quizzes?category=${encodeURIComponent(category.toUpperCase().replaceAll('-', '_'))}&limit=20`,
+    `/quizzes?category=${encodeURIComponent(category.toUpperCase().replaceAll('-', '_'))}&limit=100${difficulty ? `&difficulty=${encodeURIComponent(difficulty)}` : ''}`,
   )
 export const getQuiz = (id: string) => request<Quiz>(`/quizzes/${encodeURIComponent(id)}`)
 export const submitAttempt = (

@@ -37,6 +37,7 @@ function attemptStorageKey() {
 }
 const categories = ref<Category[]>([])
 const category = ref('')
+const difficulty = ref('')
 const quizzes = ref<Quiz[]>([])
 const index = ref(0)
 const selected = ref('')
@@ -160,10 +161,22 @@ async function start() {
 async function chooseCategory(value: string) {
   category.value = value
   failure.value = ''
-  const page = await listQuizzes(value)
-  quizzes.value = page.items
-  index.value = 0
-  resetQuestion()
+  loading.value = true
+  try {
+    const page = await listQuizzes(value, difficulty.value)
+    const items = [...page.items]
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[items[i], items[j]] = [items[j]!, items[i]!]
+    }
+    quizzes.value = items
+    index.value = 0
+    resetQuestion()
+  } catch (error) {
+    failure.value = errorMessage(error)
+  } finally {
+    loading.value = false
+  }
 }
 function resetQuestion() {
   pendingAttempt.value = null
@@ -341,6 +354,16 @@ onMounted(start)
           {{ item.name }} <span>{{ item.quiz_count }}</span>
         </button>
       </nav>
+      <label v-if="!route.query.quiz_id" class="quiz-filter">
+        난이도
+        <select v-model="difficulty" @change="chooseCategory(category)">
+          <option value="">전체 난이도</option>
+          <option value="EASY">쉬움</option>
+          <option value="MEDIUM">보통</option>
+          <option value="HARD">어려움</option>
+        </select>
+        <span>한 바퀴를 마칠 때까지 같은 문제가 반복되지 않습니다.</span>
+      </label>
       <section v-if="quiz" class="learning-layout">
         <article class="quiz-card" aria-labelledby="quiz-stem">
           <div class="quiz-meta">
@@ -491,3 +514,23 @@ onMounted(start)
     />
   </main>
 </template>
+
+<style scoped>
+.quiz-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-muted, #a8b6c7);
+  font-size: 0.875rem;
+}
+.quiz-filter select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #495865;
+  border-radius: 0.5rem;
+  background: #14212b;
+  color: #edf4fa;
+  font: inherit;
+}
+</style>
