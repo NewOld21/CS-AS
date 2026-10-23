@@ -72,7 +72,9 @@ class QuizService:
         remaining()
         query = " ".join(request.get("concept_labels") or request["concept_ids"])
         query = (query + " " + request.get("learning_context", ""))[:2000]
-        rows = self.retriever.search(query, 5, request["concept_ids"])
+        sourced = any(c.startswith("concept:gyoogle-") for c in request["concept_ids"])
+        rows = (self.retriever.search(query, 5, request["concept_ids"], filters={"source_id": "gyoogle"})
+                if sourced else self.retriever.search(query, 5, request["concept_ids"]))
         evidence = [r for r in rows if r["score"] >= self.min_score][:5]
         common = {"request_id": request["request_id"], "index_version": request["index_version"],
                   "model_version": self.generator.model, "prompt_version": PROMPT_VERSION,

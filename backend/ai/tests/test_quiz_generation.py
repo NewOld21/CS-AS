@@ -49,6 +49,17 @@ class Generator:
 
 
 class QuizGenerationTests(unittest.TestCase):
+    def test_gyoogle_related_generation_forces_source_filter(self):
+        class ScopedRetriever(Retriever):
+            def search(self, query, limit, concepts, **kwargs):
+                self.filters = kwargs['filters']
+                return []
+        retriever = ScopedRetriever()
+        data = request()
+        data['concept_ids'] = ['concept:gyoogle-1234']
+        self.assertEqual(QuizService(retriever, Generator()).generate(data)['status'], 'insufficient_evidence')
+        self.assertEqual(retriever.filters, {'source_id':'gyoogle'})
+
     def test_candidate_is_never_published_without_validator(self):
         retriever, generator = Retriever(), Generator()
         result = QuizService(retriever, generator).generate(request())

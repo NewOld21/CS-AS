@@ -130,6 +130,10 @@ class AnswerService:
                 raise GenerationError("Invalid search plan") from error
             context_query, keywords = plan["query"], plan["keywords"]
             filters = {**plan["filters"], **filters}
+        # These concepts come from the owner-scoped Spring quiz context, never from
+        # a public request parameter. A planner/user cannot broaden source policy.
+        if any(c.startswith("concept:gyoogle-") for c in concepts or []):
+            filters = {**filters, "source_id": "gyoogle"}
         if filters or options.get("search_type", "similarity") != "similarity":
             rows = self.retriever.search(context_query, limit, concepts, filters=filters,
                                          search_type=options.get("search_type", "similarity"))
