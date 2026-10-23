@@ -16,13 +16,20 @@ class OpenAIAnswerGenerator:
             raise ProviderError("GMS_KEY or OPENAI_API_KEY is required")
 
     def generate(self, system: str, prompt: str) -> dict:
+        return self._generate(system, prompt)
+
+    def generate_bounded(self, system: str, prompt: str, timeout: float) -> dict:
+        return self._generate(system, prompt, timeout, 0)
+
+    def _generate(self, system: str, prompt: str, timeout=None, max_retries=None) -> dict:
         payload = {
             "model": self.model,
             "messages": [{"role": "developer", "content": system}, {"role": "user", "content": prompt}],
             "response_format": {"type": "json_object"},
         }
         try:
-            response = post_json(self.endpoint + "/chat/completions", self.api_key, payload)
+            response = post_json(self.endpoint + "/chat/completions", self.api_key, payload,
+                                 timeout=timeout, max_retries=max_retries)
             import json
             return json.loads(response["choices"][0]["message"]["content"])
         except (ValueError, KeyError, IndexError, TypeError) as error:

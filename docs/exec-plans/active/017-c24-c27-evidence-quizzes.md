@@ -29,3 +29,7 @@ frontend/, backend/src/, backend/ai/src·tests/, scripts/, docs/에서 기존 �
 Docker Python 68개(66 통과·Chroma 조건부 2 skip), 전용 PostgreSQL ChatIntegrationTest 7개 통과. Vue 14개 단위·타입·production build 통과. 라이브 코퍼스/API는 환경 설정 부재로 미실행.
 
 Chrome UI fixture 8개 통과: 저장된 청크 본문, 안전한 원문 링크, Escape 닫기·포커스 복원·390px 모바일·새로고침 복원 확인. fixture 결과를 라이브 코퍼스 성공으로 간주하지 않는다.
+
+### C25
+
+Docker Python 72개 중 70 통과·조건부 Chroma 2 skip. GMS mock의 JSON 후보·실제 검색 근거 ID 전달, 근거 부족 시 모델 미호출, 잘못된 JSON/provider 오류 분리, 등록 개념 입력·deadline 검증을 확인했다. 후보는 독립 검증 전 candidate=null이다. 실제 GMS 키/ACTIVE 데이터는 이 작업 환경에 제공되지 않아 라이브 호출은 미실행이다.

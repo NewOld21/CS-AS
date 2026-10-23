@@ -67,6 +67,8 @@ concept_ids는 이번 질문에서 확인한 등록 개념 ID이며 Spring이 �
 
 ## 퀴즈 후보 생성·검증
 
+C25 구현: 서비스 인증된 POST /internal/v1/quiz-candidates. 입력의 concept_ids와 concept_labels는 Spring이 PostgreSQL 원장에서 확인한다. learning_context는 본인 대화의 최근 질문/문제 문맥이며 최대 2000자다. 후보 생성만 완료된 상태에서는 candidate=null, validation_failed/VALIDATION_NOT_CONFIGURED를 반환한다. 공개 사용자 API는 C27에서 연결한다. 각 LLM 단계는 남은 deadline을 사용하고 자동 재생성하지 않는다.
+
 입력: 공통 필드 + `concept_ids`, `difficulty`, 선택적 `learning_context`(정규화된 개념 설명, 최근 사용자 질문), `exclude_quiz_fingerprints`(서버 제한 길이). 소유자 식별정보는 보내지 않는다.
 
 200 응답 상태:

@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "backend/ai/src"))
 
 from csas_rag.api.server import serve
 from csas_rag.generation.answering import AnswerService
+from csas_rag.generation.quiz import QuizService
 from csas_rag.providers.chroma import ChromaVectorStore
 from csas_rag.providers.embeddings import OpenAIEmbedding
 from csas_rag.providers.llm import OpenAIAnswerGenerator
@@ -31,7 +32,9 @@ def main(argv=None):
         raise SystemExit("Only an ACTIVE index manifest can serve answers")
     embedding = OpenAIEmbedding(model=manifest["model"], dimensions=manifest["dimensions"])
     retriever = VectorRetriever(ChromaVectorStore(manifest["index_version"]), embedding, manifest)
-    serve(AnswerService(retriever, OpenAIAnswerGenerator()), token, manifest["index_version"], args.host, args.port)
+    generator = OpenAIAnswerGenerator()
+    serve(AnswerService(retriever, generator), token, manifest["index_version"], args.host, args.port,
+          quiz_service=QuizService(retriever, generator))
 
 
 if __name__ == "__main__":

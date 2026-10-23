@@ -2,6 +2,8 @@
 
 상태: 1차 개발 설계 제안. FR-08. 실시간 생성의 정확성을 형식 검사만으로 보장하지 않는다.
 
+C25: 내부 quiz-candidates 경로와 QuizService를 구현했다. 기존 VectorRetriever와 GMS JSON provider를 재사용해 한 후보를 생성하며 개념·학습 문맥·실제 evidence·모델/프롬프트/인덱스/corpus 버전을 추적한다. 검증기 미설정 상태에서는 후보를 반환하지 않는다. LLM 자동 재생성 없이 단계별 deadline을 검사한다.
+
 ## 입출력·소유권
 
 입력은 `concept_ids`, 선택적 `chat_session_id`, `difficulty`다. 사용자의 본인 대화만 참조한다. 대화가 있으면 현재 문제 개념·최근 학습 내용을 참고하되, 문제의 사실 근거는 새로 검색한다. `concept_ids`는 등록된 ID여야 하며 대화 내 개념과의 연결은 서버가 확인한다.

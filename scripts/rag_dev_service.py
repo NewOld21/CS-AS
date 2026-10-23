@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "backend/ai/src"))
 
 from csas_rag.api.server import serve
 from csas_rag.generation.answering import AnswerService
+from csas_rag.generation.quiz import QuizService
 from csas_rag.providers.chroma import ChromaVectorStore
 from csas_rag.providers.embeddings import DeterministicTestEmbedding, OpenAIEmbedding
 from csas_rag.providers.llm import OpenAIAnswerGenerator
@@ -110,6 +111,7 @@ def main() -> None:
         index_version,
         host="0.0.0.0",
         port=8090,
+        quiz_service=QuizService(retriever, generator, min_score=-1.0),
     )
 
 
