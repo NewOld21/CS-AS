@@ -1,0 +1,1106 @@
+[
+  {
+    "slot": 1,
+    "topic": "스택 기초 동작",
+    "learningObjective": "스택의 기본 연산 이름과 역할을 이해합니다.",
+    "difficulty": "EASY",
+    "question": "스택에서 최상위에 있는 값을 꺼내는 연산의 이름은 무엇입니까?",
+    "options": [
+      "pop()",
+      "push()",
+      "enQueue()",
+      "deQueue()"
+    ],
+    "correctAnswer": 1,
+    "explanation": "자료에서 '데이터 최상위 값 뺌 : pop()'으로 설명되어 있으므로 최상위 값을 꺼내는 연산은 pop()입니다.",
+    "optionExplanations": [
+      "정답: 문서에 '데이터 최상위 값 뺌 : pop()'으로 명시되어 있습니다 (라인 15-17).",
+      "오답: push()는 문서에 '데이터 넣음 : push()'로 설명되어 있어 값을 넣는 연산입니다 (라인 15).",
+      "오답: enQueue()는 큐의 삽입 연산 이름으로 문서의 큐 섹션에서 사용되는 용어입니다 (라인 248-251, 288-295).",
+      "오답: deQueue()는 큐에서 값을 빼는 연산 이름으로, 스택의 pop과는 다른 연산입니다 (라인 248-251, 309-318)."
+    ],
+    "keywords": [
+      "스택",
+      "pop",
+      "push",
+      "연산 이름"
+    ],
+    "sourceEvidence": {
+      "section": "스택(Stack)",
+      "startLine": 15,
+      "endLine": 17,
+      "quote": "데이터 넣음 : push() \n\n데이터 최상위 값 뺌 : pop()"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Stack & Queue.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Stack%20%26%20Queue.md",
+    "id": "e6519898-cda0-5cb1-a212-b637f2ec8d18",
+    "review": {
+      "blind": {
+        "slot": 1,
+        "correctOptionText": "pop()",
+        "unambiguous": true,
+        "reason": "Source describes pop() as the operation that removes (꺼내는) the top value from the stack.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 1,
+        "passed": true,
+        "reason": "The source explicitly states '데이터 최상위 값 뺌 : pop()', so the correct option (pop()) and the option explanations match the provided text."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 2,
+    "topic": "배열 크기 계산 (C++)",
+    "learningObjective": "sizeof 연산자를 이용해 정적 배열의 요소 개수를 계산할 수 있다.",
+    "difficulty": "EASY",
+    "question": "C++에서 정적 배열 arr[]의 요소 개수를 구하기 위해 다음 코드 int n = sizeof(arr) / sizeof(arr[0]); 를 사용하였습니다. 이 표현식이 정확한 이유로 옳은 것은 무엇입니까?",
+    "options": [
+      "sizeof(arr[0])는 항상 4를 반환하므로 모든 배열에서 이를 나누면 요소 개수를 구할 수 있다.",
+      "sizeof(arr)는 배열 전체 바이트 수이고 sizeof(arr[0])는 한 요소의 바이트 수이므로 둘을 나누면 요소 개수가 된다.",
+      "sizeof(arr)는 배열의 요소 개수를 반환하고 sizeof(arr[0])는 첫 요소의 값 자체를 반환하므로 나누면 요소 개수가 된다.",
+      "sizeof(arr)는 포인터 크기를 반환하므로 배열 요소 개수를 구하려면 포인터 산술과 함께 사용해야 한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "소스에는 int arr[] = { ... }; 와 함께 int n = sizeof(arr) / sizeof(arr[0]); // 7 과 같이 배열 전체 크기를 한 요소의 크기로 나누어 요소 수를 얻는 예제가 제시되어 있습니다. 즉 sizeof(arr)는 배열 전체 바이트 수이고 sizeof(arr[0])는 한 요소의 바이트 수이므로 나눗셈으로 요소 개수를 얻습니다.",
+    "optionExplanations": [
+      "틀렸습니다. sizeof(arr[0])는 요소 타입의 바이트 수를 반환하며 모든 경우 4가 되는 것은 아닙니다; 소스 예제는 특정 타입(int)에서의 사용을 보였습니다.",
+      "정답입니다. 소스의 예제(라인 8-9)는 전체 바이트 수를 한 요소 바이트 수로 나누어 요소 수를 얻는 방법을 보여줍니다.",
+      "틀렸습니다. sizeof 연산자는 값이나 개수가 아니라 바이트 크기를 반환하며, sizeof(arr)는 요소 수를 직접 반환하지 않습니다. (소스의 예제와 다릅니다.)",
+      "틀렸습니다. 정적 배열에 대해 sizeof(arr)는 포인터 크기가 아니라 전체 배열의 바이트 수를 반환합니다; 소스가 그 방법을 보여줍니다."
+    ],
+    "keywords": [
+      "sizeof",
+      "배열 크기",
+      "요소 개수",
+      "C++"
+    ],
+    "sourceEvidence": {
+      "section": "Array.md",
+      "startLine": 5,
+      "endLine": 10,
+      "quote": "- C++에서 사이즈 구하기 \n\n```\nint arr[] = { 1, 2, 3, 4, 5, 6, 7 }; \nint n = sizeof(arr) / sizeof(arr[0]); // 7\n```"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Array.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Array.md",
+    "id": "3d5efb39-b0f9-5a31-b150-9590a0c76ca1",
+    "review": {
+      "blind": {
+        "slot": 2,
+        "correctOptionText": "sizeof(arr)는 배열 전체 바이트 수이고 sizeof(arr[0])는 한 요소의 바이트 수이므로 둘을 나누면 요소 개수가 된다.",
+        "unambiguous": true,
+        "reason": "Source shows sizeof(arr)/sizeof(arr[0]) computes total bytes divided by one element's bytes to yield element count.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 2,
+        "passed": true,
+        "reason": "문항의 정답(옵션 2)은 소스의 예제( sizeof(arr) / sizeof(arr[0]) )와 일치합니다. 나머지 선택지는 소스 내용과 모순되어 오답으로 판정 가능합니다(요소 크기가 항상 4라는 주장, sizeof가 요소 개수나 값 반환이라는 주장, 정적 배열에 대해 sizeof가 포인터 크기를 반환한다는 주장 모두 소스와 맞지 않습니다)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 3,
+    "topic": "힙 저장 방식",
+    "learningObjective": "힙을 표준적으로 어떻게 저장하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "힙(Heap)을 구현할 때 표준적으로 사용하는 저장 자료구조는 무엇입니까?",
+    "options": [
+      "해시테이블(Hash Table)",
+      "포인터 기반 이진 트리(Binary pointer tree)",
+      "배열",
+      "연결리스트(Linked List)"
+    ],
+    "correctAnswer": 3,
+    "explanation": "원문은 힙을 저장하는 표준적인 자료구조로 '배열'을 명시하고 있으며, 구현 편의상 배열의 첫 인덱스(0)를 사용하지 않는다고 설명합니다. 따라서 힙은 배열로 저장하는 것이 표준입니다.",
+    "optionExplanations": [
+      "해시테이블은 원문에서 힙의 표준 저장 방식으로 언급되지 않았습니다; 힙은 완전 이진 트리 성질 때문에 배열로 구현하는 것이 일반적입니다(71행).",
+      "포인터 기반 이진 트리 구현은 가능하더라도 원문은 표준적인 저장 방식으로 배열을 지목하며, 배열을 사용하면 노드 인덱스가 고정된다는 장점을 설명합니다(71-77행).",
+      "정답: 원문은 \"힙을 저장하는 표준적인 자료구조는 배열\"이라고 직접 설명합니다(71-74행).",
+      "연결리스트는 우선순위 큐의 한 구현 방법일 수 있지만, 원문은 표준 저장 방식으로 배열을 제시합니다(31행, 71행)."
+    ],
+    "keywords": [
+      "힙",
+      "배열",
+      "저장 방식",
+      "완전 이진 트리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Heap.md",
+      "startLine": 71,
+      "endLine": 75,
+      "quote": "힙을 저장하는 표준적인 자료구조는 `배열`\n\n구현을 쉽게 하기 위해 배열의 첫번째 인덱스인 0은 사용되지 않음\n\n특정 위치의 노드 번호는 새로운 노드가 추가되어도 변하지 않음"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Heap.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Heap.md",
+    "id": "5ff4c72a-cf7d-50c2-a5c3-634431d02c7b",
+    "review": {
+      "blind": {
+        "slot": 3,
+        "correctOptionText": "배열",
+        "unambiguous": true,
+        "reason": "원문에 '힙을 저장하는 표준적인 자료구조는 `배열`'이라고 명시되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 3,
+        "passed": true,
+        "reason": "원문(71-75행)이 '힙을 저장하는 표준적인 자료구조는 배열'이라고 명확히 기술하고 있어 정답(배열)을 유일하게 지지합니다. 다른 선택지(해시테이블, 포인터 기반 이진 트리, 연결리스트)는 원문에서 힙의 '표준 저장 방식'으로 언급되지 않아 오답으로 판정됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 4,
+    "topic": "트리의 구성 요소",
+    "learningObjective": "트리 자료구조가 어떤 기본 요소로 구성되는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "트리 자료구조는 기본적으로 어떤 요소들로 이루어져 있습니까?",
+    "options": [
+      "정점(Vertex)과 가중치(Weight)",
+      "키(Key)와 값(Value)",
+      "스택(Stack)과 큐(Queue)",
+      "노드(Node)와 간선(Edge)"
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에 따르면 트리는 값을 가진 노드와 이 노드들을 연결해주는 간선으로 이루어져 있습니다. 따라서 트리의 기본 요소는 노드와 간선입니다.",
+    "optionExplanations": [
+      "정점(vertex)과 가중치(weight)는 그래프 관련 용어이거나 엣지에 가중치가 있는 경우를 나타내지만, 문서에서는 트리를 '노드와 간선'으로 구성된다고 설명합니다. (참고: 문서 행 6, 16)",
+      "키와 값은 연관 배열이나 맵의 구성 요소로 적합한 표현이나, 문서에서 트리의 기본 구성 요소로 명시된 것은 노드와 간선입니다. (참고: 문서 행 16)",
+      "스택과 큐는 다른 자료구조의 이름이며, 문서에서는 트리를 노드와 간선으로 구성된 구조로 설명합니다. (참고: 문서 행 16)",
+      "정답입니다. 문서에 'Node와 Edge로 이루어진 자료구조' 및 '노드(Node)와 ... 간선(Edge)으로 이루어져있다'라고 명시되어 있습니다. (참고: 문서 행 6, 16)"
+    ],
+    "keywords": [
+      "트리",
+      "노드",
+      "간선",
+      "구성 요소"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Tree.md",
+      "startLine": 6,
+      "endLine": 16,
+      "quote": "Node와 Edge로 이루어진 자료구조\nTree의 특성을 이해하자\n```\n\n<br>\n\n<img src=\"https://www.geeksforgeeks.org/wp-content/uploads/binary-tree-to-DLL.png\">\n\n<br>\n\n트리는 값을 가진 `노드(Node)`와 이 노드들을 연결해주는 `간선(Edge)`으로 이루어져있다."
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Tree.md",
+    "id": "2107e4b5-2c6c-52a5-88aa-d8df7f68940f",
+    "review": {
+      "blind": {
+        "slot": 4,
+        "correctOptionText": "노드(Node)와 간선(Edge)",
+        "unambiguous": true,
+        "reason": "문서 첫 줄에 'Node와 Edge로 이루어진 자료구조'라고 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 4,
+        "passed": true,
+        "reason": "질문·정답·해설이 문서 내용과 일치합니다. 문서에 'Node와 Edge'로 트리를 정의하고 있어 정답(노드와 간선)은 명확하며 다른 선택지는 문서에 근거가 없어 오답임이 증명됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 5,
+    "topic": "Linked List 기본 정의",
+    "learningObjective": "링크드 리스트가 연속 메모리에 저장되는지와 노드 구성 요소를 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "링크드 리스트(Linked List)에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "연속적인 메모리 위치에 저장되지 않는 선형 자료구조이며, 각 노드는 데이터 필드와 다음 노드에 대한 참조를 포함합니다.",
+      "항상 연속적인 메모리 블록에 저장되며 임의 접근(random access)을 기본으로 합니다.",
+      "각 노드는 데이터만 갖고 다음 노드에 대한 참조는 포함하지 않습니다.",
+      "이진 탐색을 위해 임의 접근이 가능하도록 설계되어 있습니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "링크드 리스트는 연속적인 메모리 위치에 저장되지 않는 선형 데이터 구조이며 각 노드는 데이터 필드와 다음 노드에 대한 참조를 포함합니다. (출처 코드와 설명에서 '연속적인 메모리 위치에 저장되지 않는 선형 데이터 구조'와 '각 노드는 데이터 필드와 다음 노드에 대한 참조'를 명시하고 있습니다.)",
+    "optionExplanations": [
+      "정답입니다. 본문에서 링크드 리스트는 연속 메모리에 저장되지 않는 선형 자료구조이고, 각 노드는 데이터 필드와 다음 노드에 대한 참조로 구성된다고 기술되어 있습니다.",
+      "틀렸습니다. 본문은 링크드 리스트가 '연속적인 메모리 위치에 저장되지 않는' 구조라고 설명하고 있으므로 연속 저장을 전제로 하지 않습니다.",
+      "틀렸습니다. 본문은 노드가 '데이터와 다음 노드에 대한 참조'로 구성된다고 명시하고 있어, 참조(포인터)를 갖지 않는다는 주장은 맞지 않습니다.",
+      "틀렸습니다. 본문은 임의 접근을 허용하지 않아 이진 검색을 수행할 수 없다고 명시하고 있으므로 임의 접근을 기본으로 한다는 설명은 잘못입니다."
+    ],
+    "keywords": [
+      "연속적이지 않음",
+      "데이터 필드",
+      "다음 노드 참조",
+      "선형 자료구조"
+    ],
+    "sourceEvidence": {
+      "section": "Linked List.md",
+      "startLine": 7,
+      "endLine": 11,
+      "quote": "연속적인 메모리 위치에 저장되지 않는 선형 데이터 구조\n\n(포인터를 사용해서 연결된다)\n\n각 노드는 **데이터 필드**와 **다음 노드에 대한 참조**를 포함하는 노드로 구성"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Linked List.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Linked%20List.md",
+    "id": "abaa7d9b-5263-57d1-b2f9-e8974413faf6",
+    "review": {
+      "blind": {
+        "slot": 5,
+        "correctOptionText": "연속적인 메모리 위치에 저장되지 않는 선형 자료구조이며, 각 노드는 데이터 필드와 다음 노드에 대한 참조를 포함합니다.",
+        "unambiguous": true,
+        "reason": "소스 문서에서 링크드 리스트를 비연속 메모리 선형 구조로 정의하고 각 노드가 데이터 필드와 다음 노드에 대한 참조를 포함한다고 명시함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 5,
+        "passed": true,
+        "reason": "문항의 정답과 오답 해설이 제공된 원본 텍스트의 문장(연속적이지 않음, 데이터 필드와 다음 노드 참조 포함)에 정확히 근거하고 있으며, 오답들은 원문과 명백히 모순되어 있어 모두 배타적으로 틀립니다. 난이도·학습목표·한국어 표현도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 6,
+    "topic": "B-Tree 기본 규칙",
+    "learningObjective": "B-Tree에서 노드의 자료수와 자식 수의 관계를 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "B-Tree에서 한 노드의 자료가 N개일 때, 그 노드의 자식 수는 어떻게 되겠습니까?",
+    "options": [
+      "자식 수는 N-1개여야 합니다.",
+      "자식 수는 N+1개여야 합니다.",
+      "자식 수는 항상 N개여야 합니다.",
+      "자식 수는 항상 2개여야 합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "자료에서 B-Tree의 규칙으로 '노드의 자료수가 N이면, 자식 수는 N+1이어야 함'이라고 명시되어 있습니다. 이 규칙이 B-Tree의 구조적 성질을 정의합니다.",
+    "optionExplanations": [
+      "오답입니다. N-1은 잘못된 관계이며 소스에서는 그런 규칙을 제시하지 않았습니다. 올바른 규칙은 N+1입니다 (lines 35-35).",
+      "정답입니다. 소스의 규칙 목록에 '노드의 자료수가 N이면, 자식 수는 N+1이어야 함'이라고 직접 명시되어 있습니다 (lines 35-35).",
+      "오답입니다. 소스는 자식 수가 자료 수와 동일하다고 하지 않았고, 대신 N+1이어야 한다고 서술했습니다 (lines 35-36).",
+      "오답입니다. B-Tree는 이진 트리가 아니며 자식 수가 항상 2개라고 제한하지 않습니다. 소스는 다중 자식을 허용한다고 설명합니다 (lines 15-16, 35-36)."
+    ],
+    "keywords": [
+      "B-Tree",
+      "자식 수",
+      "자료수 N"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/B Tree & B+ Tree.md",
+      "startLine": 35,
+      "endLine": 36,
+      "quote": "- 노드의 자료수가 N이면, 자식 수는 N+1이어야 함\n- 각 노드의 자료는 정렬된 상태여야함"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/B Tree & B+ Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/B%20Tree%20%26%20B%2B%20Tree.md",
+    "id": "81644cec-9693-5718-8cfb-7c9266d9ae1b",
+    "review": {
+      "blind": {
+        "slot": 6,
+        "correctOptionText": "자식 수는 N+1개여야 합니다.",
+        "unambiguous": true,
+        "reason": "본문 규칙에 '노드의 자료수가 N이면, 자식 수는 N+1이어야 함'이라고 명시됨.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 6,
+        "passed": true,
+        "reason": "Question, correct option, and explanation directly match the quoted source line '- 노드의 자료수가 N이면, 자식 수는 N+1이어야 함'. All three distractors are contradicted by that same source line, so they are provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 7,
+    "topic": "삽입과 검색 성능 비교",
+    "learningObjective": "ArrayList와 LinkedList의 삽입 및 검색 성능 특성과 그 교환 조건을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "중간 위치에 빈번한 삽입 작업이 많고, 순차적 탐색이 허용되는 상황이라면 다음 자료구조 중 어느 것이 더 적합합니까?",
+    "options": [
+      "Array",
+      "크기 고정의 정적 배열과 ArrayList를 조합한 구조",
+      "LinkedList",
+      "ArrayList"
+    ],
+    "correctAnswer": 3,
+    "explanation": "연결리스트는 중간 삽입 및 삭제 시 이전·다음 노드의 포인터만 수정하면 되므로 삽입이 빠릅니다(라인 54-66). 반면 ArrayList는 중간에 데이터를 추가·삭제할 때 뒤의 요소들을 이동시키는 비용이 발생하여 느립니다(라인 17, 48-51). 따라서 중간 삽입이 빈번하면 LinkedList가 더 적합합니다.",
+    "optionExplanations": [
+      "오답: Array는 크기 고정이고 중간 삽입/삭제에 매우 비효율적이라는 설명이 있습니다(라인 25-36, 36-39).",
+      "오답: 정적 배열은 크기를 미리 정해야 하고 중간 삽입에 비효율적이며, 조합 구조에 대한 설명이나 장점이 본문에 제시되어 있지 않습니다(라인 25-36, 36-39).",
+      "정답: LinkedList는 노드 연결 포인터만 수정하여 중간 삽입·삭제가 빠르다는 설명이 있습니다(라인 54-66).",
+      "오답: ArrayList는 검색은 빠르지만 중간 삽입·삭제 시 요소들을 밀고 당겨야 해서 시간이 오래 걸린다고 명시되어 있습니다(라인 17, 48-51)."
+    ],
+    "keywords": [
+      "LinkedList",
+      "ArrayList",
+      "중간 삽입",
+      "포인터 수정"
+    ],
+    "sourceEvidence": {
+      "section": "Array vs ArrayList vs LinkedList.md",
+      "startLine": 54,
+      "endLine": 66,
+      "quote": "그렇다면 **LinkedList**는?\n\n연결리스트에는 단일, 다중 등 여러가지가 존재한다.\n\n종류가 무엇이든, **한 노드에 연결될 노드의 포인터 위치를 가리키는 방식**으로 되어있다.\n\n> 단일은 뒤에 노드만 가리키고, 다중은 앞뒤 노드를 모두 가리키는 차이\n\n<br>\n\n이런 방식을 활용하면서, 데이터의 중간에 삽입 및 삭제를 하더라도 전체를 돌지 않아도 이전 값과 다음값이 가르켰던 주소값만 수정하여 연결시켜주면 되기 때문에 빠르게 진행할 수 있다.\n\n이렇게만 보면 가장 좋은 방법 같아보이지만, `List의 k번째 값을 찾아라`에서는 비효율적이다."
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Array vs ArrayList vs LinkedList.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Array%20vs%20ArrayList%20vs%20LinkedList.md",
+    "id": "d999446d-d463-5c9b-a978-5723fb02e2a6",
+    "review": {
+      "blind": {
+        "slot": 7,
+        "correctOptionText": "LinkedList",
+        "unambiguous": true,
+        "reason": "LinkedList supports fast insertion/deletion in the middle and is acceptable when sequential traversal is allowed (per source).",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 7,
+        "passed": true,
+        "reason": "정답(LinkedList)과 세 오답(배열, 정적 배열+ArrayList 조합, ArrayList)이 본문 인용문으로 명확히 근거·반증됩니다; 설명·난이도·학습목표도 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 8,
+    "topic": "이진탐색트리의 중복 처리",
+    "learningObjective": "이진탐색트리에서 중복 노드를 허용하지 않는 설계 선택의 이유와 대안(노드에 count 필드 추가)을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "이진탐색트리(BST)에서 '중복된 노드가 없어야 한다'고 설명하는 가장 적절한 이유는 무엇입니까?",
+    "options": [
+      "중복을 허용하면 트리의 균형이 자동으로 깨져서 항상 편향 트리가 되기 때문입니다.",
+      "중복 노드는 중위순회(inorder)로 정렬된 순서를 유지할 수 없게 만들기 때문입니다.",
+      "중복을 허용하면 삭제의 3가지 경우(leaf, 자식 1개, 자식 2개)를 분류할 수 없게 되기 때문입니다.",
+      "검색 효율이 주목적이므로, 중복이 많으면 트리 기반 검색 성능이 불필요하게 저하되어 대신 노드에 count 값을 두는 방식이 더 효율적입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에서는 BST가 '검색 목적의 자료구조'이므로 중복이 많으면 검색 속도가 느려질 이유로 트리에 중복을 두지 않는 것이 좋고, 그 대신 노드에 count 값을 두어 처리하는 것이 훨씬 효율적이라고 명시하고 있습니다. 따라서 검색 효율 관점에서 중복을 허용하지 않는 것이 합리적입니다.",
+    "optionExplanations": [
+      "오답: 원문은 중복이 트리의 균형을 ‘항상’ 깨뜨린다고 주장하지 않으며, 균형 문제와 중복 허용은 별개로 다루고 있습니다.",
+      "오답: 중위순회는 BST에서 항상 왼쪽-루트-오른쪽 순서로 정렬된 결과를 만듭니다; 중복 여부가 중위순회의 정렬성 자체를 불가능하게 한다고 하지 않습니다.",
+      "오답: 삭제의 세 가지 경우 분류는 노드의 자식 수에 따르는 규칙으로, 중복 허용 여부와 직접 무관하다고 기술되어 있습니다.",
+      "정답: 출처는 중복이 많은 경우 트리로 검색 속도를 느리게 하지 않기 위해 중복을 허용하지 않고, 노드에 count 값을 두는 처리가 더 효율적이라고 설명합니다."
+    ],
+    "keywords": [
+      "중복",
+      "검색 효율",
+      "count",
+      "이진탐색트리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Binary Search Tree.md",
+      "startLine": 29,
+      "endLine": 31,
+      "quote": "***중복이 없어야 하는 이유는?***\n\n검색 목적 자료구조인데, 굳이 중복이 많은 경우에 트리를 사용하여 검색 속도를 느리게 할 필요가 없음. (트리에 삽입하는 것보다, 노드에 count 값을 가지게 하여 처리하는 것이 훨씬 효율적)"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Binary Search Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Binary%20Search%20Tree.md",
+    "id": "8f413733-d51e-50c7-8de9-b13c05b769bf",
+    "review": {
+      "blind": {
+        "slot": 8,
+        "correctOptionText": "검색 효율이 주목적이므로, 중복이 많으면 트리 기반 검색 성능이 불필요하게 저하되어 대신 노드에 count 값을 두는 방식이 더 효율적입니다.",
+        "unambiguous": true,
+        "reason": "원문에서 중복 금지는 검색 목적의 자료구조이므로 중복이 많으면 검색 속도가 느려지고, 대신 노드에 count 값을 두는 것이 더 효율적이라고 명시함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 8,
+        "passed": true,
+        "reason": "The chosen correct option (4) and its explanation directly match the quoted source text stating duplicates hurt search efficiency and recommending using a count field; the three distractors are contradicted by or unsupported in the source (no claim that duplicates always break balance, no claim that inorder traversal cannot produce sorted output, and deletion cases are presented independently of duplication)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 9,
+    "topic": "Trie 삽입 충돌 탐지",
+    "learningObjective": "트라이의 insert 구현에서 접두어 충돌을 탐지하는 거짓(false) 반환 조건을 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "제공된 트라이 insert 구현에서 어떤 상황일 때 즉시 false를 반환합니까?",
+    "options": [
+      "현재 노드의 end가 이미 true인 경우, 즉 이 노드에서 끝나는 단어가 존재할 때",
+      "새로운 자식 노드를 생성할 때 pass를 true로 설정하므로 그 즉시 false를 반환할 때",
+      "idx가 문자열 길이와 같을 때 항상 false를 반환할 때",
+      "자식 노드가 존재하지 않으면 항상 false를 반환할 때"
+    ],
+    "correctAnswer": 1,
+    "explanation": "코드에서 insert 초반에 if(end) return false;로 구현되어 있어, 현재 노드가 이미 단어의 끝으로 표시되어 있으면 더 긴 문자열을 삽입하는 도중 즉시 false를 반환합니다. 또한 문자열 끝에 도달했을 때(pass가 true인 경우) false를 반환하는 별도 조건이 있지만(즉 다른 단어가 이 문자열을 지나갈 때) 질문은 즉시 반환되는 초기 조건을 묻고 있으므로 '현재 노드의 end가 true인 경우'가 정답입니다.",
+    "optionExplanations": [
+      "정답: 코드에 if(end) return false;가 있어 현재 노드가 이미 끝나는 단어이면 즉시 false를 반환합니다. (소스: lines 36-40)",
+      "오답: 자식 노드를 생성하면 pass를 true로 설정하지만, 그 자체로 즉시 false를 반환하는 코드는 없습니다(자식 생성 후에는 재귀 호출을 반환합니다). (소스: lines 50-54)",
+      "오답: idx가 문자열 길이와 같을 때는 end를 true로 설정하고, pass가 있으면 false를 반환하지만 항상 false를 반환하지는 않습니다. (소스: lines 41-45)",
+      "오답: 자식 노드가 null이면 새로운 자식을 만들고 재귀로 계속 삽입하므로 그 자체로 false를 반환하지 않습니다. (소스: lines 49-55)"
+    ],
+    "keywords": [
+      "Trie",
+      "insert",
+      "end",
+      "pass",
+      "접두어 충돌"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Trie.md",
+      "startLine": 36,
+      "endLine": 45,
+      "quote": "public boolean insert(String str, int idx) {\n\n        //끝나는 단어 있으면 false 종료\n        if(end) return false;\n\n        //idx가 str만큼 왔을때\n        if(idx == str.length()) {\n            end = true;\n            if(pass) return false; // 더 지나가는 단어 있으면 false 종료\n            else return true;"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Trie.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Trie.md",
+    "id": "26f80a4c-b15d-51ef-8272-f3333cc63e1a",
+    "review": {
+      "blind": {
+        "slot": 9,
+        "correctOptionText": "현재 노드의 end가 이미 true인 경우, 즉 이 노드에서 끝나는 단어가 존재할 때",
+        "unambiguous": true,
+        "reason": "코드의 첫 줄에서 if(end) return false; 이므로 현재 노드가 단어의 끝이면 즉시 false 반환한다.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 9,
+        "passed": true,
+        "reason": "정답(옵션 1)은 소스의 if(end) return false;와 정확히 일치합니다. 나머지 선택지들은 소스 코드(자식 생성 후 재귀 호출, idx==len일 때는 pass 체크 후에야 false 가능 등)에 의해 거짓으로 입증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 10,
+    "topic": "해시 충돌 해결 기법 비교 (체이닝 vs Open Addressing)",
+    "learningObjective": "체이닝과 Open Addressing의 동작 방식과 메모리/저장 위치 측면의 차이를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "체이닝(chaining)과 Open Addressing(개방 주소법)을 비교할 때, 두 방식의 주요 차이를 가장 정확하게 설명한 것은 무엇입니까?",
+    "options": [
+      "체이닝은 충돌을 방지하기 위해 해시 함수 자체를 여러 번 적용하는 방식이고, Open Addressing은 항상 같은 해시값에만 데이터를 저장하므로 충돌을 허용하지 않습니다.",
+      "체이닝은 연결리스트로 충돌된 항목을 계속 추가해(포인터 사용) 저장하므로 노드를 무제한으로 확장할 수 있지만 메모리 부담이 커질 수 있고, Open Addressing은 충돌 시 해시 테이블 내의 다른 빈 슬롯에 데이터를 저장(탐사)하여 별도의 포인터 구조를 사용하지 않습니다.",
+      "체이닝은 충돌 시 해시 테이블 내부의 다른 빈 슬롯으로 이동하여 데이터를 저장하는 방식이고, Open Addressing은 충돌된 항목을 연결리스트로 연결해 저장하는 방식입니다.",
+      "체이닝과 Open Addressing은 모두 별도의 추가 메모리(예: 포인터)를 필요로 하지 않으며, 단지 다른 해시 함수를 사용하는 것만으로 충돌을 해결합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 체이닝을 '연결리스트로 노드를 계속 추가해나가는 방식(제한 없이 계속 연결 가능, but 메모리 문제)'이라고 설명하고 있으며(32-33행), Open Addressing은 '해시 함수로 얻은 주소가 아닌 다른 주소에 데이터를 저장할 수 있도록 허용(해당 키 값에 저장되어있으면 다음 주소에 저장)'이라고 설명합니다(35행). 따라서 체이닝은 포인터 기반의 리스트로 충돌 항목을 저장해 메모리 부담이 있을 수 있고, Open Addressing은 테이블 내부의 다른 슬롯으로 저장(탐사)하는 방식이 맞습니다.",
+    "optionExplanations": [
+      "오답입니다. 소스에는 체이닝이 해시 함수를 여러 번 적용해 충돌을 막는다고 하거나, Open Addressing이 항상 같은 해시값에만 저장한다고 말하지 않습니다. 실제로 Open Addressing은 빈 슬롯을 찾아 저장하는 탐사 방법입니다(35행).",
+      "정답입니다. 소스는 체이닝을 연결리스트로 계속 추가하는 방식이며 메모리 문제가 있을 수 있다고 적고(32-33행), Open Addressing은 다른 주소에 저장하도록 허용해(탐사) 충돌을 피한다고 기술합니다(35행).",
+      "오답입니다. 이 설명은 두 방식을 뒤바꿔 기술하고 있습니다. 소스는 체이닝을 연결리스트 방식으로, Open Addressing을 테이블 내 다른 주소에 저장하는 방식으로 설명합니다(32-33행, 35행).",
+      "오답입니다. 소스는 체이닝이 연결리스트(포인터)를 사용한다고 명시하고 있어 '추가 메모리 불필요' 주장은 맞지 않습니다(32-33행). 또한 Open Addressing은 단순히 다른 해시 함수를 쓰는 방식으로만 설명되지 않습니다(35행)."
+    ],
+    "keywords": [
+      "체이닝",
+      "Open Addressing",
+      "충돌",
+      "연결리스트",
+      "탐사",
+      "메모리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Hash.md",
+      "startLine": 32,
+      "endLine": 36,
+      "quote": "1. **체이닝** : 연결리스트로 노드를 계속 추가해나가는 방식\n   (제한 없이 계속 연결 가능, but 메모리 문제)\n\n2. **Open Addressing** : 해시 함수로 얻은 주소가 아닌 다른 주소에 데이터를 저장할 수 있도록 허용 (해당 키 값에 저장되어있으면 다음 주소에 저장)"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Hash.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Hash.md",
+    "id": "f9e35950-1a3c-5014-bc97-7c05d5a010ec",
+    "review": {
+      "blind": {
+        "slot": 10,
+        "correctOptionText": "체이닝은 연결리스트로 충돌된 항목을 계속 추가해(포인터 사용) 저장하므로 노드를 무제한으로 확장할 수 있지만 메모리 부담이 커질 수 있고, Open Addressing은 충돌 시 해시 테이블 내의 다른 빈 슬롯에 데이터를 저장(탐사)하여 별도의 포인터 구조를 사용하지 않습니다.",
+        "unambiguous": true,
+        "reason": "Matches source: chaining uses linked lists (nodes added, memory cost) and Open Addressing stores collided items in other table slots via probing without separate pointer structures.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 10,
+        "passed": true,
+        "reason": "옵션 2은 출처의 32-36행 설명(체이닝은 연결리스트로 항목을 계속 추가하며 메모리 문제가 있을 수 있고, Open Addressing은 테이블 내 다른 빈 슬롯에 저장(탐사)한다고 허용함)과 정확히 일치합니다. 나머지 세 옵션은 출처 내용과 명백히 모순됩니다(옵션1·3·4는 체이닝/개방주소법의 역할을 뒤바꾸거나 포인터 불필요 등 출처에 없는 잘못된 주장을 함)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 11,
+    "topic": "원형 큐의 단점 비교",
+    "learningObjective": "원형 큐와 일반 큐의 단점을 비교하여 원형 큐의 한계를 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "제공된 자료에 따르면 원형 큐(circular queue)의 단점으로 옳은 것은 무엇입니까?",
+    "options": [
+      "메모리 활용이 나빠서 빈 공간이 많이 생긴다.",
+      "dequeue 시마다 배열의 모든 요소를 한 칸씩 이동해야 한다.",
+      "배열로 구현되어 있기 때문에 큐의 크기가 제한된다.",
+      "항상 하나의 빈 자리를 유지해야 해서 데이터 순환이 불가능하다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서 원형 큐의 단점으로 '메모리 공간은 잘 활용하지만, 배열로 구현되어 있기 때문에 큐의 크기가 제한'된다고 명시하고 있으므로 배열 기반이므로 크기가 제한되는 것이 단점입니다 (라인 453-455).",
+    "optionExplanations": [
+      "오답: 문서에는 원형 큐가 '메모리 공간은 잘 활용'한다고 긍정적으로 기술되어 있으므로 메모리 활용이 나쁘다는 설명은 문서와 반대입니다 (라인 452-453).",
+      "오답: 문서에는 원형 큐가 인덱스를 (index + 1) % size로 순환시키므로 요소를 이동시키지 않는다고 설명되어 있으며, 매번 이동해야 한다고 나와 있지 않습니다 (라인 369-371, 399-401, 419-421).",
+      "정답: 문서에 원형 큐의 단점으로 '배열로 구현되어 있기 때문에 큐의 크기가 제한'된다고 직접 서술되어 있습니다 (라인 453-455).",
+      "오답: 문서에는 원형 큐가 '자리 하나를 항상 비워둠'으로 공백/포화 상태를 구분한다고 설명되어 있으며, 이로 인해 데이터 순환이 불가능하다는 주장은 문서에 없습니다(라인 366-371)."
+    ],
+    "keywords": [
+      "원형 큐",
+      "단점",
+      "배열 기반",
+      "크기 제한"
+    ],
+    "sourceEvidence": {
+      "section": "큐(Queue)",
+      "startLine": 452,
+      "endLine": 455,
+      "quote": "원형 큐의 단점 : 메모리 공간은 잘 활용하지만, 배열로 구현되어 있기 때문에 큐의 크기가 제한\n\n<br>"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Stack & Queue.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Stack%20%26%20Queue.md",
+    "id": "f50bc44d-27a0-58fd-a55f-66b811c3703b",
+    "review": {
+      "blind": {
+        "slot": 11,
+        "correctOptionText": "배열로 구현되어 있기 때문에 큐의 크기가 제한된다.",
+        "unambiguous": true,
+        "reason": "Source states the circular queue's drawback is that, although it uses memory well, being array-based means the queue size is limited.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 11,
+        "passed": true,
+        "reason": "The source explicitly lists the circular queue's drawback: '배열로 구현되어 있기 때문에 큐의 크기가 제한' (i.e., array-based so size is limited), and the other options contradict or are not stated in the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 12,
+    "topic": "힙 구현의 인덱스 설계",
+    "learningObjective": "힙에서 1 기반 배열 인덱스 사용의 설계 이유와 부모·자식 인덱스 관계의 장단점을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "힙을 배열로 구현할 때 첫번째 인덱스(0)를 사용하지 않는 설계에 대해 설명한 것 중, 본문 내용과 가장 일치하는 것은 무엇입니까?",
+    "options": [
+      "배열의 첫번째 인덱스(0)를 비워 두는 것은 메모리 절약을 위해 권장되며, 힙 노드 수가 적을 때 효율이 더 좋아집니다.",
+      "첫번째 인덱스를 사용하지 않으면 삽입 시 배열 이동이 필요 없으나, 부모·자식 인덱스 계산은 0 기반 규칙인 왼쪽 2*i+1, 오른쪽 2*i+2, 부모 (i-1)/2를 사용해야 합니다.",
+      "첫번째 인덱스를 비워 두는 이유는 루트 노드의 인덱스를 0이 아닌 1로 고정해 힙의 최대값·최소값 탐색을 O(1)에서 O(log n)으로 느리게 하여 균형을 맞추기 위함입니다.",
+      "배열의 첫번째 인덱스(0)를 비워 두면 부모·자식 인덱스를 간단한 수식(왼쪽 2*i, 오른쪽 2*i+1, 부모 i/2)으로 표현할 수 있고, 새로운 노드가 추가되어도 기존 노드의 번호가 변하지 않습니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "본문은 힙을 배열로 저장하며 첫번째 인덱스(0)를 사용하지 않는다고 설명하고, 이렇게 하면 부모·자식 인덱스가 왼쪽 = (부모 index)*2, 오른쪽 = (부모 index)*2+1, 부모 = (자식 index)/2로 간단해진다고 명시합니다. 또한 새로운 노드가 추가되어도 특정 위치의 노드 번호가 변하지 않는다고 설명하므로, 첫번째 인덱스를 비워 두는 설계는 인덱스 계산의 단순화와 노드 번호의 고정이라는 장점을 가진다고 본문에서 밝히고 있습니다.",
+    "optionExplanations": [
+      "본문에서는 배열의 첫번째 인덱스를 비워 두는 것을 메모리 절약 목적이라고 하지 않습니다. 본문은 그 대신 구현을 쉽게 하기 위해 첫번째 인덱스를 사용하지 않는다고 설명합니다; 메모리 절약에 관한 언급은 없습니다.",
+      "본문에서 제시한 인덱스 규칙은 1 기반 규칙(왼쪽 = 부모*2 등)이며, 0 기반 규칙(왼쪽 = 2*i+1 등)을 사용해야 한다고 설명하지 않습니다. 따라서 이 선택지는 본문 내용과 맞지 않습니다.",
+      "본문에는 첫번째 인덱스를 비워 두는 이유가 루트의 인덱스를 고정해 탐색을 느리게 한다는 설명이 없습니다. 본문은 탐색 복잡도를 변경한다는 내용이나 그런 목적을 언급하지 않습니다.",
+      "정답입니다. 본문은 힙을 배열로 저장하고 배열의 첫번째 인덱스인 0은 사용되지 않으며, 부모·자식 인덱스 관계를 왼쪽 자식 = 부모*2, 오른쪽 자식 = 부모*2+1, 부모 = 자식/2로 제시하고, 새로운 노드가 추가되어도 특정 위치의 노드 번호는 변하지 않는다고 설명합니다."
+    ],
+    "keywords": [
+      "배열 저장",
+      "1 기반 인덱스",
+      "부모 자식 관계",
+      "힙 구현"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Heap.md",
+      "startLine": 71,
+      "endLine": 89,
+      "quote": "힙을 저장하는 표준적인 자료구조는 `배열`\n\n구현을 쉽게 하기 위해 배열의 첫번째 인덱스인 0은 사용되지 않음\n\n특정 위치의 노드 번호는 새로운 노드가 추가되어도 변하지 않음\n\n(ex. 루트 노드(1)의 오른쪽 노드 번호는 항상 3)\n\n <br>\n\n##### 부모 노드와 자식 노드 관계\n\n```\n왼쪽 자식 index = (부모 index) * 2\n\n오른쪽 자식 index = (부모 index) * 2 + 1\n\n부모 index = (자식 index) / 2\n```"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Heap.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Heap.md",
+    "id": "8b2c31b5-c1a8-59d1-ad7f-09a63c1a3e3f",
+    "review": {
+      "blind": {
+        "slot": 12,
+        "correctOptionText": "배열의 첫번째 인덱스(0)를 비워 두면 부모·자식 인덱스를 간단한 수식(왼쪽 2*i, 오른쪽 2*i+1, 부모 i/2)으로 표현할 수 있고, 새로운 노드가 추가되어도 기존 노드의 번호가 변하지 않습니다.",
+        "unambiguous": true,
+        "reason": "본문은 인덱스 0을 사용하지 않아 부모·자식 관계를 left=2*i, right=2*i+1, parent=i/2로 간단히 계산할 수 있고 노드 번호가 변하지 않는다고 명시함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 12,
+        "passed": true,
+        "reason": "정답(4)은 본문의 '배열의 첫번째 인덱스인 0은 사용되지 않음'과 '왼쪽 = 부모*2, 오른쪽 = 부모*2+1, 부모 = 자식/2' 설명을 직접 반영하고 있어 정확합니다. 나머지 보기들은 본문과 모순됩니다: (1)은 메모리 절약 언급이 없어 틀렸고, (2)는 본문이 1기반 인덱스를 사용한다고 명시하므로 0기반 식을 주장하는 내용과 충돌하며 틀렸고, (3)은 탐색 복잡도를 느리게 한다는 설명이 본문에 전혀 없어 틀립니다. 옵션별 설명들도 본문 근거(인용된 구절)를 바탕으로 올바르게 기술되어 있습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 13,
+    "topic": "힙 연산 시간복잡도",
+    "learningObjective": "힙에서 삽입과 삭제 연산의 시간복잡도를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "원문에서 힙(특히 우선순위 큐 구현용 힙)의 삽입과 삭제 연산 각각의 시간복잡도는 어떻게 설명하고 있습니까?",
+    "options": [
+      "삽입 O(log n), 삭제 O(log n)",
+      "삽입 O(1), 삭제 O(log n)",
+      "삽입 O(log n), 삭제 O(1)",
+      "삽입 O(n), 삭제 O(log n)"
+    ],
+    "correctAnswer": 1,
+    "explanation": "원문은 우선순위 큐를 힙으로 구현할 때 '삽입 : O(logn) , 삭제 : O(logn)'이라고 명시합니다. 또한 삽입은 마지막에 넣고 부모와 교환(위로 이동)하며, 삭제는 루트에 마지막 노드를 옮긴 뒤 자식들과 교환하며 재구성(아래로 이동)한다고 기술되어 있어 두 연산 모두 로그 시간 복잡도를 갖습니다.",
+    "optionExplanations": [
+      "정답: 원문에 삽입과 삭제 모두 O(log n)이라고 직접 표기되어 있습니다(31-34행). 삽입은 부모와 교환하며 올라가고(95-99행, 101-119행), 삭제는 루트에 마지막 노드를 옮기고 내려가며 재구성합니다(126-133행, 139-171행).",
+      "오답: 원문은 삽입을 O(1)이라고 하지 않았습니다. 삽입은 마지막에 추가한 뒤 부모들과 교환하며 올라가므로 로그 시간입니다(93-99행, 101-119행).",
+      "오답: 삭제를 O(1)이라고 하지 않았습니다. 삭제는 루트 교체 후 자식들과 비교·교환하며 재구성하므로 로그 시간입니다(126-133행, 139-171행).",
+      "오답: 삽입을 O(n)으로 설명하지 않았습니다. 원문은 삽입을 O(log n)으로 명시합니다(31-34행, 101-119행)."
+    ],
+    "keywords": [
+      "삽입",
+      "삭제",
+      "시간복잡도",
+      "O(log n)"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Heap.md",
+      "startLine": 31,
+      "endLine": 34,
+      "quote": "우선순위 큐는 배열, 연결리스트, 힙으로 구현 (힙으로 구현이 가장 효율적!)\n\n힙 → 삽입 : O(logn) , 삭제 : O(logn)"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Heap.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Heap.md",
+    "id": "234f96b2-01e7-53f5-83b2-972be9660916",
+    "review": {
+      "blind": {
+        "slot": 13,
+        "correctOptionText": "삽입 O(log n), 삭제 O(log n)",
+        "unambiguous": true,
+        "reason": "원문에 '힙 → 삽입 : O(logn) , 삭제 : O(logn)'이라고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 13,
+        "passed": true,
+        "reason": "원문(31-34행)에 '힙 → 삽입 : O(logn) , 삭제 : O(logn)'이라고 직접 표기되어 있어 '삽입 O(log n), 삭제 O(log n)'만 정답으로 지지됩니다. 나머지 시간복잡도 선택지는 원문에서 언급되지 않아 모두 틀립니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 14,
+    "topic": "트리와 그래프(포리스트) 구분",
+    "learningObjective": "사이클과 연결성 관점에서 트리와 사이클이 없는 그래프(포리스트)의 차이를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 문서에서 제시하는 '트리'를 그래프와 구별하는 핵심 조건은 무엇입니까?",
+    "options": [
+      "루트 노드가 반드시 존재해야 한다.",
+      "사이클이 없고 모든 노드가 간선으로 서로 연결되어 있어야 한다.",
+      "모든 노드의 차수(degree)가 2 이하여야 한다.",
+      "노드 수 N에 대해 간선 수가 언제나 N개여야 한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서는 트리와 그래프의 차이를 사이클의 유무로 설명하며, 사이클이 없다고 해서 반드시 트리는 아니고 사이클이 없고 모든 노드가 간선으로 이어져 있어야 트리라고 명시했습니다. 즉, '사이클이 없음'과 '모두 연결된 상태' 두 조건이 핵심입니다.",
+    "optionExplanations": [
+      "루트 노드의 존재는 일반적인 트리의 특성이지만, 문서가 트리와 그래프를 구별하는 핵심 조건으로 제시한 것은 '사이클의 유무'와 '모든 노드가 간선으로 이어져 있음'입니다. (참고: 문서 행 39-41)",
+      "정답입니다. 문서에 '트리의 경우 싸이클이 존재하지 않고 모든 노드가 간선으로 이어져 있어야 한다'라고 명확히 적혀 있습니다. (참고: 문서 행 39-41)",
+      "문서에서는 노드의 차수 제한을 트리의 핵심 조건으로 언급하지 않았습니다; 따라서 이 선택지는 문서의 설명과 맞지 않습니다. (참고: 문서 전반, 특히 행 30-36 및 39-41)",
+      "문서에서는 노드가 N개이면 간선이 N-1개라고 했지, 간선 수가 N개라고 한 적은 없습니다. 따라서 이 선택지는 문서와 다릅니다. (참고: 문서 행 35)"
+    ],
+    "keywords": [
+      "트리",
+      "그래프",
+      "사이클",
+      "연결성",
+      "포리스트"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Tree.md",
+      "startLine": 32,
+      "endLine": 41,
+      "quote": "- 트리에는 사이클이 존재할 수 없다. (만약 사이클이 만들어진다면, 그것은 트리가 아니고 그래프다)\n- 모든 노드는 자료형으로 표현이 가능하다.\n- 루트에서 한 노드로 가는 경로는 유일한 경로 뿐이다.\n- 노드의 개수가 N개면, 간선은 N-1개를 가진다.\n\n<br>\n\n가장 중요한 것은, `그래프`와 `트리`의 차이가 무엇인가인데, 이는 사이클의 유무로 설명할 수 있다.\n\n사이클이 존재하지 않는 `그래프`라 하여 무조건 `트리`인 것은 아니다 사이클이 존재하지 않는 그래프는 `Forest`라 지칭하며 트리의 경우 싸이클이 존재하지 않고 모든 노드가 간선으로 이어져 있어야 한다"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Tree.md",
+    "id": "f6cd6248-0afa-5b7e-8af0-80bf426ed263",
+    "review": {
+      "blind": {
+        "slot": 14,
+        "correctOptionText": "사이클이 없고 모든 노드가 간선으로 서로 연결되어 있어야 한다.",
+        "unambiguous": true,
+        "reason": "문서에서 트리와 그래프의 차이를 '사이클이 존재하지 않고 모든 노드가 간선으로 이어져 있어야 한다'고 설명하고 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 14,
+        "passed": true,
+        "reason": "문서에서 트리와의 구별 조건으로 '사이클이 없음'과 '모든 노드가 간선으로 이어져 있음(연결성)'을 함께 명시하고 있어 정답(사이클이 없고 모든 노드가 연결됨)은 문서로부터 직접 도출됩니다. 나머지 선택지는 문서 내용과 모순되어 오답임이 확인됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 15,
+    "topic": "Linked List 삽입 방식 비교",
+    "learningObjective": "앞쪽 삽입(push)과 끝쪽 삽입(append)의 구현 차이와 비용적 특징을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 끝쪽에 노드를 추가(append)하는 구현에 대한 옳은 설명은 무엇입니까?",
+    "options": [
+      "insertAfter 함수에서 새 노드의 next는 항상 NULL로 설정되므로 특정 노드 다음 삽입과 동일합니다.",
+      "append 구현은 리스트 끝을 바로 가리키는 포인터가 항상 있어 순회가 절대 발생하지 않습니다.",
+      "리스트가 비어있으면 헤드 포인터를 새 노드로 설정하고, 비어있지 않으면 마지막 노드를 찾기 위해 순회한 뒤 마지막 노드의 next에 새 노드를 연결합니다.",
+      "항상 새 노드의 next를 현재 헤드로 설정하고 헤드를 새 노드로 교체하므로 순회가 전혀 필요 없습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "append 구현은 먼저 새 노드를 만들고(new_node->next = NULL) 리스트가 빈 경우 헤드를 새 노드로 설정합니다. 빈 리스트가 아니면 last 포인터를 사용해 last->next가 NULL인 마지막 노드를 찾기 위해 순회한 후(last = last->next 반복) 마지막 노드의 next를 새 노드로 설정합니다. 따라서 빈 리스트 처리와 순회가 필요하다는 설명이 맞습니다.",
+    "optionExplanations": [
+      "틀렸습니다. insertAfter에서는 new_node->next = prev_node->next; 로 설정하므로 항상 NULL로 설정하지 않습니다(특정 노드가 마지막일 때만 NULL이 될 수 있습니다).",
+      "틀렸습니다. 주어진 append 구현은 끝을 바로 가리키는 별도 포인터를 사용하지 않고 while로 순회하기 때문에 순회가 발생할 수 있습니다.",
+      "정답입니다. 코드에서 빈 리스트일 때 *head_ref = new_node; 로 처리하고, 그렇지 않으면 while(last->next != NULL) 반복으로 마지막을 찾아 last->next = new_node; 하는 흐름이 명시되어 있습니다.",
+      "틀렸습니다. 이것은 앞쪽에 삽입(push)의 동작이며 append는 새 노드의 next를 NULL로 하고 마지막을 찾아 연결합니다."
+    ],
+    "keywords": [
+      "append",
+      "순회",
+      "빈 리스트 처리",
+      "last->next"
+    ],
+    "sourceEvidence": {
+      "section": "Linked List.md",
+      "startLine": 112,
+      "endLine": 131,
+      "quote": "```\nvoid append(struct Node** head_ref, int new_data){\n    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));\n\n    struct Node *last = *head_ref;\n\n    new_node->data = new_data;\n\n    new_node->next = NULL;\n\n    if (*head_ref == NULL){\n        *head_ref = new_node;\n        return;\n    }\n\n    while(last->next != NULL){\n        last = last->next;\n    }\n\n    last->next = new_node;"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Linked List.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Linked%20List.md",
+    "id": "6d66ff77-3a89-5b92-8942-f282ddc1a3e1",
+    "review": {
+      "blind": {
+        "slot": 15,
+        "correctOptionText": "리스트가 비어있으면 헤드 포인터를 새 노드로 설정하고, 비어있지 않으면 마지막 노드를 찾기 위해 순회한 뒤 마지막 노드의 next에 새 노드를 연결합니다.",
+        "unambiguous": true,
+        "reason": "제시된 append 구현은 빈 리스트면 *head_ref를 새 노드로 설정하고, 아니면 while로 마지막 노드를 찾은 뒤 last->next에 새 노드를 연결함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 15,
+        "passed": true,
+        "reason": "정답 설명이 append 함수의 코드(new_node->next = NULL, 빈 리스트 처리, while(last->next != NULL)로 순회 후 연결)에 정확히 대응하고 있고, 세 개의 오답 선택지도 원문 코드와 명백히 모순되어 있어 모두 틀린 것으로 검증됩니다. 난이도·학습목표·한국어 표현도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 16,
+    "topic": "B-Tree와 B+Tree의 데이터 저장 위치 비교",
+    "learningObjective": "B-Tree와 B+Tree에서 key와 data의 저장 위치 차이와 연산 위치 차이를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "주어진 설명들 중 B+Tree에 대해 올바른 것은 무엇입니까?",
+    "options": [
+      "B+Tree는 각 노드에 key와 데이터가 모두 저장되며, 삭제는 내부 노드에서만 수행됩니다.",
+      "B+Tree는 내부 노드에 데이터 주소가 들어있어 루트에서 바로 데이터에 도달할 수 있습니다.",
+      "B+Tree는 leaf 노드들이 연결되지 않아 범위 탐색에 불리합니다.",
+      "B+Tree는 내부 노드에는 key만 저장하고 데이터는 모두 leaf 노드에만 존재합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에 따르면 B+Tree는 '각 노드에서 key만 들어감. 따라서 data는 모두 leaf 노드에만 존재'하고, 또한 'add와 delete가 모두 leaf 노드에서만 이루어짐'이라 명시되어 있습니다. 따라서 내부 노드에는 데이터가 없고 데이터는 leaf에만 있다는 설명이 맞습니다.",
+    "optionExplanations": [
+      "오답입니다. 이는 B-Tree의 특성에 더 가깝습니다. 소스는 B-Tree는 각 노드에 key와 data 모두 들어갈 수 있다고 하고, B+Tree는 데이터가 leaf에만 존재한다고 구분합니다 (lines 86-89).",
+      "오답입니다. 소스는 B+Tree가 내부 노드에 하드디스크 액세스 주소가 없기 때문에 블럭을 더 많이 이용할 수 있다고 하였고, 내부 노드가 바로 데이터 주소를 가진다고 하지 않습니다 (lines 62-63, 86-89).",
+      "오답입니다. 소스는 B+Tree의 장점으로 'leaf 노드끼리 연결 리스트로 연결되어 있어서 범위 탐색에 매우 유리함'을 명시하고 있어, 연결이 없다는 주장은 틀립니다 (lines 64-65).",
+      "정답입니다. 소스는 B+Tree에서 내부 노드는 key만 가지며 데이터는 모두 leaf에 존재한다고 직접 기술하고 있습니다 (lines 86-89, 90-90)."
+    ],
+    "keywords": [
+      "B+Tree",
+      "데이터 위치",
+      "leaf"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/B Tree & B+ Tree.md",
+      "startLine": 86,
+      "endLine": 90,
+      "quote": "B-tree는 각 노드에서 key와 data 모두 들어갈 수 있고, data는 disk block으로 포인터가 될 수 있음\n\nB+tree는 각 노드에서 key만 들어감. 따라서 data는 모두 leaf 노드에만 존재\n\nB+tree는 add와 delete가 모두 leaf 노드에서만 이루어짐"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/B Tree & B+ Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/B%20Tree%20%26%20B%2B%20Tree.md",
+    "id": "62e40e4d-ae57-5322-a38c-212518cb2dcb",
+    "review": {
+      "blind": {
+        "slot": 16,
+        "correctOptionText": "B+Tree는 내부 노드에는 key만 저장하고 데이터는 모두 leaf 노드에만 존재합니다.",
+        "unambiguous": true,
+        "reason": "본문에 'B+tree는 각 노드에서 key만 들어감. 따라서 data는 모두 leaf 노드에만 존재'라고 설명되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 16,
+        "passed": true,
+        "reason": "Correct option and explanation are supported by the source passage stating 'B+tree는 각 노드에서 key만 들어감. 따라서 data는 모두 leaf 노드에만 존재' and that add/delete occur at leaves. All three distractors contradict explicit source statements (they describe B-Tree behavior, claim internal nodes contain data addresses, or deny leaf linking), so they are provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 17,
+    "topic": "무제한 크기와 랜덤 액세스 요구",
+    "learningObjective": "크기 미지의 데이터와 빠른 인덱스 기반 검색이 동시에 필요할 때 어떤 자료구조를 선택해야 하는지, 자료구조들의 특성을 조합해 판단할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "애플리케이션 요구사항으로 '데이터가 계속 늘어나며 최대 크기를 미리 알 수 없고, k번째 요소에 대한 임의 접근(read)이 빈번하다'라는 조건이 주어졌습니다. 이 상황에서 본문에서 제시한 자료구조들 중 가장 적합한 것은 무엇입니까?",
+    "options": [
+      "ArrayList",
+      "LinkedList",
+      "정적 Array",
+      "LinkedList와 ArrayList를 동시에 사용하는 복합구조"
+    ],
+    "correctAnswer": 1,
+    "explanation": "List는 크기를 미리 정하지 않아도 되므로 크기 미지 조건을 만족합니다(라인 44-49). 또한 ArrayList는 인덱스를 사용해 검색이 빠르다는 설명이 있어 k번째 요소에 대한 임의 접근에 적합합니다(라인 15, 46-49). 반면 정적 Array는 크기와 타입을 선언 시 지정해야 하므로(라인 25-33) 크기 미지 상황에 부적합하고, LinkedList는 임의 접근 시 처음부터 순차로 살펴봐야 하므로 검색이 느립니다(라인 64-71). 따라서 주어진 요구사항에는 ArrayList가 가장 적합합니다.",
+    "optionExplanations": [
+      "정답: List는 크기를 정하지 않아도 되고(라인 44-49), ArrayList는 인덱스를 통해 검색이 빠르다는 설명이 있어 임의 접근이 빈번한 경우 적합합니다(라인 15, 46-49).",
+      "오답: LinkedList는 중간 삽입·삭제에 유리하지만 k번째 값을 찾을 때는 처음부터 순차 탐색해야 하므로 검색이 느리다고 명시되어 있습니다(라인 64-71).",
+      "오답: Array는 선언 시 크기를 정해야 하므로 데이터가 계속 늘어나고 최대를 모르는 상황에는 부적합하다고 적혀 있습니다(라인 25-35).",
+      "오답: 본문에는 LinkedList와 ArrayList를 동시에 사용하는 복합구조의 장점이나 구현 방안이 제시되어 있지 않습니다; 또한 복합구조의 필요성도 설명되지 않습니다(관련 근거 부재)."
+    ],
+    "keywords": [
+      "ArrayList",
+      "List",
+      "임의 접근",
+      "크기 미지"
+    ],
+    "sourceEvidence": {
+      "section": "Array vs ArrayList vs LinkedList.md",
+      "startLine": 44,
+      "endLine": 49,
+      "quote": "이를 해결하기 위해 나온 것이 **List**다.\n\nList는 array처럼 **크기를 정해주지 않아도 된다**. 대신 array에서 index가 중요했다면, List에서는 순서가 중요하다.\n\n크기가 정해져있지 않기 때문에, 중간에 데이터를 추가하거나 삭제하더라도 array에서 갖고 있던 문제점을 해결 가능하다. index를 가지고 있으므로 검색도 빠르다."
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Array vs ArrayList vs LinkedList.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Array%20vs%20ArrayList%20vs%20LinkedList.md",
+    "id": "216f7b24-9489-54ab-9253-db03276944ae",
+    "review": {
+      "blind": {
+        "slot": 17,
+        "correctOptionText": "ArrayList",
+        "unambiguous": true,
+        "reason": "ArrayList has dynamic size and provides fast indexed (kth) access, matching requirements in the source.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 17,
+        "passed": true,
+        "reason": "정답(ArrayList)과 세 오답(LinkedList, 정적 Array, 복합구조)이 본문 인용문으로 명확히 근거·반증됩니다; 설명·난이도·학습목표도 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 18,
+    "topic": "BST 삭제와 시간복잡도",
+    "learningObjective": "편향된(정렬된 삽입으로 생성된) 이진탐색트리에서 루트(자식 2개)를 삭제할 때 적용되는 삭제 규칙과 시간복잡도를 적용하여 결과를 도출할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "정렬된 순서로 값을 삽입하여 한쪽으로만 뻗은 편향된 이진탐색트리(노드 수 N)가 만들어졌습니다. 이 트리에서 '자식이 2개인 루트 노드'를 삭제할 때의 시간복잡도로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "O(N logN)",
+      "O(N)",
+      "O(logN)",
+      "O(1)"
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 시간복잡도가 트리의 depth에 비례한다고 하며(삽입, 검색, 삭제가 트리의 Depth에 비례), 편향된 트리는 노드 수 N일 때 시간복잡도가 O(N)이라고 설명합니다. 또한 자식이 2개인 노드 삭제 시에는 오른쪽 서브트리에서 가장 작은 값(또는 왼쪽 서브트리에서 가장 큰 값)을 올리는 절차가 필요하므로 해당 서브트리에서 깊이만큼 탐색해야 하며, 편향된 경우 그 깊이가 O(N)이 됩니다. 따라서 삭제 시간복잡도는 O(N)입니다.",
+    "optionExplanations": [
+      "오답: O(N logN)은 이 상황에서 근거가 없으며, 단일 삭제 연산이 그 정도의 비용을 요구한다고 문서에 설명되어 있지 않습니다.",
+      "정답: 삭제 연산은 트리의 깊이에 비례하며, 편향된 트리의 깊이는 O(N)으로 주어집니다. 또한 두 자식인 노드는 후속 노드를 찾기 위해 서브트리를 깊이 탐색해야 하므로 O(N)입니다.",
+      "오답: O(logN)은 균형 잡힌(균등) 트리의 경우에 해당합니다; 편향된 트리는 이 조건을 만족하지 않습니다.",
+      "오답: 삭제 연산은 탐색과 대체 노드 찾기를 포함하므로 상수시간에 끝나지 않습니다; 트리 깊이에 비례합니다."
+    ],
+    "keywords": [
+      "편향 트리",
+      "삭제",
+      "시간복잡도",
+      "깊이"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Binary Search Tree.md",
+      "startLine": 51,
+      "endLine": 66,
+      "quote": "#### 시간 복잡도\n\n- 균등 트리 : 노드 개수가 N개일 때 O(logN)\n- 편향 트리 : 노드 개수가 N개일 때 O(N)\n\n> 삽입, 검색, 삭제 시간복잡도는 **트리의 Depth**에 비례\n\n<br>\n\n#### 삭제의 3가지 Case\n\n1) 자식이 없는 leaf 노드일 때 → 그냥 삭제\n\n2) 자식이 1개인 노드일 때 → 지워진 노드에 자식을 올리기\n\n3) 자식이 2개인 노드일 때 → 오른쪽 자식 노드에서 가장 작은 값 or 왼쪽 자식 노드에서 가장 큰 값 올리기"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Binary Search Tree.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Binary%20Search%20Tree.md",
+    "id": "51029109-4d4d-5d98-b055-6f01d1c7c613",
+    "review": {
+      "blind": {
+        "slot": 18,
+        "correctOptionText": "O(N)",
+        "unambiguous": true,
+        "reason": "편향된 트리는 깊이가 O(N)이며, 자식이 2개인 노드 삭제는 후속 노드(최소/최대)를 찾는 등 트리의 깊이에 비례하므로 O(N)임.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 18,
+        "passed": true,
+        "reason": "The correct option (O(N)) and explanation follow the source which states operations are proportional to tree depth and that a skewed (편향) tree has depth O(N); the other options (O(N logN), O(logN), O(1)) are not supported by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 19,
+    "topic": "Trie와 이진탐색트리 문자열 검색 비교",
+    "learningObjective": "문자열 최대 길이 M과 문자열 수 N이 주어졌을 때 트라이와 이진탐색트리를 이용한 문자열 검색의 시간복잡도를 비교하여 언제 트라이가 더 유리한지 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "문자열 검색에서 트라이를 사용했을 때와 정수형에서의 이진탐색트리를 문자열에 그대로 적용했을 때의 시간복잡도 비교로 옳은 것은 무엇입니까? (문자열의 최대 길이를 M, 문자열 개수를 N이라고 할 때)",
+    "options": [
+      "트라이와 이진탐색트리 모두 문자열 검색에서 O(log N)이다",
+      "트라이는 O(log N)이고, 이진탐색트리는 O(M * log N)이다",
+      "트라이로는 O(M)이고, 이진탐색트리를 문자열에 적용하면 O(M * log N)이다",
+      "트라이로는 O(M * log N)이고, 이진탐색트리는 O(M)"
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문에 따르면 정수형에서 이진탐색트리를 문자열에 그대로 적용하면 문자열 길이 최대값 M 때문에 O(M * logN)이 되지만, 트라이를 활용하면 O(M)으로 문자열 검색이 가능하다고 명시되어 있습니다. 따라서 트라이는 문자열 길이에만 비례하고, BST 방식은 문자열 길이와 로그 N의 곱으로 더 느립니다.",
+    "optionExplanations": [
+      "오답: 문서 어디에도 두 자료구조가 모두 O(log N)이라고 하지 않으며, 문자열 길이 M이 고려되어야 함이 명시되어 있습니다. (소스: lines 6-9)",
+      "오답: 트라이는 O(M)으로 설명되어 있어 'O(log N)'이라고 한 선택지는 틀립니다. (소스: lines 6-9)",
+      "정답: 문서에 '문자열 최대 길이가 M이면 O(M*logN)'과 '트라이를 활용하면? → O(M)'이라고 직접 서술되어 있습니다. (소스: lines 6-9)",
+      "오답: 문서와 반대로 기술되어 있어 잘못되었습니다; 트라이는 O(M)으로 더 빠릅니다. (소스: lines 6-9)"
+    ],
+    "keywords": [
+      "Trie",
+      "이진탐색트리",
+      "시간복잡도",
+      "문자열 검색",
+      "M",
+      "N"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Data Structure/Trie.md",
+      "startLine": 6,
+      "endLine": 9,
+      "quote": "정수형에서 이진탐색트리를 이용하면 시간복잡도 O(logN)\n하지만 문자열에서 적용했을 때, 문자열 최대 길이가 M이면 O(M*logN)이 된다.\n\n트라이를 활용하면? → O(M)으로 문자열 검색이 가능함!"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Trie.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Trie.md",
+    "id": "f0ec645f-0caf-5f3c-b0ad-c0410bcced2b",
+    "review": {
+      "blind": {
+        "slot": 19,
+        "correctOptionText": "트라이로는 O(M)이고, 이진탐색트리를 문자열에 적용하면 O(M * log N)이다",
+        "unambiguous": true,
+        "reason": "본문에서 정수 BST는 O(logN), 문자열에 적용하면 O(M*logN)이고 트라이는 O(M)이라고 명시되어 있다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 19,
+        "passed": true,
+        "reason": "정답(옵션 3)은 소스에 '이진탐색트리를 문자열에 적용하면 O(M*logN), 트라이는 O(M)'이라고 명시되어 있어 근거가 명확합니다. 다른 선택지들은 소스 서술과 모순됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 20,
+    "topic": "해시 버킷 동적 확장과 리해싱",
+    "learningObjective": "로드 팩터 기준 초과 시 해시 버킷을 확장하고 리해싱을 수행하는 동작의 이유와 과정을 설명할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "문서에 따르면 해시 버킷의 'load factor'가 보편적 임계치(예: 0.7~0.8) 이상이 되면 어떤 절차가 수행되며, 그 목적은 무엇입니까?",
+    "options": [
+      "버킷 크기는 유지하되 모든 연결리스트를 병합하여 메모리를 절약하고 충돌을 자동으로 무시합니다.",
+      "로드 팩터가 임계치를 넘으면 해시 함수를 즉시 변경하고 기존 값들은 원래 해시값 그대로 남겨둡니다.",
+      "버킷 수를 줄여 메모리 사용을 강제로 낮추고, 충돌 발생 시 삽입을 거부하는 방식으로 데이터 무결성을 보장합니다.",
+      "버킷 크기를 동적으로 확장하고 기존에 저장된 값들을 다시 해싱(리해싱)하여 새로운 키를 부여함으로써 충돌 빈도를 낮추려는 목적입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 'load factor'가 일정 수준 이상이면 해시 버킷의 크기를 확장하는 동적 확장 방식을 사용한다고 설명하며, 해시 버킷이 동적 확장 될 때 '리해싱' 과정을 거쳐 '기존 저장되어 있는 값들을 다시 해싱하여 새로운 키를 부여'한다고 명시하고 있습니다. 이는 버킷을 늘려 충돌 빈도를 낮추기 위한 절차입니다.",
+    "optionExplanations": [
+      "오류입니다. 문서는 임계치 초과 시 버킷 크기를 확장한다고 했지 '연결리스트를 병합해 메모리를 절약'하거나 '충돌을 무시'한다고 하지 않습니다.",
+      "오류입니다. 문서에는 임계치 초과 시 해시 함수를 단순히 변경하고 기존 값들을 그대로 둔다는 설명이 없습니다. 대신 버킷 확장과 리해싱으로 기존 값을 다시 해싱한다고 명시되어 있습니다.",
+      "오류입니다. 문서에는 임계치 초과 시 버킷 수를 줄인다는 내용이나 삽입 거부로 무결성을 보장한다는 설명이 없습니다. 반대로 버킷을 확장한다고 적혀 있습니다.",
+      "정답입니다. 문서에 'load factor가 일정 수준 이상 이라면 ... 해시 버킷의 크기를 확장하는 동적 확장 방식'과 '리해싱: 기존 저장되어 있는 값들을 다시 해싱하여 새로운 키를 부여하는 것'이라고 명시되어 있어 이 선택지가 맞습니다."
+    ],
+    "keywords": [
+      "load factor",
+      "동적 확장",
+      "리해싱",
+      "충돌 빈도"
+    ],
+    "sourceEvidence": {
+      "section": "Hash.md",
+      "startLine": 44,
+      "endLine": 55,
+      "quote": "해시 버킷의 크기가 충분히 크다면 해시 충돌 빈도를 낮출 수 있다\n\n하지만 메모리는 한정된 자원이기 때문에 무작정 큰 공간을 할당해 줄 수 없다\n\n때문에 `load factor`가 일정 수준 이상 이라면 (보편적으로는 0.7 ~ 0.8) 해시 버킷의 크기를 확장하는 동적 확장 방식을 사용한다\n\n- **load factor** : 할당된 키의 개수 / 해시 버킷의 크기\n\n해시 버킷이 동적 확장 될 때 `리해싱` 과정을 거치게 된다\n\n- **리해싱(Rehashing)** : 기존 저장되어 있는 값들을 다시 해싱하여 새로운 키를 부여하는 것을 말한다"
+    },
+    "category": "DATA_STRUCTURE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Data Structure/Hash.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Hash.md",
+    "id": "33f14802-7206-5c24-a373-b5c493d80f72",
+    "review": {
+      "blind": {
+        "slot": 20,
+        "correctOptionText": "버킷 크기를 동적으로 확장하고 기존에 저장된 값들을 다시 해싱(리해싱)하여 새로운 키를 부여함으로써 충돌 빈도를 낮추려는 목적입니다.",
+        "unambiguous": true,
+        "reason": "문서에서는 load factor 임계치 이상일 때 해시 버킷 크기를 확장하고 리해싱을 통해 기존 값을 다시 해싱한다고 설명함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 20,
+        "passed": true,
+        "reason": "Correct answer (option 4) and its explanation accurately reflect the source: expand bucket size when load factor exceeds threshold and perform rehashing to lower collision frequency; distractors are contradicted by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  }
+]

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,7 +42,10 @@ class ChatIntegrationTest extends HttpTestSupport {
                       "chunk:index",
                       "Database index",
                       "https://example.test/index",
-                      "index.md#cost");
+                      "index.md#cost",
+                      "Saved evidence: index maintenance costs",
+                      "DATABASE",
+                      "17");
               return new RagGateway.Answer(
                   request.requestId(),
                   "answered",
@@ -55,6 +59,61 @@ class ChatIntegrationTest extends HttpTestSupport {
             })
         .when(rag)
         .answer(any());
+  }
+
+  @Test
+  void followupHistoryIsSessionScopedAndNeverCopiedIntoANewSession() throws Exception {
+    var owner = account();
+    var browser = owner.browser();
+    var first =
+        browser
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "First"), true)
+            .body()
+            .path("id")
+            .asText();
+    var second =
+        browser
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "Second"), true)
+            .body()
+            .path("id")
+            .asText();
+    for (String question : List.of("Explain transaction isolation", "Explain more simply")) {
+      assertThat(
+              browser
+                  .request(
+                      "POST",
+                      "/api/v1/chat/sessions/" + first + "/messages",
+                      Map.of("question", question),
+                      true,
+                      Map.of("Idempotency-Key", UUID.randomUUID().toString()))
+                  .status())
+          .isEqualTo(200);
+    }
+    assertThat(
+            browser
+                .request(
+                    "POST",
+                    "/api/v1/chat/sessions/" + second + "/messages",
+                    Map.of("question", "Explain memory"),
+                    true,
+                    Map.of("Idempotency-Key", UUID.randomUUID().toString()))
+                .status())
+        .isEqualTo(200);
+    var captured = ArgumentCaptor.forClass(RagGateway.AnswerRequest.class);
+    verify(rag, times(3)).answer(captured.capture());
+    assertThat(captured.getAllValues().get(0).history()).isEmpty();
+    assertThat(captured.getAllValues().get(1).history())
+        .extracting(RagGateway.History::content)
+        .contains("Explain transaction isolation");
+    assertThat(captured.getAllValues().get(2).history()).isEmpty();
+    assertThat(captured.getAllValues().get(2).quizContext()).isNull();
+    var stranger = account();
+    assertThat(
+            stranger
+                .browser()
+                .request("GET", "/api/v1/chat/sessions/" + first + "/messages", null, false)
+                .status())
+        .isEqualTo(404);
   }
 
   @Test
@@ -83,6 +142,8 @@ class ChatIntegrationTest extends HttpTestSupport {
                 Map.of("Idempotency-Key", UUID.randomUUID().toString()));
     assertThat(answer.status()).isEqualTo(200);
     assertThat(answer.body().get("status").asText()).isEqualTo("answered");
+    assertThat(answer.body().get("sources").get(0).get("evidence_text").asText())
+        .isEqualTo("Saved evidence: index maintenance costs");
     assertThat(answer.body().get("sources").get(0).get("chunk_id").asText())
         .isEqualTo("chunk:index");
 
@@ -139,6 +200,9 @@ class ChatIntegrationTest extends HttpTestSupport {
                 null,
                 false);
     assertThat(messages.status()).isEqualTo(200);
+    assertThat(
+            messages.body().get("items").get(1).get("sources").get(0).get("evidence_text").asText())
+        .isEqualTo("Saved evidence: index maintenance costs");
     assertThat(messages.body().get("items")).hasSize(2);
     assertThat(messages.body().get("items").get(0).get("role").asText()).isEqualTo("USER");
     assertThat(messages.body().get("items").get(1).get("role").asText()).isEqualTo("ASSISTANT");

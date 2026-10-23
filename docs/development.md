@@ -1,5 +1,7 @@
 # Development
 
+gyoogle 문제은행의 수량·난이도·출처·인용·자동 검토는 `python scripts/gyoogle_quiz_bank.py validate`로 검사하고 `python scripts/build_gyoogle_seed.py`로 V13을 재현한다. 신규 240문항과 기존 15문항은 별개다. 분야별 예시와 원문 목록은 [문제은행 보고서](gyoogle-question-bank.md)를 따른다. 생성 명령은 실제 모델 비용이 발생하므로 재검증 시 validate만 실행한다.
+
 ## Retrieval 평가 실행
 
 ```sh
@@ -11,6 +13,22 @@ docker compose run --rm --no-deps ai python scripts/rag_retrieval_eval.py \
 AI 테스트도 호스트 Python 대신 Docker에서 `python -m unittest discover -s backend/ai/tests -v`로 실행한다.
 
 ## Docker 전체 개발 스택
+
+C24~C27의 변경 후 검증 명령:
+
+```sh
+docker compose -f compose.backend-test.yaml run --rm checks gradle --no-daemon spotlessApply check bootJar
+# frontend/에서
+npm ci
+npm run test
+npm run build
+npm run lint
+PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- tests/e2e/ui.spec.ts
+```
+
+Python은 generation/quiz의 GMS mock·독립 검증·내부 HTTP를 unittest로 검사한다. 실제 생성은 설정된 GMS·ACTIVE manifest·Chroma가 필요하다. 관련 퀴즈 버튼은 모델 생성과 검증 후에만 개인 문제를 표시하며 새로고침은 기존 생성 키로 복구한다. 실패 확정 후 새 요청은 새 키를 사용하고 불명확한 네트워크 실패는 같은 키의 결과를 먼저 조회한다. 운영 공개 전 실제 표본 검수 결과를 별도로 남긴다.
+
+C28~C31: /me에서 이력·통계, /me/wrong-answers에서 복습 상태, /me/attempts/:attemptId에서 당시 결과를 확인한다. 전용 DB 전체 검사는 위 Gradle 명령을 사용한다. Chrome 학습 회귀는 frontend/에서 `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- tests/e2e/ui.spec.ts tests/e2e/history.spec.ts`로 실행한다. HTTP/PostgreSQL의 재로그인·소유권·멱등 흐름은 GenerationIntegrationTest/HistoryIntegrationTest/ReviewIntegrationTest, 브라우저 화면은 fixture API로 검증하므로 실제 GMS/검색 검증과 구분한다.
 
 일상 개발 실행은 저장소 루트의 Compose를 기준으로 한다. 호스트에 Node.js·JDK·Python을 설치하지 않아도 frontend, Spring Boot backend, 로컬 RAG adapter, PostgreSQL, ChromaDB가 함께 실행된다.
 
@@ -35,6 +53,8 @@ docker compose run --rm --no-deps ai python scripts/rag_e2e.py \
 외부 호출 없는 개발은 루트 `.env`에 `RAG_DEV_PROVIDER=deterministic-test`, `RAG_ACTIVE_INDEX=local-dev-v1`을 지정한다. GMS 키, 요청 Authorization, 전체 환경변수는 출력하지 않는다.
 
 ## Vue 로컬 UI (012, C17)
+
+독립 CS 학습은 `/chat`이다. 실제 GMS 경로는 ACTIVE manifest와 backend/.env의 설정을 요구하며 누락 시 canned 답변으로 대체하지 않는다. `/api/v1/chat/status`는 인증 사용자에게 provider/모델/인덱스 상태만 제공한다. 실제 모델 회귀는 전용 테스트 DB backend에 `CSAS_CHAT_E2E_API`를 지정하고 Chrome `tests/e2e/chat-live.spec.ts`를 실행한다. 생성 후보의 독립 검증 실패는 READY 성공으로 간주하지 않는다. 27항목 재현과 제출 자료는 [패키지](submission/README.md)를 따른다.
 
 Node 22.12+(검증 24.18.0)/npm, 설치는 frontend/에서 `npm ci`다. 버전은 package.json/package-lock.json으로 고정한다. 루트 공통 명령:
 

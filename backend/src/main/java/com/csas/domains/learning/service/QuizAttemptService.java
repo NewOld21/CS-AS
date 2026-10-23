@@ -3,7 +3,11 @@ package com.csas.domains.learning.service;
 import com.csas.common.exception.ApiException;
 import com.csas.domains.learning.dto.AttemptRequest;
 import com.csas.domains.learning.dto.AttemptResultResponse;
+import com.csas.domains.learning.dto.SourceResponse;
+import com.csas.domains.quiz.dto.QuizResponse;
 import com.csas.domains.quiz.service.QuizCatalogService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,16 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class QuizAttemptService {
   private final JdbcTemplate jdbc;
   private final QuizCatalogService quizzes;
+  private final ObjectMapper mapper;
 
-  public QuizAttemptService(JdbcTemplate jdbc, QuizCatalogService quizzes) {
+  public QuizAttemptService(JdbcTemplate jdbc, QuizCatalogService quizzes, ObjectMapper mapper) {
     this.jdbc = jdbc;
     this.quizzes = quizzes;
+    this.mapper = mapper;
   }
 
   @Transactional
   public AttemptResultResponse submit(
       UUID userId, UUID quizId, UUID idempotencyKey, AttemptRequest request) {
     String requestHash = hash(quizId, request);
+    jdbc.query(
+        "SELECT pg_advisory_xact_lock(hashtextextended(?,0))", rs -> {}, userId + ":" + quizId);
     AttemptRow replay = findByKey(userId, idempotencyKey);
     if (replay != null) {
       return replay(userId, replay, requestHash);
@@ -39,6 +47,8 @@ public class QuizAttemptService {
     OptionRow selected = loadOption(quizId, request.selected_option_id());
     OptionRow correct = loadCorrectOption(quizId);
     validateRetry(userId, quizId, request.retry_of_attempt_id());
+    String quizSnapshot = json(quizzes.get(userId, quizId));
+    String evidenceSnapshot = json(evidence(quizId));
     UUID attemptId = UUID.randomUUID();
     Instant submittedAt = Instant.now();
     List<UUID> inserted =
@@ -47,8 +57,8 @@ public class QuizAttemptService {
             INSERT INTO csas.quiz_attempts(
               id, user_id, quiz_id, selected_option_id, correct_option_id, is_correct,
               explanation_snapshot, source_url_snapshot, submitted_at, idempotency_key,
-              request_hash, retry_of_attempt_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              request_hash, retry_of_attempt_id, quiz_snapshot, evidence_snapshot)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb)
             ON CONFLICT (user_id, idempotency_key) DO NOTHING
             RETURNING id
             """,
@@ -64,11 +74,38 @@ public class QuizAttemptService {
             Timestamp.from(submittedAt),
             idempotencyKey,
             requestHash,
-            request.retry_of_attempt_id());
+            request.retry_of_attempt_id(),
+            quizSnapshot,
+            evidenceSnapshot);
     if (inserted.isEmpty()) {
       return replay(userId, findRequiredByKey(userId, idempotencyKey), requestHash);
     }
+    updateReview(userId, quizId, attemptId, selected.isCorrect(), submittedAt);
     return result(userId, findRequiredByKey(userId, idempotencyKey));
+  }
+
+  private void updateReview(UUID user, UUID quiz, UUID attempt, boolean correct, Instant at) {
+    if (correct) {
+      jdbc.update(
+          "UPDATE csas.review_states SET status='RESOLVED',latest_attempt_id=?,last_reviewed_at=? WHERE user_id=? AND quiz_id=?",
+          attempt,
+          Timestamp.from(at),
+          user,
+          quiz);
+    } else {
+      jdbc.update(
+          """
+        INSERT INTO csas.review_states(user_id,quiz_id,status,latest_attempt_id,first_wrong_at,last_wrong_at)
+        VALUES (?,?,'NEEDS_REVIEW',?,?,?)
+        ON CONFLICT (user_id,quiz_id) DO UPDATE SET status='NEEDS_REVIEW',latest_attempt_id=excluded.latest_attempt_id,
+          last_wrong_at=excluded.last_wrong_at,last_reviewed_at=excluded.last_wrong_at
+        """,
+          user,
+          quiz,
+          attempt,
+          Timestamp.from(at),
+          Timestamp.from(at));
+    }
   }
 
   private QuizRow loadQuiz(UUID userId, UUID quizId) {
@@ -137,7 +174,7 @@ public class QuizAttemptService {
         jdbc.query(
             """
             SELECT id, quiz_id, selected_option_id, correct_option_id, is_correct,
-                   explanation_snapshot, submitted_at, request_hash
+                   explanation_snapshot, submitted_at, request_hash, quiz_snapshot, evidence_snapshot
               FROM csas.quiz_attempts WHERE user_id=? AND idempotency_key=?
             """,
             (rs, row) ->
@@ -149,7 +186,9 @@ public class QuizAttemptService {
                     rs.getBoolean("is_correct"),
                     rs.getString("explanation_snapshot"),
                     rs.getTimestamp("submitted_at").toInstant(),
-                    rs.getString("request_hash")),
+                    rs.getString("request_hash"),
+                    rs.getString("quiz_snapshot"),
+                    rs.getString("evidence_snapshot")),
             userId,
             key);
     return rows.isEmpty() ? null : rows.getFirst();
@@ -173,13 +212,84 @@ public class QuizAttemptService {
   private AttemptResultResponse result(UUID userId, AttemptRow row) {
     return new AttemptResultResponse(
         row.id(),
-        quizzes.getForRecordedAttempt(userId, row.quizId()),
+        read(row.quizSnapshot(), QuizResponse.class),
         row.selectedOptionId(),
         row.correctOptionId(),
         row.isCorrect(),
         row.explanation(),
-        List.of(),
+        sources(row.evidenceSnapshot()),
         row.submittedAt());
+  }
+
+  public AttemptResultResponse get(UUID userId, UUID attemptId) {
+    var rows =
+        jdbc.query(
+            """
+        SELECT id, quiz_id, selected_option_id, correct_option_id, is_correct,
+               explanation_snapshot, submitted_at, request_hash, quiz_snapshot, evidence_snapshot
+          FROM csas.quiz_attempts WHERE id=? AND user_id=?
+        """,
+            (rs, row) ->
+                new AttemptRow(
+                    rs.getObject("id", UUID.class),
+                    rs.getObject("quiz_id", UUID.class),
+                    rs.getObject("selected_option_id", UUID.class),
+                    rs.getObject("correct_option_id", UUID.class),
+                    rs.getBoolean("is_correct"),
+                    rs.getString("explanation_snapshot"),
+                    rs.getTimestamp("submitted_at").toInstant(),
+                    rs.getString("request_hash"),
+                    rs.getString("quiz_snapshot"),
+                    rs.getString("evidence_snapshot")),
+            attemptId,
+            userId);
+    if (rows.isEmpty()) {
+      throw new ApiException(404, "RESOURCE_NOT_FOUND", "Attempt not found.");
+    }
+    return result(userId, rows.getFirst());
+  }
+
+  private String json(Object value) {
+    try {
+      return mapper.writeValueAsString(value);
+    } catch (java.io.IOException ex) {
+      throw new IllegalStateException("Snapshot serialization failed", ex);
+    }
+  }
+
+  private <T> T read(String value, Class<T> type) {
+    try {
+      return mapper.readValue(value, type);
+    } catch (java.io.IOException ex) {
+      throw new IllegalStateException("Stored snapshot is invalid", ex);
+    }
+  }
+
+  private List<SourceResponse> sources(String value) {
+    try {
+      return mapper.readValue(value, new TypeReference<List<SourceResponse>>() {});
+    } catch (java.io.IOException ex) {
+      throw new IllegalStateException("Stored evidence is invalid", ex);
+    }
+  }
+
+  private List<SourceResponse> evidence(UUID quizId) {
+    return jdbc.query(
+        "SELECT * FROM csas.quiz_evidence WHERE quiz_id=? ORDER BY ordinal",
+        (rs, row) ->
+            new SourceResponse(
+                rs.getString("source_id"),
+                rs.getString("document_id"),
+                rs.getString("revision"),
+                rs.getString("chunk_id"),
+                rs.getString("index_version"),
+                rs.getString("title"),
+                rs.getString("url"),
+                rs.getString("locator"),
+                rs.getString("evidence_text"),
+                rs.getString("category"),
+                rs.getString("technology_version")),
+        quizId);
   }
 
   private String hash(UUID quizId, AttemptRequest request) {
@@ -211,5 +321,7 @@ public class QuizAttemptService {
       boolean isCorrect,
       String explanation,
       Instant submittedAt,
-      String requestHash) {}
+      String requestHash,
+      String quizSnapshot,
+      String evidenceSnapshot) {}
 }

@@ -1,0 +1,602 @@
+{
+  "executed_at": "2026-10-23T01:23:37.559972+00:00",
+  "isolated": {
+    "provider": "deterministic-test",
+    "storage": "real isolated Chroma",
+    "documents": 8,
+    "generated_chunks": 16,
+    "first_count": 16,
+    "second_count": 16,
+    "reindex_embedding_calls": 0,
+    "idempotent": true,
+    "second_index_report": {
+      "total_documents": 8,
+      "new": 0,
+      "modified": 0,
+      "unchanged": 8,
+      "deleted": 0,
+      "embedded_documents": 0,
+      "embedded_chunks": 0,
+      "reused_chunks": 0,
+      "skipped_documents": 8,
+      "removed_documents": 0,
+      "failed_documents": 0,
+      "failures": [],
+      "dry_run": false
+    },
+    "chunk_config_counts": [
+      49,
+      16
+    ],
+    "top_k": {
+      "3": [
+        "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+        "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+        "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a"
+      ],
+      "5": [
+        "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+        "chunk:0c59bce1cc2369a59af3605c92a08d220f560fbf9e6b0d1fa41bdc2a93faf83b",
+        "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+        "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a",
+        "chunk:7fe4b0dc7f920bca6a92234ce5557f23fabd500faa60675d09e40924fcd56a34"
+      ]
+    },
+    "mmr": [
+      "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+      "chunk:0c59bce1cc2369a59af3605c92a08d220f560fbf9e6b0d1fa41bdc2a93faf83b",
+      "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+      "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+      "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a"
+    ],
+    "filtered_categories": [
+      "database",
+      "database",
+      "database",
+      "database",
+      "database"
+    ],
+    "repeat_query_ms": [
+      1.5,
+      1.57
+    ],
+    "repeat_query_embedding_calls": 1,
+    "query_collection_count_unchanged": true,
+    "representative_chunk": {
+      "ids": [
+        "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc"
+      ],
+      "embeddings": null,
+      "metadatas": [
+        {
+          "revision": "r1",
+          "concept_ids": "[]",
+          "chunk_config_version": "markdown-structure-1200-180-v1",
+          "chunk_index": 0,
+          "title": "Fixture transaction 0",
+          "source_id": "checklist-fixture",
+          "chunk_id": "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+          "url": "https://example.org/fixture",
+          "language": "en",
+          "version": "",
+          "index_version": "checklist-8ce99cff30cf4d37996929512e84e8da",
+          "category": "database",
+          "locator": "fixture:0#Transaction",
+          "document_id": "doc:0"
+        }
+      ],
+      "documents": [
+        "# Transaction\ntransaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory in"
+      ],
+      "data": null,
+      "uris": null,
+      "included": [
+        "documents",
+        "metadatas"
+      ]
+    },
+    "passed": true
+  },
+  "model_comparison": {
+    "model": "gpt-5-mini",
+    "embedding_model": "text-embedding-3-large",
+    "index_version": "csas-checklist-live-v1",
+    "same_model_and_generation_settings": true,
+    "results": [
+      {
+        "question": "PostgreSQL에서 Read Committed의 각 SELECT는 같은 트랜잭션 안에서 항상 같은 스냅샷을 보는가?",
+        "rag": {
+          "request_id": "7795579e918e46fba3f5812c34e85346",
+          "index_version": "csas-checklist-live-v1",
+          "model_version": "gpt-5-mini",
+          "prompt_version": "answer-graph-v2",
+          "status": "answered",
+          "concept_ids": [
+            "concept:database-isolation",
+            "concept:database-transaction"
+          ],
+          "answer": "아니요. Read Committed에서는 각 SELECT는 그 쿼리가 시작된 시점의 커밋된 상태(스냅샷)를 봅니다. 따라서 같은 트랜잭션 내의 서로 다른 SELECT들은 다른 시점에 시작되면 서로 다른 결과를 볼 수 있습니다. 다만 자신의 트랜잭션에서 수행한 이전 변경은 그 다음 SELECT에서 볼 수 있습니다 [1][2].",
+          "retrieved_chunks": [
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "saction isolation level of a transaction, use the command SET TRANSACTION.\n\nImportant\n\nSome PostgreSQL data types and functions have special rules regarding transactional behavior. In particular, changes made to a sequence (and therefore the counter of a column declared using serial) are immediately visible to all other transactions and are not rolled back if the transaction that made the changes aborts. See Section 9.17 and Section 8.1.4.\n\n13.2.1. Read Committed Isolation Level #\n\nRead Committed is the default isolation level in PostgreSQL. When a transaction uses this isolation level, a SELECT query (without a FOR UPDATE/SHARE clause) sees only data committed before the query began; it never sees either uncommitted data or changes committed by concurrent transactions during the query's execution. In effect, a SELECT query sees a snapshot of the database as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "ase as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed. Also note that two successive SELECT commands can see different data, even though they are within a single transaction, if other transactions commit changes after the first SELECT starts and before the second SELECT starts.\n\nUPDATE, DELETE, SELECT FOR UPDATE, and SELECT FOR SHARE commands behave the same as SELECT in terms of searching for target rows: they will only find target rows that were committed as of the command start time. However, such a target row might have already been updated (or deleted or locked) by another concurrent transaction by the time it is found. In this case, the would-be updater will wait for the first updating transaction to commit or roll back (if it is still in progress). If the first updater rolls back, then its effects are negated and the second updater can proceed with updating the originally found row.",
+              "category": "database",
+              "technology_version": ""
+            }
+          ],
+          "cited_chunk_ids": [
+            "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566"
+          ],
+          "diagnostics": {
+            "keywords": [
+              "PostgreSQL",
+              "Read Committed",
+              "snapshot",
+              "SELECT",
+              "same transaction",
+              "visibility",
+              "transaction isolation",
+              "MVCC"
+            ],
+            "candidate_chunk_ids": [
+              "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566",
+              "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "chunk:0a9aac78de5234b777f196c35abcf8f15595c657ee14f585563c247eaff0d86c"
+            ],
+            "selected_chunk_ids": [
+              "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566"
+            ],
+            "excluded": [
+              {
+                "chunk_id": "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+                "reason": "Describes snapshot-as-of-first-statement behavior which applies to Repeatable Read, not Read Committed; would be misleading for this question."
+              },
+              {
+                "chunk_id": "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+                "reason": "Discusses serializability and deferrable read-only transactions; not directly relevant to Read Committed SELECT snapshot behavior."
+              },
+              {
+                "chunk_id": "chunk:0a9aac78de5234b777f196c35abcf8f15595c657ee14f585563c247eaff0d86c",
+                "reason": "Explains mapping of isolation levels in PostgreSQL generally; does not directly answer whether successive SELECTs in Read Committed see the same snapshot."
+              }
+            ],
+            "top_k": 5,
+            "filters": {},
+            "search_type": "similarity",
+            "nodes": [
+              "retrieve",
+              "generate"
+            ],
+            "elapsed_ms": 19937.07,
+            "collection_events": 0
+          }
+        },
+        "no_rag": {
+          "answer": "아니요. PostgreSQL의 Read Committed 모드는 \"statement-level\" 스냅샷을 사용하므로 같은 트랜잭션 안에서도 각 SELECT(또는 각 SQL 문)는 그 문이 실행될 때의 최신 커밋된 상태를 기준으로 별도의 스냅샷을 가져옵니다. 즉 트랜잭션 내부에서 첫 SELECT와 이어지는 두번째 SELECT는 그 사이에 다른 트랜잭션이 커밋되었다면 서로 다른 결과를 볼 수 있습니다. 단, 하나의 SQL 문(예: 복잡한 쿼리나 서브쿼리)은 그 문 내부에서는 내부적으로 동일한 스냅샷을 사용해 일관되게 동작합니다. 트랜잭션 전체에서 동일한 스냅샷을 원하면 Repeatable Read 또는 Serializable을 사용해야 합니다. (설명은 제 지식에 기반하며, 구현상 예외적 상황이나 특정 옵션이 있을 수 있어 100% 확신은 아닙니다.)"
+        },
+        "elapsed_ms": 23535.14,
+        "human_accuracy_review": "UNVERIFIED"
+      },
+      {
+        "question": "PostgreSQL Repeatable Read에서 동시 업데이트 충돌이 나면 애플리케이션은 어떻게 해야 하는가?",
+        "rag": {
+          "request_id": "99eed620a1d74058b88a350af1e35772",
+          "index_version": "csas-checklist-live-v1",
+          "model_version": "gpt-5-mini",
+          "prompt_version": "answer-graph-v2",
+          "status": "answered",
+          "concept_ids": [
+            "concept:database-isolation",
+            "concept:database-transaction"
+          ],
+          "answer": "Repeatable Read에서 동시 업데이트로 인해 \"could not serialize access due to concurrent update\" 오류가 발생하면, 애플리케이션은 현재 트랜잭션을 중단(롤백)하고 트랜잭션 전체를 처음부터 다시 시도해야 합니다. 재시도하면 두번째 실행에서는 이미 커밋된 변경이 초기 스냅샷에 반영되므로 논리적 충돌이 사라집니다. 또한 이 격리 수준을 사용할 때는 직렬화 충돌로 인해 트랜잭션을 재시도해야 할 가능성에 대비해야 하며(단, 읽기 전용 트랜잭션은 직렬화 충돌을 일으키지 않습니다) 트랜잭션이 성공적으로 커밋될 때까지 그 안에서 읽은 데이터를 신뢰하면 안 됩니다 [1][2][3].",
+          "retrieved_chunks": [
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:4c0482a808850ef3616f2a5ad049137fb4d8dccab1ea87218f881f5d0f530668",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "(if it is still in progress). If the first updater rolls back, then its effects are negated and the repeatable read transaction can proceed with updating the originally found row. But if the first updater commits (and actually updated or deleted the row, not just locked it) then the repeatable read transaction will be rolled back with the message\n\nERROR:  could not serialize access due to concurrent update\n\nbecause a repeatable read transaction cannot modify or lock rows changed by other transactions after the repeatable read transaction began.\n\nWhen an application receives this error message, it should abort the current transaction and retry the whole transaction from the beginning. The second time through, the transaction will see the previously-committed change as part of its initial view of the database, so there is no logical conflict in using the new version of the row as the starting point for the new transaction's update.\n\nNote that only updating transactions might need to be retried; read-only transactions will never have serialization conflicts.\n\nThe Repeatable Read mode provides a rigorous guarantee that each transaction sees a completely stable view of the database.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "transaction sees a snapshot as of the start of the first non-transaction-control statement in the transaction, not as of the start of the current statement within the transaction. Thus, successive SELECT commands within a single transaction see the same data, i.e., they do not see changes made by other transactions that committed after their own transaction started.\n\nApplications using this level must be prepared to retry transactions due to serialization failures.\n\nUPDATE, DELETE, MERGE, SELECT FOR UPDATE, and SELECT FOR SHARE commands behave the same as SELECT in terms of searching for target rows: they will only find target rows that were committed as of the transaction start time. However, such a target row might have already been updated (or deleted or locked) by another concurrent transaction by the time it is found. In this case, the repeatable read transaction will wait for the first updating transaction to commit or roll back (if it is still in progress). If the first updater rolls back, then its effects are negated and the repeatable read transaction can proceed with updating the originally found row.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "actions to prevent anomalies, it is important that any data read from a permanent user table not be considered valid until the transaction which read it has successfully committed. This is true even for read-only transactions, except that data read within a deferrable read-only transaction is known to be valid as soon as it is read, because such a transaction waits until it can acquire a snapshot guaranteed to be free from such problems before starting to read any data. In all other cases applications must not depend on results read during a transaction that later aborted; instead, they should retry the transaction until it succeeds.\n\nTo guarantee true serializability PostgreSQL uses predicate locking, which means that it keeps locks which allow it to determine when a write would have had an impact on the result of a previous read from a concurrent transaction, had it run first. In PostgreSQL these locks do not cause any blocking and therefore can not play any part in causing a deadlock. They are used to identify and flag dependencies among concurrent Serializable transactions which in certain combinations can lead to serialization anomalies.",
+              "category": "database",
+              "technology_version": ""
+            }
+          ],
+          "cited_chunk_ids": [
+            "chunk:4c0482a808850ef3616f2a5ad049137fb4d8dccab1ea87218f881f5d0f530668",
+            "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+            "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9"
+          ],
+          "diagnostics": {
+            "keywords": [
+              "PostgreSQL",
+              "Repeatable Read",
+              "동시 업데이트",
+              "동시성 충돌",
+              "concurrent update",
+              "serialization failure",
+              "retry transaction",
+              "애플리케이션 처리"
+            ],
+            "candidate_chunk_ids": [
+              "chunk:4c0482a808850ef3616f2a5ad049137fb4d8dccab1ea87218f881f5d0f530668",
+              "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "chunk:9e58378f4d4b2ea16504dd9c1722cc8f927e3e7ac1e086743862b996de47a208",
+              "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "chunk:54fdf43a1d22daeda6114ec681fd17d2c35fbf44d0f75d9608875e5c1935053f"
+            ],
+            "selected_chunk_ids": [
+              "chunk:4c0482a808850ef3616f2a5ad049137fb4d8dccab1ea87218f881f5d0f530668",
+              "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "chunk:54fdf43a1d22daeda6114ec681fd17d2c35fbf44d0f75d9608875e5c1935053f"
+            ],
+            "excluded": [
+              {
+                "chunk_id": "chunk:9e58378f4d4b2ea16504dd9c1722cc8f927e3e7ac1e086743862b996de47a208",
+                "reason": "General introduction to MVCC; does not provide specific guidance on handling Repeatable Read concurrent update conflicts or retry behavior."
+              }
+            ],
+            "top_k": 5,
+            "filters": {},
+            "search_type": "similarity",
+            "nodes": [
+              "retrieve",
+              "generate"
+            ],
+            "elapsed_ms": 13873.67,
+            "collection_events": 0
+          }
+        },
+        "no_rag": {
+          "answer": "짧게 요약하면: 동시 업데이트 충돌이 나면 애플리케이션 쪽에서 해당 트랜잭션을 안전하게 롤백하고 재시도하는 것이 일반적입니다. 다만 상황에 따라 다른 대책(락 사용, 충돌 회피, 사용자에게 충돌 알림)이 더 나을 수 있습니다. 아래에 구체적인 권장 절차와 주의사항을 정리합니다.\n\n1) 에러 감지\n- PostgreSQL의 Repeatable Read(스냅샷 격리)나 Serializable 모드에서 동시성 문제는 커밋 시점에 \"could not serialize access due to concurrent update\" 또는 SQLSTATE 40001(또는 데드락의 경우 40P01)을 발생시킬 수 있습니다. (정확한 메시지는 버전/상황에 따라 달라질 수 있습니다.)\n- 따라서 트랜잭션 실행 중에 이 에러를 잡아야 합니다.\n\n2) 기본 대응: 롤백 후 재시도\n- 권장 패턴은 트랜잭션을 롤백하고(또는 DB 커넥션을 초기화한 뒤) 동일한 작업을 다시 시도하는 것입니다.\n- 재시도 루프에는 최대 재시도 횟수와 지수적 백오프(또는 랜덤 지연)를 넣어야 합니다. 무한 루프는 피하세요.\n- 재시도는 애플리케이션 레벨에서 idempotent(멱등)하도록 설계되어야 합니다. 예: 상태 플래그, 고유 요청 ID 저장 등으로 중복 적용을 방지.\n\n예시(의사코드):\n- for i in 1..MAX_RETRIES:\n    begin transaction\n    try:\n       ... 데이터 읽기/수정 ...\n       commit\n       break (성공)\n    except SerializationFailure (SQLSTATE 40001) or Deadlock (40P01):\n       rollback\n       sleep(backoff(i))\n       continue\n    except 다른 오류:\n       rollback\n       raise\n\n3) 충돌을 줄이는 다른 전략\n- 명시적 로킹: SELECT ... FOR UPDATE로 수정 대상 행을 잠그면 경쟁을 명확히 제어할 수 있습니다(동시에 접근하는 트랜잭션이 순차적으로 대기하게 됨). 성능/대기 영향 고려 필요.\n- 낙관적 동시성 제어: 행에 버전 컬럼(예: updated_at 또는 version)을 두고 업데이트 시 WHERE version = :old_version 조건을 사용해 영향을 받은 행 수가 0이면 충돌로 보고 재시도.\n- 작업 분해: 충돌 가능성이 높은 큰 트랜잭션을 더 작은 트랜잭션으로 쪼개거나 충돌 빈도를 낮추는 설계 변경.\n\n4) 사용자 경험/정책적 고려\n- 자동 재시도로 해결되지 않는 경우 사용자에게 충돌 사실을 알리고 수동 병합이나 재시도를 유도할 수 있습니다.\n- 재시도 횟수 초과 시 적절한 에러 메시지와 로그를 남기고 운영자 개입 경로를 제공.\n\n5) 로그와 모니터링\n- 충돌 빈도와 재시도 횟수를 모니터링해 시스템 설계(데이터 모델, 트랜잭션 크기, 인덱스 등)를 개선할 근거로 삼으세요.\n\n불확실성 고지: PostgreSQL의 동작(오류 메시지, 어떤 시점에 에러가 발생하는지)은 버전과 트랜잭션 모드에 따라 달라질 수 있습니다. 정확한 에러 코드/문구나 최적 전략은 사용 중인 PostgreSQL 버전과 애플리케이션 특성(요구 일관성, 지연 허용치, 트래픽 패턴 등)을 반영해 결정해야 합니다."
+        },
+        "elapsed_ms": 24310.72,
+        "human_accuracy_review": "UNVERIFIED"
+      },
+      {
+        "question": "HTTP GET 요청 본문은 모든 서버와 프록시가 같은 의미로 지원하는가?",
+        "rag": {
+          "request_id": "55956e353dab404cb1024664a55daee8",
+          "index_version": "csas-checklist-live-v1",
+          "model_version": "gpt-5-mini",
+          "prompt_version": "answer-graph-v2",
+          "status": "answered",
+          "concept_ids": [
+            "concept:network-http"
+          ],
+          "answer": "아니요. GET 요청에 본문을 포함하는 것은 보편적으로 같은 의미로 지원되지 않습니다. GET 요청에서 수신된 콘텐츠는 일반적으로 정의된 의미가 없고 요청의 의미나 대상(target)을 변경할 수 없으며, 일부 구현은 이를 요청 스머글링 공격 가능성 때문에 거부하고 연결을 닫을 수 있습니다. 따라서 클라이언트는 원격 서버가 사전에 본문을 허용한다고 명시하지 않는 한 GET에 본문을 생성해서는 안되며, 원본 서버만이 그러한 본문을 적절히 처리하도록 명시적으로 지원해야 합니다 [1][2].",
+          "retrieved_chunks": [
+            {
+              "source_id": "rfc-editor",
+              "document_id": "doc:e89694421dacb61eccd285c0341d1690fd47bbd4da3024b2c65c7168278da938",
+              "revision": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+              "chunk_id": "chunk:e5a335c5eeb5904dc16a225f3b36151f6e2e7f0cda017c10a9c85409a0c6d7fd",
+              "title": "HTTP Semantics",
+              "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "locator": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "evidence_text": "the files with the request as input\n   and send the output as the representation rather than transfer the\n   files directly.  Regardless, only the origin server needs to know how\n   each resource identifier corresponds to an implementation and how\n   that implementation manages to select and send a current\n   representation of the target resource.\n\n   A client can alter the semantics of GET to be a \"range request\",\n   requesting transfer of only some part(s) of the selected\n   representation, by sending a Range header field in the request\n   (Section 14.2).\n\n   Although request message framing is independent of the method used,\n   content received in a GET request has no generally defined semantics,\n   cannot alter the meaning or target of the request, and might lead\n   some implementations to reject the request and close the connection\n   because of its potential as a request smuggling attack (Section 11.2\n   of [HTTP/1.1]).  A client SHOULD NOT generate content in a GET\n   request unless it is made directly to an origin server that has\n   previously indicated, in or out of band, that such a request has a\n   purpose and will be adequately supported.  An origin server SHOULD",
+              "category": "network",
+              "technology_version": ""
+            },
+            {
+              "source_id": "rfc-editor",
+              "document_id": "doc:e89694421dacb61eccd285c0341d1690fd47bbd4da3024b2c65c7168278da938",
+              "revision": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+              "chunk_id": "chunk:3fa8ec78e27fdfbe85d473aec52f0a86f97b5b79a926e5c28d8088e0c2f4eb91",
+              "title": "HTTP Semantics",
+              "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "locator": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "evidence_text": "e directly to an origin server that has\n   previously indicated, in or out of band, that such a request has a\n   purpose and will be adequately supported.  An origin server SHOULD\n   NOT rely on private agreements to receive content, since participants\n   in HTTP communication are often unaware of intermediaries along the\n   request chain.\n\n   The response to a GET request is cacheable; a cache MAY use it to\n   satisfy subsequent GET and HEAD requests unless otherwise indicated\n   by the Cache-Control header field (Section 5.2 of [CACHING]).\n\n   When information retrieval is performed with a mechanism that\n   constructs a target URI from user-provided information, such as the\n   query fields of a form using GET, potentially sensitive data might be\n   provided that would not be appropriate for disclosure within a URI\n   (see Section 17.9).  In some cases, the data can be filtered or\n   transformed such that it would not reveal such information.  In\n   others, particularly when there is no benefit from caching a\n   response, using the POST method (Section 9.3.3) instead of GET can\n   transmit such information in the request content rather than within\n   the target URI.\n\n9.3.2.  HEAD",
+              "category": "network",
+              "technology_version": ""
+            }
+          ],
+          "cited_chunk_ids": [
+            "chunk:e5a335c5eeb5904dc16a225f3b36151f6e2e7f0cda017c10a9c85409a0c6d7fd",
+            "chunk:3fa8ec78e27fdfbe85d473aec52f0a86f97b5b79a926e5c28d8088e0c2f4eb91"
+          ],
+          "diagnostics": {
+            "keywords": [
+              "HTTP GET",
+              "request body",
+              "message body",
+              "semantics",
+              "servers",
+              "proxies",
+              "RFC",
+              "support"
+            ],
+            "candidate_chunk_ids": [
+              "chunk:e5a335c5eeb5904dc16a225f3b36151f6e2e7f0cda017c10a9c85409a0c6d7fd",
+              "chunk:3fa8ec78e27fdfbe85d473aec52f0a86f97b5b79a926e5c28d8088e0c2f4eb91",
+              "chunk:9f3a1703c7af73b0657f27ef81196e88084b945d38463ff70c3e1ff0e1cdcd48",
+              "chunk:eaadb3b26f628d9e6ff76d7bc99a947e199ba449dce91cd63ed8d34be989881c",
+              "chunk:ad3af95d67b71808a6e0d7f66ba845cfd9921d4e955dddb4b46711e1537848e3"
+            ],
+            "selected_chunk_ids": [
+              "chunk:e5a335c5eeb5904dc16a225f3b36151f6e2e7f0cda017c10a9c85409a0c6d7fd",
+              "chunk:3fa8ec78e27fdfbe85d473aec52f0a86f97b5b79a926e5c28d8088e0c2f4eb91",
+              "chunk:eaadb3b26f628d9e6ff76d7bc99a947e199ba449dce91cd63ed8d34be989881c"
+            ],
+            "excluded": [
+              {
+                "chunk_id": "chunk:9f3a1703c7af73b0657f27ef81196e88084b945d38463ff70c3e1ff0e1cdcd48",
+                "reason": "Provides examples of responses and content coding but does not address semantics of GET request bodies or intermediaries."
+              },
+              {
+                "chunk_id": "chunk:ad3af95d67b71808a6e0d7f66ba845cfd9921d4e955dddb4b46711e1537848e3",
+                "reason": "Focuses on POST semantics and HEAD caching; not directly relevant to GET request body semantics across servers/proxies."
+              }
+            ],
+            "top_k": 5,
+            "filters": {},
+            "search_type": "similarity",
+            "nodes": [
+              "retrieve",
+              "generate"
+            ],
+            "elapsed_ms": 14630.62,
+            "collection_events": 0
+          }
+        },
+        "no_rag": {
+          "answer": "아니요. 모든 서버와 프록시는 HTTP GET 요청의 본문(body)을 동일하게 지원하지 않습니다. 일반적으로 HTTP 표준(특히 RFC 계열)은 GET에 본문을 완전히 금지하지는 않지만 그 의미와 처리는 명확히 정의되어 있지 않습니다. 결과적으로 다양한 구현체와 중간요소가 본문을 무시하거나, 삭제하거나, 전달 방식이 달라질 수 있습니다.\n\n주요 이유 및 위험:\n- 많은 서버/프레임워크(예: 일부 웹서버·라우터 라이브러리)는 GET 요청의 본문을 무시하거나 파싱하지 않습니다. \n- 프록시나 캐시(예: CDN, HTTP 캐시)는 GET을 안전·멱등한 요청으로 간주해 본문 없이 캐싱·처리하도록 최적화되어 있어 본문을 버릴 수 있습니다.\n- 일부 클라이언트 라이브러리나 브라우저는 GET에 본문을 보내는 것을 지원하지 않거나 비정상적으로 처리할 수 있습니다.\n- 보안·로깅·라우팅 규칙 때문에 중간 장비가 본문을 차단하거나 수정할 가능성이 있습니다.\n\n권장사항:\n- GET으로 데이터를 전송해야 한다면 쿼리스트링을 사용하세요. 본문이 필요하다면 POST/PUT/PATCH 등 목적에 맞는 메서드를 사용하세요.\n- 만약 반드시 GET에 본문을 사용해야 한다면(비표준적이므로) 대상 서버와 모든 중간 구성요소가 이를 안전하게 전달·처리하는지 철저히 테스트해야 합니다.\n\n참고: 위 내용은 일반적인 관행과 구현 차이에 근거한 요약입니다. 특정 서버·프록시의 동작은 해당 제품의 문서나 환경에 따라 달라질 수 있으므로, 실제 환경에서는 직접 확인하는 것이 안전합니다."
+        },
+        "elapsed_ms": 22664.09,
+        "human_accuracy_review": "UNVERIFIED"
+      },
+      {
+        "question": "HTTP 304 응답 본문에 새 표현 전체를 담아 보내는가?",
+        "rag": {
+          "request_id": "55367acba9fa4c2cad695e76ffa1d2cc",
+          "index_version": "csas-checklist-live-v1",
+          "model_version": "gpt-5-mini",
+          "prompt_version": "answer-graph-v2",
+          "status": "answered",
+          "concept_ids": [
+            "concept:network-http"
+          ],
+          "answer": "아니요. 304 Not Modified 응답은 클라이언트가 이미 보유한 표현을 재사용하도록 하는 목적이며, 본문을 전송하지 않습니다. 304 응답은 헤더 섹션으로 종료되며 본문이나 트레일러를 포함할 수 없습니다[1][2].",
+          "retrieved_chunks": [
+            {
+              "source_id": "rfc-editor",
+              "document_id": "doc:e89694421dacb61eccd285c0341d1690fd47bbd4da3024b2c65c7168278da938",
+              "revision": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+              "chunk_id": "chunk:9562f9322e68521a1378c0193e436919c913a094033d6ad092d74f7fa5009d80",
+              "title": "HTTP Semantics",
+              "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "locator": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "evidence_text": "ation of a 303\n   response ought to contain a short hypertext note with a hyperlink to\n   the same URI reference provided in the Location header field.\n\n15.4.5.  304 Not Modified\n\n   The 304 (Not Modified) status code indicates that a conditional GET\n   or HEAD request has been received and would have resulted in a 200\n   (OK) response if it were not for the fact that the condition\n   evaluated to false.  In other words, there is no need for the server\n   to transfer a representation of the target resource because the\n   request indicates that the client, which made the request\n   conditional, already has a valid representation; the server is\n   therefore redirecting the client to make use of that stored\n   representation as if it were the content of a 200 (OK) response.\n\n   The server generating a 304 response MUST generate any of the\n   following header fields that would have been sent in a 200 (OK)\n   response to the same request:\n\n   *  Content-Location, Date, ETag, and Vary\n\n   *  Cache-Control and Expires (see [CACHING])\n\n   Since the goal of a 304 response is to minimize information transfer\n   when the recipient already has one or more cached representations, a",
+              "category": "network",
+              "technology_version": ""
+            },
+            {
+              "source_id": "rfc-editor",
+              "document_id": "doc:e89694421dacb61eccd285c0341d1690fd47bbd4da3024b2c65c7168278da938",
+              "revision": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+              "chunk_id": "chunk:4fc134d62a6ef8d1e62dda764d26d9815a1f09aa47b212ed43bfd3312d199aaa",
+              "title": "HTTP Semantics",
+              "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "locator": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+              "evidence_text": "ontrol and Expires (see [CACHING])\n\n   Since the goal of a 304 response is to minimize information transfer\n   when the recipient already has one or more cached representations, a\n   sender SHOULD NOT generate representation metadata other than the\n   above listed fields unless said metadata exists for the purpose of\n   guiding cache updates (e.g., Last-Modified might be useful if the\n   response does not have an ETag field).\n\n   Requirements on a cache that receives a 304 response are defined in\n   Section 4.3.4 of [CACHING].  If the conditional request originated\n   with an outbound client, such as a user agent with its own cache\n   sending a conditional GET to a shared proxy, then the proxy SHOULD\n   forward the 304 response to that client.\n\n   A 304 response is terminated by the end of the header section; it\n   cannot contain content or trailers.\n\n15.4.6.  305 Use Proxy\n\n   The 305 (Use Proxy) status code was defined in a previous version of\n   this specification and is now deprecated (Appendix B of [RFC7231]).\n\n15.4.7.  306 (Unused)\n\n   The 306 status code was defined in a previous version of this\n   specification, is no longer used, and the code is reserved.\n\n15.4.8.",
+              "category": "network",
+              "technology_version": ""
+            }
+          ],
+          "cited_chunk_ids": [
+            "chunk:9562f9322e68521a1378c0193e436919c913a094033d6ad092d74f7fa5009d80",
+            "chunk:4fc134d62a6ef8d1e62dda764d26d9815a1f09aa47b212ed43bfd3312d199aaa"
+          ],
+          "diagnostics": {
+            "keywords": [
+              "HTTP 304",
+              "304 Not Modified",
+              "response body",
+              "representation",
+              "conditional GET",
+              "cache validation",
+              "RFC 7232"
+            ],
+            "candidate_chunk_ids": [
+              "chunk:9562f9322e68521a1378c0193e436919c913a094033d6ad092d74f7fa5009d80",
+              "chunk:a46020af8a9e2d99125598c46b283353c8c2d868d20774783273abf5f3a31a03",
+              "chunk:4fc134d62a6ef8d1e62dda764d26d9815a1f09aa47b212ed43bfd3312d199aaa",
+              "chunk:238ee8561e9a05ff09f8a0ae38987829c6904033481a01680fe925f607a783a8",
+              "chunk:71bb32c30dffba8400d1fa2484ff8f4042cd2b67950e5c68a4824e14b9fdb59c"
+            ],
+            "selected_chunk_ids": [
+              "chunk:9562f9322e68521a1378c0193e436919c913a094033d6ad092d74f7fa5009d80",
+              "chunk:4fc134d62a6ef8d1e62dda764d26d9815a1f09aa47b212ed43bfd3312d199aaa",
+              "chunk:71bb32c30dffba8400d1fa2484ff8f4042cd2b67950e5c68a4824e14b9fdb59c"
+            ],
+            "excluded": [
+              {
+                "chunk_id": "chunk:a46020af8a9e2d99125598c46b283353c8c2d868d20774783273abf5f3a31a03",
+                "reason": "Discusses 303 See Other semantics, not relevant to whether 304 includes a body."
+              },
+              {
+                "chunk_id": "chunk:238ee8561e9a05ff09f8a0ae38987829c6904033481a01680fe925f607a783a8",
+                "reason": "Discusses Range/206 Partial Content behavior, unrelated to 304 response body rules."
+              }
+            ],
+            "top_k": 5,
+            "filters": {},
+            "search_type": "similarity",
+            "nodes": [
+              "retrieve",
+              "generate"
+            ],
+            "elapsed_ms": 17225.54,
+            "collection_events": 0
+          }
+        },
+        "no_rag": {
+          "answer": "일반적으로 아니요. HTTP 304(Not Modified) 응답은 클라이언트에게 서버에 변경된 새 표현이 없음을 알리고, 클라이언트는 자신의 캐시된 표현을 그대로 사용하도록 하는 상태 코드입니다. 따라서 304 응답은 본문(body)을 포함하지 않는 것이 원칙이며(대신 ETag, Cache-Control, Expires, Vary 등 관련 헤더는 보낼 수 있음), 만약 서버가 본문을 붙여 보낸다 하더라도 클라이언트는 보통 이를 무시하고 캐시된 표현을 사용해야 합니다. 다만 구현이나 중간 프록시에 따라 예외적 동작이 있을 수 있으므로 환경에 따라 검증해 보시기 바랍니다. (내 지식은 공개 사양과 일반 구현 관행에 기반합니다.)"
+        },
+        "elapsed_ms": 20462.47,
+        "human_accuracy_review": "UNVERIFIED"
+      },
+      {
+        "question": "문서에 근거가 없다면 2035년 PostgreSQL의 격리 수준 변경을 확정할 수 있는가?",
+        "rag": {
+          "request_id": "2f0bd1a6ba9d4dfabb5cdb3d7bcb3fc4",
+          "index_version": "csas-checklist-live-v1",
+          "model_version": "gpt-5-mini",
+          "prompt_version": "answer-graph-v2",
+          "status": "insufficient_evidence",
+          "concept_ids": [
+            "concept:database-isolation",
+            "concept:database-transaction"
+          ],
+          "answer": null,
+          "retrieved_chunks": [
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:0a9aac78de5234b777f196c35abcf8f15595c657ee14f585563c247eaff0d86c",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "Allowed, but not in PG\n            Possible\n\n            Serializable\n            Not possible\n            Not possible\n            Not possible\n            Not possible\n\nIn PostgreSQL, you can request any of the four standard transaction isolation levels, but internally only three distinct isolation levels are implemented, i.e., PostgreSQL's Read Uncommitted mode behaves like Read Committed. This is because it is the only sensible way to map the standard isolation levels to PostgreSQL's multiversion concurrency control architecture.\n\nThe table also shows that PostgreSQL's Repeatable Read implementation does not allow phantom reads. This is acceptable under the SQL standard because the standard specifies which anomalies must not occur at certain isolation levels; higher guarantees are acceptable. The behavior of the available isolation levels is detailed in the following subsections.\n\nTo set the transaction isolation level of a transaction, use the command SET TRANSACTION.\n\nImportant\n\nSome PostgreSQL data types and functions have special rules regarding transactional behavior.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "saction isolation level of a transaction, use the command SET TRANSACTION.\n\nImportant\n\nSome PostgreSQL data types and functions have special rules regarding transactional behavior. In particular, changes made to a sequence (and therefore the counter of a column declared using serial) are immediately visible to all other transactions and are not rolled back if the transaction that made the changes aborts. See Section 9.17 and Section 8.1.4.\n\n13.2.1. Read Committed Isolation Level #\n\nRead Committed is the default isolation level in PostgreSQL. When a transaction uses this isolation level, a SELECT query (without a FOR UPDATE/SHARE clause) sees only data committed before the query began; it never sees either uncommitted data or changes committed by concurrent transactions during the query's execution. In effect, a SELECT query sees a snapshot of the database as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:8d469c73ac7aae500d83da36abbccc1c18a1e61cd10557cfb63bc5315a092947",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "roducts as Snapshot Isolation. Differences in behavior and performance may be observed when compared with systems that use a traditional locking technique that reduces concurrency. Some other systems may even offer Repeatable Read and Snapshot Isolation as distinct isolation levels with different behavior. The permitted phenomena that distinguish the two techniques were not formalized by database researchers until after the SQL standard was developed, and are outside the scope of this manual. For a full treatment, please see [berenson95].\n\nNote\n\nPrior to PostgreSQL version 9.1, a request for the Serializable transaction isolation level provided exactly the same behavior described here. To retain the legacy Serializable behavior, Repeatable Read should now be requested.\n\n13.2.3. Serializable Isolation Level #\n\nThe Serializable isolation level provides the strictest transaction isolation. This level emulates serial transaction execution for all committed transactions; as if transactions had been executed one after another, serially, rather than concurrently.",
+              "category": "database",
+              "technology_version": ""
+            },
+            {
+              "source_id": "postgresql",
+              "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+              "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+              "chunk_id": "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+              "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+              "evidence_text": "actions to prevent anomalies, it is important that any data read from a permanent user table not be considered valid until the transaction which read it has successfully committed. This is true even for read-only transactions, except that data read within a deferrable read-only transaction is known to be valid as soon as it is read, because such a transaction waits until it can acquire a snapshot guaranteed to be free from such problems before starting to read any data. In all other cases applications must not depend on results read during a transaction that later aborted; instead, they should retry the transaction until it succeeds.\n\nTo guarantee true serializability PostgreSQL uses predicate locking, which means that it keeps locks which allow it to determine when a write would have had an impact on the result of a previous read from a concurrent transaction, had it run first. In PostgreSQL these locks do not cause any blocking and therefore can not play any part in causing a deadlock. They are used to identify and flag dependencies among concurrent Serializable transactions which in certain combinations can lead to serialization anomalies.",
+              "category": "database",
+              "technology_version": ""
+            }
+          ],
+          "cited_chunk_ids": [],
+          "diagnostics": {
+            "keywords": [
+              "PostgreSQL",
+              "격리 수준",
+              "isolation level",
+              "2035",
+              "변경",
+              "확정",
+              "문서 근거",
+              "documentation"
+            ],
+            "candidate_chunk_ids": [
+              "chunk:0a9aac78de5234b777f196c35abcf8f15595c657ee14f585563c247eaff0d86c",
+              "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "chunk:8d469c73ac7aae500d83da36abbccc1c18a1e61cd10557cfb63bc5315a092947",
+              "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "chunk:870da1741241432f858c6bf332765939a86bacf567ca1e2e630d90683c7af336"
+            ],
+            "selected_chunk_ids": [
+              "chunk:0a9aac78de5234b777f196c35abcf8f15595c657ee14f585563c247eaff0d86c",
+              "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+              "chunk:8d469c73ac7aae500d83da36abbccc1c18a1e61cd10557cfb63bc5315a092947",
+              "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9"
+            ],
+            "excluded": [
+              {
+                "chunk_id": "chunk:870da1741241432f858c6bf332765939a86bacf567ca1e2e630d90683c7af336",
+                "reason": "Discusses performance/serialization failure details but is not directly relevant to whether an undocumented future change can be confirmed."
+              }
+            ],
+            "top_k": 5,
+            "filters": {},
+            "search_type": "similarity",
+            "nodes": [
+              "retrieve",
+              "generate"
+            ],
+            "elapsed_ms": 15238.13,
+            "collection_events": 0
+          }
+        },
+        "no_rag": {
+          "answer": "단언할 수 없습니다. 문서(공식 릴리스 노트, 커밋 기록, 개발자 메일링리스트 공지 등) 근거가 없으면 2035년에 PostgreSQL의 격리 수준(isolation level)이 바뀔 것이라고 확정할 수 없습니다. PostgreSQL의 설계·정책 변경은 오픈소스 커뮤니티(핵심 개발자, 커밋터, pgsql-hackers 토론 등)를 통해 이루어지며, 공식 경로(릴리스 노트, 커밋 로그, 위키, 공식 웹사이트의 발표)로 발표됩니다. 따라서 확인하려면 다음을 권합니다: 1) PostgreSQL 공식 릴리스 노트와 변경 로그 확인, 2) git 저장소의 커밋/머지 기록 조회, 3) pgsql-hackers, pgsql-announce 같은 메일링리스트 및 포럼 검색, 4) PostgreSQL 위키나 개발자 블로그의 제안(RFC/지도문서) 확인. 제 답변은 공개 문서를 직접 접근해 검증한 결과가 아니라 일반적인 절차와 불확실성을 기반으로 한 것이므로, 최종 판단은 공식 자료로 확인하시기 바랍니다."
+        },
+        "elapsed_ms": 18774.23,
+        "human_accuracy_review": "UNVERIFIED"
+      }
+    ],
+    "human_accuracy_review": "UNVERIFIED"
+  }
+}

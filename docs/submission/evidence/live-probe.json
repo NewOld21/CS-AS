@@ -1,0 +1,263 @@
+{
+  "executed_at": "2026-10-23T01:29:46.058289+00:00",
+  "isolated": {
+    "provider": "deterministic-test",
+    "storage": "real isolated Chroma",
+    "documents": 8,
+    "generated_chunks": 16,
+    "first_count": 16,
+    "second_count": 16,
+    "reindex_embedding_calls": 0,
+    "idempotent": true,
+    "second_index_report": {
+      "total_documents": 8,
+      "new": 0,
+      "modified": 0,
+      "unchanged": 8,
+      "deleted": 0,
+      "embedded_documents": 0,
+      "embedded_chunks": 0,
+      "reused_chunks": 0,
+      "skipped_documents": 8,
+      "removed_documents": 0,
+      "failed_documents": 0,
+      "failures": [],
+      "dry_run": false
+    },
+    "chunk_config_counts": [
+      49,
+      16
+    ],
+    "top_k": {
+      "3": [
+        "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+        "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a",
+        "chunk:b5f018e3887b4aad6b79c136cce01118f233d95a1059905bee54d87ff189e622"
+      ],
+      "5": [
+        "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+        "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+        "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a",
+        "chunk:b5f018e3887b4aad6b79c136cce01118f233d95a1059905bee54d87ff189e622",
+        "chunk:3a75138e1cbd1dbaf221121a7297a1ff6bd078ec90fdabe9a984416fdc90233b"
+      ]
+    },
+    "mmr": [
+      "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+      "chunk:0c59bce1cc2369a59af3605c92a08d220f560fbf9e6b0d1fa41bdc2a93faf83b",
+      "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+      "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+      "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a"
+    ],
+    "filtered_categories": [
+      "database",
+      "database",
+      "database",
+      "database",
+      "database"
+    ],
+    "repeat_query_ms": [
+      1.5,
+      1.55
+    ],
+    "repeat_query_embedding_calls": 1,
+    "query_collection_count_unchanged": true,
+    "representative_chunk": {
+      "ids": [
+        "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc"
+      ],
+      "embeddings": null,
+      "metadatas": [
+        {
+          "locator": "fixture:0#Transaction",
+          "document_id": "doc:0",
+          "version": "",
+          "chunk_config_version": "markdown-structure-1200-180-v1",
+          "source_id": "checklist-fixture",
+          "url": "https://example.org/fixture",
+          "index_version": "checklist-0c10513be00f4c54bcea2830a3c45ea0",
+          "chunk_index": 0,
+          "revision": "r1",
+          "concept_ids": "[]",
+          "category": "database",
+          "title": "Fixture transaction 0",
+          "language": "en",
+          "chunk_id": "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc"
+        }
+      ],
+      "documents": [
+        "# Transaction\ntransaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory in"
+      ],
+      "data": null,
+      "uris": null,
+      "included": [
+        "documents",
+        "metadatas"
+      ]
+    },
+    "passed": true
+  },
+  "live_probe": {
+    "results": [
+      {
+        "request_id": "9b7ecdb1052f43d28c8202e4d688d947",
+        "index_version": "csas-checklist-live-v1",
+        "model_version": "gpt-5-mini",
+        "prompt_version": "answer-graph-v2",
+        "status": "answered",
+        "concept_ids": [
+          "concept:database-isolation",
+          "concept:database-transaction"
+        ],
+        "answer": "아니요. Read Committed에서는 각 SELECT는 그 SELECT가 시작된 시점의 스냅샷을 봅니다. 즉 같은 트랜잭션 안에서도 서로 다른 시점에 시작되는 두 개의 SELECT는 다른(업데이트된) 데이터를 볼 수 있습니다. 단, 해당 트랜잭션 내에서 이전에 수행한 업데이트는 그 SELECT에 반영됩니다[1][2].",
+        "retrieved_chunks": [
+          {
+            "source_id": "postgresql",
+            "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+            "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+            "chunk_id": "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+            "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "evidence_text": "saction isolation level of a transaction, use the command SET TRANSACTION.\n\nImportant\n\nSome PostgreSQL data types and functions have special rules regarding transactional behavior. In particular, changes made to a sequence (and therefore the counter of a column declared using serial) are immediately visible to all other transactions and are not rolled back if the transaction that made the changes aborts. See Section 9.17 and Section 8.1.4.\n\n13.2.1. Read Committed Isolation Level #\n\nRead Committed is the default isolation level in PostgreSQL. When a transaction uses this isolation level, a SELECT query (without a FOR UPDATE/SHARE clause) sees only data committed before the query began; it never sees either uncommitted data or changes committed by concurrent transactions during the query's execution. In effect, a SELECT query sees a snapshot of the database as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed.",
+            "category": "database",
+            "technology_version": ""
+          },
+          {
+            "source_id": "postgresql",
+            "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+            "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+            "chunk_id": "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566",
+            "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+            "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "evidence_text": "ase as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed. Also note that two successive SELECT commands can see different data, even though they are within a single transaction, if other transactions commit changes after the first SELECT starts and before the second SELECT starts.\n\nUPDATE, DELETE, SELECT FOR UPDATE, and SELECT FOR SHARE commands behave the same as SELECT in terms of searching for target rows: they will only find target rows that were committed as of the command start time. However, such a target row might have already been updated (or deleted or locked) by another concurrent transaction by the time it is found. In this case, the would-be updater will wait for the first updating transaction to commit or roll back (if it is still in progress). If the first updater rolls back, then its effects are negated and the second updater can proceed with updating the originally found row.",
+            "category": "database",
+            "technology_version": ""
+          }
+        ],
+        "cited_chunk_ids": [
+          "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+          "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566"
+        ],
+        "diagnostics": {
+          "keywords": [
+            "PostgreSQL",
+            "Read Committed",
+            "snapshot",
+            "SELECT",
+            "transaction",
+            "MVCC",
+            "visibility",
+            "transaction-isolation"
+          ],
+          "candidate_chunk_ids": [
+            "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+            "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566"
+          ],
+          "selected_chunk_ids": [
+            "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "chunk:b41f54ccacc7d8570cd869880c20d1e052808440dc1a49bc7a127fa2dc6dc566"
+          ],
+          "excluded": [
+            {
+              "chunk_id": "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "reason": "Describes snapshot behavior for Repeatable Read (transaction-level snapshot), not Read Committed; therefore not relevant to the question about Read Committed."
+            }
+          ],
+          "top_k": 3,
+          "filters": {
+            "source_id": "postgresql"
+          },
+          "search_type": "similarity",
+          "nodes": [
+            "retrieve",
+            "generate"
+          ],
+          "elapsed_ms": 21616.71,
+          "collection_events": 0
+        }
+      },
+      {
+        "request_id": "54df57b632564cf8b4e47c113cb102f5",
+        "index_version": "csas-checklist-live-v1",
+        "model_version": "gpt-5-mini",
+        "prompt_version": "answer-graph-v2",
+        "status": "answered",
+        "concept_ids": [
+          "concept:database-isolation",
+          "concept:database-transaction"
+        ],
+        "answer": "아니오. Read Committed에서는 트랜잭션 전체가 아닌 각 SELECT 문별로 스냅샷이 결정됩니다. 즉, 각 SELECT 쿼리는 그 쿼리가 시작된 시점에 커밋된 데이터만 보며(자신 트랜잭션의 이전 변경은 봄) 같은 트랜잭션 내의 서로 다른 SELECT는 서로 다른 스냅샷을 볼 수 있습니다 [1].",
+        "retrieved_chunks": [
+          {
+            "source_id": "postgresql",
+            "document_id": "doc:018079c70ebf8a57955b251de53aef30db83665e81a971bcc6fb2956ab9d1308",
+            "revision": "3cbdd6bd65e4c3fc3cf0751bf2256dea53fd15483955f9cbeef3a46e1d2dbf5b",
+            "chunk_id": "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "title": "PostgreSQL: Documentation: 17: 13.2. Transaction Isolation",
+            "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "locator": "https://www.postgresql.org/docs/17/transaction-iso.html",
+            "evidence_text": "saction isolation level of a transaction, use the command SET TRANSACTION.\n\nImportant\n\nSome PostgreSQL data types and functions have special rules regarding transactional behavior. In particular, changes made to a sequence (and therefore the counter of a column declared using serial) are immediately visible to all other transactions and are not rolled back if the transaction that made the changes aborts. See Section 9.17 and Section 8.1.4.\n\n13.2.1. Read Committed Isolation Level #\n\nRead Committed is the default isolation level in PostgreSQL. When a transaction uses this isolation level, a SELECT query (without a FOR UPDATE/SHARE clause) sees only data committed before the query began; it never sees either uncommitted data or changes committed by concurrent transactions during the query's execution. In effect, a SELECT query sees a snapshot of the database as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed.",
+            "category": "database",
+            "technology_version": ""
+          }
+        ],
+        "cited_chunk_ids": [
+          "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77"
+        ],
+        "diagnostics": {
+          "keywords": [
+            "PostgreSQL",
+            "Read Committed",
+            "snapshot",
+            "SELECT",
+            "transaction",
+            "MVCC",
+            "visibility",
+            "concurrency"
+          ],
+          "candidate_chunk_ids": [
+            "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+            "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77",
+            "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9"
+          ],
+          "selected_chunk_ids": [
+            "chunk:e53ce4dd678f1aca70b3058f1695b8a6c198ad557d9615e32059ea759ecccd77"
+          ],
+          "excluded": [
+            {
+              "chunk_id": "chunk:2d0b488d014b62b76526579a344b44861fe5676959166bdae1165f406c876635",
+              "reason": "Describes snapshot behavior for Repeatable Read (snapshot as of transaction start), not Read Committed; not directly relevant to question about Read Committed."
+            },
+            {
+              "chunk_id": "chunk:25b6b14c0c6239621229fd5070367a32bf2c5262d91e3ee4f24c7269ef1ee2b9",
+              "reason": "Discusses Serializable/deferrable transactions and retry semantics; does not address Read Committed per-query snapshot visibility."
+            }
+          ],
+          "top_k": 3,
+          "filters": {
+            "source_id": "postgresql"
+          },
+          "search_type": "similarity",
+          "nodes": [
+            "retrieve",
+            "generate"
+          ],
+          "elapsed_ms": 15801.04,
+          "collection_events": 0
+        }
+      }
+    ],
+    "graph": "---\nconfig:\n  flowchart:\n    curve: linear\n---\ngraph TD;\n\t__start__([<p>__start__</p>]):::first\n\tretrieve(retrieve)\n\tgenerate(generate)\n\t__end__([<p>__end__</p>]):::last\n\t__start__ --> retrieve;\n\tretrieve --> generate;\n\tgenerate --> __end__;\n\tclassDef default fill:#f2f0ff,line-height:1.2\n\tclassDef first fill-opacity:0\n\tclassDef last fill:#bfb6fc\n",
+    "collection_before": 673,
+    "collection_after": 673,
+    "query_embedding_calls": 2,
+    "filter_verified": true,
+    "repeat_total_ms": [
+      21616.71,
+      15801.04
+    ]
+  }
+}

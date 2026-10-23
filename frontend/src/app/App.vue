@@ -12,7 +12,9 @@ function closeMenu() {
   menuToggle.value?.focus()
 }
 function focusMain() {
-  document.querySelector<HTMLElement>('main')?.focus({ preventScroll: true })
+  const main = document.querySelector<HTMLElement>('main')
+  if (document.activeElement !== main && main?.contains(document.activeElement)) return
+  main?.focus({ preventScroll: true })
 }
 watch(
   () => route.fullPath,
@@ -44,6 +46,8 @@ watch(
       >
         <RouterLink to="/#explore">학습 지도</RouterLink
         ><RouterLink to="/#journey">학습 여정</RouterLink>
+        <RouterLink v-if="auth.user" to="/me">나의 학습</RouterLink>
+        <RouterLink v-if="auth.user" to="/chat">CS 학습 챗봇</RouterLink>
         <RouterLink v-if="auth.user" to="/learn">퀴즈 · AS</RouterLink
         ><span class="nav-divider" aria-hidden="true"></span
         ><RouterLink v-if="auth.user" to="/account">내 계정</RouterLink

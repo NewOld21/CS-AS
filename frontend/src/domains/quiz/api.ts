@@ -29,6 +29,9 @@ export interface Source {
   title: string
   url: string
   locator: string
+  evidence_text?: string | null
+  category?: string | null
+  technology_version?: string | null
 }
 export interface Attempt {
   id: string
@@ -68,15 +71,21 @@ export interface ChatAnswer {
 }
 
 export const listCategories = () => request<Category[]>('/quiz/categories')
-export const listQuizzes = (category: string) =>
+export const listQuizzes = (category: string, difficulty = '') =>
   request<{ items: Quiz[]; next_cursor: string | null }>(
-    `/quizzes?category=${encodeURIComponent(category)}&limit=20`,
+    `/quizzes?category=${encodeURIComponent(category.toUpperCase().replaceAll('-', '_'))}&limit=100${difficulty ? `&difficulty=${encodeURIComponent(difficulty)}` : ''}`,
   )
-export const submitAttempt = (quizId: string, optionId: string) =>
+export const getQuiz = (id: string) => request<Quiz>(`/quizzes/${encodeURIComponent(id)}`)
+export const submitAttempt = (
+  quizId: string,
+  optionId: string,
+  key: string = crypto.randomUUID(),
+  retryOf?: string,
+) =>
   post<Attempt>(
     `/quizzes/${quizId}/attempts`,
-    { selected_option_id: optionId },
-    { 'Idempotency-Key': crypto.randomUUID() },
+    { selected_option_id: optionId, ...(retryOf ? { retry_of_attempt_id: retryOf } : {}) },
+    { 'Idempotency-Key': key },
   )
 export const createContextChat = (quizId: string, attemptId: string) =>
   post<ChatSession>('/chat/sessions', { title: null, quiz_id: quizId, attempt_id: attemptId })
@@ -90,17 +99,33 @@ export const getChatMessages = (sessionId: string, page = 0, limit = 50) =>
   request<{ items: ChatMessage[]; next_page: number | null }>(
     `/chat/sessions/${sessionId}/messages?page=${page}&limit=${limit}`,
   )
-export const ask = (sessionId: string, question: string) =>
+export const ask = (sessionId: string, question: string, key: string = crypto.randomUUID()) =>
   post<ChatAnswer>(
     `/chat/sessions/${sessionId}/messages`,
     { question },
-    { 'Idempotency-Key': crypto.randomUUID() },
+    { 'Idempotency-Key': key },
+    125000,
   )
+
+export interface GenerationResult {
+  generation_id: string
+  status: 'ready' | 'insufficient_evidence' | 'validation_failed'
+  quiz: Quiz | null
+}
+export const generateQuiz = (conceptIds: string[], sessionId: string, key: string) =>
+  post<GenerationResult>(
+    '/quiz-generations',
+    { concept_ids: conceptIds, difficulty: 'EASY', chat_session_id: sessionId },
+    { 'Idempotency-Key': key },
+    125000,
+  )
+export const recoverGeneration = (key: string) =>
+  request<GenerationResult>(`/quiz-generations/${encodeURIComponent(key)}`)
 
 export function safeSourceUrl(value: string): string | null {
   try {
     const url = new URL(value)
-    return url.protocol === 'https:' ? url.href : null
+    return url.protocol === 'https:' && !url.username && !url.password ? url.href : null
   } catch {
     return null
   }

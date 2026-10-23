@@ -1,10 +1,12 @@
 # 06. ERD — 데이터 모델과 관계
 
-상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5), chat_sessions·chat_messages·message_citations(V6), 대화 복원·멱등·실패 상태(V7)를 구현했다. review_states와 생성 모델은 논리 설계 제안이며, 문서·청크·임베딩은 파일 manifest와 ChromaDB가 관리한다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
+상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5), chat_sessions·chat_messages·message_citations(V6), 대화 복원·멱등·실패 상태(V7), 근거 snapshot(V8), 생성·검증 이력(V9), 풀이 표시 snapshot(V10), review_states(V11)를 구현했다. 문서·청크·임베딩은 파일 manifest와 ChromaDB가 관리한다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
 현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. 버전별 ChromaDB BUILDING 인덱스 적재·검색 어댑터도 구현했지만 승인 코퍼스 평가 전 ACTIVE로 전환하지 않는다.
 
 ## 저장소 책임
+
+C24 V8은 message_citations에 evidence_text/category/technology_version snapshot을 추가한다. C27 V9은 generation_requests(사용자·멱등 키 UNIQUE·요청 hash·상태·생성 버전), generation_validations(단계 보고서·거부 사유·통과 여부), quiz_evidence(청크·리비전·본문 snapshot)를 추가한다. READY AI 문제는 통과한 생성 요청과 검증 이력이 존재해야 하는 지연 constraint trigger로 보호한다. 문제·선택지·개념·근거·검증·READY 전환을 원자적으로 저장한다. quiz_attempts는 기존 테이블과 채점 경로를 그대로 사용하며 생성 근거는 제출 후 반환한다.
 
 | 저장소 | 데이터 |
 |---|---|
@@ -62,8 +64,8 @@ erDiagram
 | quizzes | id PK, family_id, version, stem, category, difficulty, origin, status, owner_user_id FK?, explanation, source_url, reviewed_at, created_at/updated_at | (family_id, version) UNIQUE. origin=CURATED/AI_GENERATED, status=DRAFT/READY/RETIRED. V3 구현 |
 | quiz_options | id PK, quiz_id FK, position, text, is_correct | (quiz_id, position) UNIQUE, (quiz_id, id) UNIQUE. 정답은 서버 전용. V3 구현 |
 | quiz_concepts | quiz_id FK, concept_id FK, is_primary | 복합 PK, 대표 개념 1개와 추가 개념 허용. V3 구현 |
-| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, correct_option_id, is_correct, explanation/source URL snapshot, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택/정답 선택지와 문제의 복합 FK. V5 구현 |
-| review_states | user_id FK, quiz_id FK, status, latest_attempt_id FK, last_reviewed_at? | (user_id, quiz_id) PK. NEEDS_REVIEW/RESOLVED |
+| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, correct_option_id, is_correct, explanation/source URL snapshot, quiz_snapshot, evidence_snapshot, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택/정답 선택지와 문제의 복합 FK. V5/V10 구현 |
+| review_states | user_id FK, quiz_id FK, status, latest_attempt_id FK, first_wrong_at, last_wrong_at, last_reviewed_at? | (user_id, quiz_id) PK. 본인·같은 문제의 attempt 복합 FK. NEEDS_REVIEW/RESOLVED. V11 구현 |
 | chat_sessions | id PK, user_id FK, context_attempt_id FK?, title, created_at, updated_at | 문제 문맥은 본인 풀이만. 일반 대화는 문맥 null |
 | chat_messages | id PK, session_id FK, role, content, status?, sequence_no, concept_ids, request_id, request_key?, request_hash?, user_message_id?, failure_code?, model_version?, index_version?, created_at | USER/ASSISTANT. pending/answered/insufficient_evidence/failed 상태. 대화 순서는 sequence_no |
 | message_citations | message_id FK, chunk_id, revision, index_version, ordinal | 원문 메타데이터 스냅샷(title/url/source_id/document_id/locator)을 보존 |
@@ -105,5 +107,7 @@ quiz_attempts(user_id, submitted_at DESC, id), (user_id, quiz_id); review_states
 페이지 조회는 cursor 기반이다. 통계 total_attempts에는 재풀이가 포함되고 정확도는 correct_attempts / total_attempts다. 한 문제가 여러 개념에 연결되면 개념별 집계에 각각 포함되므로 개념별 수를 전체 풀이 수로 합산하지 않는다.
 
 ## Graph 확장
+
+quizzes.source_metadata(JSONB)는 gyoogle-v1의 원문 SHA·경로·인용·학습 목표·키워드·선택지별 해설·자동 검토를 보존하는 서버 전용 필드다. 공개 출제 응답에는 포함하지 않는다. 기존 quiz_attempts의 채점·해설 snapshot과 quiz_evidence를 그대로 사용한다. 신규 테이블로 풀이 이력을 나누지 않는다.
 
 관계 모델은 [Graph RAG](domain/knowledge-graph.md)를 따른다. PostgreSQL concepts가 개념 식별자의 원장이고 Graph 노드는 그 ID의 투영이다. Graph 도입 시 quiz_attempts의 키를 교체하지 않는다. 관계·근거 변경은 버전 manifest와 재구축 가능한 배치로 반영한다.

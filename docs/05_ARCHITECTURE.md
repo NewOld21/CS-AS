@@ -4,6 +4,8 @@
 
 ## 서비스 경계
 
+C24~C27: Python은 검색 근거로 후보 생성·결정적 구조 검사·정답 비공개 독립 풀이·해설 검증을 수행한다. Spring generation은 검수된 개념과 본인 대화만 전달하고 검증 통과 결과를 기존 quizzes/options/concepts에 개인 문제로 저장한다. 외부 모델 호출 중 DB 트랜잭션을 유지하지 않으며 완료 저장은 한 트랜잭션이다. Vue는 citation snapshot 패널과 기존 문제 선택·제출 화면을 재사용한다.
+
 Vue → Spring Boot 공개 API → Python RAG 내부 API → ChromaDB/모델 공급자.
 Spring은 PostgreSQL 서비스 스키마를 통해 사용자·퀴즈·학습 기록을 관리한다. Python은 ChromaDB의 검색용 문서·청크·임베딩을 관리하며 사용자 계정·채점 테이블을 수정하지 않는다.
 

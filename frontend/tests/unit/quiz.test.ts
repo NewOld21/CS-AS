@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { ask, safeSourceUrl, submitAttempt } from '../../src/domains/quiz/api'
+import { ask, generateQuiz, safeSourceUrl, submitAttempt } from '../../src/domains/quiz/api'
 import { resetCsrf } from '../../src/shared/api/client'
 
 afterEach(() => {
@@ -8,6 +8,23 @@ afterEach(() => {
 })
 
 describe('quiz and citation client policy', () => {
+  it('generates with the supplied stable key and sends no answer or evidence text', async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ token: 'csrf' }), { status: 200 }))
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ status: 'validation_failed', quiz: null }), { status: 200 }),
+      )
+    vi.stubGlobal('fetch', fetch)
+    await generateQuiz(['concept:database-index'], 'owned-chat', 'stable-key')
+    const init = fetch.mock.calls[1]![1] as RequestInit
+    expect(init.headers).toMatchObject({ 'Idempotency-Key': 'stable-key' })
+    expect(JSON.parse(init.body as string)).toEqual({
+      concept_ids: ['concept:database-index'],
+      difficulty: 'EASY',
+      chat_session_id: 'owned-chat',
+    })
+  })
   it('allows only HTTPS citation links', () => {
     expect(safeSourceUrl('https://example.org/docs/index')).toBe('https://example.org/docs/index')
     expect(safeSourceUrl('javascript:alert(1)')).toBeNull()

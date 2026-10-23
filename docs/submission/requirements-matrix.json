@@ -1,0 +1,218 @@
+[
+  {
+    "number": 1,
+    "requirement": "F2001",
+    "target": "Index units/counts",
+    "result": "PASS",
+    "evidence": "evidence/live-comparison.json",
+    "note": "12 approved source documents; 673 live chunks. Isolated generated/store counts match."
+  },
+  {
+    "number": 2,
+    "requirement": "F2002",
+    "target": "Idempotent indexing",
+    "result": "PASS",
+    "evidence": "evidence/isolated.json",
+    "note": "Isolated counts 16 -> 16; unchanged incremental embedding calls 0."
+  },
+  {
+    "number": 3,
+    "requirement": "F2003/F2004",
+    "target": "Two planning prompts",
+    "result": "PASS",
+    "evidence": "evidence/live-comparison.json",
+    "note": "Real GMS keywords/candidates/selected/excluded IDs captured. Selection applies to existing indexed documents, not query-time ingestion."
+  },
+  {
+    "number": 4,
+    "requirement": "F2004/NF2002",
+    "target": "Repeat without ingestion",
+    "result": "PASS",
+    "evidence": "evidence/live-probe.json",
+    "note": "Live collection 673 -> 673; query graph imports no collector. LLM rewriting caused 2 embedding calls across two requests; cache only shares identical rewritten queries."
+  },
+  {
+    "number": 5,
+    "requirement": "F2005",
+    "target": "Chunk settings",
+    "result": "PASS",
+    "evidence": "evidence/isolated.json",
+    "note": "Isolated configuration chunk totals: [49, 16]"
+  },
+  {
+    "number": 6,
+    "requirement": "F2006",
+    "target": "Top-K",
+    "result": "PASS",
+    "evidence": "evidence/isolated.json",
+    "note": "Same isolated query returns 3 vs 5 actual Chroma rows."
+  },
+  {
+    "number": 7,
+    "requirement": "F2007",
+    "target": "LangGraph",
+    "result": "PASS",
+    "evidence": "evidence/live-probe.json",
+    "note": "Real compiled retrieve/generate graph; executed traces and Mermaid recorded."
+  },
+  {
+    "number": 8,
+    "requirement": "F2008",
+    "target": "Citations",
+    "result": "PASS",
+    "evidence": "evidence/live-gms-evidence.png",
+    "note": "Live browser evidence dialog and source numbering; forged ID/number/order regression tests."
+  },
+  {
+    "number": 9,
+    "requirement": "F2007/F2008",
+    "target": "Abstention",
+    "result": "PASS",
+    "evidence": "evidence/live-comparison.json",
+    "note": "Future PostgreSQL question returns insufficient_evidence with zero cited IDs; browser empty-source notice verified."
+  },
+  {
+    "number": 10,
+    "requirement": "F2009",
+    "target": "Conversation isolation",
+    "result": "PASS",
+    "evidence": "evidence/live-gms-multiturn.png",
+    "note": "Real browser new chat clears transcript; Spring owner-scoped history test and foreign-user 404."
+  },
+  {
+    "number": 11,
+    "requirement": "F2011",
+    "target": "Metadata filters",
+    "result": "PASS",
+    "evidence": "evidence/live-probe.json",
+    "note": "Live source_id=postgresql restriction rechecked against all returned chunks."
+  },
+  {
+    "number": 12,
+    "requirement": "F2010",
+    "target": "Domain evidence",
+    "result": "FAIL",
+    "evidence": "evidence/generation-validation.json",
+    "note": "Live quiz AS has evidence. Actual generated quiz failed independent evidence audit (EXPLANATION_OR_DISTRACTOR_UNSUPPORTED), so live generation/submission/history happy path did not complete. Existing mock regressions passed."
+  },
+  {
+    "number": 13,
+    "requirement": "F2012",
+    "target": "Progress/configuration errors",
+    "result": "UNVERIFIED",
+    "evidence": "evidence/fixture-standalone-mobile.png",
+    "note": "Request progress and mocked missing-key UI verified. Actual missing-key/index deletion runtime probes still need an isolated configuration run. Never delete active index."
+  },
+  {
+    "number": 14,
+    "requirement": "F2012",
+    "target": "High-risk disclaimer",
+    "result": "NOT_APPLICABLE",
+    "evidence": "",
+    "note": "CS learning; no clinical or financial decision domain."
+  },
+  {
+    "number": 15,
+    "requirement": "F2013",
+    "target": "Web UI",
+    "result": "PASS",
+    "evidence": "evidence/live-gms-multiturn.png",
+    "note": "Actual Vue -> dedicated Spring/PostgreSQL -> Python LangGraph -> GMS/Chroma browser execution."
+  },
+  {
+    "number": 16,
+    "requirement": "F2014",
+    "target": "Similarity/MMR",
+    "result": "PASS",
+    "evidence": "evidence/isolated.json",
+    "note": "Both rankings executed against an isolated real Chroma collection. Test vectors verify diversity behavior; no quality superiority claim."
+  },
+  {
+    "number": 17,
+    "requirement": "F2015",
+    "target": "Five-question comparison",
+    "result": "UNVERIFIED",
+    "evidence": "evidence/live-comparison.json",
+    "note": "Five real same-model pairs executed and agent-reviewed; independent human accuracy/citation assessment remains pending."
+  },
+  {
+    "number": 18,
+    "requirement": "F2015",
+    "target": "Comparison document",
+    "result": "PASS",
+    "evidence": "evidence/live-comparison.json",
+    "note": "Actual paired outputs and limitations are included in rag-vs-no-rag.md."
+  },
+  {
+    "number": 19,
+    "requirement": "F2016",
+    "target": "Source kinds",
+    "result": "PASS",
+    "evidence": "evidence/fixture-standalone-desktop.png",
+    "note": "UI distinguishes GitHub/Wikipedia/external technical documents/development fixtures; quiz context labeled separately."
+  },
+  {
+    "number": 20,
+    "requirement": "NF2001",
+    "target": "Latency",
+    "result": "UNVERIFIED",
+    "evidence": "evidence/live-probe.json",
+    "note": "Live first/repeat RAG ms: [21616.71, 15801.04]; user acceptability not judged automatically."
+  },
+  {
+    "number": 21,
+    "requirement": "NF2003/NF2004",
+    "target": "Secrets/errors",
+    "result": "UNVERIFIED",
+    "evidence": "",
+    "note": "Ignored environment and sanitized errors implemented; exact current-key scan is recorded separately in test-results.md. Independent visual audit pending."
+  },
+  {
+    "number": 22,
+    "requirement": "NF2005",
+    "target": "Modules",
+    "result": "PASS",
+    "evidence": "",
+    "note": "ingestion/indexing/retrieval/generation/providers and Vue/Spring separated; no broad rewrite."
+  },
+  {
+    "number": 23,
+    "requirement": "NF2006",
+    "target": "HTTP policy",
+    "result": "PASS",
+    "evidence": "evidence/corpus-probes.json",
+    "note": "Existing retry/backoff/Retry-After/timeout tests, approved source gates and configured contact; bounded sample collection completed."
+  },
+  {
+    "number": 24,
+    "requirement": "NF2007",
+    "target": "Source terms",
+    "result": "PASS",
+    "evidence": "evidence/source-policies.json",
+    "note": "Approved registry license/attribution/URL/storage policies summarized in README and source-policies.json."
+  },
+  {
+    "number": 25,
+    "requirement": "Required",
+    "target": "Combined result",
+    "result": "UNVERIFIED",
+    "evidence": "",
+    "note": "Unverified individual checks and independent peer review remain; not an all-pass submission."
+  },
+  {
+    "number": 26,
+    "requirement": "Required",
+    "target": "Screenshots",
+    "result": "UNVERIFIED",
+    "evidence": "",
+    "note": "Real browser screenshots included. Dedicated captures for every numerical/configuration-error checklist item remain to be completed. Raw execution JSON is supplied."
+  },
+  {
+    "number": 27,
+    "requirement": "Required",
+    "target": "Submission files",
+    "result": "PASS",
+    "evidence": "",
+    "note": "Requirements, architecture, results, matrix, comparison, checklist and evidence are packaged; source remains in this Git repository."
+  }
+]

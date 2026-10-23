@@ -67,6 +67,8 @@ concept_ids는 이번 질문에서 확인한 등록 개념 ID이며 Spring이 �
 
 ## 퀴즈 후보 생성·검증
 
+C25 구현: 서비스 인증된 POST /internal/v1/quiz-candidates. 입력의 concept_ids와 concept_labels는 Spring이 PostgreSQL 원장에서 확인한다. learning_context는 본인 대화의 최근 질문/문제 문맥이며 최대 2000자다. 후보 생성만 완료된 상태에서는 candidate=null, validation_failed/VALIDATION_NOT_CONFIGURED를 반환한다. 공개 사용자 API는 C27에서 연결한다. 각 LLM 단계는 남은 deadline을 사용하고 자동 재생성하지 않는다.
+
 입력: 공통 필드 + `concept_ids`, `difficulty`, 선택적 `learning_context`(정규화된 개념 설명, 최근 사용자 질문), `exclude_quiz_fingerprints`(서버 제한 길이). 소유자 식별정보는 보내지 않는다.
 
 200 응답 상태:
@@ -80,3 +82,5 @@ concept_ids는 이번 질문에서 확인한 등록 개념 ID이며 Spring이 �
 candidate는 stem, options(4개, position/text), correct_option_position, explanation, concept_ids, evidence_chunk_ids를 가진다. 검증 규칙은 [생성 도메인](../domain/quiz-generation.md)을 따른다. JSON 파싱 성공이나 LLM의 `validated=true`만으로 발행하지 않는다. 실제 검증 단계·결과와 인용을 확인한다.
 
 Spring에서 새로운 UUID와 소유자를 부여한다. Python이 생성한 quiz_id나 user_id로 서비스 DB에 쓰지 않는다. 내부 API 실패 시 생성 요청 상태를 FAILED로 기록하고 공개 오류 코드로 매핑한다.
+
+C24 retrieved_chunks는 실제 검색 본문 evidence_text와 선택적 category/technology_version을 포함한다. Spring은 저장된 인용 snapshot만 공개하며 원문 업데이트와 독립적으로 보존한다.

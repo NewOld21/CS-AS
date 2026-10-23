@@ -1,0 +1,7 @@
+{
+  "status": "REJECTED",
+  "reason_codes": [
+    "EXPLANATION_OR_DISTRACTOR_UNSUPPORTED"
+  ],
+  "observed_via": "dedicated PostgreSQL after real GMS browser generation"
+}

@@ -2,6 +2,12 @@
 
 상태: 1차 개발 설계 제안. [PRD FR-03/04/06/07/09/10](../01_PRD.md)와 [ERD](../06_ERD.md)를 구현 단위로 연결한다.
 
+## C28 이력 조회
+
+GET /api/v1/me/attempts와 /{attempt_id}는 인증 사용자 조건을 모든 조회에 적용한다. 기본 limit=20, 최대 100이며 category(기존 대문자 enum)/correct/origin 필터를 지원한다. items/next_cursor/total_count를 반환하며 total_count는 커서 이전 전체 필터 일치 건수다. (submitted_at DESC,id DESC) 키셋 커서를 사용자·필터에 묶어 시간 동률·추가 풀이에도 중복 이동을 방지한다.
+
+V10은 기존 quiz_attempts에 quiz_snapshot/evidence_snapshot을 추가한다. 새 풀이부터 당시 문제·선택지·개념·근거를 저장하고 정답/정오답/해설은 기존 채점 snapshot을 재사용한다. RETIRED 또는 내용이 바뀐 문제도 본인 이력은 당시 snapshot으로 복원한다. 기존 행의 migration은 적용 시점 문제/근거로 backfill하며 이전에 덮어쓴 원문을 복구했다고 주장하지 않는다. 이력은 정적/AI 문제를 같은 테이블에서 조회한다.
+
 ## 책임
 
 - Quiz: 접근 가능한 READY 문제 조회와 정답 비노출 DTO, 서버 채점.
@@ -17,10 +23,18 @@
 
 ## 통계·오답
 
+C29 구현은 기존 NEEDS_REVIEW/RESOLVED 정책을 적용한다. 첫 정답만으로 오답노트를 만들지 않는다. 한 번 틀린 문제 버전은 최근 실제 채점이 정답이면 RESOLVED, 다시 오답이면 NEEDS_REVIEW로 전환한다. review_states는 사용자·문제 복합 키와 본인/같은 문제의 latest_attempt FK를 가지며 최초/최근 오답 시각과 마지막 복습 시각을 보존한다. V11은 기존 시도에서 상태를 backfill한다.
+
+기존 POST /quizzes/{quiz_id}/attempts의 retry_of_attempt_id와 새 Idempotency-Key로 재풀이한다. 타인/다른 문제의 시도 참조는 404, RETIRED 새 풀이는 409다. 같은 사용자·문제의 advisory transaction lock 안에서 시도 저장과 상태 변경을 원자적으로 수행한다. 중복 키 재생은 복습 상태를 다시 변경하지 않는다. 상태를 사용자가 직접 완료 처리하는 API는 제공하지 않는다.
+
+GET /me/wrong-answers는 최근 오답 시각·quiz_id 내림차순 커서, category/status/origin과 total_count, latest_attempt_id·최초/최근 오답·복습 시각·오답 시도 수·현재 retryable을 반환한다. GET /me/stats는 재풀이 포함 시도/정답/accuracy, 서로 다른 문제 수, 복습 필요/해결 수, 분야별 집계를 반환한다. 시도 0건의 accuracy는 null이다.
+
 모든 시도는 불변 이력이다. 잘못된 문제 수정은 새 버전이며, 과거 정오답을 최신 정답으로 다시 채점하지 않는다. 오답노트에는 한 번이라도 틀린 (사용자, 문제 버전) 조합을 표시한다. 최근 풀이가 오답이면 미복습, 이후 정답이면 해결 상태다. 해결된 문제도 필터로 조회할 수 있다.
 
 전체·분야별 정답률은 모든 시도를 기준으로 계산한다. 별도 개념 집계는 문제에 연결된 각 개념에 반영한다. “문제 수”, “시도 수”, “해결한 오답 수”는 서로 다른 값으로 표시한다. 초기에는 집계 쿼리를 사용하고 성능 문제가 확인된 뒤 별도 집계 저장소를 도입한다.
 
 ## 필수 검증
+
+C30 화면은 /me의 통계·풀이 이력, /me/wrong-answers의 문제별 복습 상태, /me/attempts/:attemptId의 당시 결과를 제공한다. 분야/출처/정오답/복습 상태 필터와 서버 커서 페이지를 사용하며 빈 이력과 통계 장애를 구분한다. 재풀이는 정답이 없는 현재 문제 DTO를 조회한 뒤 기존 제출 API에 retry_of_attempt_id를 보낸다. 응답 유실 때 선택지와 동일 멱등 키를 sessionStorage에 보존하고 재확인하며, 로그인 정보는 저장하지 않는다. 재풀이 대상 문제의 분야 전환은 제한한다. RETIRED 문제는 당시 해설만 읽을 수 있다.
 
 다른 문제 선택지 제출 거부, 타인 시도/대화/AI 문제 조회 거부, 같은 멱등 키 재전송·동시 제출, 새 키 재풀이, 정답/오답/정답의 상태 전환, 시도 0건의 통계, 문제 개정 후 과거 해설 복원을 검증한다. 사용자 흐름은 [testing](../09_TEST_SCENARIO.md)을 따른다.

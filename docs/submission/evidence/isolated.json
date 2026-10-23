@@ -1,0 +1,100 @@
+{
+  "executed_at": "2026-10-23T01:21:07.500573+00:00",
+  "isolated": {
+    "provider": "deterministic-test",
+    "storage": "real isolated Chroma",
+    "documents": 8,
+    "generated_chunks": 16,
+    "first_count": 16,
+    "second_count": 16,
+    "reindex_embedding_calls": 0,
+    "idempotent": true,
+    "second_index_report": {
+      "total_documents": 8,
+      "new": 0,
+      "modified": 0,
+      "unchanged": 8,
+      "deleted": 0,
+      "embedded_documents": 0,
+      "embedded_chunks": 0,
+      "reused_chunks": 0,
+      "skipped_documents": 8,
+      "removed_documents": 0,
+      "failed_documents": 0,
+      "failures": [],
+      "dry_run": false
+    },
+    "chunk_config_counts": [
+      49,
+      16
+    ],
+    "top_k": {
+      "3": [
+        "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+        "chunk:b5f018e3887b4aad6b79c136cce01118f233d95a1059905bee54d87ff189e622",
+        "chunk:7fe4b0dc7f920bca6a92234ce5557f23fabd500faa60675d09e40924fcd56a34"
+      ],
+      "5": [
+        "chunk:0c59bce1cc2369a59af3605c92a08d220f560fbf9e6b0d1fa41bdc2a93faf83b",
+        "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+        "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a",
+        "chunk:b5f018e3887b4aad6b79c136cce01118f233d95a1059905bee54d87ff189e622",
+        "chunk:7fe4b0dc7f920bca6a92234ce5557f23fabd500faa60675d09e40924fcd56a34"
+      ]
+    },
+    "mmr": [
+      "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+      "chunk:0c59bce1cc2369a59af3605c92a08d220f560fbf9e6b0d1fa41bdc2a93faf83b",
+      "chunk:743f1d7b54a0ad26433c1f63b00fa7376b6c8db6f903f8ed27684a2d3848c3ff",
+      "chunk:99e0421cd870e071e872e034de096ea88cdf8a0d8e23e80a91c60da2dcf403c2",
+      "chunk:685076f7dd8d2e1319922106566e98996f73e102b62d3c55c87314e3afa0293a"
+    ],
+    "filtered_categories": [
+      "database",
+      "database",
+      "database",
+      "database",
+      "database"
+    ],
+    "repeat_query_ms": [
+      2.42,
+      1.9
+    ],
+    "repeat_query_embedding_calls": 1,
+    "query_collection_count_unchanged": true,
+    "representative_chunk": {
+      "ids": [
+        "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc"
+      ],
+      "embeddings": null,
+      "metadatas": [
+        {
+          "chunk_config_version": "markdown-structure-1200-180-v1",
+          "index_version": "checklist-45c3cce4f3774bc38f3b14ee0f138a7d",
+          "title": "Fixture transaction 0",
+          "locator": "fixture:0#Transaction",
+          "version": "",
+          "concept_ids": "[]",
+          "url": "https://example.org/fixture",
+          "chunk_index": 0,
+          "language": "en",
+          "revision": "r1",
+          "category": "database",
+          "chunk_id": "chunk:386e0cc9d5b922bb9fb0f674669294bf074173634923bbe2435e8abf1a25c3fc",
+          "source_id": "checklist-fixture",
+          "document_id": "doc:0"
+        }
+      ],
+      "documents": [
+        "# Transaction\ntransaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory index transaction isolation memory in"
+      ],
+      "data": null,
+      "uris": null,
+      "included": [
+        "documents",
+        "metadatas"
+      ]
+    },
+    "passed": true
+  }
+}

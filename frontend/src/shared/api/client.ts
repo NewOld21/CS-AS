@@ -10,9 +10,13 @@ let csrf: string | null = null
 export function resetCsrf() {
   csrf = null
 }
-export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+export async function request<T>(
+  path: string,
+  init: RequestInit = {},
+  timeoutMs = 12000,
+): Promise<T> {
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 12000)
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
   try {
     const response = await fetch(`/api/v1${path}`, {
       ...init,
@@ -38,14 +42,19 @@ export async function post<T>(
   path: string,
   body?: unknown,
   headers: Record<string, string> = {},
+  timeoutMs = 12000,
 ): Promise<T> {
   if (!csrf) csrf = (await request<{ token: string }>('/auth/csrf')).token
   try {
-    return await request<T>(path, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, ...headers },
-      body: body === undefined ? undefined : JSON.stringify(body),
-    })
+    return await request<T>(
+      path,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, ...headers },
+        body: body === undefined ? undefined : JSON.stringify(body),
+      },
+      timeoutMs,
+    )
   } catch (error) {
     if (error instanceof ApiError && (error.status === 401 || error.status === 403)) resetCsrf()
     // State-changing requests are never automatically replayed.

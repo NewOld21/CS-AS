@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface RagGateway {
   Answer answer(AnswerRequest request);
 
+  com.fasterxml.jackson.databind.JsonNode generate(com.fasterxml.jackson.databind.JsonNode request);
+
   @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
   record AnswerRequest(
       String requestId,
@@ -51,5 +53,19 @@ public interface RagGateway {
       String chunkId,
       String title,
       String url,
-      String locator) {}
+      String locator,
+      String evidenceText,
+      String category,
+      String technologyVersion) {
+    public RetrievedChunk(
+        String sourceId,
+        String documentId,
+        String revision,
+        String chunkId,
+        String title,
+        String url,
+        String locator) {
+      this(sourceId, documentId, revision, chunkId, title, url, locator, null, null, null);
+    }
+  }
 }

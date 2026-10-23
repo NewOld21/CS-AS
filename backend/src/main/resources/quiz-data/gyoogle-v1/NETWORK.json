@@ -1,0 +1,2736 @@
+[
+  {
+    "slot": 1,
+    "topic": "수신 윈도우(Receive Window)",
+    "learningObjective": "수신 윈도우의 목적과 송신자의 동작 제약을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "TCP에서 수신 윈도우(Receive Window)는 무엇을 나타내며, 송신자는 그것을 어떻게 사용합니까?",
+    "options": [
+      "수신자의 남은 수신 버퍼 용량을 나타내며, 송신자는 이를 확인해 버퍼를 초과하지 않도록 전송량을 조절합니다.",
+      "송신자가 보낼 수 있는 최대 세그먼트 크기(MSS)를 나타내며, 송신자는 항상 이 크기로 세그먼트를 분할해 보냅니다.",
+      "네트워크 혼잡도를 나타내는 값이며, 송신자는 이 값을 보고 전송 속도를 지수적으로 증가시킵니다.",
+      "패킷 손실률을 나타내는 지표이며, 송신자는 손실률이 높으면 전송을 중지합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 수신자가 자신의 수신 버퍼의 남은 용량을 송신자에게 알리는 것을 '수신 윈도우'라고 설명하고, 송신자는 그 값을 확인하여 수신 버퍼 용량을 초과하지 않도록 전송한다고 명시합니다(라인 31-35). 따라서 수신 윈도우는 남은 버퍼 용량을 나타내며 송신자는 이를 기준으로 전송량을 조절합니다.",
+    "optionExplanations": [
+      "정답: 본문은 수신 버퍼의 남은 용량을 수신 윈도우라 하고, 송신자는 이를 확인해 버퍼를 초과하지 않도록 전송한다고 설명합니다(31-35).",
+      "오답: MSS는 세그먼트 크기를 의미하지만 본문은 수신 윈도우를 버퍼 용량으로 설명하며 MSS와 동일하다고 하지 않습니다(31-35).",
+      "오답: 혼잡도는 혼잡제어의 범주이며 본문은 수신 윈도우를 수신 버퍼 용량으로 정의합니다(31-35, 95).",
+      "오답: 패킷 손실률을 의미한다고 본문에 쓰여 있지 않으며, 수신 윈도우는 버퍼 용량과 관련되어 있습니다(31-35)."
+    ],
+    "keywords": [
+      "수신 윈도우",
+      "수신 버퍼",
+      "흐름제어"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+      "startLine": 31,
+      "endLine": 35,
+      "quote": "- 전송된 데이터는 수신자(receiver) 쪽으로 전달되어, 수신자 쪽에서는 수신 버퍼(Receive Buffer)에 저장됩니다. \n  - 이때, 수신자 쪽에서는 수신 버퍼의 용량을 넘치게 하지 않도록 조절해야 합니다. \n  - 수신자 쪽에서는 자신의 수신 버퍼의 남은 용량을 상대방(sender)에게 알려주는데, 이를 \"수신 윈도우(Receive Window)\"라고 합니다.\n  - 송신자(sender)는 수신자의 수신 윈도우를 확인하여 수신자의 수신 버퍼 용량을 초과하지 않도록 데이터를 전송합니다. \n  - 이를 통해 데이터 전송 중에 수신 버퍼가 넘치는 현상을 방지하면서, 안정적인 데이터 전송을 보장합니다. 이를 \"플로우 컨트롤(Flow Control)\"이라고 합니다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%20%28%ED%9D%90%EB%A6%84%EC%A0%9C%EC%96%B4%ED%98%BC%EC%9E%A1%EC%A0%9C%EC%96%B4%29.md",
+    "id": "41145149-d445-5112-8451-520ce117069b",
+    "review": {
+      "blind": {
+        "slot": 1,
+        "correctOptionText": "수신자의 남은 수신 버퍼 용량을 나타내며, 송신자는 이를 확인해 버퍼를 초과하지 않도록 전송량을 조절합니다.",
+        "unambiguous": true,
+        "reason": "본문은 수신 윈도우가 수신 버퍼의 남은 용량을 알려주고 송신자는 이를 확인해 버퍼 초과를 피하도록 전송을 조절한다고 명시함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 1,
+        "passed": true,
+        "reason": "Correct answer (옵션 1) is explicitly supported by the source lines 31–35; all distractors contradict the source (MSS, 혼잡도, 손실률 are not defined as 수신 윈도우 in the source)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 2,
+    "topic": "UDP 기본 정의",
+    "learningObjective": "UDP의 성격(연결성, 신뢰성)을 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "UDP(User Datagram Protocol)에 대해 옳은 설명은 무엇입니까?",
+    "options": [
+      "응용 계층 프로토콜로 DNS 같은 서비스를 직접 규정하는 규약입니다.",
+      "비연결형이며 신뢰성을 보장하지 않는 전송 계층 프로토콜입니다.",
+      "연결을 설정한 후 순서 보장과 재전송으로 신뢰성을 제공하는 전송 계층 프로토콜입니다.",
+      "네트워크 계층에서 라우팅과 패킷 분할을 담당하는 프로토콜입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서 UDP는 '비연결형, 신뢰성 없는 전송 프로토콜'이며 전송 계층(Transport layer)에서 동작한다고 명시되어 있습니다. 따라서 비연결성·비신뢰성·전송 계층이라는 속성이 맞습니다.",
+    "optionExplanations": [
+      "응용 계층 프로토콜은 DNS 등이며, 문서에는 DNS가 응용 계층 프로토콜이고 UDP는 전송 계층이라고 구분되어 있습니다.",
+      "정답입니다. 출처에서 UDP를 비연결형이며 신뢰성 없는 전송 프로토콜로 설명하고, Transport layer에서 동작한다고 되어 있습니다.",
+      "이는 TCP의 설명입니다. 문서에는 TCP가 데이터의 분실·중복·순서 문제를 보정한다고 되어 있습니다.",
+      "네트워크 계층 기능(라우팅 등)은 IP의 역할이며, 문서에서 UDP는 전송 계층이라고 되어 있습니다."
+    ],
+    "keywords": [
+      "비연결형",
+      "신뢰성 없음",
+      "Transport layer"
+    ],
+    "sourceEvidence": {
+      "section": "UDP.md",
+      "startLine": 9,
+      "endLine": 12,
+      "quote": "- User Datagram Protocol의 약자로 데이터를 데이터그램 단위로 처리하는 프로토콜이다. \n  - 비연결형, 신뢰성 없는 전송 프로토콜이다.\n  - 데이터그램 단위로 쪼개면서 전송을 해야하기 때문에 전송 계층이다.\n  - Transport layer에서 사용하는 프로토콜."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "0c2cecd4-ee96-579a-996b-b9495b3ec9be",
+    "review": {
+      "blind": {
+        "slot": 2,
+        "correctOptionText": "비연결형이며 신뢰성을 보장하지 않는 전송 계층 프로토콜입니다.",
+        "unambiguous": true,
+        "reason": "문서에서 UDP를 '비연결형, 신뢰성 없는 전송 프로토콜'이며 Transport layer라 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 2,
+        "passed": true,
+        "reason": "All option claims are verifiable from the source: option 2 matches the source text ('비연결형, 신뢰성 없는 전송 프로토콜' and 'Transport layer'); the other three are contradicted by the source (A: DNS is application-layer; C: describes TCP; D: routing is IP/network layer). Explanations and difficulty align with the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 3,
+    "topic": "Blocking vs Non-blocking",
+    "learningObjective": "호출된 함수가 제어권을 호출자에게 언제 반환하는지 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "함수 A가 함수 B를 호출한 상황에서 'Blocking'의 특징으로 옳은 것은 무엇입니까?",
+    "options": [
+      "함수 A가 B의 수행 상태를 신경 쓰지 않고 콜백으로 결과를 받습니다.",
+      "함수 B가 비동기로 동작하며 A는 수행 상태를 계속 확인합니다.",
+      "함수 B가 자신의 일을 모두 마칠 때까지 제어권을 가지고 있어 A가 기다려야 합니다.",
+      "함수 B가 바로 제어권을 A에게 넘겨 A가 즉시 다른 일을 시작할 수 있습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 Blocking을 '함수 B는 내 할 일을 다 마칠 때까지 제어권을 가지고 있는다. A는 B가 다 마칠 때까지 기다려야 한다.'고 정의하고 있으므로, 정답은 함수 B가 일을 마칠 때까지 제어권을 유지하여 호출자(A)가 기다리는 경우입니다.",
+    "optionExplanations": [
+      "오답: 콜백을 통한 처리는 비동기성(Asynchronous)에 대한 설명이며 Blocking과 직접적 일치가 없습니다 (라인 44,48).",
+      "오답: 비동기 동작을 설명하고 있으나 '수행 상태를 계속 확인'은 동기(Synchronous)에 해당하는 설명과 혼합된 잘못된 진술입니다 (라인 43-45).",
+      "정답: 소스에서 Blocking의 정의가 정확히 일치합니다 (라인 30-31).",
+      "오답: 이는 Non-blocking의 설명으로, 호출된 함수가 바로 제어권을 반환하는 경우입니다 (라인 31,33)."
+    ],
+    "keywords": [
+      "Blocking",
+      "제어권",
+      "호출된 함수",
+      "호출자 대기"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "startLine": 30,
+      "endLine": 31,
+      "quote": "- **Blocking** : 함수 B는 내 할 일을 다 마칠 때까지 제어권을 가지고 있는다. A는 B가 다 마칠 때까지 기다려야 한다.\n- **Non-blocking** : 함수 B는 할 일을 마치지 않았어도 A에게 제어권을 바로 넘겨준다. A는 B를 기다리면서도 다른 일을 진행할 수 있다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+    "id": "8d32731d-76fa-5e19-9100-51da2821f7a5",
+    "review": {
+      "blind": {
+        "slot": 3,
+        "correctOptionText": "함수 B가 자신의 일을 모두 마칠 때까지 제어권을 가지고 있어 A가 기다려야 합니다.",
+        "unambiguous": true,
+        "reason": "문서의 Blocking 정의: 호출된 함수 B가 내 할 일을 다 마칠 때까지 제어권을 가지고 있으며 A는 기다려야 한다고 명시.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 3,
+        "passed": true,
+        "reason": "문서의 Blocking 정의(‘B가 일을 다 마칠 때까지 제어권을 가짐, A는 기다린다’)와 정답(옵션 3)이 정확히 일치하며 다른 선택지는 소스의 설명과 다릅니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 4,
+    "topic": "HTTP 기본 정의",
+    "learningObjective": "HTTP가 무엇인지 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "HTTP(HyperText Transfer Protocol)의 역할로 옳은 것은 무엇입니까?",
+    "options": [
+      "클라이언트와 서버 사이의 모든 통신을 자동으로 암호화하여 보안 문제를 완전히 해결합니다.",
+      "네트워크에서 패킷을 라우팅하는 역할을 담당하는 프로토콜입니다.",
+      "브라우저의 렌더링 엔진으로, HTML을 화면에 그리는 구성 요소입니다.",
+      "인터넷에서 클라이언트와 서버가 자원을 주고받을 때 사용하는 통신 규약입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "원문은 HTTP를 '인터넷 상에서 클라이언트와 서버가 자원을 주고 받을 때 쓰는 통신 규약'이라고 정의하고 있습니다(라인 5-7). 따라서 HTTP의 주된 역할은 클라이언트와 서버 간 자원 교환을 규정하는 통신 규약입니다.",
+    "optionExplanations": [
+      "오답: 문서에 따르면 HTTP는 평문 기반의 텍스트 교환이므로 암호화를 자동으로 제공하지 못하며 보안 이슈가 존재합니다 (lines 11-12).",
+      "오답: 패킷 라우팅 역할은 문서에서 설명하지 않으며, HTTP는 애플리케이션 계층의 통신 규약입니다 (lines 5-7).",
+      "오답: 브라우저 렌더링 엔진은 HTTP의 정의가 아니며 문서에는 그런 설명이 없습니다.",
+      "정답: 문서에서 HTTP를 통신 규약으로 명확히 정의하고 있습니다 (lines 5-7)."
+    ],
+    "keywords": [
+      "HTTP",
+      "통신 규약",
+      "클라이언트-서버"
+    ],
+    "sourceEvidence": {
+      "section": "HTTP & HTTPS.md",
+      "startLine": 5,
+      "endLine": 7,
+      "quote": "- ##### HTTP(HyperText Transfer Protocol)\n\n  인터넷 상에서 클라이언트와 서버가 자원을 주고 받을 때 쓰는 통신 규약"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/HTTP & HTTPS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+    "id": "7ad33200-7320-557b-83e4-b8af541e9844",
+    "review": {
+      "blind": {
+        "slot": 4,
+        "correctOptionText": "인터넷에서 클라이언트와 서버가 자원을 주고받을 때 사용하는 통신 규약입니다.",
+        "unambiguous": true,
+        "reason": "문서에서 HTTP를 '인터넷 상에서 클라이언트와 서버가 자원을 주고 받을 때 쓰는 통신 규약'으로 정의함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 4,
+        "passed": true,
+        "reason": "정답(4)은 제공된 원문(라인 5-7)의 정확한 문장에 일치하며, 다른 선택지들은 문서에 없는 기능(자동 암호화, 라우팅, 렌더링)을 주장하므로 원문에 의해 반증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 5,
+    "topic": "Client Hello 메시지 구성",
+    "learningObjective": "클라이언트가 보내는 client hello 메시지에 포함되는 기본 요소들을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "client hello 메시지에 클라이언트가 포함하여 서버로 보내는 정보로 옳은 것은 무엇입니까?",
+    "options": [
+      "TLS/SSL 버전, 암호 알고리즘, 압축 방식",
+      "세션 ID와 CA 공개 인증서",
+      "클라이언트의 개인키와 인증서",
+      "교환 내역의 해시값을 대칭키로 암호화한 값"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 클라이언트가 server에게 client hello 메시지를 보낼 때 '버전', '암호 알고리즘', '압축 방식' 등의 암호화된 정보를 담아 보낸다고 명시하고 있습니다. 따라서 첫 번째 선택지가 정답입니다.",
+    "optionExplanations": [
+      "정답: 18-20행에 클라이언트가 client hello에 버전, 암호 알고리즘, 압축 방식을 담아 보낸다고 되어 있습니다.",
+      "오답: 세션 ID와 CA 공개 인증서는 문서에서 서버가 server hello 응답에 포함한다고 되어 있으며 클라이언트가 처음 보내는 내용은 아닙니다 (23행).",
+      "오답: 클라이언트의 개인키는 절대 client hello에 포함되지 않습니다; 문서에도 개인키가 포함된다고 하지 않습니다.",
+      "오답: 교환 내역의 해시값을 대칭키로 암호화한 값은 handshake 완료 시에 finished 메시지에 담아서 보내는 값입니다 (43행)."
+    ],
+    "keywords": [
+      "client hello",
+      "버전",
+      "암호 알고리즘",
+      "압축 방식"
+    ],
+    "sourceEvidence": {
+      "section": "TLS/SSL HandShake",
+      "startLine": 18,
+      "endLine": 20,
+      "quote": "1. 클라이언트는 서버에게 `client hello` 메시지를 담아 서버로 보낸다.\n   이때 암호화된 정보를 함께 담는데, `버전`, `암호 알고리즘`, `압축 방식` 등을 담는다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TLS HandShake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+    "id": "427dba61-ea5f-5828-9efb-fd8a7120626c",
+    "review": {
+      "blind": {
+        "slot": 5,
+        "correctOptionText": "TLS/SSL 버전, 암호 알고리즘, 압축 방식",
+        "unambiguous": true,
+        "reason": "문서의 1단계에서 client hello에 버전, 암호 알고리즘, 압축 방식을 담아 보낸다고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 5,
+        "passed": true,
+        "reason": "문서의 1단계(행 18-20)가 client hello에 '버전, 암호 알고리즘, 압축 방식'을 포함한다고 명시하므로 정답·오답·근거 모두 원문과 일치함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 6,
+    "topic": "로드 밸런싱 정의",
+    "learningObjective": "로드 밸런싱의 정의와 기본 역할을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "로드 밸런싱의 기본 목적은 무엇입니까?",
+    "options": [
+      "각 서버에 동일한 데이터를 항상 동기화하는 것입니다.",
+      "여러 대의 서버에 트래픽을 분산시켜 서버의 부하를 완화하는 것입니다.",
+      "한 대의 서버에만 모든 트래픽을 집중시켜 처리 성능을 최대화하는 것입니다.",
+      "클라이언트와 서버 간의 암호화된 연결을 설정하는 것입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "출처에 따르면 로드 밸런싱은 여러 서버에 부하를 나눠주는 역할을 하며, 클라이언트와 서버 사이에 Load Balancer를 두고 트래픽을 분산시켜 웹 서버의 부하를 해결하는 방식입니다.",
+    "optionExplanations": [
+      "오답입니다. 데이터 동기화는 스테이트 관리 문제의 하나일 수 있으나, 문서에서 로드 밸런싱의 기본 목적으로 제시되지는 않습니다. (lines 11-15)",
+      "정답입니다. 문서에서 로드 밸런싱은 여러 서버에 부하를 나누어주는 역할을 하며 트래픽을 분산시켜 부하를 해결한다고 설명합니다. (lines 11-15)",
+      "오답입니다. 한 대의 서버에 집중시키는 것은 Scale-up 전략이며, 로드 밸런싱의 목적과 반대입니다. (lines 11-12)",
+      "오답입니다. 암호화된 연결 설정은 로드 밸런서의 기본 정의에 포함된 기능이 아닙니다; 문서에서는 트래픽 분산이 목적이라고 설명합니다. (lines 11-15)"
+    ],
+    "keywords": [
+      "로드 밸런싱",
+      "트래픽 분산",
+      "부하 완화"
+    ],
+    "sourceEvidence": {
+      "section": "로드 밸런싱(Load Balancing).md",
+      "startLine": 11,
+      "endLine": 15,
+      "quote": "따라서 이 사람들에 대해 모든 트래픽을 감당하기엔 1대의 서버로는 부족하다. 대응 방안으로 하드웨어의 성능을 올리거나(Scale-up) 여러대의 서버가 나눠서 일하도록 만드는 것(Scale-out)이 있다. 하드웨어 향상 비용이 더욱 비싸기도 하고, 서버가 여러대면 무중단 서비스를 제공하는 환경 구성이 용이하므로 Scale-out이 효과적이다. 이때 여러 서버에게 균등하게 트래픽을 분산시켜주는 것이 바로 **로드 밸런싱**이다.\n\n<br>\n\n**로드 밸런싱**은 분산식 웹 서비스로, 여러 서버에 부하(Load)를 나누어주는 역할을 한다. Load Balancer를 클라이언트와 서버 사이에 두고, 부하가 일어나지 않도록 여러 서버에 분산시켜주는 방식이다. 서비스를 운영하는 사이트의 규모에 따라 웹 서버를 추가로 증설하면서 로드 밸런서로 관리해주면 웹 서버의 부하를 해결할 수 있다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+    "id": "5ed2dc4d-48f1-5e17-8d02-30ba3ba1faeb",
+    "review": {
+      "blind": {
+        "slot": 6,
+        "correctOptionText": "여러 대의 서버에 트래픽을 분산시켜 서버의 부하를 완화하는 것입니다.",
+        "unambiguous": true,
+        "reason": "문서가 로드 밸런싱을 '여러 서버에 부하를 나누어주는 역할'이라고 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 6,
+        "passed": true,
+        "reason": "정답(옵션2)과 오답 근거 모두 원문(라인11-15)에 명시되어 있으며 설명·난이도·학습목표가 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 7,
+    "topic": "Blocking I/O 서버 설계",
+    "learningObjective": "Blocking I/O로 여러 클라이언트를 처리할 때 서버가 왜 많은 스레드를 생성해야 하는지 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "여러 클라이언트가 접속하는 서버를 Blocking I/O 방식으로 구현하면 클라이언트별로 별도의 스레드를 생성해야 하는 주된 이유는 무엇입니까?",
+    "options": [
+      "Blocking I/O는 네트워크 계층에서 패킷을 재조립하지 않으므로 각 클라이언트마다 전용 스레드가 필요합니다.",
+      "Blocking I/O는 recvfrom 호출이 항상 즉시 데이터를 반환하므로 단일 스레드로는 동시성을 제공할 수 없습니다.",
+      "Blocking I/O에서는 I/O 작업 중에 해당 프로세스(또는 스레드)가 작업을 중단하고 대기하므로, 다른 클라이언트의 처리를 위해 별도 스레드가 필요합니다.",
+      "Blocking I/O는 커널이 모든 클라이언트의 소켓을 동시에 서비스해주지 못해 사용자 공간에서 복잡한 스케줄러를 돌려야 하기 때문입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 Blocking I/O의 특징으로 \"I/O 작업이 진행되는 동안 user Process(Thread)는 자신의 작업을 중단한 채 대기\"한다고 설명합니다. 따라서 여러 클라이언트를 동시에 처리하려면 I/O 중에 대기하는 작업이 다른 클라이언트 처리를 막지 않도록 클라이언트별로 별도의 스레드를 생성해야 합니다.",
+    "optionExplanations": [
+      "오답: 본문은 패킷 재조립 문제를 언급하지 않으며, 이 점이 스레드 필요의 원인이라고 설명하지 않습니다.",
+      "오답: 본문은 Blocking에서는 recv 호출이 완료될 때까지 대기한다고 하며, \"항상 즉시 반환\"한다고 하지 않습니다; 따라서 이 진술은 사실과 다릅니다.",
+      "정답 설명과 일치합니다: 소스는 Blocking 방식에서 스레드가 I/O 중 대기한다고 명시하여, 다른 클라이언트를 위해 별도 스레드가 필요함을 설명합니다. (lines 19-21, 25-26)",
+      "오답: 본문은 커널의 동시 서비스 불가능을 근거로 설명하지 않으며, 사용자 공간 스케줄러 필요성을 언급하지 않습니다."
+    ],
+    "keywords": [
+      "Blocking I/O",
+      "스레드 증가",
+      "대기"
+    ],
+    "sourceEvidence": {
+      "section": "Blocking I/O & Non-Blocking I/O.md",
+      "startLine": 19,
+      "endLine": 26,
+      "quote": "* 특징\n     * I/O 작업이 진행되는 동안 user Process(Thread) 는 자신의 작업을 중단한 채 대기\n     * Resource 낭비가 심함 <br>(I/O 작업이 CPU 자원을 거의 쓰지 않으므로)\n\n   <br>\n\n   `여러 Client 가 접속하는 서버를 Blocking 방식으로 구현하는 경우` -> I/O 작업을 진행하는 작업을 중지 -> 다른 Client가 진행중인 작업을 중지하면 안되므로, client 별로 별도의 Thread를 생성해야 함 -> 접속자 수가 매우 많아짐"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking Non-Blocking IO.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%20Non-Blocking%20IO.md",
+    "id": "eb1a728a-ebed-50b8-96ff-422097037b1a",
+    "review": {
+      "blind": {
+        "slot": 7,
+        "correctOptionText": "Blocking I/O에서는 I/O 작업 중에 해당 프로세스(또는 스레드)가 작업을 중단하고 대기하므로, 다른 클라이언트의 처리를 위해 별도 스레드가 필요합니다.",
+        "unambiguous": true,
+        "reason": "본문 설명에서 Blocking I/O는 I/O 진행 동안 프로세스(스레드)가 중단되어 대기하므로 다른 클라이언트를 처리하려면 별도 스레드가 필요하다고 명시함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 7,
+        "passed": true,
+        "reason": "정답(3)은 본문의 'I/O 작업이 진행되는 동안 ... 대기' 문장과 직접 일치합니다. 다른 보기들은 본문에 근거가 없어 오답으로 판명됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 8,
+    "topic": "데이터 링크 계층의 MAC 주소와 프레임 기능",
+    "learningObjective": "데이터 링크 계층이 MAC 주소를 이용해 프레임에 수행하는 구체적 역할을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "데이터 링크 계층이 수행하는 역할로 옳은 것은 무엇입니까?",
+    "options": [
+      "패킷의 목적지까지 경로를 선택하고 IP 주소를 부여합니다.",
+      "데이터를 전기적 신호로 변환하여 실제 매체로 전송합니다.",
+      "응용 프로세스에 직접적인 사용자 인터페이스 서비스를 제공합니다.",
+      "프레임에 MAC 주소를 부여하고 에러 검출과 재전송, 흐름제어를 수행합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에서 데이터 링크 계층은 'Mac 주소를 통해 통신한다. 프레임에 Mac 주소를 부여하고 에러검출, 재전송, 흐름제어를 진행한다'고 명시되어 있어, 프레임에 MAC 주소를 부여하고 오류검출·재전송·흐름제어를 수행하는 것이 맞습니다.",
+    "optionExplanations": [
+      "오답: 경로 선택과 IP 주소 지정은 네트워크 계층의 기능으로, 해당 설명은 다른 계층에 해당합니다 (lines 35-41).",
+      "오답: 전기적 신호로의 변환과 실제 매체 전달은 물리 계층의 역할입니다 (lines 15-21).",
+      "오답: 응용 프로세스와 사용자 인터페이스 서비스는 응용 계층의 역할입니다 (lines 77-83).",
+      "정답: 출처는 데이터 링크 계층 설명으로, MAC 주소와 프레임, 에러검출·재전송·흐름제어를 직접 언급합니다 (lines 25-32)."
+    ],
+    "keywords": [
+      "데이터 링크",
+      "MAC 주소",
+      "프레임",
+      "에러검출",
+      "재전송",
+      "흐름제어"
+    ],
+    "sourceEvidence": {
+      "section": "OSI 7 계층",
+      "startLine": 25,
+      "endLine": 32,
+      "quote": "##### 2) 데이터 링크(Data Link)\n\n> 브릿지, 스위치 등\n\n물리 계층으로 송수신되는 정보를 관리하여 안전하게 전달되도록 도와주는 역할\n\nMac 주소를 통해 통신한다. 프레임에 Mac 주소를 부여하고 에러검출, 재전송, 흐름제어를 진행한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/OSI 7 계층.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/OSI%207%20%EA%B3%84%EC%B8%B5.md",
+    "id": "ba4d5aab-9055-5932-8ace-ec9620dbda57",
+    "review": {
+      "blind": {
+        "slot": 8,
+        "correctOptionText": "프레임에 MAC 주소를 부여하고 에러 검출과 재전송, 흐름제어를 수행합니다.",
+        "unambiguous": true,
+        "reason": "Source states 데이터 링크 계층 uses MAC 주소, assigns addresses to frames, and performs error detection, retransmission, and flow control.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 8,
+        "passed": true,
+        "reason": "정답(옵션 4)이 원문(라인 25-32)에 명확히 기술되어 있고, 나머지 선택지들은 각각 네트워크·물리·응용 계층 기능으로 원문과 일치하지 않아 오답으로 판정 가능합니다. 문장 표현과 학습목표도 데이터 링크 계층 역할을 정확히 반영합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 9,
+    "topic": "TCP 3-way handshake 기본 흐름",
+    "learningObjective": "클라이언트와 서버가 3-way handshake에서 주고받는 패킷의 순서를 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "3-way handshake 과정에서 클라이언트와 서버가 주고받는 세 가지 패킷의 올바른 순서는 무엇입니까?",
+    "options": [
+      "클라이언트가 SYN, 서버가 SYN+ACK, 클라이언트가 ACK",
+      "클라이언트가 ACK, 서버가 SYN, 클라이언트가 SYN+ACK",
+      "클라이언트가 SYN+ACK, 서버가 ACK, 클라이언트가 SYN",
+      "클라이언트가 FIN, 서버가 ACK, 클라이언트가 ACK"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 먼저 클라이언트가 SYN을 보내고(라인 13), 서버가 SYN을 받고 ACK와 SYN을 보낸다고 하며(라인 15), 마지막으로 클라이언트가 ACK를 보낸다고 명시하고 있습니다(라인 17). 따라서 올바른 순서는 SYN → SYN+ACK → ACK입니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 제시된 순서(클라이언트 SYN → 서버 SYN+ACK → 클라이언트 ACK)와 일치합니다 (라인 13, 15, 17).",
+      "잘못된 순서입니다. 문서에서 ACK가 먼저 온다고 하지 않으며, 초기 메시지는 클라이언트의 SYN입니다 (라인 13).",
+      "잘못된 순서입니다. 문서의 흐름과 일치하지 않습니다; 클라이언트가 최초로 보내는 것은 SYN입니다 (라인 13).",
+      "잘못된 선택입니다. FIN/ACK는 연결 해제 절차에 해당하며, 3-way handshake에는 해당되지 않습니다 (라인 27, 33)."
+    ],
+    "keywords": [
+      "3 way handshake",
+      "SYN",
+      "SYN+ACK",
+      "ACK"
+    ],
+    "sourceEvidence": {
+      "section": "source file",
+      "startLine": 13,
+      "endLine": 17,
+      "quote": "1) 클라이언트가 서버에게 SYN 패킷을 보냄 (sequence : x)\n\n2) 서버가 SYN(x)을 받고, 클라이언트로 받았다는 신호인 ACK와 SYN 패킷을 보냄 (sequence : y, ACK : x + 1)\n\n3) 클라이언트는 서버의 응답은 ACK(x+1)와 SYN(y) 패킷을 받고, ACK(y+1)를 서버로 보냄"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP 3 way handshake & 4 way handshake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%203%20way%20handshake%20%26%204%20way%20handshake.md",
+    "id": "fef53546-b815-5854-b608-0a50e1fb9b58",
+    "review": {
+      "blind": {
+        "slot": 9,
+        "correctOptionText": "클라이언트가 SYN, 서버가 SYN+ACK, 클라이언트가 ACK",
+        "unambiguous": true,
+        "reason": "문서에 3-way handshake가 클라이언트 SYN → 서버 SYN+ACK → 클라이언트 ACK 순으로 설명되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 9,
+        "passed": true,
+        "reason": "정답(클라이언트 SYN → 서버 SYN+ACK → 클라이언트 ACK)이 출처(라인 13–17)에 명확히 제시되어 있으며, 다른 선택지는 출처와 일치하지 않아 모두 틀림."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 10,
+    "topic": "대칭키 정의",
+    "learningObjective": "대칭키 암호화의 기본 정의와 주요 장단점을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "대칭키 암호화 방식의 본질과 대표적 장단점으로 옳은 것은 무엇입니까?",
+    "options": [
+      "암호화와 복호화에 같은 키를 사용하지만 키를 공개해도 보안에 문제가 없다.",
+      "암호화와 복호화에 같은 키를 사용하며, 처리 속도가 빠우나 키 전달 과정에서 해킹 위험이 있다.",
+      "암호화와 복호화에 서로 다른 키를 사용하며, 키 분배 문제가 없어서 속도가 빠르다.",
+      "암호화는 공개키로, 복호화는 비밀키로 하여 무결성과 인증을 자동으로 보장한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "대칭키는 암호화와 복호화에 같은 키를 사용하는 알고리즘이며, 동일한 키를 주고받기 때문에 매우 빠르다는 장점이 있지만, 대칭키 전달과정에서 해킹 위험에 노출된다고 설명합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 대칭키를 공개하면 보안에 문제가 되므로 본문과 모순되는 진술입니다.",
+      "정답입니다. 본문은 대칭키가 같은 키를 사용하고 빠르지만 키 전달과정에서 해킹 위험이 있다고 명시합니다.",
+      "틀렸습니다. 서로 다른 키를 사용하는 방식은 공개키(비대칭키)에 해당하며, 대칭키의 설명과 혼동된 진술입니다.",
+      "틀렸습니다. 공개키 방식(비대칭키)은 암호화·복호화 키를 분리하지만 문서에 따르면 이 방식만으로는 무결성이나 인증을 보장하지 못한다고 합니다."
+    ],
+    "keywords": [
+      "대칭키",
+      "속도",
+      "키 전달 위험"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/대칭키 & 공개키.md",
+      "startLine": 5,
+      "endLine": 11,
+      "quote": "#### 대칭키(Symmetric Key)\n\n> 암호화와 복호화에 같은 암호키(대칭키)를 사용하는 알고리즘\n\n동일한 키를 주고받기 때문에, 매우 빠르다는 장점이 있음\n\nbut, 대칭키 전달과정에서 해킹 위험에 노출"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/대칭키 & 공개키.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%8C%80%EC%B9%AD%ED%82%A4%20%26%20%EA%B3%B5%EA%B0%9C%ED%82%A4.md",
+    "id": "3ffd4416-79ba-506c-87cc-b85094815c62",
+    "review": {
+      "blind": {
+        "slot": 10,
+        "correctOptionText": "암호화와 복호화에 같은 키를 사용하며, 처리 속도가 빠우나 키 전달 과정에서 해킹 위험이 있다.",
+        "unambiguous": true,
+        "reason": "본문에서 대칭키는 동일한 키를 사용해 빠르지만 키 전달 과정에서 해킹 위험이 있다고 명시됨.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 10,
+        "passed": true,
+        "reason": "정답(옵션 2)은 본문 그대로: 대칭키는 암복호에 같은 키를 사용하고 빠르지만 키 전달과정이 해킹 위험에 노출된다고 명시되어 있음. 다른 선택지는 본문과 명백히 모순됨(공개해도 안전하다는 주장 / 서로 다른 키 사용 주장 / 공개키가 무결성·인증을 자동 보장한다는 주장)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 11,
+    "topic": "DNS 기본 역할",
+    "learningObjective": "도메인 이름과 IP 주소의 매핑 역할을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "DNS의 기본 역할은 무엇입니까?",
+    "options": [
+      "모든 클라이언트의 hosts 파일을 중앙에서 관리하는 것입니다.",
+      "라우터 간의 최적 경로를 계산하는 것입니다.",
+      "사용자가 입력한 도메인 이름을 대응하는 IP 주소로 변환하는 것입니다.",
+      "네트워크 트래픽을 암호화하여 전송하는 것입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에 따르면 DNS는 IP 주소와 도메인 주소를 매핑하는 역할을 수행한다고 명시되어 있어, 도메인 이름을 IP로 변환하는 것이 DNS의 기본 역할입니다.",
+    "optionExplanations": [
+      "오답: hosts 파일은 로컬에서 설정된 매핑을 담는다고 설명되나, 중앙 관리 기능은 문서에 언급되지 않습니다 (lines 9-11).",
+      "오답: 라우터의 경로 계산과 관련된 설명은 문서에 없으며 DNS의 역할로도 서술되어 있지 않습니다.",
+      "정답: 소스는 DNS가 IP 주소와 도메인 주소를 매핑하는 역할을 수행한다고 직접 서술합니다 (lines 3-6).",
+      "오답: 암호화 기능은 문서에서 DNS의 역할로 언급되지 않습니다; 문서에는 암호화 관련 내용이 없습니다 (lines 3-6)."
+    ],
+    "keywords": [
+      "도메인-주소 매핑",
+      "IP 변환"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/DNS.md",
+      "startLine": 3,
+      "endLine": 6,
+      "quote": "모든 통신은 IP를 기반으로 연결된다. 하지만 사용자에게 일일히 IP 주소를 입력하기란 UX적으로 좋지 않다\n\n때문에 DNS 가 등장 했으며 DNS 는 IP 주소와 도메인 주소를 매핑하는 역할을 수행한다"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/DNS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/DNS.md",
+    "id": "0676ef43-9439-5351-9fb2-7e1da4be84f8",
+    "review": {
+      "blind": {
+        "slot": 11,
+        "correctOptionText": "사용자가 입력한 도메인 이름을 대응하는 IP 주소로 변환하는 것입니다.",
+        "unambiguous": true,
+        "reason": "Source: \"DNS 는 IP 주소와 도메인 주소를 매핑하는 역할을 수행한다\" — DNS의 기본 역할은 도메인 주소를 IP로 변환하는 것임.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 11,
+        "passed": true,
+        "reason": "정답(옵션 3)은 제공된 원문(도메인과 IP를 매핑)으로 명확히 뒷받침되며 나머지 선택지들은 문서에 근거가 없어 모두 배제 가능합니다. 난이도(EASY)와 학습목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 12,
+    "topic": "Stop and Wait",
+    "learningObjective": "Stop and Wait의 기본 동작을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "Stop and Wait 방식의 기본 동작은 무엇입니까?",
+    "options": [
+      "여러 패킷을 윈도우 크기만큼 연속 전송하고 ACK를 모두 받은 뒤 윈도우를 옆으로 이동합니다.",
+      "ACK가 세 번 중복되면 즉시 패킷을 재전송하고 윈도우 크기를 반으로 줄입니다.",
+      "송신측과 수신측이 모두 전송 속도를 곱셈으로 줄였다가 선형으로 증가시키는 방식입니다.",
+      "각 패킷을 보낸 뒤 그 패킷에 대한 확인 응답(ACK)을 받은 뒤에야 다음 패킷을 전송합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "본문은 Stop and Wait을 '매번 전송한 패킷에 대해 확인 응답을 받아야만 그 다음 패킷을 전송하는 방법'이라고 설명합니다(라인 49). 따라서 각 패킷 전송 후 ACK를 받은 뒤 다음을 전송하는 방식이 맞습니다.",
+    "optionExplanations": [
+      "오답: 여러 패킷을 연속 전송하는 것은 Sliding Window 계열의 동작으로 본문에 Sliding Window로 설명되어 있습니다(53-56, 65).",
+      "오답: 'ACK가 세 번 중복되면 재전송'은 Fast Retransmit에 관한 설명이며 Stop and Wait의 동작이 아닙니다(109-114).",
+      "오답: 송/수 신속도 조절을 곱셈·선형으로 하는 설명은 AIMD 또는 Fast Recovery 관련 내용이며 Stop and Wait과 무관합니다(98-101, 114-116).",
+      "정답: 본문에 Stop and Wait은 매번 전송한 패킷에 대해 확인 응답을 받아야만 다음 패킷을 전송한다고 명시되어 있습니다(49)."
+    ],
+    "keywords": [
+      "Stop and Wait",
+      "확인 응답",
+      "흐름제어"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+      "startLine": 49,
+      "endLine": 49,
+      "quote": "- Stop and Wait : 매번 전송한 패킷에 대해 확인 응답을 받아야만 그 다음 패킷을 전송하는 방법"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%20%28%ED%9D%90%EB%A6%84%EC%A0%9C%EC%96%B4%ED%98%BC%EC%9E%A1%EC%A0%9C%EC%96%B4%29.md",
+    "id": "9a4f7bdc-3b2a-57dd-a20d-98d382a32080",
+    "review": {
+      "blind": {
+        "slot": 12,
+        "correctOptionText": "각 패킷을 보낸 뒤 그 패킷에 대한 확인 응답(ACK)을 받은 뒤에야 다음 패킷을 전송합니다.",
+        "unambiguous": true,
+        "reason": "본문의 Stop and Wait 정의는 매번 전송한 패킷에 대해 ACK를 받아야만 다음 패킷을 전송한다고 설명하고 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 12,
+        "passed": true,
+        "reason": "Correct answer (옵션 4) matches the source line 49 exactly; other options describe Sliding Window, Fast Retransmit, or AIMD behavior which the source assigns elsewhere, so they are provably wrong for Stop-and-Wait."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 13,
+    "topic": "UDP 사용 사례와 이점",
+    "learningObjective": "UDP가 실시간 서비스에서 선호되는 이유를 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "실시간 방송이나 온라인 게임에서 UDP를 주로 사용하는 주된 이유는 무엇입니까?",
+    "options": [
+      "데이터 처리와 전송 속도가 TCP보다 빠르기 때문입니다.",
+      "연결을 확립하여 재전송을 보장하기 때문에 데이터 무결성이 뛰어나기 때문입니다.",
+      "IP 계층에서 라우팅을 대체하여 네트워크 혼잡을 줄여주기 때문입니다.",
+      "응용 계층의 모든 오류 처리를 자동으로 수행하기 때문입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 UDP의 결정적 장점으로 '데이터의 신속성' 즉 TCP보다 처리·전송 속도가 빠르다고 명시하고 있으며, 이 때문에 실시간 방송·온라인 게임에 주로 사용된다고 되어 있습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 UDP의 장점으로 데이터의 신속성(처리·전송 속도가 빠름)을 들고 있으며 실시간 서비스에 적합하다고 되어 있습니다.",
+      "이는 TCP의 특성입니다. 문서에는 TCP가 재전송·순서 보정 등으로 신뢰성을 제공한다고 되어 있습니다.",
+      "라우팅은 IP의 기능이며 문서에는 UDP가 이를 대체한다는 설명이 없습니다.",
+      "문서에는 UDP는 신뢰성이 없어서 오류 처리나 재전송을 응용 계층에서 처리해야 한다고 되어 있습니다."
+    ],
+    "keywords": [
+      "실시간",
+      "신속성",
+      "온라인 게임"
+    ],
+    "sourceEvidence": {
+      "section": "UDP.md",
+      "startLine": 31,
+      "endLine": 33,
+      "quote": "- UDP의 결정적인 장점은 데이터의 신속성이다. 데이터의 처리가 TCP보다 빠르다.\n  - 주로 실시간 방송과 온라인 게임에서 사용된다. 네트워크 환경이 안 좋을때, 끊기는 현상을 생각하면 된다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "e09cead7-239c-5c6b-9e69-4fc2fc25c41b",
+    "review": {
+      "blind": {
+        "slot": 13,
+        "correctOptionText": "데이터 처리와 전송 속도가 TCP보다 빠르기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서에서 UDP의 결정적 장점으로 '데이터의 신속성'과 TCP보다 빠르다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 13,
+        "passed": true,
+        "reason": "Source explicitly states UDP's decisive advantage is speed and use in real-time services, supporting option 1; the other options are contradicted by the source (B: describes TCP; C: routing is IP; D: source says application layer must handle errors). Explanations and learning objective match the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 14,
+    "topic": "Asynchronous (Callback)",
+    "learningObjective": "비동기 작업에서 콜백의 역할을 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "문서에 따른 'Asynchronous' 동작에서 콜백(callback)은 어떤 역할을 합니까?",
+    "options": [
+      "네트워크 연결을 차단하여 호출자가 대기하도록 강제합니다.",
+      "작업 완료 여부를 호출한 함수에게 알려주어 호출한 함수가 그 전까지 신경 쓰지 않게 합니다.",
+      "호출된 함수의 제어권을 즉시 호출자에게 반환하는 메커니즘입니다.",
+      "호출자가 수행 상태를 계속 확인하도록 만드는 동작입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서는 비동기성을 '비동기는 호출시 Callback을 전달하여 작업의 완료 여부를 호출한 함수에게 답하게 된다. (Callback이 오기 전까지 호출한 함수는 신경쓰지 않고 다른 일을 할 수 있음)'고 설명하고 있으므로 콜백은 완료를 통지하는 역할을 합니다.",
+    "optionExplanations": [
+      "오답: 네트워크 차단으로 기다리게 하는 동작은 Blocking의 설명에 가까운 진술로, 콜백의 역할과 다릅니다 (라인 30-31).",
+      "정답: 문서가 콜백을 작업 완료 여부를 알려 호출한 함수가 그 전까지 신경 쓰지 않게 한다고 명시합니다 (라인 48).",
+      "오답: 제어권을 즉시 반환하는 것은 Non-blocking의 설명이며 콜백 자체의 정의가 아닙니다 (라인 31,33).",
+      "오답: 수행 상태를 계속 확인하는 것은 Synchronous의 특징이며 콜백과는 반대됩니다 (라인 43-44)."
+    ],
+    "keywords": [
+      "Asynchronous",
+      "Callback",
+      "작업 완료 통지"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "startLine": 48,
+      "endLine": 48,
+      "quote": "비동기는 호출시 Callback을 전달하여 작업의 완료 여부를 호출한 함수에게 답하게 된다. (Callback이 오기 전까지 호출한 함수는 신경쓰지 않고 다른 일을 할 수 있음)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+    "id": "3e7acfdc-1806-5252-8ed6-6dd1be226784",
+    "review": {
+      "blind": {
+        "slot": 14,
+        "correctOptionText": "작업 완료 여부를 호출한 함수에게 알려주어 호출한 함수가 그 전까지 신경 쓰지 않게 합니다.",
+        "unambiguous": true,
+        "reason": "문서의 비동기 설명: 콜백은 작업의 완료 여부를 호출한 함수에게 알리며 호출한 함수는 그 전까지 신경쓰지 않는다.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 14,
+        "passed": true,
+        "reason": "문서에서 비동기성은 콜백으로 작업 완료를 알리는 것이라 했고(라인 48), 정답(옵션 2)이 직접적으로 근거됩니다; 나머지 옵션들은 소스 설명과 불일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 15,
+    "topic": "HTTPS의 기본 개념",
+    "learningObjective": "HTTPS의 핵심 기능을 간단히 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "문서에서 HTTPS(HyperText Transfer Protocol Secure)를 가장 잘 설명한 것은 무엇입니까?",
+    "options": [
+      "네트워크 계층에서 패킷 암호화를 담당하는 프로토콜입니다.",
+      "브라우저 내부에서만 동작하는 보안 정책으로, 서버와의 통신에는 영향이 없습니다.",
+      "인터넷 상에서 정보를 암호화하는 SSL 프로토콜을 사용해 클라이언트와 서버가 자원을 주고받는 통신 규약입니다.",
+      "단순히 HTTP 요청에 특별한 헤더를 추가하는 확장 규약으로 암호화는 포함하지 않습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 HTTPS를 '인터넷 상에서 정보를 암호화하는 SSL 프로토콜을 사용해 클라이언트와 서버가 자원을 주고 받을 때 쓰는 통신 규약'으로 설명하고 있습니다(라인 37-39). 따라서 HTTPS는 SSL(암호화)을 사용하여 통신을 보호합니다.",
+    "optionExplanations": [
+      "오답: 문서는 HTTPS가 애플리케이션 계층에서 SSL을 통해 텍스트를 암호화한다고 하며 네트워크 계층 패킷 암호화라는 표현은 사용하지 않습니다 (lines 37-41).",
+      "오답: 문서에 따르면 HTTPS는 서버와의 통신에 직접적인 영향을 주는 암호화 프로토콜입니다 (lines 37-39).",
+      "정답: 문서에서 HTTPS를 SSL을 사용한 암호화 통신 규약으로 명시하고 있습니다 (lines 37-39).",
+      "오답: 문서에는 HTTPS가 단순 헤더 확장이며 암호화를 포함하지 않는다고 설명하지 않습니다; 오히려 암호화를 사용하는 것으로 되어 있습니다 (lines 37-41)."
+    ],
+    "keywords": [
+      "HTTPS",
+      "SSL",
+      "암호화"
+    ],
+    "sourceEvidence": {
+      "section": "HTTP & HTTPS.md",
+      "startLine": 37,
+      "endLine": 39,
+      "quote": "- ##### HTTPS(HyperText Transfer Protocol Secure)\n\n  인터넷 상에서 정보를 암호화하는 SSL 프로토콜을 사용해 클라이언트와 서버가 자원을 주고 받을 때 쓰는 통신 규약"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/HTTP & HTTPS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+    "id": "ea6b0f58-3676-5137-96ff-f942abda59cf",
+    "review": {
+      "blind": {
+        "slot": 15,
+        "correctOptionText": "인터넷 상에서 정보를 암호화하는 SSL 프로토콜을 사용해 클라이언트와 서버가 자원을 주고받는 통신 규약입니다.",
+        "unambiguous": true,
+        "reason": "문서의 HTTPS 정의가 동일한 문장으로 명시되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 15,
+        "passed": true,
+        "reason": "정답(3)은 원문(라인 37-39)의 HTTPS 정의와 일치합니다. 다른 보기들은 원문에서 언급하지 않는 내용(네트워크 계층 패킷 암호화, 브라우저 내부 정책, 단순 헤더 확장)이므로 오답으로 판정 가능합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 16,
+    "topic": "client hello 메시지 구성",
+    "learningObjective": "클라이언트가 client hello에 포함하는 항목들을 식별하고 그 중 암호화 설정 관련 항목을 구분할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "client hello 메시지에 클라이언트가 서버에 알려주는 정보 중, TLS 연결의 암호화 방식 협상에 직접적으로 사용되는 항목은 무엇입니까?",
+    "options": [
+      "세션 ID",
+      "CA 공개 인증서",
+      "클라이언트의 개인키로 암호화된 임의 문자열",
+      "지원하는 암호 알고리즘 목록"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에 따르면 client hello에는 '버전', '암호 알고리즘', '압축 방식' 등을 담아 서버로 보낸다고 명시되어 있어 암호화 방식 협상에는 클라이언트가 보낸 암호 알고리즘 목록이 직접 사용됩니다 (lines 18-19).",
+    "optionExplanations": [
+      "세션 ID는 서버가 server hello에서 응답할 때 포함하는 항목으로, session 식별에 사용되며 암호 협상 그 자체는 아닙니다 (line 23).",
+      "CA 공개 인증서는 서버가 server hello로 보내는 것으로 클라이언트가 서버 인증서를 검증하는 데 쓰이므로 client hello의 협상 항목이 아닙니다 (line 23).",
+      "클라이언트의 개인키로 암호화된 임의 문자열은 클라이언트 인증을 요구받은 경우에만 전송되는 항목으로, client hello에 포함되는 내용이 아닙니다 (line 35).",
+      "정답: client hello에 암호 알고리즘 목록을 담아 서버와 어떤 암호를 사용할지 협상합니다 (lines 18-19)."
+    ],
+    "keywords": [
+      "client hello",
+      "암호 알고리즘",
+      "세션 ID",
+      "CA 인증서"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TLS HandShake.md",
+      "startLine": 18,
+      "endLine": 23,
+      "quote": "1. 클라이언트는 서버에게 `client hello` 메시지를 담아 서버로 보낸다.\n   이때 암호화된 정보를 함께 담는데, `버전`, `암호 알고리즘`, `압축 방식` 등을 담는다.\n\n   <br>\n\n2. 서버는 클라이언트가 보낸 암호 알고리즘과 압축 방식을 받고, `세션 ID`와 `CA 공개 인증서`를 `server hello` 메시지와 함께 담아 응답한다. 이 CA 인증서에는 앞으로 통신 이후 사용할 대칭키가 생성되기 전, 클라이언트에서 handshake 과정 속 암호화에 사용할 공개키를 담고 있다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TLS HandShake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+    "id": "5fbf8408-1f65-5bce-887a-6e0c1d03c902",
+    "review": {
+      "blind": {
+        "slot": 16,
+        "correctOptionText": "지원하는 암호 알고리즘 목록",
+        "unambiguous": true,
+        "reason": "원문에 client hello가 암호화 관련 정보(버전, 암호 알고리즘, 압축 방식)를 보내며 암호화 방식 협상에 직접 사용되는 항목으로 '지원하는 암호 알고리즘 목록'이 명시됨.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 16,
+        "passed": true,
+        "reason": "정답(4)은 출처 문서가 client hello에 '암호 알고리즘' 목록을 포함한다고 명시하고 있어 고유하게 맞습니다. 다른 선택지들(세션 ID, CA 공개 인증서, 클라이언트의 개인키로 암호화된 임의 문자열)은 문서에서 server hello 또는 클라이언트 인증 시에만 등장하므로 오답으로 판정됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 17,
+    "topic": "로드 밸런서 선택 알고리즘",
+    "learningObjective": "세션이 길어지는 경우 어떤 서버 선택 방식이 적절한지 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "사용자 세션이 길어져 연결이 오래 유지되는 상황에서는 어떤 로드 밸런서 선택 방식이 권장됩니까?",
+    "options": [
+      "Least Connections 방식을 사용하는 것이 권장됩니다.",
+      "Source 해싱 방식을 사용하는 것이 권장됩니다.",
+      "라운드 로빈 방식을 사용하는 것이 권장됩니다.",
+      "무작위(Random) 방식이 권장됩니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에 Least Connections는 '연결 개수가 가장 적은 서버 선택'이며, 트래픽으로 인해 세션이 길어지는 경우에 권장된다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에서 세션이 길어지는 경우 Least Connections를 권장한다고 직접 명시하고 있습니다. (line 22)",
+      "오답입니다. Source 방식은 특정 사용자가 항상 같은 서버로 연결되게 보장하는 방식으로, 세션 길이 관점에서 권장된다는 언급은 없습니다. (line 23)",
+      "오답입니다. 라운드 로빈은 단순 순환 방식이며, 문서에서는 세션이 길어질 때의 권장 방식으로 언급하지 않습니다. (line 21)",
+      "오답입니다. 문서에 무작위 방식은 설명되지 않으며, 세션이 긴 경우의 권장 방식도 제시되지 않습니다. (lines 21-23)"
+    ],
+    "keywords": [
+      "Least Connections",
+      "세션 길이",
+      "서버 선택"
+    ],
+    "sourceEvidence": {
+      "section": "로드 밸런싱(Load Balancing).md",
+      "startLine": 21,
+      "endLine": 22,
+      "quote": "- 라운드 로빈(Round Robin) : CPU 스케줄링의 라운드 로빈 방식 활용\n- Least Connections : 연결 개수가 가장 적은 서버 선택 (트래픽으로 인해 세션이 길어지는 경우 권장)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+    "id": "585f0cb7-5978-59df-936a-183aabc86218",
+    "review": {
+      "blind": {
+        "slot": 17,
+        "correctOptionText": "Least Connections 방식을 사용하는 것이 권장됩니다.",
+        "unambiguous": true,
+        "reason": "문서에 'Least Connections : 연결 개수가 가장 적은 서버 선택 (트래픽으로 인해 세션이 길어지는 경우 권장)'라고 적혀 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 17,
+        "passed": true,
+        "reason": "정답(Least Connections)이 원문(라인21-22)에 직접 권장되어 있고, 다른 선택지들은 원문에 근거가 없어 오답으로 판정 가능합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 18,
+    "topic": "Non-Blocking I/O 동작 순서",
+    "learningObjective": "recvfrom 호출이 Non-Blocking 모드에서 EWOULDBLOCK을 반환하는 의미와 이후 프로세스의 동작을 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "Non-Blocking I/O 환경에서 recvfrom을 호출했을 때 커널이 EWOULDBLOCK을 반환하면 사용자 프로세스는 어떤 행동을 취할 수 있습니까?",
+    "options": [
+      "프로세스는 즉시 블록 상태로 전환되어 다른 스레드가 데이터 수신을 대체해야 합니다.",
+      "해당 프로세스는 I/O를 기다리며 중단하지 않고 다른 작업을 계속 수행할 수 있습니다.",
+      "프로세스는 즉시 종료되어야 하며, 나중에 재시작해야 합니다.",
+      "프로세스는 커널에게 강제로 데이터를 즉시 전송하도록 요청해야 합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 Non-Blocking I/O에서 커널이 recvfrom에 대해 EWOULDBLOCK을 반환할 때, Blocking 방식과 달리 사용자 프로세스는 다른 작업을 진행할 수 있다고 명시합니다. 따라서 EWOULDBLOCK은 즉시 대기하지 않고 계속 실행할 수 있음을 의미합니다.",
+    "optionExplanations": [
+      "오답: 본문은 블록 상태로 전환된다고 설명하지 않으며, 오히려 블록하지 않는 동작을 강조합니다.",
+      "정답: 소스는 EWOULDBLOCK을 반환해도 사용자 프로세스가 다른 작업을 수행할 수 있다고 분명히 기술합니다. (lines 37-41)",
+      "오답: 본문은 프로세스가 종료되어야 한다고 말하지 않습니다; 종료는 적절하지 않습니다.",
+      "오답: 본문은 커널에게 강제 전송 요청을 해야 한다고 언급하지 않습니다; EWOULDBLOCK은 단순히 데이터가 아직 없음을 알립니다."
+    ],
+    "keywords": [
+      "Non-Blocking",
+      "EWOULDBLOCK",
+      "recvfrom"
+    ],
+    "sourceEvidence": {
+      "section": "Blocking I/O & Non-Blocking I/O.md",
+      "startLine": 35,
+      "endLine": 43,
+      "quote": "* 진행 순서\n\n     1. User Process가 recvfrom 함수 호출 (커널에게 해당 Socket으로부터 data를 받고 싶다고 요청함)\n\n     2. Kernel은 이 요청에 대해서, 곧바로 recvBuffer를 채워서 보내지 못하므로, \"EWOULDBLOCK\"을 return함.\n\n     3. Blocking 방식과 달리, User Process는 다른 작업을 진행할 수 있음.\n\n     4. recvBuffer에 user가 받을 수 있는 데이터가 있는 경우, Buffer로부터 데이터를 복사하여 받아옴."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking Non-Blocking IO.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%20Non-Blocking%20IO.md",
+    "id": "1baa6d8d-2c6d-528c-a0f1-5b9ce311a193",
+    "review": {
+      "blind": {
+        "slot": 18,
+        "correctOptionText": "해당 프로세스는 I/O를 기다리며 중단하지 않고 다른 작업을 계속 수행할 수 있습니다.",
+        "unambiguous": true,
+        "reason": "본문은 Non-Blocking I/O에서 커널이 EWOULDBLOCK을 반환하면 사용자 프로세스가 다른 작업을 진행할 수 있다고 설명함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 18,
+        "passed": true,
+        "reason": "정답(2)은 본문이 EWOULDBLOCK 반환 시 '사용자 프로세스는 다른 작업을 진행할 수 있음'이라 한 진술과 일치합니다. 나머지 선택지는 본문에 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 19,
+    "topic": "네트워크 계층의 라우팅과 IP 역할",
+    "learningObjective": "네트워크 계층이 라우터를 사용해 경로를 선택하고 패킷 전달을 수행하는 메커니즘을 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "네트워크 계층이 수행하는 기능으로 적절한 것은 무엇입니까?",
+    "options": [
+      "파일 인코딩과 압축, 암호화를 담당하여 데이터 표현의 독립성을 제공합니다.",
+      "물리 매체 상에서 전기적 신호로만 데이터를 전달하는 역할을 수행합니다.",
+      "라우터를 통해 이동할 경로를 선택하고 IP 주소를 지정하여 패킷을 전달합니다.",
+      "포트를 열어 응용 프로그램들이 데이터를 전송하도록 직접 제공합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "출처에 따르면 네트워크 계층은 '라우터를 통해 이동할 경로를 선택하여 IP 주소를 지정하고, 해당 경로에 따라 패킷을 전달해준다'고 되어 있어, 경로 선택과 IP 기반 패킷 전달이 네트워크 계층의 핵심 기능입니다.",
+    "optionExplanations": [
+      "오답: 파일 인코딩·압축·암호화와 표현의 독립성은 표현 계층의 역할입니다 (lines 67-74).",
+      "오답: 물리적 신호 변환 및 전송은 물리 계층의 역할로 네트워크 계층과 구분됩니다 (lines 15-21).",
+      "정답: 네트워크 계층 설명에 라우터·경로 선택·IP 주소 지정 및 패킷 전달이 명시되어 있습니다 (lines 35-41).",
+      "오답: 포트 처리와 응용 프로그램 간 전송 지원은 전송 계층의 역할입니다 (lines 47-51)."
+    ],
+    "keywords": [
+      "네트워크 계층",
+      "라우터",
+      "IP",
+      "경로 선택",
+      "패킷 전달"
+    ],
+    "sourceEvidence": {
+      "section": "OSI 7 계층",
+      "startLine": 35,
+      "endLine": 41,
+      "quote": "##### 3) 네트워크(Network)\n\n> 라우터, IP\n\n데이터를 목적지까지 가장 안전하고 빠르게 전달하는 기능을 담당한다.\n\n라우터를 통해 이동할 경로를 선택하여 IP 주소를 지정하고, 해당 경로에 따라 패킷을 전달해준다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/OSI 7 계층.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/OSI%207%20%EA%B3%84%EC%B8%B5.md",
+    "id": "c1317ac2-0be7-5bec-a04f-9c15bfb92214",
+    "review": {
+      "blind": {
+        "slot": 19,
+        "correctOptionText": "라우터를 통해 이동할 경로를 선택하고 IP 주소를 지정하여 패킷을 전달합니다.",
+        "unambiguous": true,
+        "reason": "Source describes 네트워크 계층 as using routers and IP to choose routes and deliver packets, assigning IP addresses.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 19,
+        "passed": true,
+        "reason": "정답(옵션 3)이 원문(라인 35-41)에 직접 근거가 있으며, 다른 선택지들은 표현·물리·전송 계층 기능으로 원문과 상충하므로 모두 오답으로 확정 가능합니다. 난이도(MEDIUM)와 학습목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 20,
+    "topic": "TCP 3-way handshake의 ACK/SEQ 필드 역할",
+    "learningObjective": "3-way handshake에서 두 번째 패킷에 포함된 ACK와 SEQ 필드의 역할을 구분할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "3-way handshake 과정에서 서버가 클라이언트에게 두 번째로 보내는 패킷(SYN+ACK)에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "서버는 클라이언트의 시퀀스 번호(x)를 그대로 ACK에 넣고, 자신의 시퀀스 번호는 포함하지 않습니다.",
+      "서버는 ACK 필드에 x-1을 넣어 이전에 받은 바이트들을 재요청합니다.",
+      "서버는 SYN만 보내고 ACK는 세 번째 패킷에서 처음으로 보냅니다.",
+      "서버는 자신의 초기 시퀀스 번호(y)를 담은 SYN과, 클라이언트의 SYN을 수신했음을 나타내는 ACK(x+1)를 함께 보냅니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "원문은 서버가 클라이언트의 SYN(x)을 받고, 클라이언트로 받았다는 신호인 ACK와 SYN 패킷을 보낸다고 설명하며 구체적으로 'sequence : y, ACK : x + 1'로 표기되어 있습니다. 따라서 두 번째 패킷에는 서버의 시퀀스 번호(y)와 클라이언트의 SYN을 받았음을 알리는 ACK(x+1)가 모두 포함됩니다.",
+    "optionExplanations": [
+      "오답입니다. 소스는 서버가 ACK에 x+1을 넣는다고 했으며, 서버의 시퀀스 번호(y)도 함께 보낸다고 명시합니다; 서버가 자신의 시퀀스를 포함하지 않는다고 쓰여 있지 않습니다 (lines 13-17).",
+      "오답입니다. 소스에는 ACK에 x+1을 넣는다고 명시되어 있고 x-1을 넣는다는 내용은 없습니다 (lines 13-17).",
+      "오답입니다. 소스는 두 번째 패킷에서 서버가 SYN과 ACK를 함께 보낸다고 명확히 기술하고 있으며, ACK를 세 번째 패킷에서 처음 보낸다고 하지 않습니다 (lines 13-17).",
+      "정답입니다. 소스는 두 번째 패킷이 'sequence : y, ACK : x + 1' 형태로 서버의 시퀀스 번호와 클라이언트에 대한 ACK를 함께 보낸다고 명시합니다 (lines 13-17)."
+    ],
+    "keywords": [
+      "SYN",
+      "ACK",
+      "sequence",
+      "3 way handshake"
+    ],
+    "sourceEvidence": {
+      "section": "TCP 3 way handshake & 4 way handshake.md",
+      "startLine": 13,
+      "endLine": 17,
+      "quote": "1) 클라이언트가 서버에게 SYN 패킷을 보냄 (sequence : x)\n\n2) 서버가 SYN(x)을 받고, 클라이언트로 받았다는 신호인 ACK와 SYN 패킷을 보냄 (sequence : y, ACK : x + 1)\n\n3) 클라이언트는 서버의 응답은 ACK(x+1)와 SYN(y) 패킷을 받고, ACK(y+1)를 서버로 보냄"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP 3 way handshake & 4 way handshake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%203%20way%20handshake%20%26%204%20way%20handshake.md",
+    "id": "0057ce9d-1b97-5d20-8870-7349f0bbfe04",
+    "review": {
+      "blind": {
+        "slot": 20,
+        "correctOptionText": "서버는 자신의 초기 시퀀스 번호(y)를 담은 SYN과, 클라이언트의 SYN을 수신했음을 나타내는 ACK(x+1)를 함께 보냅니다.",
+        "unambiguous": true,
+        "reason": "원문에서 2) 서버가 SYN(x)을 받고, ... ACK와 SYN 패킷을 보냄 (sequence : y, ACK : x + 1)이라고 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 20,
+        "passed": true,
+        "reason": "정답(4)과 각 선택지 설명이 제공된 원문(라인 13-17)의 'sequence : y, ACK : x + 1' 진술에 정확히 근거함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 21,
+    "topic": "공개키의 보장 범위와 추가 기법",
+    "learningObjective": "공개키 암호화가 보장하는 보안 속성과, 무결성·인증을 확보하기 위한 보완 수단을 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "공개키(비대칭키) 방식으로 통신할 때 어떤 보안 속성이 단독으로 보장되지 않으며, 이를 해결하기 위한 적절한 방법은 무엇입니까?",
+    "options": [
+      "무결성과 인증은 보장되지 않으므로 MAC 또는 전자서명을 사용해야 한다.",
+      "기밀성은 보장되지 않으므로 대칭키로 모든 통신을 대체해야 한다.",
+      "무결성과 인증은 보장되므로 추가 조치가 필요 없다.",
+      "인증은 보장되지만, 무결성은 보장되지 않아 암호화 알고리즘 자체를 바꿔야 한다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 공개키 방식이 기밀성(Confidentiality)만 보장할 뿐 무결성(Integrity)과 인증(Authenticity)은 보장하지 못한다고 명시하며, 이 문제를 MAC이나 전자 서명으로 해결한다고 설명합니다.",
+    "optionExplanations": [
+      "정답입니다. 문서는 공개키 방식이 기밀성만 제공하고, 무결성·인증은 MAC이나 전자서명으로 해결한다고 명시합니다.",
+      "틀렸습니다. 문서는 공개키 방식이 기밀성을 제공한다고 명시하며, 기밀성 부재를 이유로 대칭키로 전부 대체해야 한다고 하지 않습니다.",
+      "틀렸습니다. 본문은 무결성·인증이 보장되지 않는다고 명확히 기술하고 있어 추가 조치가 필요합니다.",
+      "틀렸습니다. 문서는 인증과 무결성 모두가 보장되지 않는다고 언급하며, 단순히 알고리즘 교체로 해결된다고 하지 않습니다."
+    ],
+    "keywords": [
+      "공개키",
+      "무결성",
+      "인증",
+      "MAC",
+      "전자 서명"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/대칭키 & 공개키.md",
+      "startLine": 31,
+      "endLine": 34,
+      "quote": "하지만 이 방식은 Confidentiallity만 보장해줄 뿐, Integrity나 Authenticity는 보장해주지 못함\n\n-> 이는 MAC(Message Authentication Code)나 전자 서명(Digital Signature)으로 해결\n(MAC은 공개키 방식이 아니라 대칭키 방식임을 유의! T=MAC(K,M) 형식)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/대칭키 & 공개키.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%8C%80%EC%B9%AD%ED%82%A4%20%26%20%EA%B3%B5%EA%B0%9C%ED%82%A4.md",
+    "id": "0ac71b02-592b-51e8-b127-0ff8060407b7",
+    "review": {
+      "blind": {
+        "slot": 21,
+        "correctOptionText": "무결성과 인증은 보장되지 않으므로 MAC 또는 전자서명을 사용해야 한다.",
+        "unambiguous": true,
+        "reason": "본문은 공개키 방식이 기밀성만 보장하고 무결성·인증은 보장하지 않으므로 MAC 또는 전자서명으로 해결한다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 21,
+        "passed": true,
+        "reason": "정답(옵션 1)은 본문 근거와 일치: 공개키 방식은 기밀성만 보장하고 무결성·인증은 보장하지 않아 MAC 또는 전자서명으로 해결한다고 명시. 나머지 선택지는 문서 내용과 직접적으로 모순됨(기밀성 불가 주장 / 추가 조치 불필요 주장 / 인증만 보장된다는 주장)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 22,
+    "topic": "DNS 캐시 확인 순서",
+    "learningObjective": "DNS가 여러 캐시 계층을 어떤 순서로 확인하는지 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "DNS가 요청을 처리할 때 캐시 확인 순서로 올바른 것은 무엇입니까?",
+    "options": [
+      "로컬(OS) 캐시 → 브라우저 캐시 → ISP 캐시 → 라우터 캐시 순으로 확인합니다.",
+      "브라우저 캐시 → 로컬(OS) 캐시 → 라우터 캐시 → ISP 캐시 순으로 확인합니다.",
+      "ISP 캐시 → 라우터 캐시 → 로컬(OS) 캐시 → 브라우저 캐시 순으로 확인합니다.",
+      "라우터 캐시 → 브라우저 캐시 → ISP 캐시 → 로컬(OS) 캐시 순으로 확인합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 DNS가 브라우저 캐시, 로컬(OS) 캐시, 라우터 캐시, ISP 캐시 순으로 확인한다고 명시되어 있으므로 (브라우저→로컬→라우터→ISP)가 정답입니다.",
+    "optionExplanations": [
+      "오답: 문서가 제시한 순서와 일치하지 않습니다; 브라우저와 로컬의 위치가 바뀌어 있습니다 (lines 11-13).",
+      "정답: 문서에 명시된 정확한 캐시 확인 순서와 일치합니다 (lines 11-13).",
+      "오답: 문서가 제시한 순서와 반대이며 근거가 없습니다 (lines 11-13).",
+      "오답: 문서의 순서와 일치하지 않습니다; 라우터와 브라우저의 위치가 바뀌어 있습니다 (lines 11-13)."
+    ],
+    "keywords": [
+      "캐시 확인 순서",
+      "브라우저 캐시",
+      "로컬 캐시",
+      "라우터 캐시",
+      "ISP 캐시"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/DNS.md",
+      "startLine": 11,
+      "endLine": 13,
+      "quote": "2. DNS는 캐시를 확인 합니다\n   - 기존에 접속했던 사이트의 경우 캐시에 남아 있을 수 있습니다\n   - DNS는 브라우저 캐시, 로컬 캐시(OS 캐시), 라우터 캐시, ISP(Internet Service Provider)캐시 순으로 확인 합니다"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/DNS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/DNS.md",
+    "id": "2a364d17-1ccb-5b12-a093-eae4216dd090",
+    "review": {
+      "blind": {
+        "slot": 22,
+        "correctOptionText": "브라우저 캐시 → 로컬(OS) 캐시 → 라우터 캐시 → ISP 캐시 순으로 확인합니다.",
+        "unambiguous": true,
+        "reason": "Source: \"DNS는 브라우저 캐시, 로컬 캐시(OS 캐시), 라우터 캐시, ISP... 순으로 확인 합니다.\" — 이 순서가 정답임.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 22,
+        "passed": true,
+        "reason": "정답(옵션 2, 브라우저→로컬→라우터→ISP)은 원문에 직접 명시되어 있어 유일하게 맞습니다. 다른 보기는 문서의 순서와 일치하지 않으므로 오답으로 판별됩니다. 난이도(MEDIUM)와 학습목표도 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 23,
+    "topic": "Sliding Window vs Stop and Wait",
+    "learningObjective": "Sliding Window가 Stop and Wait에 비해 어떤 문제를 해결하는지 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "Sliding Window(Go Back N ARQ)가 Stop and Wait에 비해 제공하는 주된 이점은 무엇입니까?",
+    "options": [
+      "수신 윈도우가 없어도 동작하므로 수신 버퍼 용량과 상관없이 전송할 수 있습니다.",
+      "중복 ACK 세 개가 도착할 때까지 아무런 조치를 취하지 않아 재전송을 지연시킵니다.",
+      "확인 응답 없이 윈도우 크기만큼 연속으로 세그먼트를 보내어 대기 시간을 효율적으로 활용합니다.",
+      "패킷 손실이 발생하면 즉시 창 크기를 1로 줄여 재시작하므로 안정성이 더 높습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 Sliding Window가 '수신측에서 설정한 윈도우 크기만큼 송신측에서 확인응답없이 세그먼트를 전송할 수 있게 하여 데이터 흐름을 동적으로 조절'한다고 설명합니다(라인 53-56). 이는 Stop and Wait처럼 매번 ACK를 기다리지 않아 전송 효율과 대역폭 활용을 개선하는 장점입니다.",
+    "optionExplanations": [
+      "오답: 본문은 송신자가 수신 윈도우를 확인해 버퍼를 초과하지 않도록 전송한다고 명시하므로 수신 윈도우가 필요합니다(33-35).",
+      "오답: '중복 ACK 세 개'는 Fast Retransmit의 조건이며 Sliding Window의 작동 원리를 설명하는 문구가 아닙니다(109-114).",
+      "정답: 본문은 Sliding Window가 윈도우 크기만큼 확인응답 없이 연속 전송해 전송을 동적으로 조절한다고 명시합니다(53-56).",
+      "오답: 창 크기를 1로 줄이는 행동은 Slow Start 또는 Fast Recovery의 일부 설명에 해당하며 Sliding Window의 기본 이점으로 제시되지는 않습니다(105-106, 114-116)."
+    ],
+    "keywords": [
+      "Sliding Window",
+      "Stop and Wait",
+      "윈도우",
+      "전송 효율"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+      "startLine": 53,
+      "endLine": 56,
+      "quote": "- Sliding Window (Go Back N ARQ) \n\n    - 수신측에서 설정한 윈도우 크기만큼 송신측에서 확인응답없이 세그먼트를 전송할 수 있게 하여 데이터 흐름을 동적으로 조절하는 제어기법"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%20%28%ED%9D%90%EB%A6%84%EC%A0%9C%EC%96%B4%ED%98%BC%EC%9E%A1%EC%A0%9C%EC%96%B4%29.md",
+    "id": "006484ac-a4a7-528a-92e6-e4c84d583923",
+    "review": {
+      "blind": {
+        "slot": 23,
+        "correctOptionText": "확인 응답 없이 윈도우 크기만큼 연속으로 세그먼트를 보내어 대기 시간을 효율적으로 활용합니다.",
+        "unambiguous": true,
+        "reason": "본문은 Sliding Window가 수신측이 설정한 윈도우 크기만큼 확인응답 없이 연속 전송할 수 있어 전송을 동적으로 조절한다고 설명함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 23,
+        "passed": true,
+        "reason": "Correct answer (옵션 3) is supported by lines 53–56 describing Sliding Window allowing multiple segments to be sent without waiting for ACKs; each distractor directly contradicts the source (requires no receive window, ties to duplicate-ACK behavior, or immediate window-to-1 action)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 24,
+    "topic": "UDP 헤더 필드",
+    "learningObjective": "UDP 헤더에 포함된 필드를 식별하고 그 기능을 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "UDP 헤더에 포함된 항목 중 오류 검출을 담당하는 필드는 무엇입니까?",
+    "options": [
+      "Source port 필드",
+      "Length 필드",
+      "Destination port 필드",
+      "Checksum 필드"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서의 UDP Header 설명에서 'Checksum : 오류 검출'이라고 명확히 표기되어 있으며, 체크섬은 전송된 자료의 무결성 보호를 위한 중복 검사 형태라고 설명되어 있습니다.",
+    "optionExplanations": [
+      "Source port는 송신 측 포트 식별용으로, 오류 검출 기능과 관련이 없습니다.",
+      "Length는 데이터 길이를 나타내는 필드로 오류 검출 역할이 아닙니다.",
+      "Destination port는 수신 측 포트 식별용으로 오류 검출과 관련이 없습니다.",
+      "정답입니다. 문서에 체크섬이 오류 검출용 필드라고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "Checksum",
+      "오류 검출",
+      "UDP Header"
+    ],
+    "sourceEvidence": {
+      "section": "UDP.md",
+      "startLine": 46,
+      "endLine": 51,
+      "quote": "- <img src='https://t1.daumcdn.net/cfile/tistory/272A5A385759267B36'>\n  - Source port : 시작 포트\n  - Destination port : 도착지 포트\n  - Length : 길이\n  - _Checksum_ : 오류 검출\n    - 중복 검사의 한 형태로, 오류 정정을 통해 공간이나 시간 속에서 송신된 자료의 무결성을 보호하는 단순한 방법이다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "54254f60-01fc-57ee-9302-71937947b8a6",
+    "review": {
+      "blind": {
+        "slot": 24,
+        "correctOptionText": "Checksum 필드",
+        "unambiguous": true,
+        "reason": "문서의 UDP 헤더 설명에서 Checksum이 오류 검출을 담당한다고 명시됨.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 24,
+        "passed": true,
+        "reason": "Source lists UDP header fields and labels 'Checksum : 오류 검출', directly supporting option 4; other options are identified in the source as port/length fields without error-detection roles. Explanations and difficulty are consistent with the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 25,
+    "topic": "Blocking vs Non-blocking tradeoffs",
+    "learningObjective": "호출된 함수가 제어권을 빨리 반환하는 Non-blocking의 동작과 그로 인한 호출자의 행동을 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "Non-blocking 호출의 전형적인 결과로 문서에서 기대되는 호출자(A)의 행동은 무엇입니까?",
+    "options": [
+      "B가 일을 마치지 않았더라도 A는 바로 제어권을 받아 다른 일을 진행할 수 있습니다.",
+      "A는 B가 일을 끝낼 때까지 계속 서서 기다리며 상태를 확인합니다.",
+      "A는 B의 작업 완료를 콜백으로 전달받기 전까지 아무 일도 하지 못합니다.",
+      "B가 완료될 때까지 A는 제어권을 상실하고 아무 작업도 못 합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 Non-blocking을 '함수 B는 할 일을 마치지 않았어도 A에게 제어권을 바로 넘겨준다. A는 B를 기다리면서도 다른 일을 진행할 수 있다.'고 설명하여, 호출자가 즉시 다른 일을 수행할 수 있음을 명확히 하고 있습니다.",
+    "optionExplanations": [
+      "정답: 소스에 직접적으로 'A는 B를 기다리면서도 다른 일을 진행할 수 있다'라고 서술되어 있습니다 (라인 31).",
+      "오답: 계속 서서 기다리며 상태를 확인하는 행동은 Blocking & Synchronous 또는 Synchronous 성격이며 Non-blocking의 전형적 결과가 아닙니다 (라인 30-31,43).",
+      "오답: 콜백으로 전달받기 전까지 아무 일도 하지 못한다는 표현은 비동기/콜백 설명을 오해한 것이며, Non-blocking 자체의 특성과 맞지 않습니다 (라인 31,48).",
+      "오답: 제어권을 상실하여 아무 작업도 못 한다는 진술은 Blocking의 반대 상황으로, Non-blocking에서는 호출자가 제어권을 가집니다 (라인 31)."
+    ],
+    "keywords": [
+      "Non-blocking",
+      "제어권 반환",
+      "호출자 행동"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "startLine": 31,
+      "endLine": 31,
+      "quote": "- **Non-blocking** : 함수 B는 할 일을 마치지 않았어도 A에게 제어권을 바로 넘겨준다. A는 B를 기다리면서도 다른 일을 진행할 수 있다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+    "id": "df2db914-ab43-59a3-b546-345c43e79eb8",
+    "review": {
+      "blind": {
+        "slot": 25,
+        "correctOptionText": "B가 일을 마치지 않았더라도 A는 바로 제어권을 받아 다른 일을 진행할 수 있습니다.",
+        "unambiguous": true,
+        "reason": "문서의 Non-blocking 정의: 호출된 함수가 할 일을 마치지 않아도 제어권을 바로 넘겨 A는 다른 일을 진행할 수 있다.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 25,
+        "passed": true,
+        "reason": "문서의 Non-blocking 정의(‘A는 제어권을 바로 받아 다른 일을 진행할 수 있다’)가 정답(옵션 1)을 명확히 지지하며 다른 보기는 문서 내용과 모순됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 26,
+    "topic": "HTTP 취약점과 HTTPS의 대응",
+    "learningObjective": "HTTP의 특정 취약점을 HTTPS(또는 그 구성요소)가 어떻게 해결하는지 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 '통신 상대의 위장(스푸핑)' 문제를 HTTPS가 어떻게 해결한다고 문서에서 설명하는지에 대한 옳은 설명은 무엇입니까?",
+    "options": [
+      "HTTPS는 위장을 막지 못하므로 별도의 인증 체계가 항상 필요합니다.",
+      "CA 인증서를 통해 인증된 상대와만 통신할 수 있게 하여 위장을 방지합니다.",
+      "메시지 암호화를 통해 도청만을 방지하고 위장은 해결하지 못합니다.",
+      "대칭키 암호화만으로 상대를 검증하면 위장 문제가 자동으로 해결됩니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서는 '통신 상대를 확인하지 않기 때문에 위장된 상대와 통신할 수 있다'고 밝히고, 바로 아래에 'HTTPS는 CA 인증서를 통해 인증된 상대와 통신이 가능하다'고 설명해 CA 기반 인증으로 위장을 방지한다고 명시합니다 (lines 27-29).",
+    "optionExplanations": [
+      "오답: 문서는 HTTPS가 CA 인증을 통해 위장을 방지할 수 있다고 하여 '항상 별도 인증 체계가 필요하다'는 표현과는 다릅니다 (lines 27-29).",
+      "정답: 문서에 HTTPS가 CA 인증서를 통해 인증된 상대와 통신할 수 있게 하여 위장을 방지한다고 명시되어 있습니다 (lines 27-29).",
+      "오답: 메시지 암호화는 도청을 막는 데 도움이 되지만, 문서에서는 위장 문제는 CA 인증서로 해결한다고 별도로 적고 있습니다 (lines 19-22 and 27-29).",
+      "오답: 대칭키 암호화만으로는 상대의 신원을 보장한다고 문서에 적혀 있지 않으며, 문서는 CA 기반 인증을 언급합니다 (lines 27-29, 65-68)."
+    ],
+    "keywords": [
+      "위장",
+      "CA 인증서",
+      "인증"
+    ],
+    "sourceEvidence": {
+      "section": "HTTP & HTTPS.md",
+      "startLine": 27,
+      "endLine": 29,
+      "quote": "- 통신 상대를 확인하지 않기 깨문에 위장된 상대와 통신할 수 있다\n- HTTPS는 CA 인증서를 통해 인증된 상대와 통신이 가능하다"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/HTTP & HTTPS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+    "id": "ccd4b9cd-208b-5813-b157-e4409d77d4c2",
+    "review": {
+      "blind": {
+        "slot": 26,
+        "correctOptionText": "CA 인증서를 통해 인증된 상대와만 통신할 수 있게 하여 위장을 방지합니다.",
+        "unambiguous": true,
+        "reason": "문서에 'HTTPS는 CA 인증서를 통해 인증된 상대와 통신이 가능하다'고 설명되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 26,
+        "passed": true,
+        "reason": "정답(2)은 원문(라인 27-29)이 명시적으로 'HTTPS는 CA 인증서를 통해 인증된 상대와 통신이 가능하다'고 기술하고 있어 근거가 분명합니다. 나머지 선택지는 원문에서 지원되지 않는 주장입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 27,
+    "topic": "CA 인증서와 공개키 역할 비교",
+    "learningObjective": "서버가 server hello로 보내는 CA 공개 인증서의 목적과 그 인증서가 클라이언트에게 어떤 검증 과정을 요구하는지 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "server hello에 포함된 CA 공개 인증서의 주된 목적과 클라이언트가 그 인증서에 대해 수행해야 하는 동작으로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "클라이언트의 개인키를 대체하므로 클라이언트는 개인키를 폐기해야 한다",
+      "서버가 클라이언트 인증을 생략했음을 알리므로 클라이언트는 별도 인증 과정을 수행할 필요가 없다",
+      "서버의 공개키를 제공하여 클라이언트가 인증서 유효성을 CA 목록과 대조해 확인한다",
+      "대칭키를 포함하여 이후 모든 통신을 암호화하므로 클라이언트는 즉시 대칭키로 통신을 시작한다"
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 server hello에 CA 공개 인증서를 담아 응답하며, 이 인증서는 '클라이언트에서 handshake 과정 속 암호화에 사용할 공개키를 담고 있다'고 하고, 이어 클라이언트는 해당 CA 인증서의 유효성을 CA 목록에서 확인한다고 명시하고 있습니다 (lines 23, 27).",
+    "optionExplanations": [
+      "CA 인증서는 클라이언트의 개인키를 대체하지 않으며 문서에 그런 설명이 없습니다; 개인키는 클라이언트 소유로 남습니다 (no supporting lines).",
+      "server hello가 클라이언트 인증 요구 여부를 직접 알린다는 설명은 없고, 클라이언트 인증은 별도 조건(요구된 경우)에 따라 진행됩니다 (line 35).",
+      "정답: server hello는 서버의 공개키를 포함한 CA 인증서를 보내고, 클라이언트는 그 인증서의 유효성을 자신이 가진 CA 목록에서 확인합니다 (lines 23, 27).",
+      "인증서 자체가 대칭키를 포함한다는 언급은 없으며, 대칭키는 난수 바이트 교환으로 최종 생성됩니다 (line 31)."
+    ],
+    "keywords": [
+      "CA 인증서",
+      "공개키",
+      "유효성 확인",
+      "server hello"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TLS HandShake.md",
+      "startLine": 23,
+      "endLine": 27,
+      "quote": "2. 서버는 클라이언트가 보낸 암호 알고리즘과 압축 방식을 받고, `세션 ID`와 `CA 공개 인증서`를 `server hello` 메시지와 함께 담아 응답한다. 이 CA 인증서에는 앞으로 통신 이후 사용할 대칭키가 생성되기 전, 클라이언트에서 handshake 과정 속 암호화에 사용할 공개키를 담고 있다.\n\n   <br>\n\n3. 클라이언트 측은 서버에서 보낸 CA 인증서에 대해 유효한 지 CA 목록에서 확인하는 과정을 진행한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TLS HandShake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+    "id": "f13f514f-fc49-5137-a69d-b1ee7faf27e3",
+    "review": {
+      "blind": {
+        "slot": 27,
+        "correctOptionText": "서버의 공개키를 제공하여 클라이언트가 인증서 유효성을 CA 목록과 대조해 확인한다",
+        "unambiguous": true,
+        "reason": "원문에서 server hello가 CA 공개 인증서를 보내며 클라이언트는 해당 인증서의 유효성을 CA 목록에서 확인한다고 설명됨.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 27,
+        "passed": true,
+        "reason": "정답(3)은 문서에서 server hello가 CA 공개 인증서를 보내고 클라이언트가 그 유효성을 CA 목록과 대조한다고 명시하므로 정확합니다. 나머지 선택지는 문서 내용과 직접적으로 모순되거나 언급되지 않습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 28,
+    "topic": "로드 밸런서 이중화",
+    "learningObjective": "로드 밸런서 장애 대비로 이중화(Active/Passive)를 사용하는 이유를 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "문서에서 로드 밸런서를 이중화하는 주된 이유로 올바른 것은 무엇입니까?",
+    "options": [
+      "로드 밸런서를 이중화하면 트래픽 분산 방식이 자동으로 개선됩니다.",
+      "이중화는 각 서버의 데이터를 자동으로 동기화하기 위함입니다.",
+      "이중화는 클라이언트와의 암호화된 터널을 유지하기 위한 것입니다.",
+      "로드 밸런서에 문제가 생길 수 있으므로 장애 대비를 위해 이중화합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 '서버를 분배하는 로드 밸런서에 문제가 생길 수 있기 때문에 로드 밸런서를 이중화하여 대비한다'고 명시하며 Active/Passive 상태에 대해 언급합니다.",
+    "optionExplanations": [
+      "오답입니다. 문서에서는 이중화가 트래픽 분산 방식을 자동으로 개선한다고 말하지 않습니다; 목적은 장애 대비입니다. (lines 29-31)",
+      "오답입니다. 데이터 동기화에 대한 언급은 없고, 이중화 목적은 장애 대비입니다. (lines 29-31)",
+      "오답입니다. 암호화된 터널 유지와 관련된 설명은 문서에 없습니다; 이중화 목적은 장애 대비입니다. (lines 29-31)",
+      "정답입니다. 문서에 로드 밸런서에 문제가 생길 수 있으므로 이중화하여 대비한다고 직접 서술되어 있습니다. (lines 29-31)"
+    ],
+    "keywords": [
+      "이중화",
+      "Active/Passive",
+      "장애 대비"
+    ],
+    "sourceEvidence": {
+      "section": "로드 밸런싱(Load Balancing).md",
+      "startLine": 29,
+      "endLine": 31,
+      "quote": "서버를 분배하는 로드 밸런서에 문제가 생길 수 있기 때문에 로드 밸런서를 이중화하여 대비한다.\n\n> Active 상태와 Passive 상태"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+    "id": "627e94c8-a8ba-5561-8bdd-d1f89e10c083",
+    "review": {
+      "blind": {
+        "slot": 28,
+        "correctOptionText": "로드 밸런서에 문제가 생길 수 있으므로 장애 대비를 위해 이중화합니다.",
+        "unambiguous": true,
+        "reason": "문서에 '로드 밸런서를 이중화하여 대비'한다고 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 28,
+        "passed": true,
+        "reason": "원문(라인29-31)이 이중화의 목적을 장애 대비로 명확히 서술하므로 정답(옵션4)과 오답 설명이 모두 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 29,
+    "topic": "커널 버퍼와 데이터 복사 성능",
+    "learningObjective": "Kernel recvBuffer에서 사용자로 데이터를 복사하는 동작이 I/O 작업보다 왜 빠른지 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "본문에 따르면, recvBuffer(커널 메모리)에서 사용자로 데이터를 복사하는 것이 I/O보다 훨씬 빠른 이유는 무엇입니까?",
+    "options": [
+      "recvBuffer는 커널 메모리에 적재되어 있어 메모리 간 복사이므로 물리적 I/O보다 속도가 빠르기 때문입니다.",
+      "커널이 데이터를 암호화해서 보내기 때문에 전송 지연이 줄어들기 때문입니다.",
+      "복사 작업이 네트워크 카드의 DMA 대신 CPU가 직접 수행되어 병목이 사라지기 때문입니다.",
+      "recvBuffer는 파일 시스템 캐시에 들어있어 디스크 접근 대신 파일 읽기처럼 동작하기 때문입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 recvBuffer가 커널 메모리에 적재되어 있으므로 메모리 간 복사로 인해 I/O보다 훨씬 빠른 속도로 데이터를 받아올 수 있다고 명시합니다. 이 진술이 정답의 근거입니다.",
+    "optionExplanations": [
+      "정답: 소스는 recvBuffer가 커널 메모리에 있고 메모리 복사이므로 I/O보다 빠르다고 직접 서술합니다. (lines 43-46)",
+      "오답: 본문은 암호화에 대해 언급하지 않으며 암호화가 성능 향상의 이유라고 하지 않습니다.",
+      "오답: 본문은 DMA나 CPU 수행 주체를 언급하지 않으며, 그로 인한 병목 해소를 근거로 제시하지 않습니다.",
+      "오답: 본문은 파일 시스템 캐시나 디스크 접근을 언급하지 않으며, recvBuffer가 파일 캐시에 있다는 설명도 없습니다."
+    ],
+    "keywords": [
+      "recvBuffer",
+      "메모리 복사",
+      "성능"
+    ],
+    "sourceEvidence": {
+      "section": "Blocking I/O & Non-Blocking I/O.md",
+      "startLine": 43,
+      "endLine": 46,
+      "quote": "4. recvBuffer에 user가 받을 수 있는 데이터가 있는 경우, Buffer로부터 데이터를 복사하여 받아옴.\n\n        > 이때, recvBuffer는 Kernel이 가지고 있는 메모리에 적재되어 있으므로, Memory간 복사로 인해, I/O보다 훨씬 빠른 속도로 data를 받아올 수 있음."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking Non-Blocking IO.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%20Non-Blocking%20IO.md",
+    "id": "d230da5f-8bae-5c3b-9598-cde2ac0f9bee",
+    "review": {
+      "blind": {
+        "slot": 29,
+        "correctOptionText": "recvBuffer는 커널 메모리에 적재되어 있어 메모리 간 복사이므로 물리적 I/O보다 속도가 빠르기 때문입니다.",
+        "unambiguous": true,
+        "reason": "본문은 recvBuffer가 커널 메모리에 있고 메모리 간 복사이므로 I/O보다 훨씬 빠르다고 서술함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 29,
+        "passed": true,
+        "reason": "정답(1)은 본문 문장('커널 메모리에 적재... 메모리간 복사... I/O보다 훨씬 빠름')을 직접 반영합니다. 다른 선택지는 본문에서 언급되지 않아 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 30,
+    "topic": "전송 계층의 포트와 프로토콜 특성",
+    "learningObjective": "전송 계층이 포트를 제공하여 프로그램들이 통신할 수 있게 하는 역할을 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "전송 계층이 제공하는 역할로 가장 적절한 설명은 무엇입니까?",
+    "options": [
+      "네트워크 경로를 선택하여 패킷을 목적지까지 전달합니다.",
+      "TCP와 UDP를 통해 포트를 열어 프로그램들이 전송을 할 수 있도록 제공합니다.",
+      "프레임에 MAC 주소를 붙여 물리 매체로 안전하게 전달합니다.",
+      "데이터 표현의 독립성을 위해 파일 인코딩과 압축을 수행합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "자료에서 전송 계층은 'TCP와 UDP 프로토콜을 통해 통신을 활성화한다. 포트를 열어두고, 프로그램들이 전송을 할 수 있도록 제공해준다'고 설명되어 있으므로, 포트를 제공해 프로그램 통신을 지원하는 것이 전송 계층의 역할입니다.",
+    "optionExplanations": [
+      "오답: 경로 선택과 패킷 전달은 네트워크 계층의 역할입니다 (lines 35-41).",
+      "정답: 전송 계층 설명에 TCP/UDP와 포트를 열어 프로그램들이 통신하도록 제공한다는 문장이 직접 있습니다 (lines 47-51).",
+      "오답: 프레임과 MAC 주소는 데이터 링크 계층의 기능입니다 (lines 25-32).",
+      "오답: 파일 인코딩·압축은 표현 계층의 기능으로 전송 계층과는 다른 계층입니다 (lines 67-74)."
+    ],
+    "keywords": [
+      "전송 계층",
+      "TCP",
+      "UDP",
+      "포트",
+      "프로그램 통신"
+    ],
+    "sourceEvidence": {
+      "section": "OSI 7 계층",
+      "startLine": 47,
+      "endLine": 51,
+      "quote": "##### 4) 전송(Transport)\n\n> TCP, UDP\n\nTCP와 UDP 프로토콜을 통해 통신을 활성화한다. 포트를 열어두고, 프로그램들이 전송을 할 수 있도록 제공해준다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/OSI 7 계층.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/OSI%207%20%EA%B3%84%EC%B8%B5.md",
+    "id": "b3f859b0-242c-53c5-972b-7b0ed67a7662",
+    "review": {
+      "blind": {
+        "slot": 30,
+        "correctOptionText": "TCP와 UDP를 통해 포트를 열어 프로그램들이 전송을 할 수 있도록 제공합니다.",
+        "unambiguous": true,
+        "reason": "Source explains 전송 계층 provides TCP and UDP, opens ports so programs can perform transmissions.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 30,
+        "passed": true,
+        "reason": "정답(옵션 2)이 원문(라인 47-51)에 명시된 내용과 정확히 일치합니다. 다른 선택지들은 네트워크·데이터 링크·표현 계층 기능으로 원문 내용과 다르므로 오답으로 판별 가능합니다. 설명과 키워드도 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 31,
+    "topic": "TCP 4-way handshake의 CLOSE_WAIT 역할",
+    "learningObjective": "4-way handshake에서 CLOSE_WAIT 상태가 왜 발생하며 어떤 목적을 가지는지 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "4-way handshake 중 서버가 첫 번째 FIN을 받고 ACK를 보낸 뒤 'CLOSE_WAIT' 상태가 되는 이유로 옳은 것은 무엇입니까?",
+    "options": [
+      "서버는 FIN을 받아도 추가 데이터를 절대로 보내지 못하므로 CLOSE_WAIT 상태는 단순한 대기 상태에 불과합니다.",
+      "서버는 FIN을 받은 직후 TIME_WAIT 상태로 전환되어 연결을 최종 종료할 책임을 집니다.",
+      "서버는 FIN을 받고 ACK를 보낸 후, 남아있는 데이터를 모두 전송하기 위해 CLOSE_WAIT 상태가 됩니다.",
+      "서버는 FIN을 받고 즉시 소켓을 닫기 위해 CLOSE_WAIT 상태가 됩니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "원문은 서버가 FIN을 받고 확인했다는 ACK를 보낸 뒤 '이때 모든 데이터를 보내기 위해 CLOSE_WAIT 상태가 된다'고 명시합니다. 즉 CLOSE_WAIT는 서버가 아직 보내야 할 데이터를 완료하기 위해 연결을 닫지 않고 유지하는 상태임을 뜻합니다.",
+    "optionExplanations": [
+      "오답입니다. 소스는 CLOSE_WAIT 상태에서 서버가 '모든 데이터를 보내기 위해' 동작한다고 명시하므로, 추가 데이터를 절대로 보낼 수 없다는 설명은 잘못되었습니다 (lines 33-36).",
+      "오답입니다. 소스에 따르면 TIME_WAIT은 클라이언트가 마지막 ACK 후 기다리는 상태이며, 서버는 ACK를 받은 이후 소켓을 닫는다고 나옵니다; 서버가 FIN을 받고 즉시 TIME_WAIT이 된다는 설명은 맞지 않습니다 (lines 35-43).",
+      "정답입니다. 소스는 ACK를 보낸 이후 서버가 '이때 모든 데이터를 보내기 위해 CLOSE_WAIT 상태가 된다'고 명시하여 CLOSE_WAIT의 목적을 분명히 설명합니다 (lines 33-36).",
+      "오답입니다. 소스는 CLOSE_WAIT 상태가 '모든 데이터를 보내기 위해' 이루어진다고 말하며 즉시 소켓을 닫기 위한 상태라고 하지 않습니다 (lines 33-36)."
+    ],
+    "keywords": [
+      "CLOSE_WAIT",
+      "FIN",
+      "ACK",
+      "연결 해제"
+    ],
+    "sourceEvidence": {
+      "section": "TCP 3 way handshake & 4 way handshake.md",
+      "startLine": 33,
+      "endLine": 39,
+      "quote": "1) 클라이언트는 서버에게 연결을 종료한다는 FIN 플래그를 보낸다.\n\n2) 서버는 FIN을 받고, 확인했다는 ACK를 클라이언트에게 보낸다. (이때 모든 데이터를 보내기 위해 CLOSE_WAIT 상태가 된다)\n\n3) 데이터를 모두 보냈다면, 연결이 종료되었다는 FIN 플래그를 클라이언트에게 보낸다.\n\n4) 클라이언트는 FIN을 받고, 확인했다는 ACK를 서버에게 보낸다. (아직 서버로부터 받지 못한 데이터가 있을 수 있으므로 TIME_WAIT을 통해 기다린다.)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP 3 way handshake & 4 way handshake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%203%20way%20handshake%20%26%204%20way%20handshake.md",
+    "id": "9a3cb9b7-ca33-5261-81bd-cb8a4a049320",
+    "review": {
+      "blind": {
+        "slot": 31,
+        "correctOptionText": "서버는 FIN을 받고 ACK를 보낸 후, 남아있는 데이터를 모두 전송하기 위해 CLOSE_WAIT 상태가 됩니다.",
+        "unambiguous": true,
+        "reason": "원문에서 2) 서버는 FIN을 받고, 확인했다는 ACK를 클라이언트에게 보낸다. (이때 모든 데이터를 보내기 위해 CLOSE_WAIT 상태가 된다)라고 명시되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 31,
+        "passed": true,
+        "reason": "정답(3)과 각 선택지 설명이 원문(라인 33-39)의 '이때 모든 데이터를 보내기 위해 CLOSE_WAIT 상태가 된다' 문구를 정확히 반영함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 32,
+    "topic": "하이브리드 암호화(SSL 시초) 절차",
+    "learningObjective": "하이브리드 방식에서 공개키와 대칭키가 어떻게 순차적으로 사용되는지 비교하여 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "하이브리드 암호화 방식(SSL 시초)의 일반적인 순서로 옳은 것은 무엇입니까?",
+    "options": [
+      "A와 B가 서로의 비밀키를 교환한 뒤, 공개키로 계속 통신을 암호화한다.",
+      "A가 자신의 대칭키를 공개키로 암호화해 B에게 주면, B는 같은 대칭키로 공개키 암호화를 계속 사용한다.",
+      "대칭키와 공개키를 혼합하면 공개키 암호화의 속도 향상을 위해 이후 통신을 공개키로만 수행한다.",
+      "A가 B의 공개키로 대칭키를 암호화해 전송하면, B는 비밀키로 이를 복호화하고 그 대칭키로 이후 통신을 암호화한다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서의 하이브리드 설명은 A가 B의 공개키로 대칭키를 암호화하여 보내고, B가 자신의 비밀키로 복호화한 뒤 그 대칭키로 이후 통신을 암호화·복호화한다고 설명합니다. 즉 초기에만 공개키를 사용하고 이후에는 대칭키로 통신합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 비밀키는 공개키와 쌍을 이루며 서로의 비밀키를 교환하지 않으며, 공개키로 계속 암호화한다고 하지 않습니다.",
+      "틀렸습니다. A가 자신의 대칭키를 공개키로 암호화해 보내는 흐름은 문서에 제시된 방식과 다르며 표현이 혼동되어 있습니다.",
+      "틀렸습니다. 문서는 공개키는 초기 대칭키 전달에만 사용하고 이후에는 대칭키로 통신을 계속한다고 명시합니다.",
+      "정답입니다. 본문 순서와 일치합니다: 공개키로 대칭키를 안전하게 전달한 뒤, 전달된 대칭키로 계속 통신합니다."
+    ],
+    "keywords": [
+      "하이브리드",
+      "SSL",
+      "대칭키 전달",
+      "공개키"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/대칭키 & 공개키.md",
+      "startLine": 48,
+      "endLine": 56,
+      "quote": "```\n1. A가 B의 공개키로 암호화 통신에 사용할 대칭키를 암호화하고 B에게 보냄\n2. B는 암호문을 받고, 자신의 비밀키로 복호화함\n3. B는 A로부터 얻은 대칭키로 A에게 보낼 평문을 암호화하여 A에게 보냄\n4. A는 자신의 대칭키로 암호문을 복호화함\n5. 앞으로 이 대칭키로 암호화를 통신함\n```\n\n즉, 대칭키를 주고받을 때만 공개키 암호화 방식을 사용하고 이후에는 계속 대칭키 암호화 방식으로 통신하는 것!"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/대칭키 & 공개키.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%8C%80%EC%B9%AD%ED%82%A4%20%26%20%EA%B3%B5%EA%B0%9C%ED%82%A4.md",
+    "id": "f15032a5-7db2-5ad2-b2bf-49e22b9eab2b",
+    "review": {
+      "blind": {
+        "slot": 32,
+        "correctOptionText": "A가 B의 공개키로 대칭키를 암호화해 전송하면, B는 비밀키로 이를 복호화하고 그 대칭키로 이후 통신을 암호화한다.",
+        "unambiguous": true,
+        "reason": "본문의 하이브리드(SSL) 순서와 문장이 일치함: 공개키로 대칭키를 보내고 수신자가 비밀키로 복호화 후 대칭키로 통신함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 32,
+        "passed": true,
+        "reason": "정답(옵션 4)은 본문 절차와 정확히 일치: A가 B의 공개키로 대칭키를 암호화 전송하고 B가 비밀키로 복호화한 뒤 그 대칭키로 이후 통신을 수행한다고 되어 있음. 다른 선택지는 문서의 설명과 일치하지 않음."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 33,
+    "topic": "TLD의 역할",
+    "learningObjective": "TLD(Top Level DNS)의 반환값과 역할을 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "Root DNS가 받은 질의에 대해 TLD(Top Level DNS)의 주소를 반환하면, TLD는 다음에 어떤 정보를 반환합니까?",
+    "options": [
+      "해당 도메인에 권한이 있는 Authoritative DNS의 주소를 반환합니다.",
+      "최종 목적지 IP 주소를 직접 반환합니다.",
+      "클라이언트의 hosts 파일 내용을 반환합니다.",
+      "DNS 리쿼서의 로컬 캐시를 초기화하는 명령을 반환합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에 따르면 TLD는 도메인에 권한이 있는 Authoritative DNS의 주소를 반환한다고 명시되어 있으므로, TLD는 권한 있는 네임서버의 주소를 반환하는 역할을 합니다.",
+    "optionExplanations": [
+      "정답: 문서에서 TLD는 Authoritative DNS의 주소를 반환한다고 직접 서술합니다 (lines 17-20).",
+      "오답: 최종 IP 주소는 Authoritative DNS가 반환한다고 문서에 되어 있으며 TLD가 직접 IP를 주는 것은 아닙니다 (lines 17-22).",
+      "오답: hosts 파일은 로컬 파일이며 TLD가 해당 내용을 반환한다는 설명은 없습니다 (lines 9-11, 17-20).",
+      "오답: 캐시 초기화 명령을 반환한다는 내용은 문서에 없으며 TLD의 역할이 아닙니다 (lines 17-20)."
+    ],
+    "keywords": [
+      "TLD",
+      "Authoritative DNS",
+      "네임서버"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/DNS.md",
+      "startLine": 17,
+      "endLine": 20,
+      "quote": "- Root DNS는 도메인 주소의 최상위 계층을 확인하여 TLD(Top Level DNS)의 주소를 반환 합니다\n4. DNS는 TLD에 요청을 보냅니다\n   - Root DNS로 부터 반환받은 주소를 통해 요청을 보냅니다\n   - TLD는 도메인에 권한이 있는 Authoritative DNS의 주소를 반환 합니다"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/DNS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/DNS.md",
+    "id": "c9713858-a263-5923-ae5c-1d0250cef7ba",
+    "review": {
+      "blind": {
+        "slot": 33,
+        "correctOptionText": "해당 도메인에 권한이 있는 Authoritative DNS의 주소를 반환합니다.",
+        "unambiguous": true,
+        "reason": "Source: \"TLD는 도메인에 권한이 있는 Authoritative DNS의 주소를 반환 합니다\" — TLD가 반환하는 것은 Authoritative DNS 주소임.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 33,
+        "passed": true,
+        "reason": "정답(옵션 1, Authoritative DNS의 주소 반환)은 원문에 명확히 기술되어 있어 정답임이 증명됩니다. 나머지 선택지는 문서에 근거가 없어 배제됩니다. 난이도(MEDIUM)와 학습목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 34,
+    "topic": "UDP의 신뢰성 보완",
+    "learningObjective": "UDP의 비신뢰성이 발생할 때 애플리케이션 수준에서 타임아웃과 재전송으로 보완하는 방법을 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "UDP는 전송 계층에서 '신뢰성 없는' 특성을 가지므로 데이터 손실·중복·순서 뒤바뀜이 발생할 수 있습니다. 애플리케이션이 이러한 UDP의 한계를 직접 보완하려면 어떤 방법을 사용하는 것이 문서에서 제시한 적절한 접근 방식입니까?",
+    "options": [
+      "슬라이딩 윈도우와 같은 복잡한 흐름 제어 알고리즘을 UDP 자체에 추가하여 신뢰성을 만든다.",
+      "애플리케이션 레이어에서 타임아웃을 두고 응답이 없으면 재전송을 수행하는 메커니즘을 구현한다.",
+      "UDP 헤더에 3-way handshake를 추가하여 연결을 수립한 뒤 신뢰성을 확보한다.",
+      "UDP의 체크섬을 더 강력한 오류 정정 코드로 교체하여 자동으로 재전송을 수행하게 한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서는 UDP가 TCP처럼 자동으로 손실·중복·순서 문제를 보정하지 않으며, 이러한 경우 애플리케이션이 처리해야 한다고 설명합니다. 또한 DNS 예시에서 UDP의 신뢰성 부족은 애플리케이션 레이어에서 타임아웃이나 재전송을 추가함으로써 보완할 수 있다고 명시하고 있습니다. 따라서 애플리케이션 수준에서 타임아웃을 설정하고 응답이 없을 때 재전송하는 방식이 문서가 제시한 직접적인 보완책입니다.",
+    "optionExplanations": [
+      "문서는 애플리케이션 레이어에서 신뢰성을 추가할 수 있다고 설명하지만, 슬라이딩 윈도우를 UDP 자체에 추가하는 방법은 문서에서 제시된 보완책이 아닙니다.",
+      "정답: 문서에서 UDP의 신뢰성 부족은 '어플리케이션에서 처리'한다고 하고, 예로 'Timeout 추가나, resend 작업을 통해' 보완할 수 있음을 명시하고 있습니다.",
+      "문서에는 UDP에 3-way handshake를 추가하는 방안이 언급되어 있지 않습니다. 3-way handshake는 TCP의 연결성 특징이며 문서에서는 UDP의 장점으로 오버헤드가 없음을 들고 있습니다.",
+      "문서에서는 UDP가 체크섬을 포함한다고만 설명하고 있으며, 체크섬을 교체하여 자동 재전송을 수행한다는 기술적 대안이나 언급은 없습니다."
+    ],
+    "keywords": [
+      "UDP",
+      "재전송",
+      "타임아웃",
+      "비신뢰성",
+      "애플리케이션 레이어"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/UDP.md",
+      "startLine": 26,
+      "endLine": 27,
+      "quote": "- TCP : 데이터의 분실, 중복, 순서가 뒤바뀜 등을 자동으로 보정해줘서 송수신 데이터의 정확한 전달을 할 수 있도록 해준다.\n  - UDP : IP가 제공하는 정도의 수준만을 제공하는 간단한 IP 상위 계층의 프로토콜이다. TCP와는 다르게 에러가 날 수도 있고, 재전송이나 순서가 뒤바뀔 수도 있어서 이 경우, 어플리케이션에서 처리하는 번거로움이 존재한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "05432465-fe1e-5b51-a523-c956121bd9c1",
+    "review": {
+      "blind": {
+        "slot": 34,
+        "correctOptionText": "애플리케이션 레이어에서 타임아웃을 두고 응답이 없으면 재전송을 수행하는 메커니즘을 구현한다.",
+        "unambiguous": true,
+        "reason": "Source explicitly states UDP reliability can be provided at the application layer using timeout and resend mechanisms (\"Timeout 추가나, resend 작업을 통해\").",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 34,
+        "passed": true,
+        "reason": "Correct answer (2) is directly supported by the source which explicitly states application-layer timeout and resend (재전송) as the remedy; all three distractors are not supported by the source (no mention of adding sliding-window to UDP, no suggestion to add TCP-style 3-way handshake to UDP, and checksum discussion is limited to detection not automatic retransmission)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 35,
+    "topic": "DNS와 UDP의 선택 이유 비교",
+    "learningObjective": "DNS가 UDP를 사용하는 여러 이유(오버헤드, 크기, 애플리케이션 처리)를 비교할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "DNS가 일반적으로 UDP를 사용하는 이유로 문서에 언급된 내용 중 올바르지 않은 것은 무엇입니까?",
+    "options": [
+      "UDP는 3-way handshake가 없어 연결 유지 오버헤드가 없기 때문입니다.",
+      "DNS 요청은 보통 UDP 세그먼트에 들어갈 만큼 작기 때문입니다.",
+      "UDP는 완전한 신뢰성을 제공하므로 응용층에서 추가 처리를 할 필요가 없습니다.",
+      "응답 손실 시 응용 계층에서 타임아웃이나 재전송으로 처리할 수 있기 때문입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 UDP가 not reliable하다고 명시하고 있으며, 신뢰성은 응용 계층에서 추가할 수 있다고 되어 있습니다. 따라서 'UDP가 완전한 신뢰성을 제공한다'는 설명은 문서 내용과 모순됩니다.",
+    "optionExplanations": [
+      "문서에 UDP는 3-way handshake가 필요 없어 연결 유지 오버헤드가 없다는 점이 DNS 사용 이유로 언급되어 있습니다.",
+      "문서에 DNS Request가 UDP segment에 담길 정도로 작아서 UDP를 사용한다고 명시되어 있습니다.",
+      "정답입니다. 문서에서는 UDP가 신뢰성이 없고 필요하면 응용 계층에서 타임아웃·재전송 등으로 신뢰성을 구현할 수 있다고 되어 있습니다.",
+      "문서에 응답 손실은 응용 계층에서 제어(타임아웃·재전송 등)할 수 있다고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "DNS",
+      "UDP 선택 이유",
+      "신뢰성"
+    ],
+    "sourceEvidence": {
+      "section": "UDP.md",
+      "startLine": 36,
+      "endLine": 38,
+      "quote": "- Request의 양이 작음 -> UDP Request에 담길 수 있다.\n  - 3 way handshaking으로 연결을 유지할 필요가 없다. (오버헤드 발생)\n  - Request에 대한 손실은 Application Layer에서 제어가 가능하다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "d7fd4f8f-fff7-52ea-8977-8c3e8dd6faf3",
+    "review": {
+      "blind": {
+        "slot": 35,
+        "correctOptionText": "UDP는 완전한 신뢰성을 제공하므로 응용층에서 추가 처리를 할 필요가 없습니다.",
+        "unambiguous": true,
+        "reason": "문서에서는 UDP가 신뢰성을 제공하지 못하므로 응용층에서 타임아웃/재전송 등으로 보완할 수 있다고 되어 있어 해당 진술이 틀림.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 35,
+        "passed": true,
+        "reason": "The source gives three DNS/UDP reasons (no 3-way handshake overhead, small request fits UDP, loss handled at application layer); option 3 ('UDP provides complete reliability') contradicts the source which states UDP is not reliable. The distractors are supported by the source; explanations are accurate."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 36,
+    "topic": "Synchronous vs Asynchronous",
+    "learningObjective": "동기와 비동기의 차이를 수행 상태 관찰 관점에서 비교 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "문서의 정의에 따르면 'Synchronous' 동작의 핵심 차이는 무엇인가요?",
+    "options": [
+      "호출된 함수 B가 바로 제어권을 A에게 반환하여 A가 다른 일을 할 수 있게 한다는 것입니다.",
+      "작업 완료를 콜백으로 알려 호출자가 그 전까지 신경 쓰지 않게 하는 것입니다.",
+      "호출자가 전혀 B의 상태를 확인하지 않고 B가 알아서 처리하는 것입니다.",
+      "호출자 A가 호출된 함수 B의 수행 상태나 종료를 계속해서 신경 쓰고 확인한다는 것입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 Synchronous를 '함수 A는 함수 B가 일을 하는 중에 기다리면서, 현재 상태가 어떤지 계속 체크한다.'고 정의하고 있어, 호출자가 수행 상태를 계속 신경 쓰는 점이 핵심 차이입니다.",
+    "optionExplanations": [
+      "오답: 제어권을 바로 반환하는 것은 Non-blocking의 설명이며 동기성의 정의와 다릅니다 (라인 31).",
+      "오답: 콜백을 통한 통지는 Asynchronous의 특성으로, Synchronous와 반대되는 설명입니다 (라인 44,48).",
+      "오답: '전혀 확인하지 않는다'는 표현은 Asynchronous의 이상적 설명과 가깝지만 문서상 Synchronous와 반대되는 내용입니다 (라인 44-45).",
+      "정답: 문서의 Synchronous 정의가 호출자가 B의 상태를 계속 체크한다고 명시합니다 (라인 43)."
+    ],
+    "keywords": [
+      "Synchronous",
+      "상태 확인",
+      "동기성"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "startLine": 43,
+      "endLine": 44,
+      "quote": "- **Synchronous** : 함수 A는 함수 B가 일을 하는 중에 기다리면서, 현재 상태가 어떤지 계속 체크한다. \n- **Asynchronous** : 함수 B의 수행 상태를 B 혼자 직접 신경쓰면서 처리한다. (Callback)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+    "id": "9ea16798-6098-57e3-9ff6-87ced31c1fd3",
+    "review": {
+      "blind": {
+        "slot": 36,
+        "correctOptionText": "호출자 A가 호출된 함수 B의 수행 상태나 종료를 계속해서 신경 쓰고 확인한다는 것입니다.",
+        "unambiguous": true,
+        "reason": "문서의 Synchronous 정의: 호출자 A는 B가 일을 하는 중에 기다리며 현재 상태를 계속 체크한다고 명시.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 36,
+        "passed": true,
+        "reason": "문서의 Synchronous 정의(‘A가 B의 상태를 계속 체크하며 기다린다’)가 정답(옵션 4)에 해당하고, 나머지는 소스의 동기/비동기 설명과 반대되거나 혼동된 진술입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 37,
+    "topic": "HTTPS 핸드셰이크 - 공개키 취득",
+    "learningObjective": "클라이언트가 서버의 공개키를 어떻게 얻는지 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 브라우저(클라이언트)가 A서버의 공개키를 얻는 과정에서 브라우저가 이미 알고 있는 것은 무엇이며, 이를 통해 어떤 작업을 수행합니까?",
+    "options": [
+      "브라우저는 CA 기업의 공개키를 이미 알고 있으며, 이를 이용해 CA가 제공한 암호화된 인증서를 해독하여 A서버의 공개키를 얻습니다.",
+      "브라우저는 A서버의 개인키를 이미 알고 있으며, 이를 이용해 인증서를 재생성합니다.",
+      "브라우저는 서버와의 사전 공유된 대칭키를 이미 알고 있으며, 이를 통해 공개키를 도출합니다.",
+      "브라우저는 TLS 세션키를 이미 알고 있으며, 이를 사용하여 CA의 인증서를 검증하지 않고 바로 세션을 시작합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 'CA 기업의 공개키는 브라우저가 이미 알고 있다'고 하고, 브라우저가 이 공개키로 암호화된(또는 CA가 개인키로 암호화한) 인증서를 해독하여 A서버의 공개키를 얻게 된다고 설명합니다 (lines 61-63).",
+    "optionExplanations": [
+      "정답: 문서에 브라우저가 CA의 공개키를 알고 있어 인증서를 해독하여 서버 공개키를 얻는다고 명시되어 있습니다 (lines 61-63, 55-56).",
+      "오답: 브라우저가 A서버의 개인키를 아는 것은 불가능하며 문서에도 그런 설명이 없습니다.",
+      "오답: 사전 공유된 대칭키로 공개키를 도출한다는 설명은 문서에 없으며, 공개키는 인증서 해독으로 얻는다고 되어 있습니다 (lines 61-63, 55-56).",
+      "오답: TLS 세션키는 인증 이후 생성되는 것이며 문서에서는 브라우저가 세션키를 사전에 알지 못한다고 설명합니다 (lines 65-71)."
+    ],
+    "keywords": [
+      "공개키",
+      "인증서",
+      "CA 공개키",
+      "브라우저"
+    ],
+    "sourceEvidence": {
+      "section": "HTTP & HTTPS.md",
+      "startLine": 61,
+      "endLine": 63,
+      "quote": "CA 기업의 공개키는 브라우저가 이미 알고있다. (세계적으로 신뢰할 수 있는 기업으로 등록되어 있기 때문에, 브라우저가 인증서를 탐색하여 해독이 가능한 것)\n\n6. 브라우저는 해독한 뒤 A서버의 공개키를 얻게 되었다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/HTTP & HTTPS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+    "id": "e96840cc-4867-5bad-9192-7f703f0f2bdd",
+    "review": {
+      "blind": {
+        "slot": 37,
+        "correctOptionText": "브라우저는 CA 기업의 공개키를 이미 알고 있으며, 이를 이용해 CA가 제공한 암호화된 인증서를 해독하여 A서버의 공개키를 얻습니다.",
+        "unambiguous": true,
+        "reason": "문서에 'CA 기업의 공개키는 브라우저가 이미 알고있다'고 하고, 이를 통해 인증서를 해독해 A서버의 공개키를 얻는다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 37,
+        "passed": true,
+        "reason": "정답(1)은 원문(라인 61-63, 55-56)이 브라우저가 CA의 공개키를 알고 있어 인증서를 해독하여 서버 공개키를 얻는다고 서술한 내용과 정확히 일치합니다. 다른 보기들은 원문에 없는 잘못된 전제입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 38,
+    "topic": "handshake 완료 확인 메커니즘",
+    "learningObjective": "TLS 핸드쉐이크에서 finished 메시지가 교환 내역의 무결성과 대칭키 기반 신뢰확립 역할을 어떻게 수행하는지 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "handshake 완료를 알리는 finished 메시지 교환에서 클라이언트와 서버는 어떤 정보를 주고받아 상호 신뢰를 확인합니까?",
+    "options": [
+      "세션 ID를 평문으로 교환하여 양측이 동일한 세션인지 확인한다",
+      "지금까지 교환된 내용을 해싱한 값들을 새로 만든 대칭키로 암호화하여 서로 비교한다",
+      "서버의 개인키로 대칭키를 암호화해 전송하고 클라이언트가 복호화해서 비교한다",
+      "클라이언트가 생성한 난수를 CA에 전송하여 CA의 서명을 확인한다"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 클라이언트가 finished 메시지로 '지금까지 보낸 교환 내역들을 해싱 후 그 값을 대칭키로 암호화하여' 보내고, 서버도 동일하게 해싱한 뒤 일치하는지 확인하고, 일치하면 server도 대칭키로 암호화한 finished를 보낸다고 설명되어 있어 상호신뢰는 해시 값을 대칭키로 암호화해 비교함으로써 확인됩니다 (lines 43-47).",
+    "optionExplanations": [
+      "세션 ID는 server hello에서 포함되지만 finished 메시지의 교환 무결성 확인은 해시값 비교로 수행되며 세션 ID 평문 교환으로 신뢰를 확인한다고 적혀 있지 않습니다 (line 23, lines 43-47).",
+      "정답: 문서는 양쪽이 교환 내용의 해시값을 대칭키로 암호화해 교환하고 비교한다고 명확히 설명합니다 (lines 43-47).",
+      "서버의 개인키로 대칭키를 암호화해 전송한다는 설명은 없고, 대칭키는 난수 교환 후 생성되며 finished는 대칭키로 암호화됩니다 (lines 31, 43-47).",
+      "문서에는 클라이언트 난수를 CA에 전송하거나 CA 서명을 확인한다는 절차는 언급되어 있지 않습니다; 난수는 서버 공개키로 암호화되어 전송됩니다 (line 31)."
+    ],
+    "keywords": [
+      "finished",
+      "해시",
+      "대칭키",
+      "무결성 확인"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TLS HandShake.md",
+      "startLine": 43,
+      "endLine": 47,
+      "quote": "7. 클라이언트는 handshake 과정이 완료되었다는 `finished` 메시지를 서버에 보내면서, 지금까지 보낸 교환 내역들을 해싱 후 그 값을 대칭키로 암호화하여 같이 담아 보내준다.\n\n   <br>\n\n8. 서버도 동일하게 교환 내용들을 해싱한 뒤 클라이언트에서 보내준 값과 일치하는 지 확인한다. 일치하면 서버도 마찬가지로  `finished` 메시지를 이번에 만든 대칭키로 암호화하여 보낸다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TLS HandShake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+    "id": "b984ecc3-fb2b-5775-a0e7-548f8fcfcba7",
+    "review": {
+      "blind": {
+        "slot": 38,
+        "correctOptionText": "지금까지 교환된 내용을 해싱한 값들을 새로 만든 대칭키로 암호화하여 서로 비교한다",
+        "unambiguous": true,
+        "reason": "원문에서 finished 메시지는 교환 내역을 해싱하고 그 값을 대칭키로 암호화하여 서로 비교한다고 명시되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 38,
+        "passed": true,
+        "reason": "정답(2)은 문서에 '교환 내역들을 해싱 후 그 값을 대칭키로 암호화하여' 서로 주고받아 비교한다고 명확히 서술되어 있어 유일한 정답입니다. 다른 보기는 문서 절차와 일치하지 않습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 39,
+    "topic": "라운드 로빈 방식",
+    "learningObjective": "라운드 로빈 로드 분배 방식의 동작 원리를 다른 방식과 구분하여 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "라운드 로빈 로드 밸런싱 방식에 대한 옳은 설명은 무엇입니까?",
+    "options": [
+      "라운드 로빈은 사용자 IP를 해싱하여 특정 사용자를 항상 같은 서버로 보냅니다.",
+      "라운드 로빈은 트래픽의 실제 부하를 실시간 측정해 최적의 서버로 보냅니다.",
+      "라운드 로빈은 CPU 스케줄링의 라운드 로빈 방식을 활용하여 순차적으로 서버에 분배합니다.",
+      "라운드 로빈은 항상 연결 수가 가장 적은 서버로만 분배합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서 라운드 로빈은 'CPU 스케줄링의 라운드 로빈 방식 활용'이라고 설명하여 순차적으로 분배하는 방식임을 나타냅니다.",
+    "optionExplanations": [
+      "오답입니다. 사용자 IP 해싱으로 항상 같은 서버로 보내는 방식은 Source 방식에 대한 설명입니다. (line 23)",
+      "오답입니다. 문서에서는 라운드 로빈이 실시간 부하 측정을 기반으로 한다고 설명하지 않습니다; 이는 다른 고급 방식에 해당할 수 있습니다. (line 21)",
+      "정답입니다. 문서에 라운드 로빈은 CPU 스케줄링의 라운드 로빈 방식을 활용한다고 명시되어 있습니다. (line 21)",
+      "오답입니다. 연결 수 기반 분배는 Least Connections 방식이며 라운드 로빈의 정의가 아닙니다. (line 22)"
+    ],
+    "keywords": [
+      "라운드 로빈",
+      "분배 방식",
+      "CPU 스케줄링"
+    ],
+    "sourceEvidence": {
+      "section": "로드 밸런싱(Load Balancing).md",
+      "startLine": 21,
+      "endLine": 21,
+      "quote": "- 라운드 로빈(Round Robin) : CPU 스케줄링의 라운드 로빈 방식 활용"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+    "id": "332d3475-f66f-5ede-bfa9-18b1a5344ec3",
+    "review": {
+      "blind": {
+        "slot": 39,
+        "correctOptionText": "라운드 로빈은 CPU 스케줄링의 라운드 로빈 방식을 활용하여 순차적으로 서버에 분배합니다.",
+        "unambiguous": true,
+        "reason": "문서의 라운드 로빈 설명: 'CPU 스케줄링의 라운드 로빈 방식 활용'과 일치함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 39,
+        "passed": true,
+        "reason": "원문(라인21)이 라운드 로빈을 CPU 스케줄링 방식으로 정의하므로 정답(옵션3)과 나머지 오답 근거가 모두 검증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 40,
+    "topic": "recvfrom의 반환값 의미",
+    "learningObjective": "Non-Blocking recvfrom 호출이 데이터를 복사한 후 반환하는 값의 의미를 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "Non-Blocking 모드에서 recvfrom 함수가 데이터를 빠른 속도로 복사한 뒤 반환할 때, 반환값은 무엇을 나타냅니까?",
+    "options": [
+      "남아있는 recvBuffer의 전체 크기를 나타냅니다.",
+      "커널이 더 이상 읽을 데이터가 없음을 나타내는 특수 코드입니다.",
+      "복사 작업에 소요된 시간(밀리초)을 나타냅니다.",
+      "복사한 데이터의 길이를 나타냅니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "본문에서는 recvfrom 함수가 데이터를 복사한 후 \"복사한 data의 길이와 함께 반환\"한다고 명시하고 있으므로 반환값은 복사한 바이트 길이를 의미합니다.",
+    "optionExplanations": [
+      "오답: 본문은 남아있는 버퍼 전체 크기를 반환한다고 하지 않습니다.",
+      "오답: 본문은 특정 특수 코드 반환(예: 더 이상 읽을 데이터 없음)을 언급하지 않고, 데이터 길이를 반환한다고 합니다.",
+      "오답: 본문은 시간 측정을 반환값으로 언급하지 않습니다.",
+      "정답: 소스는 recvfrom이 복사한 데이터의 길이와 함께 반환된다고 명확히 기술합니다. (line 47)"
+    ],
+    "keywords": [
+      "recvfrom",
+      "반환값",
+      "데이터 길이"
+    ],
+    "sourceEvidence": {
+      "section": "Blocking I/O & Non-Blocking I/O.md",
+      "startLine": 45,
+      "endLine": 47,
+      "quote": "> 이때, recvBuffer는 Kernel이 가지고 있는 메모리에 적재되어 있으므로, Memory간 복사로 인해, I/O보다 훨씬 빠른 속도로 data를 받아올 수 있음.\n\n     5. recvfrom 함수는 빠른 속도로 data를 복사한 후, 복사한 data의 길이와 함께 반환함."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking Non-Blocking IO.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%20Non-Blocking%20IO.md",
+    "id": "b480c7a8-e28a-5382-90d4-fc8c7e3700c5",
+    "review": {
+      "blind": {
+        "slot": 40,
+        "correctOptionText": "복사한 데이터의 길이를 나타냅니다.",
+        "unambiguous": true,
+        "reason": "본문은 recvfrom가 데이터를 복사한 후 복사한 data의 길이와 함께 반환한다고 명시함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 40,
+        "passed": true,
+        "reason": "정답(4)은 본문이 '복사한 data의 길이와 함께 반환'한다고 명시한 내용과 정확히 일치합니다. 다른 보기는 본문 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 41,
+    "topic": "표현 계층의 인코딩·압축·암호화 적용",
+    "learningObjective": "표현 계층의 책임(인코딩·압축·암호화)을 바탕으로 주어진 시나리오에서 어느 계층이 해당 기능을 담당하는지 판단할 수 있다",
+    "difficulty": "HARD",
+    "question": "어떤 애플리케이션이 데이터를 전송하기 전에 파일을 압축하고 암호화하여 표현 형식을 바꾸려고 합니다. 이러한 작업을 담당하는 계층은 어디입니까?",
+    "options": [
+      "표현 계층: 파일 인코딩, 포장, 압축 및 암호화를 담당합니다.",
+      "세션 계층: TCP/IP 세션 생성·제거 및 논리적 연결만 담당합니다.",
+      "데이터 링크 계층: MAC 주소 기반으로 프레임을 생성하고 흐름제어만 수행합니다.",
+      "물리 계층: 데이터를 전기적 신호로 변환하여 압축과 암호화를 수행합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "자료는 표현 계층이 '데이터 표현에 대한 독립성을 제공하고 암호화하는 역할을 담당한다'며 '파일 인코딩, 명령어를 포장, 압축, 암호화한다'고 명시합니다. 따라서 압축 및 암호화와 같은 데이터 표현 관련 작업은 표현 계층의 책임입니다.",
+    "optionExplanations": [
+      "정답: 표현 계층 설명에 파일 인코딩·포장·압축·암호화가 명시되어 있어 해당 작업이 표현 계층의 책임임을 직접 지지합니다 (lines 67-74).",
+      "오답: 세션 계층은 논리적 연결(세션)을 만들고 없애는 책임을 가지고 있으며 압축·암호화 기능은 표현 계층에 해당합니다 (lines 59-64; 67-74).",
+      "오답: 데이터 링크 계층은 MAC 주소와 프레임 처리, 오류검출·재전송·흐름제어 등을 수행하며 압축·암호화는 표현 계층 기능입니다 (lines 25-32; 67-74).",
+      "오답: 물리 계층은 데이터의 전기적 신호 변환과 전송을 담당하며, 압축·암호화와 같은 표현 변환은 수행하지 않습니다 (lines 15-21; 67-74)."
+    ],
+    "keywords": [
+      "표현 계층",
+      "압축",
+      "암호화",
+      "인코딩",
+      "데이터 표현"
+    ],
+    "sourceEvidence": {
+      "section": "OSI 7 계층",
+      "startLine": 67,
+      "endLine": 74,
+      "quote": "##### 6) 표현(Presentation)\n\n> JPEG, MPEG 등\n\n데이터 표현에 대한 독립성을 제공하고 암호화하는 역할을 담당한다.\n\n파일 인코딩, 명령어를 포장, 압축, 암호화한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/OSI 7 계층.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/OSI%207%20%EA%B3%84%EC%B8%B5.md",
+    "id": "4bbf24a5-bcc7-5902-8513-4c63eda84241",
+    "review": {
+      "blind": {
+        "slot": 41,
+        "correctOptionText": "표현 계층: 파일 인코딩, 포장, 압축 및 암호화를 담당합니다.",
+        "unambiguous": true,
+        "reason": "Source indicates 표현 계층 handles data representation independence including file encoding, packing, compression, and encryption.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 41,
+        "passed": true,
+        "reason": "정답(옵션 1)이 원문(라인 67-74)에 직접 명시된 기능(파일 인코딩·포장·압축·암호화)과 일치합니다. 다른 선택지들은 세션·데이터 링크·물리 계층 기능을 잘못 연결한 것으로 원문 근거와 충돌하므로 오답으로 확정됩니다. 난이도(HARD)와 학습목표도 적절히 구분되어 있습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 42,
+    "topic": "TIME_WAIT 존재 이유 적용",
+    "learningObjective": "TIME_WAIT 상태의 문서상 이유를 바탕으로 특정 역할을 판단할 수 있다",
+    "difficulty": "HARD",
+    "question": "문서의 설명을 바탕으로, 클라이언트 측이 TIME_WAIT 상태에서 기다는 주된 이유로 가장 적절한 설명은 무엇입니까?",
+    "options": [
+      "서버가 CLOSE_WAIT 상태에 머무는 시간을 줄이기 위해서",
+      "서버로부터 아직 도착하지 않았을 수 있는 데이터를 더 받기 위해 기다리기 위해서",
+      "서버가 ACK를 받지 못했을 때 즉시 재전송을 허용하기 위해서",
+      "클라이언트가 소켓을 더 빨리 닫아 자원을 해제하기 위해서"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 클라이언트가 마지막 ACK를 보낸 후 '아직 서버로부터 받지 못한 데이터가 있을 수 있으므로 TIME_WAIT을 통해 기다린다'고 명시되어 있습니다(라인 39). 따라서 TIME_WAIT의 문서상 이유는 추가로 도착할 수 있는 데이터를 기다리기 위한 것입니다.",
+    "optionExplanations": [
+      "TIME_WAIT의 목적을 서버 측의 CLOSE_WAIT 단축으로 설명하지 않습니다. 문서에서는 CLOSE_WAIT와 TIME_WAIT의 발생 주체와 타이밍을 별도로 설명합니다(라인 35, 39).",
+      "정답입니다. 문서에 클라이언트가 마지막 ACK를 보낸 뒤 아직 받지 못한 데이터가 있을 수 있어 TIME_WAIT으로 기다린다고 직접 서술되어 있습니다(라인 39).",
+      "문서에서 TIME_WAIT을 '재전송을 허용'을 위한 것으로 설명하지 않습니다; 해당 문장에서는 데이터 수신 대기 이유를 명시하고 있습니다(라인 39).",
+      "문서 내용과 반대입니다. TIME_WAIT은 기다리는 상태로서 즉시 소켓을 더 빨리 닫기 위한 목적이 아닙니다; 서버는 ACK를 받은 이후에 소켓을 닫는다고 합니다(라인 41-43)."
+    ],
+    "keywords": [
+      "TIME_WAIT",
+      "데이터 수신 대기",
+      "연결 해제"
+    ],
+    "sourceEvidence": {
+      "section": "source file",
+      "startLine": 39,
+      "endLine": 43,
+      "quote": "4) 클라이언트는 FIN을 받고, 확인했다는 ACK를 서버에게 보낸다. (아직 서버로부터 받지 못한 데이터가 있을 수 있으므로 TIME_WAIT을 통해 기다린다.)\n\n- 서버는 ACK를 받은 이후 소켓을 닫는다 (Closed)\n\n- TIME_WAIT 시간이 끝나면 클라이언트도 닫는다 (Closed)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP 3 way handshake & 4 way handshake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%203%20way%20handshake%20%26%204%20way%20handshake.md",
+    "id": "fdde53d1-26ce-5426-bbfb-9aad94c2ba6f",
+    "review": {
+      "blind": {
+        "slot": 42,
+        "correctOptionText": "서버로부터 아직 도착하지 않았을 수 있는 데이터를 더 받기 위해 기다리기 위해서",
+        "unambiguous": true,
+        "reason": "문서에는 클라이언트가 TIME_WAIT에서 기다하는 이유로 '아직 서버로부터 받지 못한 데이터가 있을 수 있으므로'라고 설명되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 42,
+        "passed": true,
+        "reason": "정답(클라이언트가 TIME_WAIT에서 기다리는 주된 이유는 '서버로부터 아직 도착하지 않았을 수 있는 데이터를 더 받기 위해')이 출처(라인 39)에서 직접 명시되어 있으며, 다른 선택지는 출처와 일치하지 않음."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 43,
+    "topic": "하이브리드 방식의 취약 지점 평가",
+    "learningObjective": "하이브리드(공개키로 대칭키 전달 후 대칭키로 통신)에서 남아있는 주요 공격 위험 지점을 적용하여 판단할 수 있다",
+    "difficulty": "HARD",
+    "question": "하이브리드 방식(문서의 설명대로)으로 통신을 설정한 후 공격자가 통신을 도청한다고 가정할 때, 어떤 구간에서 가장 직접적인 키 탈취 위험이 남아있습니까?",
+    "options": [
+      "공개키 방식은 자동으로 무결성과 인증을 제공하므로 키 탈취 위험은 존재하지 않는다.",
+      "MAC을 사용하면 초기 대칭키 전달 단계에서만이 아니라 이후 통신에서도 키 탈취 위험을 완전히 제거할 수 있다.",
+      "초기에 A가 B의 공개키로 암호화하여 전송하는 대칭키 전달 단계에서의 암호문 수신·탈취 가능성.",
+      "초기 공개키로 암호화하는 단계 이후 계속되는 대칭키 암호화 통신 전체 구간 전부에서 동일한 위험이 존재한다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 하이브리드 방식에서 A가 B의 공개키로 대칭키를 암호화해 전송하고 B가 비밀키로 복호화한 뒤 이후 통신은 그 대칭키로 수행된다고 설명합니다. 또한 대칭키 전달과정은 해킹 위험에 노출된다고 지적하므로(대칭키 전달의 위험), 초기 대칭키 전달 단계가 직접적인 키 탈취 위험 지점입니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서는 공개키 방식이 무결성·인증을 보장하지 못한다고 별도로 밝히므로 공개키 방식이 자동으로 키 탈취를 차단한다고 볼 수 없습니다.",
+      "틀렸습니다. MAC은 무결성·인증을 위해 사용될 수 있으나 문서에서 MAC으로 키 탈취 위험을 '완전히 제거'한다고 주장하지는 않습니다.",
+      "정답입니다. 문서에 하이브리드 절차와 '대칭키 전달과정에서 해킹 위험에 노출'된다는 설명이 있어 초기 전달 단계가 주요 취약 지점임을 보여줍니다.",
+      "틀렸습니다. 문서는 이후 통신은 대칭키로 암호화되어 빠르게 수행된다고 설명하며, 키 탈취 위험을 특별히 계속된다고 하지 않습니다; 주요 위험은 전달 과정입니다."
+    ],
+    "keywords": [
+      "하이브리드",
+      "키 전달 위험",
+      "공개키",
+      "대칭키"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/대칭키 & 공개키.md",
+      "startLine": 49,
+      "endLine": 56,
+      "quote": "1. A가 B의 공개키로 암호화 통신에 사용할 대칭키를 암호화하고 B에게 보냄\n2. B는 암호문을 받고, 자신의 비밀키로 복호화함\n3. B는 A로부터 얻은 대칭키로 A에게 보낼 평문을 암호화하여 A에게 보냄\n4. A는 자신의 대칭키로 암호문을 복호화함\n5. 앞으로 이 대칭키로 암호화를 통신함\n```\n\n즉, 대칭키를 주고받을 때만 공개키 암호화 방식을 사용하고 이후에는 계속 대칭키 암호화 방식으로 통신하는 것!"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/대칭키 & 공개키.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%8C%80%EC%B9%AD%ED%82%A4%20%26%20%EA%B3%B5%EA%B0%9C%ED%82%A4.md",
+    "id": "5a8e8eb2-b50a-5870-96fd-bc40fb4e5f60",
+    "review": {
+      "blind": {
+        "slot": 43,
+        "correctOptionText": "초기에 A가 B의 공개키로 암호화하여 전송하는 대칭키 전달 단계에서의 암호문 수신·탈취 가능성.",
+        "unambiguous": true,
+        "reason": "본문은 대칭키 전달 과정에서 해킹 위험이 있다고 지적하며, 하이브리드에서도 대칭키를 주고받는 초기 단계가 취약하다고 설명함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 43,
+        "passed": true,
+        "reason": "정답(옵션 3)은 문서 근거와 일치: 하이브리드에서 초기 대칭키 전달 단계가 해킹 위험에 노출된다고 명시. 나머지 선택지는 본문과 모순되거나(공개키가 자동으로 무결성·인증 제공한다는 주장, 전체 구간에서 동일한 위험 존재 주장) 문서에 주장되지 않은 절대적 제거( MAC으로 완전 제거) 주장을 포함함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 44,
+    "topic": "DNS 조회 역할 구분",
+    "learningObjective": "DNS 조회 과정에서 재귀적으로 요청을 보내는 쪽과 요청을 받는 쪽의 역할을 시나리오에 적용하여 구분할 수 있다",
+    "difficulty": "HARD",
+    "question": "클라이언트의 DNS가 루트·TLD·권한있는 DNS에 차례로 질의를 보내는 상황에서, 아래 역할 중 옳게 짝지어진 것은 무엇입니까?",
+    "options": [
+      "요청을 재귀적으로 보내는 쪽을 ‘네임서버’라 하며, 요청을 받는 쪽(루트·TLD·Authoritative)을 ‘DNS 리쿼서’라 합니다.",
+      "루트·TLD·Authoritative 서버만 ‘네임서버’이고, 재귀적으로 요청을 보내는 클라이언트측 DNS는 아무 호칭도 갖지 않습니다.",
+      "hosts 파일을 참조하는 로컬 파일이 ‘네임서버’ 역할을 하며, 네트워크로 요청을 보내는 쪽이 ‘DNS 리쿼서’가 아닙니다.",
+      "요청을 재귀적으로 보내는 쪽을 ‘DNS 리쿼서’라 하며, 요청을 받는 쪽(Root, TLD, Authoritative 등)을 ‘네임서버’라 합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에서는 ‘요청을 보내는 DNS’가 재귀적으로 요청을 보내므로 DNS 리쿼서라 불리고, ‘요청을 받는 DNS’를 네임서버라 칭한다고 명시합니다. 따라서 재귀적 요청을 보내는 쪽이 DNS 리쿼서이며, 루트·TLD·권한있는 서버처럼 요청을 받는 쪽이 네임서버입니다.",
+    "optionExplanations": [
+      "문서와 반대입니다. 문서에서는 요청을 보내는 쪽을 DNS 리쿼서라 하고 요청을 받는 쪽을 네임서버라 정의합니다.",
+      "문서에 따르면 재귀적으로 요청을 보내는 DNS는 명확히 ‘DNS 리쿼서’라는 호칭이 있으므로, 아무 호칭도 없다는 주장은 문서와 일치하지 않습니다.",
+      "hosts 파일은 로컬에서 이름을 매핑하는 기능을 설명하지만 문서는 hosts 파일을 네임서버로 지칭하지 않습니다; 네임서버는 네트워크로 요청을 받는 서버들을 가리킵니다.",
+      "정답입니다. 문서에 ‘요청을 보내는 DNS의 경우 재귀적으로 요청을 보내기 때문에 `DNS 리쿼서`라 지칭’하고, ‘요청을 받는 DNS를 `네임서버`라 지칭’한다고 되어 있습니다."
+    ],
+    "keywords": [
+      "DNS 리쿼서",
+      "네임서버",
+      "루트 DNS",
+      "TLD",
+      "Authoritative"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/DNS.md",
+      "startLine": 14,
+      "endLine": 24,
+      "quote": "3. DNS는 Root DNS에 요청을 보냅니다\n   - 모든 DNS에는 Root DNS의 주소가 포함 되어 있습니다\n   - 이를 통해 Root DNS에게 질의를 보내게 됩니다\n   - Root DNS는 도메인 주소의 최상위 계층을 확인하여 TLD(Top Level DNS)의 주소를 반환 합니다\n4. DNS는 TLD에 요청을 보냅니다\n   - Root DNS로 부터 반환받은 주소를 통해 요청을 보냅니다\n   - TLD는 도메인에 권한이 있는 Authoritative DNS의 주소를 반환 합니다\n5. DNS는 Authoritative DNS에 요청을 보냅니다\n   - 도메인 이름에 대한 IP 주소를 반환 합니다\n\n- 이때 요청을 보내는 DNS의 경우 재귀적으로 요청을 보내기 때문에 `DNS 리쿼서`라 지칭 하고 요청을 받는 DNS를 `네임서버`라 지칭 합니다"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/DNS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/DNS.md",
+    "id": "f40b877e-872a-5e93-ac39-bb3fe86e8652",
+    "review": {
+      "blind": {
+        "slot": 44,
+        "correctOptionText": "요청을 재귀적으로 보내는 쪽을 ‘DNS 리쿼서’라 하며, 요청을 받는 쪽(Root, TLD, Authoritative 등)을 ‘네임서버’라 합니다.",
+        "unambiguous": true,
+        "reason": "Source states: '요청을 보내는 DNS의 경우 재귀적으로 요청을 보내기 때문에 `DNS 리쿼서`라 지칭 하고 요청을 받는 DNS를 `네임서버`라 지칭 합니다.'",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 44,
+        "passed": true,
+        "reason": "Option 4 uniquely matches the source statement that the requester (재귀적으로 요청을 보내는 쪽) is called 'DNS 리쿼서' and the receivers (Root/TLD/Authoritative) are called '네임서버'; the other three options contradict that wording in the supplied source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 45,
+    "topic": "Fast Retransmit 및 Fast Recovery 적용 시 동작",
+    "learningObjective": "중복 ACK 발생 상황에서 TCP의 Fast Retransmit과 Fast Recovery의 동작을 시나리오에 적용할 수 있다",
+    "difficulty": "HARD",
+    "question": "송신자가 중간 패킷 손실로 인해 수신자로부터 동일한 ACK 순번을 3번 받았습니다. 본문에 따른 즉각적인 동작으로 가장 적절한 설명은 무엇입니까?",
+    "options": [
+      "송신자는 빠른 재전송(Fast Retransmit)을 수행하여 해당 손실 패킷을 재전송하고, 혼잡을 감지해 윈도우 크기를 절반으로 줄인 뒤 선형으로 증가시키는 Fast Recovery 동작을 수행합니다.",
+      "송신자는 아무 조치도 취하지 않고 타임아웃이 발생할 때까지 기다렸다가 그제서야 패킷을 재전송하며 윈도우를 1로 줄입니다.",
+      "송신자는 즉시 모든 연결을 닫고 재연결을 수행한 다음 처음부터 Slow Start를 다시 수행합니다.",
+      "송신자는 중복 ACK를 무시하고 윈도우를 지수적으로 증가시켜 더 많은 패킷을 전송합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 중간 패킷이 손실되면 수신측이 중복된 ACK를 보낼 수 있고, '중복된 순번의 패킷을 3개 받으면 재전송'하는 것이 Fast Retransmit의 동작이라고 설명합니다(라인 109-114). 또한 Fast Retransmit 후 Fast Recovery는 창 크기를 1로 줄이지 않고 반으로 줄이고 선형 증가시키는 방법으로 설명되어 있어(라인 114-116), 정답 옵션이 본문 설명과 일치합니다.",
+    "optionExplanations": [
+      "정답: 본문은 중복 ACK 3개를 받으면 빠른 재전송을 하고(109-114), Fast Recovery에서는 윈도우를 1로 줄이지 않고 반으로 줄여 선형 증가시킨다고 명시합니다(114-116).",
+      "오답: 타임아웃 기반 재전송과 윈도우를 1로 떨어뜨리는 동작은 Slow Start의 혼잡 발생 시 행동 또는 일반 타임아웃 처리에 해당하지만, 중복 ACK 3개일 때는 Fast Retransmit을 사용한다고 본문에 명시되어 있습니다(105-106, 109-114).",
+      "오답: 본문은 연결을 닫고 재연결하는 동작을 설명하지 않으며 Fast Retransmit/Fast Recovery로 회복한다고 설명합니다(109-116).",
+      "오답: 중복 ACK를 무시하고 지수적으로 증가시키는 행동은 본문에 없으며, 오히려 중복 ACK는 재전송 트리거로 사용된다고 되어 있습니다(109-114)."
+    ],
+    "keywords": [
+      "Fast Retransmit",
+      "Fast Recovery",
+      "중복 ACK",
+      "혼잡제어"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+      "startLine": 109,
+      "endLine": 116,
+      "quote": "- Fast Retransmit (빠른 재전송)\n    - 빠른 재전송은 TCP의 혼잡 조절에 추가된 정책이다. \n    - 패킷을 받는 쪽에서 먼저 도착해야할 패킷이 도착하지 않고 다음 패킷이 도착한 경우에도 ACK 패킷을 보내게 된다. \n    - 단, 순서대로 잘 도착한 마지막 패킷의 다음 패킷의 순번을 ACK 패킷에 실어서 보내게 되므로, 중간에 하나가 손실되게 되면 송신 측에서는 순번이 중복된 ACK 패킷을 받게 된다. 이것을 감지하는 순간 문제가 되는 순번의 패킷을 재전송 해줄 수 있다.\n    - 중복된 순번의 패킷을 3개 받으면 재전송을 하게 된다. 약간 혼잡한 상황이 일어난 것이므로 혼잡을 감지하고 window size를 줄이게 된다.\n  - Fast Recovery (빠른 회복)\n    - 혼잡한 상태가 되면 window size를 1로 줄이지 않고 반으로 줄이고 선형증가시키는 방법이다. 이 정책까지 적용하면 혼잡 상황을 한번 겪고 나서부터는 순수한 AIMD 방식으로 동작하게 된다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%20%28%ED%9D%90%EB%A6%84%EC%A0%9C%EC%96%B4%ED%98%BC%EC%9E%A1%EC%A0%9C%EC%96%B4%29.md",
+    "id": "222b46d8-a648-59ab-96a5-4f530c60c4cc",
+    "review": {
+      "blind": {
+        "slot": 45,
+        "correctOptionText": "송신자는 빠른 재전송(Fast Retransmit)을 수행하여 해당 손실 패킷을 재전송하고, 혼잡을 감지해 윈도우 크기를 절반으로 줄인 뒤 선형으로 증가시키는 Fast Recovery 동작을 수행합니다.",
+        "unambiguous": true,
+        "reason": "본문은 중복 ACK 3개를 받으면 빠른 재전송을 하고 창 크기를 줄이며 Fast Recovery(반으로 줄이고 선형 증가) 동작을 한다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 45,
+        "passed": true,
+        "reason": "Correct answer (옵션 1) is supported by lines 109–116 describing Fast Retransmit on 3 duplicate ACKs and Fast Recovery halving the window then linearly increasing; other options are not supported by the source and are contradicted by these lines."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 46,
+    "topic": "DNS에서 TCP를 사용하는 경우 적용",
+    "learningObjective": "DNS에서 UDP 대신 TCP를 사용해야 하는 구체적 상황(전송 크기·Zone transfer)을 판단할 수 있다.",
+    "difficulty": "HARD",
+    "question": "다음 중 DNS 통신에서 UDP 대신 TCP를 사용해야 하는 상황으로 문서에 명시된 것은 무엇입니까?",
+    "options": [
+      "DNS가 항상 포트 53 대신 다른 포트를 사용할 때",
+      "응답 크기가 512바이트를 초과하거나 Zone Transfer가 필요한 경우",
+      "단일 작은 쿼리와 단일 응답만 주고받을 때",
+      "응용 계층에서 타임아웃과 재전송을 이미 구현한 경우"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에 'But, TCP를 사용할 때가 있다! 크기가 512(UDP 제한)이 넘을 때, TCP를 사용해야한다.'와 'Zone transfer을 사용해야 하는 경우에는 TCP를 사용해야 함'이라고 명시되어 있어, 응답이 512바이트 초과하거나 Zone Transfer 경우에 TCP로 전환한다고 되어 있습니다.",
+    "optionExplanations": [
+      "문서에서는 DNS가 포트 53을 사용한다고 명시되어 있으며, 포트 변경이 TCP 사용 조건이라는 언급은 없습니다.",
+      "정답입니다. 문서에서는 512바이트 초과 시와 Zone Transfer(서버 간 요청)에 TCP를 사용해야 한다고 명시하고 있습니다.",
+      "작고 단일한 쿼리/응답은 오히려 UDP를 사용하는 경우로 문서에 설명되어 있습니다.",
+      "응용 계층에서 재전송을 구현했다고 해서 문서에서 TCP를 사용해야 한다고 하지 않습니다; 대신 크기 제한과 Zone Transfer가 TCP 사용 조건입니다."
+    ],
+    "keywords": [
+      "DNS",
+      "TCP 전환",
+      "512 bytes",
+      "Zone Transfer"
+    ],
+    "sourceEvidence": {
+      "section": "UDP.md",
+      "startLine": 40,
+      "endLine": 41,
+      "quote": "- But, TCP를 사용할 때가 있다! 크기가 512(UDP 제한)이 넘을 때, TCP를 사용해야한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/UDP.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+    "id": "5170fd8c-9207-579b-82f1-2609c41ab38a",
+    "review": {
+      "blind": {
+        "slot": 46,
+        "correctOptionText": "응답 크기가 512바이트를 초과하거나 Zone Transfer가 필요한 경우",
+        "unambiguous": true,
+        "reason": "문서에 '데이터가 512 bytes를 넘거나, Zone transfer 사용 시 TCP를 사용해야 한다'고 명시됨.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 46,
+        "passed": true,
+        "reason": "Source explicitly states TCP is used when size exceeds 512 bytes and for Zone Transfer, matching option 2. Other options are not supported by the source. Explanations, difficulty and learning objective align with the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 47,
+    "topic": "Applying matrix to scenarios",
+    "learningObjective": "사례(치킨집 예시)를 보고 네 가지 경우 중 어느 조합에 속하는지 판단할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "다음 치킨집 상황을 문서의 4가지 유형 중 어느 것으로 분류하는 것이 가장 옳습니까?\n상황: 주문자는 '주문 밀려서 시간 좀 걸리니 볼일 보시다 오세요'라는 답을 받고 자리를 떠나 다른 일을 하다가 사장님이 '치킨 나왔습니다'라고 직접 알려준다.",
+    "options": [
+      "Blocking & Asynchronous",
+      "Non-blocking & Synchronous",
+      "Non-blocking & Asynchronous",
+      "Blocking & Synchronous"
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서의 4번 예시(Non-blocking & Asynchronous)는 사장님이 주문을 받고 '볼일 보시다 오세요'라고 하여 주문자가 자리를 떠나 다른 일을 하다가 사장님이 직접 '치킨 나왔습니다'라고 알리는 상황으로 설명되어 있습니다. 이는 호출된 함수가 제어권을 바로 넘겨 호출자가 다른 일을 할 수 있는(Non-blocking) 동시에, 완료 통지를 호출된 쪽이 알려주는(Asynchronous) 경우입니다.",
+    "optionExplanations": [
+      "오답: Blocking & Asynchronous는 자리를 떠나지 못하고 묶여있는 상태를 설명하며 질문 상황과 맞지 않습니다 (라인 78-84).",
+      "오답: Non-blocking & Synchronous는 자리를 떠났지만 주기적으로 상태를 확인해 묻는 상황으로, 질문의 '사장님이 직접 알려줌'과 비핵심적 차이가 있습니다 (라인 90-100).",
+      "정답: 소스의 4) Non-blocking & Asynchronous 예시가 질문 상황과 동일합니다 (라인 108-115).",
+      "오답: Blocking & Synchronous는 주문자가 가게에서 서서 기다리며 상태를 계속 확인하는 경우로 질문 상황과 다릅니다 (라인 66-71)."
+    ],
+    "keywords": [
+      "사례판단",
+      "Non-blocking & Asynchronous",
+      "치킨집 예시"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "startLine": 105,
+      "endLine": 116,
+      "quote": "### 4) Non-blocking & Asynchronous\n\n```\n나 : 사장님 치킨 한마리만 포장해주세요\n사장님 : 네~ 주문 밀려서 시간 좀 걸리니까 볼일 보시다 오세요\n나 : 넹\n-- 사장님 치킨 튀기는 중--\n나 : (앉아서 다른 일 하는 중)\n...\n사장님 : 치킨 나왔습니다\n나 : 잘먹겠습니다~\n```"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+    "id": "d00575f6-2042-53c3-ad9b-223baab04413",
+    "review": {
+      "blind": {
+        "slot": 47,
+        "correctOptionText": "Non-blocking & Asynchronous",
+        "unambiguous": true,
+        "reason": "문서의 사례 4는 주문자가 자리를 떠나 다른 일을 하다가 사장님이 직접 '치킨 나왔습니다'라고 알리는 상황을 Non-blocking & Asynchronous로 제시.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 47,
+        "passed": true,
+        "reason": "제시된 치킨집 상황은 문서의 4번 예시(Non-blocking & Asynchronous)와 동일하게 서술되어 있어 정답(옵션 3)이 소스에 근거합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 48,
+    "topic": "HTTPS 한계와 인증서 신뢰",
+    "learningObjective": "신뢰되지 않은 인증서가 브라우저 경고를 발생시키는 이유를 실제 시나리오에 적용하여 설명할 수 있다",
+    "difficulty": "HARD",
+    "question": "만약 어떤 기업이 자체적으로 인증서를 발급(자가 서명)하여 HTTPS를 적용한 경우, 문서의 설명에 근거하면 브라우저가 '주의 요함' 또는 '안전하지 않은 사이트' 경고를 표시하는 근본적인 이유로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "HTTPS 자체의 암호화 알고리즘이 약해서 브라우저가 자동으로 경고를 띄웁니다.",
+      "대칭키 교환 과정에서 항상 session-key가 유출되므로 브라우저가 경고합니다.",
+      "브라우저는 모든 HTTPS 사이트에 대해 경고를 표시하도록 설계되어 있습니다.",
+      "브라우저에 신뢰된 CA로 등록된 공개키로 인증서를 검증할 수 없기 때문에 해당 인증서를 신뢰할 수 없다고 판단합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 'HTTPS도 무조건 안전한 것은 아니다. (신뢰받는 CA 기업이 아닌 자체 인증서 발급한 경우 등)'이라면서 이런 경우 브라우저에서 '주의 요함', '안전하지 않은 사이트' 같은 알림으로 주의받게 된다고 명시합니다. 이는 브라우저가 신뢰된 CA로 서명된 인증서를 통해서만 인증을 검증할 수 있기 때문임을 설명합니다 (lines 77-79, 61-63).",
+    "optionExplanations": [
+      "오답: 문서에는 HTTPS 암호화 알고리즘 자체가 약해서 브라우저가 경고를 띄운다고 적혀 있지 않습니다; 경고의 원인은 인증서 신뢰성 문제입니다 (lines 77-79).",
+      "오답: 문서에 session-key 유출이 항상 발생한다고 서술되어 있지 않으며, 경고의 근본 원인으로 제시되지 않습니다 (lines 65-73, 77-79).",
+      "오답: 문서는 브라우저가 모든 HTTPS 사이트에 경고를 표시한다고 하지 않으며, 신뢰되지 않는 인증서의 경우에 한해 경고가 발생한다고 설명합니다 (lines 77-79).",
+      "정답: 문서는 자체 발급(신뢰받지 않는 CA) 인증서의 경우 브라우저 경고가 발생한다고 명시하며, 브라우저는 신뢰된 CA의 공개키로 인증서를 검증하도록 되어 있다고 설명합니다 (lines 77-79 and 61-63)."
+    ],
+    "keywords": [
+      "자가 서명",
+      "신뢰된 CA",
+      "브라우저 경고",
+      "인증서 신뢰"
+    ],
+    "sourceEvidence": {
+      "section": "HTTP & HTTPS.md",
+      "startLine": 77,
+      "endLine": 79,
+      "quote": "HTTPS도 무조건 안전한 것은 아니다. (신뢰받는 CA 기업이 아닌 자체 인증서 발급한 경우 등)\n\n이때는 HTTPS지만 브라우저에서 `주의 요함`, `안전하지 않은 사이트`와 같은 알림으로 주의 받게 된다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/HTTP & HTTPS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+    "id": "8cdf5e33-0212-5aa7-9a17-c7b09fe7959b",
+    "review": {
+      "blind": {
+        "slot": 48,
+        "correctOptionText": "브라우저에 신뢰된 CA로 등록된 공개키로 인증서를 검증할 수 없기 때문에 해당 인증서를 신뢰할 수 없다고 판단합니다.",
+        "unambiguous": true,
+        "reason": "문서가 자체 발급(비신뢰 CA) 인증서일 때 브라우저가 경고를 표시한다고 하고, 이는 신뢰된 CA 공개키로 검증할 수 없기 때문이라고 설명함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 48,
+        "passed": true,
+        "reason": "정답(4)은 원문(라인 77-79, 61-63)이 신뢰된 CA로 등록되지 않은 자체 발급 인증서 때문에 브라우저 경고가 발생한다고 명시한 내용과 일치합니다. 다른 선택지는 원문에서 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 49,
+    "topic": "대칭키 보안과 공개키 암호화의 역할 적용",
+    "learningObjective": "공개키로 암호화된 난수 교환과 개인키 복호화 과정을 바탕으로 중간자 공격 시 대칭키 노출 가능성을 평가할 수 있다",
+    "difficulty": "HARD",
+    "question": "공격자가 클라이언트와 서버 사이에서 통신을 가로채려고 시도할 때, 문서에 근거하면 공격자가 클라이언트가 보낸 난수 바이트로부터 대칭 마스터 키를 얻기 어려운 이유는 무엇입니까?",
+    "options": [
+      "클라이언트가 생성한 난수 바이트를 서버의 공개키로 암호화해 보내고 서버만 자신의 개인키로 그 난수를 복호화하여 대칭키를 생성하기 때문입니다.",
+      "난수 바이트 자체가 공개적으로 전송되지만 대칭키는 세션 ID로만 결정되므로 난수는 무의미하기 때문입니다.",
+      "클라이언트는 난수 대신 자신의 개인키 전체를 보내므로 중간자가 복호화할 수 없기 때문입니다.",
+      "대칭키는 최초부터 공개키 암호화로 전송되므로 중간자가 공개키를 알면 곧바로 대칭키를 얻기 때문입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 클라이언트가 난수 바이트를 생성하여 '서버의 공개키로 암호화'해서 보내고(31행), 서버는 그 암호화된 난수를 자신의 개인키로 복호화한 뒤 대칭 마스터 키 생성에 활용한다고(39행) 되어 있습니다. 따라서 중간자는 서버의 개인키를 모르면 암호화된 난수로부터 대칭키를 얻기 어렵습니다.",
+    "optionExplanations": [
+      "정답: 31행과 39행에 클라이언트가 난수를 서버 공개키로 암호화해 보내고 서버가 개인키로 복호화해 대칭키를 만든다고 되어 있어 중간자가 개인키 없이 대칭키를 얻기 어렵다고 설명됩니다.",
+      "오답: 문서에서는 난수 바이트가 공개적으로 전송된다고 하지 않으며(31행, 암호화되어 전송됨), 대칭키가 세션 ID로만 결정된다고 하지 않습니다.",
+      "오답: 클라이언트가 개인키 전체를 보내는 방식은 문서에 없으며 실제로는 개인키로 임의 문자열을 암호화한다고 서술되어 있습니다(35-36행).",
+      "오답: 문서에 따르면 대칭키는 공개키 암호화로 '전송'되는 것이 아니라 난수를 공개키로 암호화해 전송하면 서버가 개인키로 복호화하고 그 난수로 대칭키를 생성한다고 되어 있어(31,39행) 중간자가 공개키만으로 대칭키를 얻는다고 하지 않습니다."
+    ],
+    "keywords": [
+      "중간자 공격",
+      "공개키 암호화",
+      "난수 바이트",
+      "개인키 복호화",
+      "대칭 마스터 키"
+    ],
+    "sourceEvidence": {
+      "section": "TLS/SSL HandShake",
+      "startLine": 31,
+      "endLine": 39,
+      "quote": "4. CA 인증서에 대한 신뢰성이 확보되었다면, 클라이언트는 난수 바이트를 생성하여 서버의 공개키로 암호화한다. 이 난수 바이트는 대칭키를 정하는데 사용이 되고, 앞으로 서로 메시지를 통신할 때 암호화하는데 사용된다.\n\n   <br>\n\n5. 만약 2번 단계에서 서버가 클라이언트 인증서를 함께 요구했다면, 클라이언트의 인증서와 클라이언트의 개인키로 암호화된 임의의 바이트 문자열을 함께 보내준다.\n\n   <br>\n\n6. 서버는 클라이언트의 인증서를 확인 후, 난수 바이트를 자신의 개인키로 복호화 후 대칭 마스터 키 생성에 활용한다."
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/TLS HandShake.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+    "id": "d31b206a-04dd-54a8-9dd2-77c147d09966",
+    "review": {
+      "blind": {
+        "slot": 49,
+        "correctOptionText": "클라이언트가 생성한 난수 바이트를 서버의 공개키로 암호화해 보내고 서버만 자신의 개인키로 그 난수를 복호화하여 대칭키를 생성하기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서의 4~6단계에서 클라이언트가 난수를 서버 공개키로 암호화해 보내며 서버만 개인키로 복호화해 대칭키를 생성한다고 서술되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 49,
+        "passed": true,
+        "reason": "원문(행 31, 39)이 '클라이언트가 난수를 서버 공개키로 암호화해 보내고 서버가 개인키로 복호화해 대칭키를 생성'한다고 명시하므로 정답·오답 근거가 원문과 일치함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 50,
+    "topic": "세션 지속성과 부하 고려한 전략 선택",
+    "learningObjective": "긴 세션과 특정 사용자의 항상 동일한 서버 연결 요구가 동시에 있을 때 적절한 로드 밸런서 전략을 선택하여 설명할 수 있다",
+    "difficulty": "HARD",
+    "question": "서비스 특성상 사용자 세션이 길고 동시에 특정 사용자를 항상 같은 서버로 연결해야 하는(세션 고정성 필요) 경우, 문서에서 권장하거나 보장하는 분배 방식으로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "로드 밸런서를 이중화(Active/Passive)하면 자동으로 사용자가 항상 같은 서버로 연결됩니다.",
+      "Source 방식을 사용하여 사용자 IP를 해싱해 항상 같은 서버로 연결되게 하는 것이 적절합니다.",
+      "라운드 로빈 방식을 사용하여 순차적으로 분배하는 것이 적절합니다.",
+      "Least Connections 방식을 사용하면 사용자가 항상 같은 서버로 연결되는 것이 보장됩니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서 Source 방식은 '사용자 IP를 해싱하여 분배'함으로써 특정 사용자가 항상 같은 서버로 연결되는 것을 보장한다고 명시합니다. 긴 세션에 대해서는 Least Connections가 권장된다는 언급이 있으나(세션 길이 관점), '항상 같은 서버'라는 요구를 충족하려면 Source 방식이 적절합니다.",
+    "optionExplanations": [
+      "오답입니다. 로드 밸런서 이중화는 장애 대비를 위한 것이며, 사용자가 항상 같은 서버로 연결되도록 자동 보장하지 않습니다. (lines 29-31)",
+      "정답입니다. 문서에 Source는 사용자 IP를 해싱하여 특정 사용자가 항상 같은 서버로 연결되는 것을 보장한다고 직접 명시되어 있어 세션 고정성 요구를 만족합니다. (line 23)",
+      "오답입니다. 라운드 로빈은 순차 분배 방식이며 특정 사용자가 항상 같은 서버로 연결되는 것을 보장하지 않습니다. (line 21)",
+      "오답입니다. Least Connections는 연결 수가 적은 서버를 선택하는 방식으로, 항상 같은 서버로 연결된다는 보장은 없습니다. (line 22)"
+    ],
+    "keywords": [
+      "Source",
+      "세션 고정성",
+      "Least Connections",
+      "전략 선택"
+    ],
+    "sourceEvidence": {
+      "section": "로드 밸런싱(Load Balancing).md",
+      "startLine": 22,
+      "endLine": 23,
+      "quote": "- Least Connections : 연결 개수가 가장 적은 서버 선택 (트래픽으로 인해 세션이 길어지는 경우 권장)\n- Source : 사용자 IP를 해싱하여 분배 (특정 사용자가 항상 같은 서버로 연결되는 것 보장)"
+    },
+    "category": "NETWORK",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+    "id": "7d93c58f-d501-5b92-9e1e-6c4badd4eb14",
+    "review": {
+      "blind": {
+        "slot": 50,
+        "correctOptionText": "Source 방식을 사용하여 사용자 IP를 해싱해 항상 같은 서버로 연결되게 하는 것이 적절합니다.",
+        "unambiguous": true,
+        "reason": "문서에 'Source : 사용자 IP를 해싱하여 분배 (특정 사용자가 항상 같은 서버로 연결되는 것 보장)'라고 명시되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 50,
+        "passed": true,
+        "reason": "원문(라인22-23)이 Source 방식을 '항상 같은 서버로 연결 보장'이라 명시해 정답(옵션2)과 오답(이중화·RR·Least Connections 관련 주장)이 모두 반증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  }
+]

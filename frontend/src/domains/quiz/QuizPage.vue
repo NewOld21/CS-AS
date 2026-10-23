@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '../auth/store'
 import { errorMessage } from '../auth/validation'
+import { ApiError } from '../../shared/api/client'
 import SafeAnswer from '../chat/SafeAnswer.vue'
+import EvidencePanel from '../chat/EvidencePanel.vue'
 import BaseButton from '../../shared/ui/BaseButton.vue'
 import StatusMessage from '../../shared/ui/StatusMessage.vue'
 import {
@@ -11,22 +13,31 @@ import {
   createContextChat,
   createGeneralChat,
   getChatMessages,
+  getQuiz,
+  generateQuiz,
+  recoverGeneration,
   listChatSessions,
   listCategories,
   listQuizzes,
-  safeSourceUrl,
   submitAttempt,
   type Attempt,
   type Category,
   type ChatAnswer,
   type ChatSession,
   type Quiz,
+  type Source,
 } from './api'
 
 const auth = useAuth()
 const router = useRouter()
+const route = useRoute()
+const pendingAttempt = ref<{ key: string; option: string } | null>(null)
+function attemptStorageKey() {
+  return `csas:attempt:${auth.user?.id}:${quiz.value?.id}:${route.query.retry_of_attempt_id ?? ''}`
+}
 const categories = ref<Category[]>([])
 const category = ref('')
+const difficulty = ref('')
 const quizzes = ref<Quiz[]>([])
 const index = ref(0)
 const selected = ref('')
@@ -39,6 +50,69 @@ const chatSession = ref('')
 const chatQuestion = ref('왜 틀렸어?')
 const chatBusy = ref(false)
 const chatFailure = ref('')
+const generating = ref(false)
+const generationNotice = ref('')
+function generationKey() {
+  return `csas:generation:${auth.user?.id}:${chatSession.value}`
+}
+function showGenerated(response: import('./api').GenerationResult) {
+  if (response.status === 'ready' && response.quiz) {
+    quizzes.value = [
+      response.quiz,
+      ...quizzes.value.filter((item) => item.id !== response.quiz!.id),
+    ]
+    index.value = 0
+    selected.value = ''
+    result.value = null
+    generationNotice.value = '검증 단계를 통과한 AI 생성 문제입니다. 답안을 제출해 확인해 보세요.'
+  } else {
+    generationNotice.value =
+      response.status === 'insufficient_evidence'
+        ? '문제를 만들 근거가 부족합니다.'
+        : '문제 검증을 통과하지 못했습니다. 후보는 공개하지 않습니다.'
+  }
+}
+async function generateRelated() {
+  if (!chatSession.value || generating.value) return
+  generating.value = true
+  generationNotice.value = ''
+  const pending = sessionStorage.getItem(generationKey())
+  const key = pending || crypto.randomUUID()
+  sessionStorage.setItem(generationKey(), key)
+  const recent = [...messages.value].reverse().find((item) => item.answer?.concept_ids.length)
+  try {
+    let response
+    if (pending) {
+      try {
+        response = await recoverGeneration(key)
+      } catch (error) {
+        if (!(error instanceof ApiError) || error.status !== 404) throw error
+      }
+    }
+    response ??= await generateQuiz(recent?.answer?.concept_ids ?? [], chatSession.value, key)
+    showGenerated(response)
+    sessionStorage.setItem(generationKey() + ':last', key)
+    sessionStorage.removeItem(generationKey())
+  } catch (error) {
+    if (
+      error instanceof ApiError &&
+      [
+        'GENERATION_FAILED',
+        'RAG_TIMEOUT',
+        'RAG_UNAVAILABLE',
+        'RAG_FAILED',
+        'GENERATION_SAVE_FAILED',
+        'GENERATION_INVALID',
+        'DUPLICATE_GENERATED_QUIZ',
+      ].includes(error.code)
+    )
+      sessionStorage.removeItem(generationKey())
+    generationNotice.value =
+      errorMessage(error) + ' 같은 요청은 다시 확인하며 중복 생성하지 않습니다.'
+  } finally {
+    generating.value = false
+  }
+}
 const chatSessions = ref<ChatSession[]>([])
 const messages = ref<
   Array<{
@@ -48,6 +122,12 @@ const messages = ref<
     answer?: ChatAnswer
   }>
 >([])
+const evidence = ref<Source | null>(null)
+const evidenceSources = ref<Source[]>([])
+function showEvidence(source: Source, sources: Source[]) {
+  evidence.value = source
+  evidenceSources.value = sources
+}
 const quiz = computed(() => quizzes.value[index.value] ?? null)
 
 async function start() {
@@ -60,7 +140,18 @@ async function start() {
       return
     }
     categories.value = await listCategories()
-    if (categories.value.length) await chooseCategory(categories.value[0]!.id)
+    if (typeof route.query.quiz_id === 'string') {
+      quizzes.value = [await getQuiz(route.query.quiz_id)]
+      resetQuestion()
+    } else if (categories.value.length) await chooseCategory(categories.value[0]!.id)
+    if (typeof route.query.chat_session_id === 'string') {
+      await loadSessions()
+      const session = chatSessions.value.find((item) => item.id === route.query.chat_session_id)
+      if (session) {
+        chatOpen.value = true
+        await selectChat(session)
+      }
+    }
   } catch (error) {
     failure.value = errorMessage(error)
   } finally {
@@ -70,24 +161,63 @@ async function start() {
 async function chooseCategory(value: string) {
   category.value = value
   failure.value = ''
-  const page = await listQuizzes(value)
-  quizzes.value = page.items
-  index.value = 0
-  resetQuestion()
+  loading.value = true
+  try {
+    const page = await listQuizzes(value, difficulty.value)
+    const items = [...page.items]
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[items[i], items[j]] = [items[j]!, items[i]!]
+    }
+    quizzes.value = items
+    index.value = 0
+    resetQuestion()
+  } catch (error) {
+    failure.value = errorMessage(error)
+  } finally {
+    loading.value = false
+  }
 }
 function resetQuestion() {
+  pendingAttempt.value = null
   selected.value = ''
   result.value = null
   chatOpen.value = false
   chatSession.value = ''
   messages.value = []
+  const saved = sessionStorage.getItem(attemptStorageKey())
+  if (saved) {
+    try {
+      const value = JSON.parse(saved)
+      if (
+        typeof value.key === 'string' &&
+        quiz.value?.options.some((option) => option.id === value.option)
+      ) {
+        pendingAttempt.value = value
+        selected.value = value.option
+      } else sessionStorage.removeItem(attemptStorageKey())
+    } catch {
+      sessionStorage.removeItem(attemptStorageKey())
+    }
+  }
 }
 async function submit() {
   if (!quiz.value || !selected.value || busy.value) return
   busy.value = true
   failure.value = ''
   try {
-    result.value = await submitAttempt(quiz.value.id, selected.value)
+    pendingAttempt.value ??= { key: crypto.randomUUID(), option: selected.value }
+    sessionStorage.setItem(attemptStorageKey(), JSON.stringify(pendingAttempt.value))
+    result.value = await submitAttempt(
+      quiz.value.id,
+      pendingAttempt.value.option,
+      pendingAttempt.value.key,
+      quiz.value.id === route.query.quiz_id && typeof route.query.retry_of_attempt_id === 'string'
+        ? route.query.retry_of_attempt_id
+        : undefined,
+    )
+    sessionStorage.removeItem(attemptStorageKey())
+    pendingAttempt.value = null
   } catch (error) {
     failure.value = errorMessage(error)
   } finally {
@@ -145,6 +275,17 @@ async function selectChat(session: ChatSession) {
           }
         : undefined,
   }))
+  const pending =
+    sessionStorage.getItem(generationKey()) || sessionStorage.getItem(generationKey() + ':last')
+  if (pending) {
+    try {
+      showGenerated(await recoverGeneration(pending))
+      sessionStorage.removeItem(generationKey())
+    } catch {
+      generationNotice.value =
+        '이전 생성 요청을 확인 중입니다. 같은 요청으로 다시 확인할 수 있습니다.'
+    }
+  }
 }
 async function newGeneralChat() {
   chatFailure.value = ''
@@ -203,7 +344,7 @@ onMounted(start)
     </div>
     <StatusMessage v-else-if="failure && !quiz" kind="error">{{ failure }}</StatusMessage>
     <template v-else>
-      <nav class="category-tabs" aria-label="CS 분야 선택">
+      <nav v-if="!route.query.quiz_id" class="category-tabs" aria-label="CS 분야 선택">
         <button
           v-for="item in categories"
           :key="item.id"
@@ -213,14 +354,25 @@ onMounted(start)
           {{ item.name }} <span>{{ item.quiz_count }}</span>
         </button>
       </nav>
+      <label v-if="!route.query.quiz_id" class="quiz-filter">
+        난이도
+        <select v-model="difficulty" @change="chooseCategory(category)">
+          <option value="">전체 난이도</option>
+          <option value="EASY">쉬움</option>
+          <option value="MEDIUM">보통</option>
+          <option value="HARD">어려움</option>
+        </select>
+        <span>한 바퀴를 마칠 때까지 같은 문제가 반복되지 않습니다.</span>
+      </label>
       <section v-if="quiz" class="learning-layout">
         <article class="quiz-card" aria-labelledby="quiz-stem">
           <div class="quiz-meta">
+            <span v-if="quiz.origin === 'AI_GENERATED'">AI 생성 문제 · 개인 학습</span>
             <span class="mono">Q {{ index + 1 }} / {{ quizzes.length }}</span
             ><span>{{ quiz.difficulty }}</span>
           </div>
           <h2 id="quiz-stem">{{ quiz.stem }}</h2>
-          <fieldset :disabled="busy || !!result">
+          <fieldset :disabled="busy || !!result || !!pendingAttempt">
             <legend class="sr-only">답안 선택</legend>
             <label
               v-for="option in quiz.options"
@@ -248,15 +400,25 @@ onMounted(start)
           >
             <strong>{{ result.is_correct ? '정답이에요.' : '다시 연결해 볼 지점이에요.' }}</strong>
             <p>{{ result.explanation }}</p>
+            <button
+              v-for="source in result.sources"
+              :key="source.chunk_id"
+              type="button"
+              @click="showEvidence(source, result.sources)"
+            >
+              {{ source.title }} · 생성 근거 보기
+            </button>
           </div>
           <div class="quiz-actions">
             <BaseButton variant="secondary" @click="openHistory">이전 대화</BaseButton>
-            <BaseButton v-if="!result" :disabled="!selected" :loading="busy" @click="submit"
-              >답안 제출</BaseButton
-            >
+            <BaseButton v-if="!result" :disabled="!selected" :loading="busy" @click="submit">{{
+              pendingAttempt ? '제출 결과 다시 확인' : '답안 제출'
+            }}</BaseButton>
             <template v-else
               ><BaseButton @click="openChat">AS에게 질문하기</BaseButton
-              ><BaseButton variant="secondary" @click="next">다음 문제</BaseButton></template
+              ><BaseButton v-if="!route.query.quiz_id" variant="secondary" @click="next"
+                >다음 문제</BaseButton
+              ><RouterLink v-else to="/me/wrong-answers">오답노트 확인</RouterLink></template
             >
           </div>
         </article>
@@ -297,16 +459,16 @@ onMounted(start)
               :class="['message', message.role, { failed: message.status === 'failed' }]"
             >
               <span class="mono">{{ message.role === 'user' ? 'YOU' : 'AS' }}</span
-              ><SafeAnswer :content="message.text" />
+              ><SafeAnswer
+                :content="message.text"
+                :sources="message.answer?.sources"
+                @evidence="showEvidence($event, message.answer!.sources)"
+              />
               <ul v-if="message.answer?.sources.length" class="source-list">
                 <li v-for="source in message.answer.sources" :key="source.chunk_id">
-                  <a
-                    v-if="safeSourceUrl(source.url)"
-                    :href="safeSourceUrl(source.url)!"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >{{ source.title }} ↗</a
-                  ><span v-else>{{ source.title }} · URL 확인 불가</span>
+                  <button type="button" @click="showEvidence(source, message.answer!.sources)">
+                    {{ source.title }} · 근거 보기
+                  </button>
                 </li>
               </ul>
             </article>
@@ -315,6 +477,14 @@ onMounted(start)
             </div>
           </div>
           <StatusMessage v-if="chatFailure" kind="error">{{ chatFailure }}</StatusMessage>
+          <StatusMessage v-if="generationNotice">{{ generationNotice }}</StatusMessage>
+          <BaseButton
+            v-if="messages.some((item) => item.answer?.status === 'answered')"
+            :disabled="chatBusy || generating"
+            :loading="generating"
+            @click="generateRelated"
+            >관련 퀴즈 만들기</BaseButton
+          >
           <form class="chat-form" @submit.prevent="sendQuestion">
             <label for="chat-question" class="sr-only">AS 질문</label
             ><textarea
@@ -335,5 +505,32 @@ onMounted(start)
       </section>
       <div v-else class="learn-state">이 분야에 학습 가능한 문제가 아직 없습니다.</div>
     </template>
+    <EvidencePanel
+      v-if="evidence"
+      :source="evidence"
+      :sources="evidenceSources"
+      @select="evidence = $event"
+      @close="evidence = null"
+    />
   </main>
 </template>
+
+<style scoped>
+.quiz-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-muted, #a8b6c7);
+  font-size: 0.875rem;
+}
+.quiz-filter select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #495865;
+  border-radius: 0.5rem;
+  background: #14212b;
+  color: #edf4fa;
+  font: inherit;
+}
+</style>

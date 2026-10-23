@@ -22,3 +22,7 @@ Vue는 질문·로딩·답변·근거 부족·오류·출처를 표시한다.
 검사: 입력 길이·빈 입력, 위조 출처 거부, 근거 부족, timeout, UI 상태 전환, 대표 답변 사람 검토.
 
 2026-10-22 GMS `gpt-5-mini` 라이브 답변은 검색된 `POSIX threads`와 `fork` 두 청크 ID만 인용했고 URL은 Chroma 메타데이터에서 구성했다. 존재하지 않는 concept 필터는 `insufficient_evidence`를 반환했다. 전용 로컬 사용자로 Vue proxy→Spring→Python→Chroma/GMS 경로의 오답 제출과 “왜 틀렸어?” 답변·HTTPS 출처 저장을 확인했다. 이 결과는 로컬 fixture 연동 증거이며 승인 코퍼스의 의미 품질 증거는 아니다.
+
+## C24 근거 패널
+
+검증한 인용의 evidence_text/category/technology_version을 V8 snapshot으로 저장한다. 과거 인용에 본문이 없으면 미확인으로 표시하며 현재 청크로 대체하지 않는다. Vue는 HTTPS URL만 허용하고 native dialog의 Escape·포커스 복원·모바일 drawer와 다중 citation 전환을 제공한다.

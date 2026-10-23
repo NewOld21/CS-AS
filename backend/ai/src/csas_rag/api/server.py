@@ -4,7 +4,8 @@ import secrets
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from csas_rag.generation.answering import GenerationError, validate_request
+from csas_rag.generation.answering import GenerationError, RagUnavailable, validate_request
+from csas_rag.generation.quiz import validate_quiz_request
 
 
 def utc_now():
@@ -21,7 +22,7 @@ def parse_deadline(value: str) -> datetime:
     return deadline.astimezone(timezone.utc)
 
 
-def handler(service, token: str, active_index: str):
+def handler(service, token: str, active_index: str, quiz_service=None):
     class Handler(BaseHTTPRequestHandler):
         server_version = "CSAS-RAG/1"
 
@@ -42,14 +43,15 @@ def handler(service, token: str, active_index: str):
 
         def do_GET(self):
             if self.path == "/health":
-                self.send_json(200, {"status": "UP", "index_version": active_index})
+                self.send_json(200, {"status": "UP", "index_version": active_index,
+                                    **getattr(service, "runtime_status", {})})
                 return
             self.error(404, self.headers.get("X-Request-Id", "unknown"),
                        "NOT_FOUND", "Internal endpoint not found")
 
         def do_POST(self):
             request_id = self.headers.get("X-Request-Id", "unknown")
-            if self.path != "/internal/v1/answers":
+            if self.path not in ("/internal/v1/answers", "/internal/v1/quiz-candidates"):
                 self.error(404, request_id, "NOT_FOUND", "Internal endpoint not found")
                 return
             supplied = self.headers.get("Authorization", "")
@@ -60,7 +62,9 @@ def handler(service, token: str, active_index: str):
                 length = int(self.headers.get("Content-Length", "0"))
                 if not 1 <= length <= 65536:
                     raise ValueError("Invalid content length")
-                data = validate_request(json.loads(self.rfile.read(length)))
+                quiz_request = self.path == "/internal/v1/quiz-candidates"
+                validate = validate_quiz_request if quiz_request else validate_request
+                data = validate(json.loads(self.rfile.read(length)))
                 if data["request_id"] != request_id:
                     raise ValueError("Request id mismatch")
                 if data["index_version"] != active_index:
@@ -69,9 +73,16 @@ def handler(service, token: str, active_index: str):
                 if parse_deadline(data["deadline_at"]) <= datetime.now(timezone.utc):
                     self.error(504, request_id, "DEADLINE_EXCEEDED", "Request deadline exceeded")
                     return
-                self.send_json(200, service.answer(data))
+                if quiz_request:
+                    if quiz_service is None:
+                        raise GenerationError("Quiz service is unavailable")
+                    self.send_json(200, quiz_service.generate(data))
+                else:
+                    self.send_json(200, service.answer(data))
             except (ValueError, json.JSONDecodeError):
                 self.error(400, request_id, "INVALID_INPUT", "Invalid answer request")
+            except RagUnavailable as error:
+                self.error(503, request_id, error.code, "RAG configuration is incomplete")
             except GenerationError:
                 self.error(502, request_id, "PROVIDER_FAILED", "RAG provider failed")
             except TimeoutError:
@@ -82,6 +93,6 @@ def handler(service, token: str, active_index: str):
     return Handler
 
 
-def serve(service, token: str, active_index: str, host="127.0.0.1", port=8090):
-    server = ThreadingHTTPServer((host, port), handler(service, token, active_index))
+def serve(service, token: str, active_index: str, host="127.0.0.1", port=8090, quiz_service=None):
+    server = ThreadingHTTPServer((host, port), handler(service, token, active_index, quiz_service))
     server.serve_forever()

@@ -53,6 +53,20 @@ def answer_request():
 
 
 class AnsweringTests(unittest.TestCase):
+    def test_gyoogle_quiz_forces_source_filter(self):
+        class ScopedRetriever(Retriever):
+            def search(self, question, limit, concepts, **kwargs):
+                self.filters = kwargs['filters']
+                return self.rows
+        retriever = ScopedRetriever()
+        request = answer_request()
+        request['quiz_context'] = {'stem':'source quiz','options':[], 'selected_option_id':'a',
+                                   'correct_option_id':'b','explanation':'source explanation',
+                                   'concept_ids':['concept:gyoogle-1234']}
+        request['retrieval'] = {'filters':{'source_id':'wikipedia-ko'}}
+        AnswerService(retriever, Generator()).answer(request)
+        self.assertEqual(retriever.filters['source_id'], 'gyoogle')
+
     def test_answer_uses_only_retrieved_citation_metadata(self):
         result = AnswerService(Retriever(), Generator()).answer(answer_request())
         self.assertEqual(result["status"], "answered")
@@ -84,6 +98,8 @@ class AnsweringTests(unittest.TestCase):
         AnswerService(retriever, generator).answer(request)
         self.assertIn("인덱스 단점", retriever.last_question)
         self.assertIn("untrusted data", generator.system)
+        self.assertIn("존댓말", generator.system)
+        self.assertIn("even if the user", generator.system)
         self.assertIn("<evidence", generator.prompt)
 
     def test_internal_http_auth_validation_deadline_and_success(self):
