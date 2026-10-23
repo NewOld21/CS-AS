@@ -1,0 +1,2693 @@
+[
+  {
+    "slot": 1,
+    "topic": "조인이란 정의",
+    "learningObjective": "조인의 기본 정의를 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "조인이 무엇인지 가장 정확하게 설명한 것은 무엇입니까?",
+    "options": [
+      "두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 방법입니다",
+      "한 테이블의 모든 행을 다른 테이블의 컬럼으로 복사하는 방법입니다",
+      "테이블의 칼럼 이름을 자동으로 변경하는 방법입니다",
+      "데이터베이스의 인덱스를 재구성하는 방법입니다"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 조인을 \"두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 방법\"이라고 정의하고 있습니다. 따라서 첫 번째 선택지가 조인의 기본 정의와 일치합니다. 나머지 선택지는 조인의 설명과 일치하지 않습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 명시된 조인의 정의와 정확히 일치합니다.",
+      "오답입니다. 문서에서는 테이블을 복사한다는 설명이 없고, 조인은 연결하여 데이터를 검색하는 방법이라고 하였습니다.",
+      "오답입니다. 칼럼 이름 변경은 조인의 목적이나 정의로 제시되지 않았습니다.",
+      "오답입니다. 인덱스 재구성은 조인의 정의와 관련이 없습니다."
+    ],
+    "keywords": [
+      "조인 정의",
+      "테이블 연결",
+      "데이터 검색"
+    ],
+    "sourceEvidence": {
+      "section": "[Database SQL] JOIN",
+      "quote": "두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 방법"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "9bd37d72-fe61-52bf-ab3b-27b727ab6ec3",
+    "review": {
+      "blind": {
+        "slot": 1,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "Source defines JOIN as connecting two or more tables/databases to retrieve data (matches option 1)."
+      },
+      "evidenceAudit": {
+        "slot": 1,
+        "passed": true,
+        "reason": "문서에 조인을 ‘두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 방법’이라 명시되어 있어 정답·오답·설명·난이도·학습목표·한국어 표현 모두 문서와 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 2,
+    "topic": "트랜잭션에 포함되는 SQL 명령문",
+    "learningObjective": "트랜잭션에 속한 SQL 문장들의 예시를 식별할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "다음 중 트랜잭션을 구성하는 SQL 명령문 예시로 올바른 것은 무엇입니까?",
+    "options": [
+      "BACKUP DATABASE, RESTORE DATABASE, CHECKPOINT",
+      "INSERT, UPDATE, DELETE, SELECT",
+      "CREATE DATABASE, DROP DATABASE, ALTER DATABASE",
+      "GRANT, REVOKE, CREATE USER"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서 트랜잭션은 DB 상태를 변화시키기 위해 수행하는 작업 단위이며, 그 예로 SELECT, INSERT, DELETE, UPDATE와 같은 SQL 질의어를 열거하고 있습니다. 따라서 트랜잭션에 속하는 SQL 문장 예시는 INSERT, UPDATE, DELETE, SELECT입니다.",
+    "optionExplanations": [
+      "오답입니다. 백업/복구 및 체크포인트 명령들은 문서의 트랜잭션 예시 목록과 일치하지 않습니다; 문서는 트랜잭션 예시로 SQL 질의어들을 제시합니다 (lines 11-18).",
+      "정답입니다. 문서에 트랜잭션과 관련된 SQL 질의어 예시로 SELECT, INSERT, DELETE, UPDATE를 직접 나열하고 있습니다 (lines 11-18).",
+      "오답입니다. CREATE/DROP/ALTER 같은 DDL문은 데이터베이스 구조를 변경하지만, 문서에서 트랜잭션의 예시로 직접 언급한 질의어 목록과는 다릅니다 (문서의 SQL 예시는 lines 11-18).",
+      "오답입니다. 계정 권한 관련 명령어들은 트랜잭션 예시 목록에 포함되지 않았습니다; 문서는 트랜잭션 예시로 기본적인 SELECT/INSERT/DELETE/UPDATE를 제시합니다 (lines 11-18)."
+    ],
+    "keywords": [
+      "트랜잭션",
+      "SQL",
+      "INSERT",
+      "UPDATE",
+      "DELETE",
+      "SELECT"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/Transaction.md",
+      "startLine": 11,
+      "endLine": 18,
+      "quote": "상태를 변화시킨다는 것 → **SQL 질의어를 통해 DB에 접근하는 것**\n\n```\n- SELECT\n- INSERT\n- DELETE\n- UPDATE\n```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Transaction.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction.md",
+    "id": "60b92814-9543-5cfc-9052-716f33945232",
+    "review": {
+      "blind": {
+        "slot": 2,
+        "correctOptionText": "INSERT, UPDATE, DELETE, SELECT",
+        "unambiguous": true,
+        "reason": "Source lists SQL commands composing transactions as SELECT, INSERT, DELETE, UPDATE.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 2,
+        "passed": true,
+        "reason": "문서(lines 11-18)는 트랜잭션 예시로 SELECT, INSERT, DELETE, UPDATE를 직접 나열하고 있으며, 정답 옵션(2)은 그 목록과 정확히 일치합니다. 모든 오답 설명도 문서 근거로 잘 검증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 3,
+    "topic": "인덱스의 목적",
+    "learningObjective": "인덱스가 데이터베이스에서 어떤 목적으로 사용되는지 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "데이터베이스에서 인덱스를 사용하는 주된 목적은 무엇입니까?",
+    "options": [
+      "동시에 한 페이지를 수정할 수 있는 병행성을 높이기 위해서입니다.",
+      "외래키 무결성을 자동으로 보장하기 위해서입니다.",
+      "추가적인 쓰기 작업과 저장 공간을 활용하여 검색 속도를 향상시키기 위해서입니다.",
+      "테이블의 저장 공간을 줄이기 위해서입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "출처 문서에서 인덱스의 목적은 추가적인 쓰기 비용과 저장 공간을 희생하여 테이블의 검색(조회) 성능을 높이기 위한 자료구조라고 분명히 설명되어 있습니다. 따라서 '검색 속도를 향상시키기 위해'가 맞습니다. 다른 선택지는 문서에 명시된 인덱스의 장점이나 목적이 아니며, 오히려 병행성 감소나 저장공간 증가 같은 단점이 언급되어 있습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서에는 '한 페이지를 동시에 수정할 수 있는 병행성'이 줄어든다고 단점으로 명시되어 있어 병행성을 높이는 목적이 아닙니다.",
+      "틀렸습니다. 문서에는 외래키가 인덱스를 사용하는 좋은 경우로 나오지만, 인덱스가 외래키 무결성을 자동으로 보장한다는 설명은 없습니다.",
+      "정답입니다. 문서의 목적 설명에 '추가적인 쓰기 작업과 저장 공간을 활용하여 데이터베이스 테이블의 검색 속도를 향상시키기 위한 자료구조'라고 명확히 나옵니다.",
+      "틀렸습니다. 문서에서는 인덱스가 오히려 파일 크기를 증가시킨다고 언급되어 있고, 저장 공간을 줄이기 위한 목적이라고 하지 않습니다."
+    ],
+    "keywords": [
+      "목적",
+      "검색 속도",
+      "추가적 쓰기",
+      "저장 공간"
+    ],
+    "sourceEvidence": {
+      "section": "목적",
+      "quote": "추가적인 쓰기 작업과 저장 공간을 활용하여 데이터베이스 테이블의 검색 속도를 향상시키기 위한 자료구조"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "e5840065-39c5-5bb0-af8f-8935e77255c3",
+    "review": {
+      "blind": {
+        "slot": 3,
+        "position": 3,
+        "unambiguous": true,
+        "reason": "Source states the purpose is to use extra writes and storage to improve table search speed."
+      },
+      "evidenceAudit": {
+        "slot": 3,
+        "passed": true,
+        "reason": "정답(옵션 3)은 출처의 '목적' 문구와 정확히 일치하며, 나머지 선택지들은 출처 문서에서 반대(병행성 감소, 파일 크기 증가 등) 또는 언급되지 않아 오답으로 판별됩니다. 문장 표현과 난이도도 출처와 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 4,
+    "topic": "Key의 정의",
+    "learningObjective": "Key의 기본 정의를 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "데이터베이스에서 'Key'의 역할로 옳은 것은 무엇입니까?",
+    "options": [
+      "릴레이션 간의 관계를 표현하기 위해 모든 속성 값을 저장하는 제약조건이다.",
+      "데이터베이스의 저장 공간을 최적화하기 위해 테이블을 분할하는 규칙이다.",
+      "동일한 릴레이션에서 중복된 튜플을 허용하기 위한 표시자이다.",
+      "검색, 정렬시 Tuple를 구분할 수 있는 기준이 되는 Attribute이다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "정답은 Key가 튜플을 구분하는 기준이 되는 속성이라는 사실입니다. 출처 문서에서는 Key를 '검색, 정렬시 Tuple를 구분할 수 있는 기준이 되는 Attribute.'라고 정의하여 Key의 주된 역할이 튜플 식별임을 명확히 하고 있습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서에는 Key가 릴레이션 간 관계를 표현하기 위한 모든 속성 값을 저장하는 제약조건이라고 하지 않습니다.",
+      "틀렸습니다. 테이블 분할이나 저장 공간 최적화는 문서에 Key의 역할로 기술되어 있지 않습니다.",
+      "틀렸습니다. Key는 중복을 허용하기 위한 표시자가 아니라 튜플을 구분하는 기준입니다.",
+      "정답입니다. 문서에서 Key를 '검색, 정렬시 Tuple를 구분할 수 있는 기준이 되는 Attribute.'로 정의합니다."
+    ],
+    "keywords": [
+      "Key",
+      "튜플 식별",
+      "속성"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Key",
+      "quote": "Key란? : 검색, 정렬시 Tuple을 구분할 수 있는 기준이 되는 Attribute."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "a919c230-bb53-52b0-974c-f835c0b98710",
+    "review": {
+      "blind": {
+        "slot": 4,
+        "position": 4,
+        "unambiguous": true,
+        "reason": "Source 정의: Key는 검색·정렬 시 Tuple를 구분할 수 있는 Attribute이라고 명시됨."
+      },
+      "evidenceAudit": {
+        "slot": 4,
+        "passed": true,
+        "reason": "Correct answer and all distractors are directly contradicted or unsupported by the source. The source explicitly defines Key as '검색, 정렬시 Tuple를 구분할 수 있는 기준이 되는 Attribute.'"
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 5,
+    "topic": "트랜잭션 격리 수준 — Read Uncommitted",
+    "learningObjective": "Read Uncommitted의 기본 동작을 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "Read Uncommitted 격리 수준의 주된 특징은 무엇입니까?",
+    "options": [
+      "커밋되지 않은 트랜잭션의 변경사항을 다른 트랜잭션이 읽을 수 있도록 허용합니다.",
+      "SELECT 수행 중 해당 데이터에 항상 Shared Lock이 걸려 다른 트랜잭션의 접근을 차단합니다.",
+      "오직 Commit된 트랜잭션의 결과만 조회할 수 있도록 보장합니다.",
+      "트랜잭션이 완료될 때까지 조회한 모든 데이터 내용이 동일하게 유지됨을 보장합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Read Uncommitted는 SELECT 문장이 수행되는 동안 해당 데이터에 Shared Lock을 걸지 않아서, 처리 중이거나 아직 Commit되지 않은 데이터를 다른 트랜잭션이 읽을 수 있도록 허용합니다. 따라서 커밋되지 않은 변경을 읽는 것이 가능하며(Dirty Read), 이로 인해 데이터베이스의 일관성을 유지하기 어렵습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 Read Uncommitted는 SELECT 수행 시 Shared Lock이 걸리지 않으며, 처리 중이거나 아직 Commit되지 않은 데이터를 다른 트랜잭션이 읽는 것을 허용한다고 명시되어 있습니다 (행 35-41).",
+      "오답입니다. SELECT 수행 중 해당 데이터에 Shared Lock이 걸리는 것은 Read Committed의 설명으로, Read Uncommitted와는 반대되는 특성입니다 (행 49-55 대비).",
+      "오답입니다. '오직 Commit된 트랜잭션의 결과만 조회 가능'은 Read Committed의 특성으로, Read Uncommitted에서는 커밋되지 않은 데이터도 읽을 수 있습니다 (행 49-55 대비).",
+      "오답입니다. '조회한 모든 데이터 내용의 동일성 보장'은 Repeatable Read의 설명으로, Read Uncommitted의 보장 사항이 아닙니다 (행 65-69 대비)."
+    ],
+    "keywords": [
+      "Read Uncommitted",
+      "Dirty Read",
+      "Shared Lock"
+    ],
+    "sourceEvidence": {
+      "section": "Transaction Isolation Level.md",
+      "startLine": 35,
+      "endLine": 41,
+      "quote": "> SELECT 문장이 수행되는 동안 해당 데이터에 Shared Lock이 걸리지 않는 계층\n\n   트랜잭션에 처리중이거나, 아직 Commit되지 않은 데이터를 다른 트랜잭션이 읽는 것을 허용함\n\n   ```\n   사용자1이 A라는 데이터를 B라는 데이터로 변경하는 동안 사용자2는 아직 완료되지 않은(Uncommitted) 트랜잭션이지만 데이터B를 읽을 수 있다\n   ```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Transaction Isolation Level.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction%20Isolation%20Level.md",
+    "id": "5a628564-2d90-5eae-b78f-315889a76ae8",
+    "review": {
+      "blind": {
+        "slot": 5,
+        "correctOptionText": "커밋되지 않은 트랜잭션의 변경사항을 다른 트랜잭션이 읽을 수 있도록 허용합니다.",
+        "unambiguous": true,
+        "reason": "Source states Read Uncommitted allows other transactions to read data that is being processed or not yet committed (dirty reads).",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 5,
+        "passed": true,
+        "reason": "Correct answer and distractors are each directly supported or contradicted by the supplied source: option 1 matches the Read Uncommitted description (lines 35–41); options 2 and 3 describe Read Committed (lines 49–55) and option 4 describes Repeatable Read (lines 65–69), so they are provably incorrect for Read Uncommitted."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 6,
+    "topic": "인덱스 목적과 비용",
+    "learningObjective": "인덱스가 검색 속도를 개선하기 위해 어떤 추가 비용을 수반하는지 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "다음 중 이 문서에서 설명한 데이터베이스 인덱스의 목적과 그에 따른 추가 비용으로 옳은 설명은 무엇입니까?",
+    "options": [
+      "인덱스는 모든 쿼리에 대해 자동으로 병행성을 향상시킨다.",
+      "검색 속도를 올리기 위해 추가적인 쓰기 작업과 저장 공간을 사용한다.",
+      "검색 속도를 위해 테이블 구조(FRM)만 별도로 저장한다.",
+      "인덱스는 물리적으로 테이블을 중복 저장하므로 전체 테이블을 항상 풀스캔한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서는 인덱스가 '추가적인 쓰기 작업과 저장 공간을 활용하여 데이터베이스 테이블의 검색 속도를 향상'시키는 자료구조라고 명시합니다. 따라서 인덱스는 검색 성능을 높이지만 쓰기와 저장공간 비용이 발생합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 오히려 '한 페이지를 동시에 수정할 수 있는 병행성'이 줄어든다고 하여 병행성이 자동으로 향상된다고 하지 않습니다.",
+      "정답입니다. 본문은 인덱스의 목적과 추가 비용을 정확히 이렇게 기술하고 있습니다.",
+      "틀렸습니다. FRM는 테이블 구조를 저장하는 파일이지만, 본문에서 인덱스의 목적을 FRM 저장으로 설명하지 않습니다.",
+      "틀렸습니다. 인덱스는 풀스캔을 피하기 위해 사용되며 테이블을 항상 중복 저장하지 않는다고 설명합니다."
+    ],
+    "keywords": [
+      "인덱스 목적",
+      "쓰기 비용",
+      "저장 공간"
+    ],
+    "sourceEvidence": {
+      "section": "Index(인덱스)",
+      "startLine": 7,
+      "endLine": 9,
+      "quote": "```\n추가적인 쓰기 작업과 저장 공간을 활용하여 데이터베이스 테이블의 검색 속도를 향상시키기 위한 자료구조\n```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "7128ab3b-53bd-5f11-bae4-b0d3dac1ff96",
+    "review": {
+      "blind": {
+        "slot": 6,
+        "correctOptionText": "검색 속도를 올리기 위해 추가적인 쓰기 작업과 저장 공간을 사용한다.",
+        "unambiguous": true,
+        "reason": "문서의 목적은 '추가적인 쓰기 작업과 저장 공간을 활용하여 ... 검색 속도를 향상'이라 명시되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 6,
+        "passed": true,
+        "reason": "정답(옵션 2)은 소스의 인덱스 목적 문구('추가적인 쓰기 작업과 저장 공간을 활용하여...')와 정확히 일치하며, 다른 선택지는 소스 내용과 상충하거나 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 7,
+    "topic": "저장 프로시저 정의",
+    "learningObjective": "저장 프로시저의 기본 개념(무엇인지)을 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "저장 프로시저(Stored PROCEDURE)에 대해 가장 정확한 설명은 무엇입니까?",
+    "options": [
+      "클라이언트 애플리케이션이 네트워크를 통해 전송하는 원시 SQL 문자열을 암호화하는 메커니즘입니다.",
+      "쿼리 결과를 캐시에 저장하여 동일한 SELECT 문이 즉시 반환되도록 하는 데이터베이스 내부 캐시 기능입니다.",
+      "일련의 쿼리들을 하나의 함수처럼 묶어 한 번의 요청으로 실행할 수 있게 하는 쿼리 집합입니다.",
+      "데이터베이스에서 자동으로 실행되는 백업 스크립트로, 주기적으로 데이터 파일을 복사합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 저장 프로시저를 '일련의 쿼리를 마치 하나의 함수처럼 실행하기 위한 쿼리의 집합'이라고 정의하며(원문 표현), 여러 줄의 쿼리를 한 번의 요청으로 실행하는 목적과 인자 값을 받아 동일한 로직을 재사용하는 상황을 설명하고 있습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서에는 저장 프로시저가 클라이언트의 SQL 문자열을 암호화하는 기구라는 설명이 없습니다 (해당 근거 없음).",
+      "틀렸습니다. 문서에서는 프로시저 자체를 쿼리 집합으로 설명하며, 캐시 기능은 프로시저의 컴파일/캐시 관련 장점으로 따로 언급되어 있지만(프로시저 집합과 동일시되지는 않습니다) 이 옵션은 저장 프로시저의 정의와 다릅니다 (lines 95-100).",
+      "정답입니다. 원문에서 저장 프로시저를 쿼리의 집합으로 정의하고 한 번의 요청으로 실행하는 용도와 재사용성을 설명합니다 (lines 5-7, 11-13).",
+      "틀렸습니다. 문서에서는 저장 프로시저를 백업 스크립트나 주기적 파일 복사로 설명하지 않습니다; 해당 내용은 포함되어 있지 않습니다 (해당 근거 없음)."
+    ],
+    "keywords": [
+      "저장 프로시저",
+      "쿼리 집합",
+      "재사용"
+    ],
+    "sourceEvidence": {
+      "section": "저장 프로시저(Stored PROCEDURE).md",
+      "startLine": 5,
+      "endLine": 13,
+      "quote": "```\n일련의 쿼리를 마치 하나의 함수처럼 실행하기 위한 쿼리의 집합\n```\n\n<br>\n\n데이터베이스에서 SQL을 통해 작업을 하다 보면, 하나의 쿼리문으로 원하는 결과를 얻을 수 없을 때가 생긴다. 원하는 결과물을 얻기 위해 사용할 여러줄의 쿼리문을 한 번의 요청으로 실행하면 좋지 않을까? 또한, 인자 값만 상황에 따라 바뀌고 동일한 로직의 복잡한 쿼리문을 필요할 때마다 작성한다면 비효율적이지 않을까?\n\n이럴 때 사용할 수 있는 것이 바로 프로시저다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/저장 프로시저(Stored PROCEDURE).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%80%EC%9E%A5%20%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80%28Stored%20PROCEDURE%29.md",
+    "id": "bed46bc5-f7c7-5b6e-a106-3ba0082a61ae",
+    "review": {
+      "blind": {
+        "slot": 7,
+        "correctOptionText": "일련의 쿼리들을 하나의 함수처럼 묶어 한 번의 요청으로 실행할 수 있게 하는 쿼리 집합입니다.",
+        "unambiguous": true,
+        "reason": "문서 첫부분 정의와 정확히 일치: '일련의 쿼리를 마치 하나의 함수처럼 실행하기 위한 쿼리의 집합'.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 7,
+        "passed": true,
+        "reason": "정답(3)과 해설이 문서의 정의 문장(‘일련의 쿼리를... 쿼리의 집합’)에 정확히 부합하고, 나머지 선택지는 문서에서 언급되지 않아 오답으로 판별됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 8,
+    "topic": "SQL Injection 개념",
+    "learningObjective": "SQL Injection의 기본 정의를 서술할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "SQL Injection이 무엇을 의미하는지 설명하는 가장 적절한 정의는 무엇입니까?",
+    "options": [
+      "데이터베이스가 느려질 때 쿼리 실행 계획을 재구성하는 성능 최적화 기법입니다.",
+      "일반 사용자의 쿼리를 로그로 남겨 감사(audit)를 수행하는 보안 기능입니다.",
+      "데이터베이스를 암호화하여 외부에서 쿼리 내용을 볼 수 없게 만드는 기술입니다.",
+      "해커가 조작한 SQL 쿼리를 그대로 데이터베이스에 전달하여 비정상적 명령을 실행시키는 공격 기법입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에 따르면 SQL Injection은 '해커에 의해 조작된 SQL 쿼리문이 데이터베이스에 그대로 전달되어 비정상적 명령을 실행시키는 공격 기법'으로 정의되어 있습니다. 다른 선택지는 성능 최적화, 감사, 암호화 등 문서에서 설명한 공격 정의와 일치하지 않습니다.",
+    "optionExplanations": [
+      "오답: 성능 최적화는 문서에서 SQL Injection 정의와 무관한 내용입니다.",
+      "오답: 감사(logging)는 문서에서 SQL Injection의 정의가 아닙니다.",
+      "오답: 암호화는 다른 보안 기법으로 문서의 정의와 일치하지 않습니다.",
+      "정답: 문서의 명시적 정의와 일치합니다 (lines 1-3)."
+    ],
+    "keywords": [
+      "SQL Injection",
+      "정의",
+      "공격 기법"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL Injection.md",
+      "startLine": 1,
+      "endLine": 3,
+      "quote": "## SQL Injection\n\n> 해커에 의해 조작된 SQL 쿼리문이 데이터베이스에 그대로 전달되어 비정상적 명령을 실행시키는 공격 기법"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL Injection.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%20Injection.md",
+    "id": "e738d5f5-3d3c-5073-af22-35705107744d",
+    "review": {
+      "blind": {
+        "slot": 8,
+        "correctOptionText": "해커가 조작한 SQL 쿼리를 그대로 데이터베이스에 전달하여 비정상적 명령을 실행시키는 공격 기법입니다.",
+        "unambiguous": true,
+        "reason": "문서의 첫 문장이 동일한 정의를 제공한다.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 8,
+        "passed": true,
+        "reason": "정답(4)은 원문의 직접적인 정의와 일치하며 나머지 3개 선택지는 문서 내용과 명백히 불일치합니다. 문장 표현, 난이도(EASY), 학습 목표도 원문과 적절히 대응합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 9,
+    "topic": "Anomaly - 삽입 이상",
+    "learningObjective": "삽입 이상(Insertion Anomaly)의 기본 정의를 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "다음 중 삽입 이상(Insertion Anomaly)을 가장 잘 설명하는 문장은 무엇입니까?",
+    "options": [
+      "기본키 제약으로 인해 특정 속성을 모를 때 새로운 튜플을 테이블에 추가할 수 없는 상황이 발생하는 것입니다.",
+      "한 속성값을 변경할 때 테이블의 여러 튜플을 모두 갱신해야 해서 일부만 변경되면 불일치가 생기는 문제입니다.",
+      "튜플을 삭제할 때 관련된 다른 중요한 정보까지 함께 삭제되어 필요한 데이터가 사라지는 문제입니다.",
+      "같은 데이터를 여러 위치에 중복 저장하여 조회 성능을 높인 설계 방식입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 기본키가 {Student ID, Course ID}인 경우 Course를 수강하지 않은 학생은 Course ID가 없어 기본키 제약 때문에 테이블에 추가할 수 없게 되는 상황을 예로 들어 삽입 이상을 설명합니다. 즉, 기본키 제약 때문에 불완전한 데이터를 넣을 수 없어 불필요한 값을 추가해야 하는 상황이 삽입 이상입니다 (lines 11-17).",
+    "optionExplanations": [
+      "정답입니다. 출제 근거는 문서의 삽입 이상 설명으로, 기본키 제약으로 인해 Course ID가 없으면 튜플을 추가할 수 없고 '미수강' 같은 값을 추가해야 하는 사례를 들고 있습니다 (lines 11-17).",
+      "이는 갱신 이상(Update Anomaly)을 설명한 것으로, 특정 속성(예: Department) 변경 시 모든 관련 튜플을 바꿔야 하는 문제를 말합니다 (lines 21-27).",
+      "이는 삭제 이상(Deletion Anomaly)을 설명한 것으로, 튜플 삭제로 인해 필요한 학생 정보까지 함께 삭제되는 상황을 말합니다 (lines 31-37).",
+      "이 설명은 문서에서 다루는 이상 현상과 관련이 없으며, 오히려 중복 저장을 통한 성능 최적화에 관한 일반적 서술입니다; 문서에는 해당 서술이 없습니다."
+    ],
+    "keywords": [
+      "삽입 이상",
+      "기본키",
+      "Course ID",
+      "Null 불가"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Anomaly.md",
+      "startLine": 11,
+      "endLine": 17,
+      "quote": "1. 삽입 이상 (Insertion Anomaly)\n\n   기본키가 {Student ID, Course ID} 인 경우 -> Course를 수강하지 않은 학생은 Course ID가 없는 현상이 발생함. 결국 Course ID를 Null로 할 수밖에 없는데, 기본키는 Null이 될 수 없으므로, Table에 추가될 수 없음.\n\n   굳이 삽입하기 위해서는 '미수강'과 같은 Course ID를 만들어야 함.\n\n   > 불필요한 데이터를 추가해야지, 삽입할 수 있는 상황 = Insertion Anomaly"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Anomaly.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+    "id": "e88a8e79-51e5-5ba5-aa77-b91db54e042d",
+    "review": {
+      "blind": {
+        "slot": 9,
+        "correctOptionText": "기본키 제약으로 인해 특정 속성을 모를 때 새로운 튜플을 테이블에 추가할 수 없는 상황이 발생하는 것입니다.",
+        "unambiguous": true,
+        "reason": "문서의 삽입 이상 설명은 기본키({Student ID, Course ID}) 때문에 Course ID가 없는 학생을 추가할 수 없어 삽입 불가한 상황을 예로 들고 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 9,
+        "passed": true,
+        "reason": "The correct option (삽입 이상 설명) and its explanation exactly match the source lines 11–17; the three distractors correspond to other anomaly types or unrelated content and are contradicted by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 10,
+    "topic": "Redis 성능 특성",
+    "learningObjective": "Redis가 디스크가 아닌 메모리에 저장함으로써 얻는 성능 이점을 설명할 수 있습니다",
+    "difficulty": "EASY",
+    "question": "Redis가 전통적 디스크 기반 데이터베이스보다 매우 빠르다고 설명되는 주된 이유는 무엇입니까?",
+    "options": [
+      "쿼리를 병렬로 실행하는 전용 쿼리 엔진을 내장하고 있기 때문입니다.",
+      "데이터를 RAM에 저장하여 디스크 스캔이 필요 없기 때문입니다.",
+      "내부적으로 모든 데이터를 GPU에서 처리하기 때문입니다.",
+      "데이터를 항상 압축해서 저장하므로 전송량이 적기 때문입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 Redis가 메모리(RAM)에 저장하여 디스크 스캐닝이 필요 없어 매우 빠르다고 명시하고 있으므로, 메모리 저장으로 디스크 I/O를 회피하는 점이 성능의 주된 이유입니다.",
+    "optionExplanations": [
+      "오답: 전용 병렬 쿼리 엔진에 대한 언급이 없으므로 근거가 없습니다.",
+      "정답: 원문에서 Redis는 메모리(RAM)에 저장해서 디스크 스캐닝이 필요없어 매우 빠르다고 설명합니다 (5행).",
+      "오답: 원문에 GPU 처리에 대한 언급은 없습니다; 이런 주장은 근거가 없습니다.",
+      "오답: 원문에는 데이터 압축을 항상 수행한다는 언급이 없으므로 근거가 없습니다."
+    ],
+    "keywords": [
+      "메모리 저장",
+      "성능",
+      "디스크 스캔"
+    ],
+    "sourceEvidence": {
+      "section": "Redis.md",
+      "startLine": 5,
+      "endLine": 5,
+      "quote": "보통 데이터베이스는 하드 디스크나 SSD에 저장한다. 하지만 Redis는 메모리(RAM)에 저장해서 디스크 스캐닝이 필요없어 매우 빠른 장점이 존재함"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "1b31a819-fa92-5d24-b99c-9ef50bba0aeb",
+    "review": {
+      "blind": {
+        "slot": 10,
+        "correctOptionText": "데이터를 RAM에 저장하여 디스크 스캔이 필요 없기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서에 '메모리(RAM)에 저장해서 디스크 스캐닝이 필요없어 매우 빠른 장점'이라고 명시됨.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 10,
+        "passed": true,
+        "reason": "원문에 '메모리(RAM)에 저장해서 디스크 스캐닝이 필요없어 매우 빠르다'고 명시되어 있어 정답(옵션 2)이 고유하게 지원되며, 나머지 선택지는 문서에 근거가 없어 오답으로 판정됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 11,
+    "topic": "Foreign Key (외래키) 정의",
+    "learningObjective": "Foreign Key의 정의를 식별할 수 있다",
+    "difficulty": "EASY",
+    "question": "데이터베이스에서 '외래키(Foreign Key)'의 가장 정확한 정의는 무엇입니까?",
+    "options": [
+      "유일성은 만족하지만 최소성은 만족하지 못하는 키이다.",
+      "후보키들 중에서 기본키로 선택된 주된 키를 의미한다.",
+      "다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합이다.",
+      "한 릴레이션에서 튜플을 유일하게 식별하기 위해 사용하는 속성들의 부분 집합이다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "외래키는 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합임이 문서에 명확히 정의되어 있습니다. 후보키는 튜플을 유일하게 식별하는 속성들의 부분 집합으로 정의되고, 슈퍼키는 유일성은 만족하지만 최소성은 만족하지 못하는 키로 구분되며, 기본키는 후보키들 중 선택된 메인 키를 의미합니다. 따라서 '다른 릴레이션의 기본키를 참조하는 속성의 집합'이 외래키의 정확한 정의입니다.",
+    "optionExplanations": [
+      "이 설명은 슈퍼키의 정의와 일치합니다(유일성은 만족하지만 최소성은 만족하지 못하는 키). 따라서 외래키 정의와는 다릅니다.",
+      "이 설명은 기본키(Primary Key)의 정의와 일치합니다(후보키 중 선택한 Main Key). 따라서 외래키 정의와는 다릅니다.",
+      "정답입니다. 문서에 외래키는 '다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합'으로 정의되어 있습니다.",
+      "이 설명은 후보키의 정의와 일치합니다(튜플을 유일하게 식별하기 위한 속성들의 부분 집합). 따라서 외래키 정의와는 다릅니다."
+    ],
+    "keywords": [
+      "외래키",
+      "Foreign Key",
+      "참조",
+      "기본키"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/[DB] Key.md",
+      "startLine": 43,
+      "endLine": 46,
+      "quote": "#### 5. Foreign Key (외래키)\n\n> 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "cc9ceaa5-e84c-5c86-82b5-4c61409aa8bc",
+    "review": {
+      "blind": {
+        "slot": 11,
+        "correctOptionText": "다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합이다.",
+        "unambiguous": true,
+        "reason": "The source defines Foreign Key exactly as '다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합'.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 11,
+        "passed": true,
+        "reason": "Option 3 exactly matches the source quote defining Foreign Key; the three distractors correspond to Super Key, Primary Key, and Candidate Key per the source, so they are provably incorrect."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 12,
+    "topic": "SQL의 스키마 제약",
+    "learningObjective": "관계형 데이터베이스에서 스키마 준수 여부가 데이터 추가에 미치는 영향을 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "관계형 데이터베이스(SQL)에서 스키마가 중요한 이유로 가장 적절한 설명은 무엇입니까?",
+    "options": [
+      "스키마는 자동으로 수집된 모든 데이터 형식을 변환하여 저장해 주기 때문입니다.",
+      "스키마는 인덱스를 자동으로 생성하여 쿼리 속도를 보장해 주기 때문입니다.",
+      "스키마가 없으면 외래키를 통해 테이블 간 관계를 만들 수 없기 때문입니다.",
+      "정해진 스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없기 때문입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "관계형 데이터베이스는 각 테이블이 명확한 구조(필드 이름과 데이터 유형)를 가지며, 스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없다는 설명이 본문에 명확히 나와 있습니다. 따라서 스키마 준수 여부가 데이터 추가 가능 여부를 결정합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 관계형 DB가 '정해진 데이터 스키마에 따라 테이블에 저장'된다고 설명하지만, 스키마가 데이터를 자동 변환한다고 하지는 않습니다.",
+      "틀렸습니다. 본문은 스키마와 구조에 대해 설명하지만, 스키마가 자동으로 인덱스를 생성해 쿼리 속도를 보장한다고 명시하지 않습니다.",
+      "틀렸습니다. 스키마의 존재가 관계(외래키 등)를 가능하게 하지만, 본문은 '스키마가 없으면 외래키를 만들 수 없다'는 직접적 진술을 하지 않습니다.",
+      "정답입니다. 본문은 각 테이블의 구조가 필드 이름과 데이터 유형으로 정의되며 '스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없다'고 설명합니다."
+    ],
+    "keywords": [
+      "스키마",
+      "관계형 데이터베이스",
+      "레코드 추가 제한"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+      "startLine": 34,
+      "endLine": 37,
+      "quote": "데이터는 테이블에 레코드로 저장되는데, 각 테이블마다 명확하게 정의된 구조가 있다.\n해당 구조는 필드의 이름과 데이터 유형으로 정의된다.\n\n따라서 **스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없다.** 즉, 스키마를 수정하지 않는 이상은 정해진 구조에 맞는 레코드만 추가가 가능한 것이 관계형 데이터베이스의 특징 중 하나다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%EA%B3%BC%20NOSQL%EC%9D%98%20%EC%B0%A8%EC%9D%B4.md",
+    "id": "1d8c4d27-0c1d-50bf-8ec1-a10c1c7687b8",
+    "review": {
+      "blind": {
+        "slot": 12,
+        "correctOptionText": "정해진 스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없기 때문입니다.",
+        "unambiguous": true,
+        "reason": "본문은 관계형 DB가 '스키마를 준수하지 않은 레코드는 테이블에 추가할 수 없다'고 명확히 설명합니다.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 12,
+        "passed": true,
+        "reason": "문항, 정답(옵션4) 및 오답 해설이 제공된 원문 인용문과 일치하며 다른 선택지는 원문에서 지지되지 않음."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 13,
+    "topic": "Update Anomaly (갱신 이상)",
+    "learningObjective": "갱신 이상이 데이터 불일치를 어떻게 초래하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "갱신 이상(Update Anomaly)에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "일부만 변경하여, 데이터가 불일치 하는 모순의 문제이다.",
+      "튜플 삭제로 인해 꼭 필요한 데이터까지 함께 삭제되는 문제이다.",
+      "삽입하려면 불필요한 데이터를 추가해야 하는 문제이다.",
+      "같은 속성이 항상 동일한 값을 갖도록 강제하는 현상이다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "갱신 이상은 일부만 변경해서 데이터 불일치가 발생하는 문제입니다. 소스는 이를 \"일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly\"라고 명시하고 있습니다.",
+    "optionExplanations": [
+      "정답입니다. 소스의 문장과 정확히 일치합니다: \"일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly\".",
+      "이것은 삭제 이상(Deletion Anomaly)에 대한 설명입니다.",
+      "이것은 삽입 이상(Insertion Anomaly)에 대한 설명입니다.",
+      "해당 선택지는 소스에 언급된 갱신 이상의 정의와 일치하지 않습니다."
+    ],
+    "keywords": [
+      "갱신 이상",
+      "Update Anomaly",
+      "데이터 불일치"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Anomaly.md",
+      "quote": "> 일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Anomaly.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+    "id": "9dca3934-538b-5e3e-b05b-68450a7cd683",
+    "review": {
+      "blind": {
+        "slot": 13,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "본문에서 갱신 이상을 '일부만 변경하여, 데이터가 불일치 하는 모순'이라고 직접 설명함."
+      },
+      "evidenceAudit": {
+        "slot": 13,
+        "passed": true,
+        "reason": "정답(옵션 1)은 출처 문구('일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly')와 일치합니다. 나머지 선택지는 출처의 다른 이상(삭제·삽입 등)에 해당하므로 오답으로 판정 가능합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 14,
+    "topic": "테이블 생성 시 파일 구성",
+    "learningObjective": "테이블 생성 시 생성되는 파일 세 가지를 식별할 수 있다.",
+    "difficulty": "EASY",
+    "question": "문서에 따르면 테이블을 생성할 때 생성되는 파일 세 가지로 올바른 조합은 무엇입니까?",
+    "options": [
+      "FRM, IDX, DAT",
+      "FRM, MYD, MYI",
+      "FRM, LOG, MYD",
+      "MYD, MYI, BIN"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서의 '파일 구성' 항목에 테이블 생성 시 생성되는 3가지 파일로 FRM, MYD, MYI가 명시되어 있습니다. 따라서 FRM(테이블 구조), MYD(실제 데이터), MYI(인덱스 정보)가 정답입니다. 다른 선택지는 문서에 나열된 파일명이 아니므로 올바르지 않습니다.",
+    "optionExplanations": [
+      "틀렸습니다. IDX나 DAT라는 파일명은 문서의 목록에 없으며, FRM/MYD/MYI가 정답입니다.",
+      "정답입니다. 문서에 '테이블 생성 시, 3가지 파일이 생성된다.' 아래에 FRM, MYD, MYI가 나열되어 있습니다.",
+      "틀렸습니다. 문서에는 LOG 파일이 포함된다는 언급이 없고, 올바른 조합은 아닙니다.",
+      "틀렸습니다. BIN 파일은 문서에 언급되어 있지 않습니다."
+    ],
+    "keywords": [
+      "FRM",
+      "MYD",
+      "MYI",
+      "파일 구성"
+    ],
+    "sourceEvidence": {
+      "section": "파일 구성",
+      "quote": "테이블 생성 시, 3가지 파일이 생성된다.\n\n- FRM : 테이블 구조 저장 파일\n- MYD : 실제 데이터 파일\n- MYI : Index 정보 파일 (Index 사용 시 생성)"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "34f6bd4e-ea57-5221-9a43-e1bd0bf62e89",
+    "review": {
+      "blind": {
+        "slot": 14,
+        "position": 2,
+        "unambiguous": true,
+        "reason": "Source lists the three files as FRM, MYD, and MYI created on table creation."
+      },
+      "evidenceAudit": {
+        "slot": 14,
+        "passed": true,
+        "reason": "정답(옵션 2 FRM, MYD, MYI)은 출처의 '파일 구성' 항목에 명확히 나와 있으며, 다른 선택지의 파일명은 출처에 언급되어 있지 않아 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 15,
+    "topic": "Candidate Key의 조건",
+    "learningObjective": "Candidate Key가 충족해야 할 조건(유일성, 최소성)을 식별할 수 있다",
+    "difficulty": "EASY",
+    "question": "후보키(Candidate Key)가 갖추어야 하는 두 가지 조건으로 옳은 것은 무엇입니까?",
+    "options": [
+      "중복허용, NULL 허용",
+      "정규화, 인덱스화",
+      "유일성, 최소성",
+      "무결성, 참조성"
+    ],
+    "correctAnswer": 3,
+    "explanation": "후보키는 튜플을 유일하게 식별하기 위한 속성의 부분집합이며, 문서에는 '유일성'과 '최소성'을 만족해야 한다고 명시되어 있습니다. 따라서 이 두 가지 조건이 후보키의 필수 조건입니다.",
+    "optionExplanations": [
+      "틀렸습니다. 후보키는 중복이나 NULL을 허용하면 안 되는 특성이므로 해당 표현은 맞지 않습니다.",
+      "틀렸습니다. 정규화와 인덱스화는 후보키 조건으로 문서에 기술되어 있지 않습니다.",
+      "정답입니다. 문서에 '2가지 조건 만족: 유일성, 최소성'이라고 명시되어 있습니다.",
+      "틀렸습니다. '무결성, 참조성'은 후보키의 두 가지 조건으로 문서에 언급되어 있지 않습니다."
+    ],
+    "keywords": [
+      "Candidate Key",
+      "유일성",
+      "최소성"
+    ],
+    "sourceEvidence": {
+      "section": "1. Candidate Key (후보키)",
+      "quote": "Tuple을 유일하게 식별하기 위해 사용하는 속성들의 부분 집합. (기본키로 사용할 수 있는 속성들)\n\n2가지 조건 만족\n\n* 유일성 : Key로 하나의 Tuple을 유일하게 식별할 수 있음\n* 최소성 : 꼭 필요한 속성으로만 구성"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "8903eca7-2578-5120-8d00-d89823576e7f",
+    "review": {
+      "blind": {
+        "slot": 15,
+        "position": 3,
+        "unambiguous": true,
+        "reason": "Source 정의: Candidate Key는 유일성 및 최소성을 만족해야 함."
+      },
+      "evidenceAudit": {
+        "slot": 15,
+        "passed": true,
+        "reason": "Correct answer matches the source ('유일성' and '최소성') and each distractor is contradicted or not stated in the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 16,
+    "topic": "Redis 사용 사례 비교",
+    "learningObjective": "Redis를 캐시, 실시간 채팅, 세션 클러스터링 용도로 사용하는 적합성을 비교할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 문서에서 Redis 사용 사례로 직접 언급되지 않은 것은 무엇입니까?",
+    "options": [
+      "데이터베이스 캐싱과 실시간 채팅, 세션 클러스터링",
+      "실시간 채팅에 적합하고 세션 공유에 활용된다",
+      "세션 클러스터링을 위해 세션을 공유하는 데 사용된다",
+      "관계형 트랜잭션이 많은 복잡한 JOIN 연산 처리"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에는 Redis가 캐싱, 실시간 채팅, 세션 클러스터링(세션 공유)에 적합하다고 직접 언급되어 있습니다. 반면 관계형 트랜잭션이나 복잡한 JOIN 연산 처리에 관한 언급은 없습니다.",
+    "optionExplanations": [
+      "문서에서 Redis가 캐싱과 실시간 채팅, 세션 클러스터링 등에 적합하다고 명시되어 있으므로 해당 선택지는 문서에 언급된 내용입니다.",
+      "문서에 \"캐싱도 가능해 실시간 채팅에 적합하며 세션 공유를 위해 세션 클러스터링에도 활용된다.\"라고 되어 있어 맞는 진술입니다.",
+      "문서에 세션 클러스터링을 위해 세션 공유에 활용된다고 직접 나와 있어 맞는 진술입니다.",
+      "문서에는 관계형 트랜잭션이나 JOIN 연산에 대한 언급이 없으므로 이 선택지는 문서에서 직접 언급되지 않았습니다."
+    ],
+    "keywords": [
+      "캐싱",
+      "실시간 채팅",
+      "세션 클러스터링"
+    ],
+    "sourceEvidence": {
+      "section": "Redis",
+      "quote": "캐싱도 가능해 실시간 채팅에 적합하며 세션 공유를 위해 세션 클러스터링에도 활용된다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "3c1ec975-c826-5b7c-8d7e-f9c728e92236",
+    "review": {
+      "blind": {
+        "slot": 16,
+        "position": 4,
+        "unambiguous": true,
+        "reason": "본문은 캐싱, 실시간 채팅, 세션 클러스터링을 언급하지만 복잡한 관계형 JOIN 연산은 언급되지 않음."
+      },
+      "evidenceAudit": {
+        "slot": 16,
+        "passed": true,
+        "reason": "Correct answer (관계형 JOIN 처리 아님) and all other options are directly supported or contradicted by the source; explanations, difficulty, and learning objective align with the provided material."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 17,
+    "topic": "B-Tree vs B+Tree",
+    "learningObjective": "B-Tree와 B+Tree의 구조적 차이(값 저장 위치 및 리프 노드 연결)를 비교할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 B+Tree가 B-Tree와 다른 주요 특성으로 옳은 것은 무엇입니까?",
+    "options": [
+      "값을 리프 노드에만 저장하고 리프끼리 링크드 리스트로 연결되어 있다.",
+      "모든 노드에만 값을 저장하며 리프 노드는 존재하지 않는다.",
+      "자식 노드를 둘이상 가질 수 없고 이진 탐색트리 구조와 동일하다.",
+      "해시 함수를 이용하여 값을 인덱스로 직접 변환한다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서 B+Tree는 '값을 리프노드에만 저장하며 리프노드들 끼리는 링크드 리스트로 연결되어 있다'고 명시합니다. 이는 B-Tree와 구별되는 주요 특징으로, 부등호 연산에 효과적이라고도 설명합니다.",
+    "optionExplanations": [
+      "정답입니다. 본문은 리프에만 값 저장 및 리프 간 연결을 명확히 기술하고 있습니다.",
+      "틀렸습니다. 본문은 B+Tree가 리프에만 값을 저장한다고 하며 '모든 노드에만 값을 저장'이라고 하지 않습니다.",
+      "틀렸습니다. 본문은 B-Tree 계열이 자식 노드를 둘이상 가질 수 있고 Balanced Tree라고 설명합니다; 이진 탐색트리와 동일하지 않습니다.",
+      "틀렸습니다. 해시 함수를 이용하는 자료구조는 HashTable로, B+Tree와는 다른 항목으로 기술되어 있습니다."
+    ],
+    "keywords": [
+      "B+Tree",
+      "리프 노드",
+      "링크드 리스트"
+    ],
+    "sourceEvidence": {
+      "section": "Index(인덱스)",
+      "startLine": 106,
+      "endLine": 113,
+      "quote": "- ##### B+Tree 자료구조\n\n  B-Tree를 개선한 형태의 자료구조\n\n  값을 리프노드에만 저장하며 리프노드들 끼리는 링크드 리스트로 연결되어 있다 → 때문에 부등호문 연산에 대해 효과적이다.\n\n  리프 노드를 제외한 노드들은 포인터의 역할만을 수행한다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "92dfa5e7-3cb2-5917-af3c-25c5ea23cc4c",
+    "review": {
+      "blind": {
+        "slot": 17,
+        "correctOptionText": "값을 리프 노드에만 저장하고 리프끼리 링크드 리스트로 연결되어 있다.",
+        "unambiguous": true,
+        "reason": "문서는 B+Tree의 특징으로 '값을 리프노드에만 저장하며 리프노드들 끼리는 링크드 리스트로 연결'이라 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 17,
+        "passed": true,
+        "reason": "정답(옵션 1)은 소스의 B+Tree 설명(값을 리프노드에만 저장하고 리프끼리 링크드 리스트로 연결됨)을 그대로 반영합니다; 나머지 옵션들은 소스 설명과 명백히 불일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 18,
+    "topic": "프로시저 매개변수(IN/OUT)",
+    "learningObjective": "IN과 OUT 매개변수의 동작 차이를 예시를 통해 구별할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 IN 매개변수와 OUT 매개변수의 동작 차이에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "OUT 매개변수는 프로시저를 호출할 때 생략할 수 없지만 IN 매개변수는 항상 생략 가능합니다.",
+      "IN 매개변수는 호출 시 값을 전달받아 내부에서 사용하고, OUT 매개변수는 프로시저 내부에서 값을 할당하여 호출자에게 반환합니다.",
+      "IN 매개변수는 항상 프로시저 내부에서 값을 변경하여 호출자에게 반영하고, OUT 매개변수는 호출자가 값을 읽기 전용으로만 전달합니다.",
+      "IN 매개변수와 OUT 매개변수는 기능적으로 동일하며 단지 이름만 다른 선택적 표기법입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서의 예시에서 IN 매개변수는 호출 시 전달한 값을 내부에서 출력에 사용하고(예: name IN VARCHAR2를 받아 메시지와 합쳐 출력), OUT 매개변수는 프로시저 내부에서 값을 할당하여(예: name := 'Gyoogle') 호출자 쪽 변수에 반환하는 방식으로 사용됩니다 (lines 49-56, 68-79).",
+    "optionExplanations": [
+      "틀렸습니다. 문서에서는 매개변수가 '필수 아님'이라고 주장하는 일반 구문 주석이 있으나(선언 예시에서), OUT이 항상 생략 불가하고 IN이 항상 생략 가능하다는 규칙은 제시되어 있지 않습니다 (lines 29-31).",
+      "정답입니다. 예시1에서는 name IN으로 호출자가 값을 주어 내부에서 사용하며(lines 49-56), 예시2에서는 name OUT에 내부에서 값을 할당하고 호출자 변수에 전달합니다(lines 68-79).",
+      "틀렸습니다. 문서 예시에서 IN은 내부에서 호출자 값을 그대로 사용하며 호출자의 변수에 변경을 반영한다는 서술은 없고, OUT이 호출자가 값을 읽기 전용으로만 전달한다는 표현도 없습니다 (lines 49-56, 68-79).",
+      "틀렸습니다. 문서에는 IN과 OUT이 서로 다른 동작을 하는 매개변수로서 예시가 제공되어 있으며 기능이 동일하다는 설명은 없습니다 (lines 46-56, 65-81)."
+    ],
+    "keywords": [
+      "IN 매개변수",
+      "OUT 매개변수",
+      "매개변수 동작"
+    ],
+    "sourceEvidence": {
+      "section": "저장 프로시저(Stored PROCEDURE).md",
+      "startLine": 46,
+      "endLine": 79,
+      "quote": "#### 예시1 (IN)\n\n```plsql\nCREATE OR REPLACE PROCEDURE test( name IN VARCHAR2 ) \nIS\n\tmsg VARCHAR2(5) := '내 이름은';\nBEGIN \n\tdbms_output.put_line(msg||' '||name); \nEND;\n\nEXEC test('규글');\n```\n\n```\n내 이름은 규글\n```\n\n<br>\n\n#### 예시2 (OUT)\n\n```plsql\nCREATE OR REPLACE PROCEDURE test( name OUT VARCHAR2 ) \nIS\nBEGIN \n\tname := 'Gyoogle'\nEND;\n\nDECLARE\nout_name VARCHAR2(100);\n\nBEGIN\ntest(out_name);\ndbms_output.put_line('내 이름은 '||out_name);"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/저장 프로시저(Stored PROCEDURE).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%80%EC%9E%A5%20%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80%28Stored%20PROCEDURE%29.md",
+    "id": "4b5abc3f-0e00-5a98-b0a6-5b479b7ca470",
+    "review": {
+      "blind": {
+        "slot": 18,
+        "correctOptionText": "IN 매개변수는 호출 시 값을 전달받아 내부에서 사용하고, OUT 매개변수는 프로시저 내부에서 값을 할당하여 호출자에게 반환합니다.",
+        "unambiguous": true,
+        "reason": "예시와 설명에서 IN은 값 전달용, OUT은 내부에서 값 할당 후 반환으로 서술됨.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 18,
+        "passed": true,
+        "reason": "정답(2)과 해설이 예시1(IN)과 예시2(OUT)의 동작(호출자가 값 전달 vs 프로시저가 값 할당)을 그대로 반영하며, 다른 선택지는 문서 근거와 상충합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 19,
+    "topic": "인증 우회 기법",
+    "learningObjective": "WHERE 절 변조로 인증을 우회하는 공격의 기본 메커니즘을 비교할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "공격자가 로그인 WHERE 절에 OR 문과 '1' = '1' 같은 구문을 추가하여 인증을 우회하는 이유로 가장 적절한 설명은 무엇입니까?",
+    "options": [
+      "해당 구문은 비밀번호를 암호화된 형태로 변환하여 서버가 항상 일치로 판단하게 만듭니다.",
+      "추가된 OR 구문은 쿼리 실행을 멈추게 하여 인증 로직을 우회합니다.",
+      "원래 조건이 참이 아니더라도 추가한 true 조건 때문에 WHERE 절 전체가 항상 참이 되어 인증 검사를 우회할 수 있기 때문입니다.",
+      "OR '1' = '1'은 데이터베이스에 새로운 계정을 자동으로 생성하기 때문에 인증이 우회됩니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서 설명하듯이 WHERE 절에 OR문을 추가하여 '1' = '1'과 같은 항상 참인 조건을 넣으면 쿼리의 조건이 무조건 참이 되어 DB를 마음대로 조작하거나 인증을 우회할 수 있습니다 (lines 25). 다른 선택지들은 문서에서 설명한 행위와 맞지 않습니다.",
+    "optionExplanations": [
+      "오답: 문서에는 해당 구문이 암호화와 관련 있다는 언급이 없습니다.",
+      "오답: 문서에는 OR 구문이 쿼리 실행을 멈춘다고 설명하지 않습니다.",
+      "정답: 문서에 기술된 방식으로, 항상 참이 되는 조건을 추가하여 무조건 적용되게 만든다고 설명되어 있습니다 (line 25).",
+      "오답: 문서에는 OR 구문이 새로운 계정 생성과 관련된다고 언급하지 않습니다."
+    ],
+    "keywords": [
+      "인증 우회",
+      "WHERE 절",
+      "OR '1' = '1'"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL Injection.md",
+      "startLine": 25,
+      "endLine": 25,
+      "quote": "이 밖에도 기본 쿼리문의 WHERE 절에 OR문을 추가하여 `'1' = '1'`과 같은 true문을 작성하여 무조건 적용되도록 수정한 뒤 DB를 마음대로 조작할 수도 있다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL Injection.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%20Injection.md",
+    "id": "46169513-ee6f-5e35-975d-82113c6ee4ed",
+    "review": {
+      "blind": {
+        "slot": 19,
+        "correctOptionText": "원래 조건이 참이 아니더라도 추가한 true 조건 때문에 WHERE 절 전체가 항상 참이 되어 인증 검사를 우회할 수 있기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서에서 OR과 '1' = '1'을 추가해 WHERE 절을 항상 참으로 만들어 우회한다고 설명한다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 19,
+        "passed": true,
+        "reason": "정답(3)은 원문에 명시된 WHERE 절에 항상 참인 조건을 추가해 인증을 우회한다는 설명과 일치합니다. 다른 선택지들은 원문에 근거가 없어 오답으로 판정됩니다. 난이도(MEDIUM)와 학습 목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 20,
+    "topic": "Anomaly - 갱신 이상",
+    "learningObjective": "갱신 이상(Update Anomaly)이 발생하는 원인을 문서의 사례를 바탕으로 식별할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 어떤 상황이 갱신 이상(Update Anomaly)을 유발합니까?",
+    "options": [
+      "학생이 수강을 철회할 때 그 학생의 모든 관련 정보가 삭제되어 필요한 정보까지 사라지는 경우입니다.",
+      "새로운 학생을 추가하려 할 때 기본키가 일부 속성 때문에 NULL을 허용하지 않아 삽입이 불가능한 경우입니다.",
+      "동일한 데이터를 여러 테이블에 복제하여 각 테이블을 독립적으로 갱신함으로써 읽기 성능을 높이는 경우입니다.",
+      "어떤 학생의 전공(Department)을 변경했을 때 관련된 모든 튜플을 모두 빠짐없이 갱신하지 못하면 데이터 불일치가 생기는 경우입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 학생의 전공이 바뀌는 경우를 예로 들어, 모든 Department 값을 바꿔야 하는데 일부만 변경하면 데이터가 불일치하는 문제가 갱신 이상이라고 설명합니다 (lines 21-27).",
+    "optionExplanations": [
+      "이는 삭제 이상(Deletion Anomaly)에 해당하는 서술로, 삭제로 인해 학생 정보가 함께 사라지는 문제를 말합니다 (lines 31-37).",
+      "이는 삽입 이상(Insertion Anomaly)에 관한 설명으로, 기본키 제약 때문에 일부 속성이 없어 삽입할 수 없는 상황입니다 (lines 11-17).",
+      "문서에서는 성능을 위한 데이터 복제에 대해 다루지 않으며, 해당 선택지는 갱신 이상의 원인으로 제시되지 않습니다.",
+      "정답입니다. 문서의 예시는 전공 변경 시 모든 관련 레코드를 갱신해야 하며 일부만 변경되면 불일치가 발생한다고 명시합니다 (lines 21-27)."
+    ],
+    "keywords": [
+      "갱신 이상",
+      "데이터 불일치",
+      "Department",
+      "부분 갱신"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Anomaly.md",
+      "startLine": 21,
+      "endLine": 27,
+      "quote": "2. 갱신 이상 (Update Anomaly)\n\n   만약 어떤 학생의 전공 (Department) 이 \"컴퓨터에서 음악\"으로 바뀌는 경우.\n\n   모든 Department를 \"음악\"으로 바꾸어야 함. 그러나 일부를 깜빡하고 바꾸지 못하는 경우, 제대로 파악 못함.\n\n   > 일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Anomaly.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+    "id": "ec15d6be-8468-5340-8533-d718f2ca08e1",
+    "review": {
+      "blind": {
+        "slot": 20,
+        "correctOptionText": "어떤 학생의 전공(Department)을 변경했을 때 관련된 모든 튜플을 모두 빠짐없이 갱신하지 못하면 데이터 불일치가 생기는 경우입니다.",
+        "unambiguous": true,
+        "reason": "문서의 갱신 이상 설명은 전공 변경 시 모든 Department 값을 바꿔야 하고 일부만 변경하면 불일치가 생긴다고 명시함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 20,
+        "passed": true,
+        "reason": "The correct option (갱신 이상 설명) and its explanation are supported by the source lines 21–27; the other options describe deletion, insertion, or unrelated replication and are not supported by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 21,
+    "topic": "Redis String 용량 제한",
+    "learningObjective": "Redis의 String 값에 적용되는 최대 크기 한도를 식별할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "Redis에서 하나의 String 타입 값에 저장할 수 있는 최대 용량은 얼마입니까?",
+    "options": [
+      "512MB까지 저장할 수 있습니다.",
+      "1GB까지 저장할 수 있습니다.",
+      "무제한으로 저장할 수 있습니다.",
+      "64KB까지만 저장할 수 있습니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "원문은 String (text, binary data)에 대해 512MB까지 저장이 가능하다고 명시하고 있으므로, 하나의 String 값의 최대 크기는 512MB입니다.",
+    "optionExplanations": [
+      "정답: 문서에 String은 512MB까지 저장 가능하다고 직접 기재되어 있습니다 (20행).",
+      "오답: 1GB 제한은 원문에 언급되지 않았습니다.",
+      "오답: 무제한이라는 기술적 설명은 문서에 없으며, 문서는 명확한 512MB 제한을 제시합니다.",
+      "오답: 64KB 제한은 문서와 일치하지 않습니다."
+    ],
+    "keywords": [
+      "String",
+      "크기 제한",
+      "512MB"
+    ],
+    "sourceEvidence": {
+      "section": "Redis.md",
+      "startLine": 20,
+      "endLine": 20,
+      "quote": "1. String (text, binary data) - 512MB까지 저장이 가능함"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "654cbf82-5a86-5fe1-9a9b-da7d4bb65587",
+    "review": {
+      "blind": {
+        "slot": 21,
+        "correctOptionText": "512MB까지 저장할 수 있습니다.",
+        "unambiguous": true,
+        "reason": "문서에 'String ... 512MB까지 저장이 가능함'이라고 명시됨.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 21,
+        "passed": true,
+        "reason": "원문에 'String ... 512MB까지 저장이 가능함'이라고 직접 표기되어 있어 정답(옵션 1)이 명확히 뒷받침되고 다른 선택지는 문서에 언급이 없어 잘못되었습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 22,
+    "topic": "Primary Key 제약",
+    "learningObjective": "Primary Key의 제약(Null 불가, 중복 불가)을 비교하여 식별할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 기본키(Primary Key)에 대해 옳은 설명은 무엇입니까?",
+    "options": [
+      "기본키는 외래키로만 참조될 수 있고 자체적으로는 식별자 역할을 하지 않는다",
+      "기본키는 후보키 중에서 선택되며 NULL 값을 가질 수 없고 동일한 값이 중복될 수 없다",
+      "기본키는 항상 여러 속성의 집합이며 NULL과 중복을 허용한다",
+      "기본키는 후보키와 달리 유일성 조건을 만족할 필요가 없다"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서는 'Primary Key(기본키)는 후보키 중 선택한 Main Key'이며 특징으로 'Null 값을 가질 수 없음'과 '동일한 값이 중복될 수 없음'을 명시하고 있습니다. 따라서 기본키는 후보키에서 선택되며 NULL 및 중복을 허용하지 않습니다.",
+    "optionExplanations": [
+      "오답입니다. 기본키는 식별자 역할을 하며 외래키가 참조할 수 있지만 '오직 외래키로만 참조된다'는 표현은 문서에 없습니다.",
+      "정답입니다. 문서에 기본키는 후보키 중 선택된 키이며 NULL 불가, 중복 불가라고 명시되어 있습니다.",
+      "오답입니다. 문서와 반대로 기본키는 NULL과 중복을 허용하지 않습니다.",
+      "오답입니다. 기본키는 후보키이므로 유일성 조건을 만족해야 합니다."
+    ],
+    "keywords": [
+      "Primary Key",
+      "NULL 불가",
+      "중복 불가"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Key.md",
+      "startLine": 20,
+      "endLine": 28,
+      "quote": "#### 2. Primary Key (기본키)\n\n> 후보키 중 선택한 Main Key\n\n특징 \n\n* Null 값을 가질 수 없음\n* 동일한 값이 중복될 수 없음"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "a905cb8a-6426-55f1-bc22-c4dc073565f5",
+    "review": {
+      "blind": {
+        "slot": 22,
+        "correctOptionText": "기본키는 후보키 중에서 선택되며 NULL 값을 가질 수 없고 동일한 값이 중복될 수 없다",
+        "unambiguous": true,
+        "reason": "문서에서 기본키는 후보키 중 선택되며 Null 불가, 중복 불가라고 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 22,
+        "passed": true,
+        "reason": "정답(2)은 제공된 출처 문장(‘후보키 중 선택한 Main Key’, 'Null 값을 가질 수 없음', '동일한 값이 중복될 수 없음')과 정확히 일치합니다. 나머지 선택지(1,3,4)는 출처 내용과 직접적으로 모순되므로 오답으로 판별 가능합니다. 모든 선택지 설명은 출처 근거에 부합하며 과도한 절대주장(예: 출처에 없는 추가 제약)을 포함하지 않습니다. 난이도(MEDIUM)와 학습목표는 출처와 일치하고 서로 구별됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 23,
+    "topic": "NoSQL의 조인 대체 방식과 단점",
+    "learningObjective": "NoSQL이 조인 대신 데이터 복제를 사용하는 방식과 그로 인한 수정 비용 증가를 비교하여 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "NoSQL에서 관계형 데이터베이스의 '조인' 대신 주로 사용하는 방식과 그 결과로 나타나는 단점은 무엇입니까?",
+    "options": [
+      "트랜잭션을 사용해 모든 컬렉션의 데이터를 자동으로 동기화하여 중복 문제를 제거합니다.",
+      "NoSQL은 모든 데이터를 단일 테이블에 정규화하여 저장하므로 조인이 전혀 필요하지 않습니다.",
+      "관련 데이터를 컬렉션에 복제(중복 저장)하여 조인을 피하지만, 수정 시 여러 곳을 업데이트해야 하는 추가 비용이 발생합니다.",
+      "외래키와 조인을 동일하게 지원하므로 데이터 중복이 없고 수정 비용이 감소합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 NoSQL이 관련 데이터를 동일한 컬렉션에 넣어 조인을 피하고(문서를 한 곳에 포함), 조인을 대신해 '컬렉션을 통해 데이터를 복제'한다고 설명합니다. 또한 이로 인해 데이터 중복과 수정 시 '모든 컬렉션에서 수행해야 함' 등의 단점이 발생한다고 명시합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 NoSQL이 트랜잭션으로 자동 동기화한다고 설명하지 않고, 오히려 중복을 계속 업데이트해야 하는 단점을 언급합니다.",
+      "틀렸습니다. 본문은 NoSQL이 관련 데이터를 하나의 컬렉션(문서)에 포함한다고 하지만, '단일 테이블에 정규화'한다고 하지 않으며 정규화는 오히려 관계형 DB의 특징입니다.",
+      "정답입니다. 본문은 문서를 한 컬렉션에 넣어 조인을 피하고 필요할 때 '컬렉션을 통해 데이터를 복제'한다고 하며, 그 결과 수정 시 중복된 데이터를 모두 업데이트해야 한다고 설명합니다.",
+      "틀렸습니다. 본문은 NoSQL에 '조인이라는 개념이 존재하지 않음'을 밝히며, 외래키와 조인을 동일하게 지원한다고 하지 않습니다."
+    ],
+    "keywords": [
+      "NoSQL",
+      "조인 대체",
+      "데이터 복제",
+      "수정 비용"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+      "startLine": 67,
+      "endLine": 79,
+      "quote": "문서(documents)는 Json과 비슷한 형태로 가지고 있다. 관계형 데이터베이스처럼 여러 테이블에 나누어담지 않고, 관련 데이터를 동일한 '컬렉션'에 넣는다.\n\n따라서 위 사진에 SQL에서 진행한 Orders, Users, Products 테이블로 나눈 것을 NoSQL에서는 Orders에 한꺼번에 포함해서 저장하게 된다.\n\n따라서 여러 테이블에 조인할 필요없이 이미 필요한 모든 것을 갖춘 문서를 작성하는 것이 NoSQL이다. (NoSQL에는 조인이라는 개념이 존재하지 않음)\n\n<br>\n\n그러면 조인하고 싶을 때 NoSQL은 어떻게 할까? \n\n> 컬렉션을 통해 데이터를 복제하여 각 컬렉션 일부분에 속하는 데이터를 정확하게 산출하도록 한다.\n\n하지만 이러면 데이터가 중복되어 서로 영향을 줄 위험이 있다. 따라서 조인을 잘 사용하지 않고 자주 변경되지 않는 데이터일 때 NoSQL을 쓰면 상당히 효율적이다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%EA%B3%BC%20NOSQL%EC%9D%98%20%EC%B0%A8%EC%9D%B4.md",
+    "id": "f14d15c4-b25c-517b-ba14-136b8c243b5f",
+    "review": {
+      "blind": {
+        "slot": 23,
+        "correctOptionText": "관련 데이터를 컬렉션에 복제(중복 저장)하여 조인을 피하지만, 수정 시 여러 곳을 업데이트해야 하는 추가 비용이 발생합니다.",
+        "unambiguous": true,
+        "reason": "본문은 NoSQL에서 데이터를 복제하여 조인을 피한다고 하고 그로 인해 데이터 중복과 수정 시 여러 컬렉션을 업데이트해야 한다고 명시합니다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 23,
+        "passed": true,
+        "reason": "정답(옵션3)과 해설이 원문 내용(컬렉션 복제와 수정 비용 증가)을 정확히 반영하며 나머지 선택지는 원문과 모순됨."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 24,
+    "topic": "Buffer 관리 - steal 정책",
+    "learningObjective": "steal(수정된 페이지를 임의로 디스크에 쓰는 정책)의 동작과 복구 요구를 비교할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 steal 버퍼 관리 정책에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "수정된 페이지를 EOT(End Of Transaction)까지 버퍼에 유지하므로 UNDO 작업이 필요하지 않습니다.",
+      "steal 정책은 매우 큰 메모리 버퍼를 필요로 하여 대부분의 DBMS에서 사용하지 않습니다.",
+      "steal 정책은 transaction의 종료 시점까지 디스크에 쓰지 않기 때문에 REDO 복구만 필요합니다.",
+      "수정된 페이지를 언제든지 디스크에 쓸 수 있으므로 UNDO 로깅과 복구가 필요합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 steal 정책이 \"수정된 페이지를 언제든지 디스크에 쓸 수 있는 정책\"이며, 대부분의 DBMS가 채택하고 \"UNDO logging과 복구를 필요로 함\"이라고 명시하고 있습니다. 따라서 steal 정책은 버퍼 교체로 인해 정상 종료되지 않은 트랜잭션의 변경을 원상복구하기 위해 UNDO가 필요하다는 점이 핵심입니다.",
+    "optionExplanations": [
+      "오답입니다. EOT까지 유지하여 UNDO가 불필요한 정책은 ¬steal(즉 no-steal)입니다. 문서에서 no-steal이 EOT까지 버퍼 유지하며 UNDO가 필요하지 않다고 되어 있습니다 (lines 127-130).",
+      "오답입니다. 문서에서는 매우 큰 메모리 버퍼가 필요한 것은 ¬steal (no-steal) 쪽이라고 설명합니다. 반대로 steal은 대부분의 DBMS가 채택한다고 명시되어 있습니다 (lines 120-123,127-130).",
+      "오답입니다. steal은 언제든지 디스크에 쓸 수 있으므로 UNDO가 필요하다고 되어 있고, REDO만 필요하다고 하지 않습니다. 해당 진술은 문서 내용과 맞지 않습니다 (lines 116-124).",
+      "정답입니다. 문서에 \"steal : 수정된 페이지를 언제든지 디스크에 쓸 수 있는 정책\"과 \"UNDO logging과 복구를 필요로 함.\"이라고 명시되어 있습니다 (lines 116-123)."
+    ],
+    "keywords": [
+      "steal",
+      "UNDO",
+      "버퍼 교체",
+      "no-steal"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/Transaction.md",
+      "startLine": 116,
+      "endLine": 124,
+      "quote": "필요한 이유 : 수정된 Page들이 **<u>Buffer 교체 알고리즘에 따라서 디스크에 출력</u>**될 수 있음. Buffer 교체는 **<u>transaction과는 무관하게 buffer의 상태에 따라서, 결정됨</u>**. 이로 인해, 정상적으로 종료되지 않은 transaction이 변경한 page들은 원상 복구 되어야 하는데,  이 복구를 undo라고 함.\n\n- 2개의 정책 (수정된 페이지를 디스크에 쓰는 시점으로 분류)\n\n  steal : 수정된 페이지를 언제든지 디스크에 쓸 수 있는 정책\n\n  - 대부분의 DBMS가 채택하는 Buffer 관리 정책\n  - UNDO logging과 복구를 필요로 함."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Transaction.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction.md",
+    "id": "ddb1d8c0-c9ca-5cf2-9745-32a4a41c1e9f",
+    "review": {
+      "blind": {
+        "slot": 24,
+        "correctOptionText": "수정된 페이지를 언제든지 디스크에 쓸 수 있으므로 UNDO 로깅과 복구가 필요합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 steal 정책은 수정된 페이지를 언제든지 디스크에 쓸 수 있고 대부분의 DBMS가 채택하며 UNDO logging과 복구를 필요로 한다고 명시됨.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 24,
+        "passed": true,
+        "reason": "All four options and their explanations correctly reflect the source: option 4 matches the source text about steal requiring UNDO; the three distractors are contradicted by the source and are correctly labeled as wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 25,
+    "topic": "JOIN 유형 비교",
+    "learningObjective": "INNER JOIN과 LEFT OUTER JOIN의 결과 차이를 비교 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "두 테이블 A와 B가 있고 A의 모든 행을 항상 포함시키되 B와 일치하는 행은 결합하고 일치하지 않으면 NULL을 표시하려면 어떤 JOIN을 사용해야 합니까?",
+    "options": [
+      "LEFT OUTER JOIN",
+      "INNER JOIN",
+      "CROSS JOIN",
+      "RIGHT OUTER JOIN"
+    ],
+    "correctAnswer": 1,
+    "explanation": "LEFT OUTER JOIN은 기준(왼쪽) 테이블의 값들을 모두 포함시키고, 조인 테이블과 중복된 값만 결합합니다. 일치하지 않는 조인쪽 값은 NULL로 표시되는 것이 LEFT OUTER JOIN의 동작입니다.",
+    "optionExplanations": [
+      "정답입니다. 출처에 LEFT OUTER JOIN은 '기준테이블값과 조인테이블과 중복된 값을 보여준다'와 '왼쪽테이블 기준으로 JOIN을 한다'고 설명되어 있어, 왼쪽(기준) 테이블의 모든 행을 유지하는 동작과 일치합니다. (lines 45-47,49-54)",
+      "INNER JOIN은 양쪽 테이블의 교집합만 반환하므로, 왼쪽 테이블의 모든 행을 보장하지 않습니다. (lines 30-37)",
+      "CROSS JOIN은 모든 경우의 수(카르테시안 곱)를 반환하므로, 왼쪽 테이블의 모든 행을 유지한다는 의미는 맞지만, 일치하는 행만 결합하고 일치하지 않을 때 NULL을 두는 동작과는 다릅니다. (lines 92-101)",
+      "RIGHT OUTER JOIN은 오른쪽 테이블을 기준으로 모든 행을 유지하므로, 왼쪽(A) 테이블의 모든 행을 항상 포함시키는 요구와는 반대입니다. (lines 60-69)"
+    ],
+    "keywords": [
+      "LEFT OUTER JOIN",
+      "INNER JOIN",
+      "조인 기준",
+      "NULL"
+    ],
+    "sourceEvidence": {
+      "section": "[Database SQL] JOIN.md",
+      "startLine": 41,
+      "endLine": 54,
+      "quote": "- #### LEFT OUTER JOIN\n\n  <img src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F997E7F415A81490507F027\">\n\n  기준테이블값과 조인테이블과 중복된 값을 보여준다.\n\n  왼쪽테이블 기준으로 JOIN을 한다고 생각하면 편하다.\n\n  ```SQL\n  SELECT\n  A.NAME, B.AGE\n  FROM EX_TABLE A\n  LEFT OUTER JOIN JOIN_TABLE B ON A.NO_EMP = B.NO_EMP\n  ```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "643ebb5c-b4ff-5758-86f9-c248af2fe974",
+    "review": {
+      "blind": {
+        "slot": 25,
+        "correctOptionText": "LEFT OUTER JOIN",
+        "unambiguous": true,
+        "reason": "Source states LEFT OUTER JOIN includes the left table's values and matching rows from the join table, showing NULL for non-matches.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 25,
+        "passed": true,
+        "reason": "정답(LEFT OUTER JOIN)과 오답 설명들이 제공된 원문(LEFT OUTER JOIN: 왼쪽 테이블 기준 유지, INNER JOIN: 교집합만, CROSS JOIN: 카르테시안, RIGHT OUTER JOIN: 오른쪽 기준)을 근거로 정확히 일치하고, 세 개의 오답이 원문 내용에 따라 모두 잘못된 것으로 판정됩니다. (lines 30-37, 41-54, 60-69, 92-101)"
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 26,
+    "topic": "Primary Key vs Alternate Key",
+    "learningObjective": "Primary Key와 Alternate Key의 관계를 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 Alternate Key(대체키)에 대한 올바른 설명은 무엇입니까?",
+    "options": [
+      "후보키 중에서 선택된 메인 키로, NULL을 허용하지 않는다.",
+      "후보키 중 기본키를 제외한 나머지 키들이다.",
+      "유일성은 만족하지 않으나 최소성은 만족하는 키이다.",
+      "다른 릴레이션의 기본키를 참조하기 위해 사용되는 키이다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서는 Alternate Key를 '후보키 중 기본키를 제외한 나머지 키 = 보조키'라고 정의합니다. 즉 기본키로 선택되지 않은 후보키들이 대체키입니다. 다른 선택지는 대체키 정의와 맞지 않습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 후보키 중 선택된 메인 키는 기본키(Primary Key)에 대한 설명입니다.",
+      "정답입니다. 문서에 '후보키 중 기본키를 제외한 나머지 키 = 보조키'라고 명시되어 있습니다.",
+      "틀렸습니다. 유일성을 만족하지 않으면서 최소성만 만족하는 키라는 설명은 문서에 없습니다(그런 특성은 슈퍼키와도 맞지 않습니다).",
+      "틀렸습니다. 다른 릴레이션의 기본키를 참조하는 것은 외래키의 역할입니다."
+    ],
+    "keywords": [
+      "Alternate Key",
+      "대체키",
+      "후보키",
+      "기본키"
+    ],
+    "sourceEvidence": {
+      "section": "3. Alternate Key (대체키)",
+      "quote": "후보키 중 기본키를 제외한 나머지 키 = 보조키"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "35c44d77-f381-5fe2-a57b-949e2301231e",
+    "review": {
+      "blind": {
+        "slot": 26,
+        "position": 2,
+        "unambiguous": true,
+        "reason": "Source 정의: Alternate Key는 후보키 중 기본키를 제외한 나머지 키라고 명시됨."
+      },
+      "evidenceAudit": {
+        "slot": 26,
+        "passed": true,
+        "reason": "Correct answer matches the source definition of Alternate Key. Other options describe Primary Key, Super Key, or Foreign Key and are contradicted by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 27,
+    "topic": "Redis 백업 방식 비교",
+    "learningObjective": "Redis의 snapshot과 AOF 백업 방식의 기본 차이를 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 snapshot과 AOF(Append Only File)의 가장 큰 차이점은 무엇입니까?",
+    "options": [
+      "snapshot은 네트워크 백업 전용이고 AOF는 로컬 디스크만 사용한다",
+      "snapshot은 메모리 전용이고 AOF는 디스크에만 저장된다",
+      "snapshot은 특정 지점을 디스크에 백업하고, AOF는 명령들을 저장해 재실행한다",
+      "snapshot은 모든 명령을 저장하고, AOF는 특정 시점만 저장한다"
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서 snapshot은 \"특정 지점을 설정하고 디스크에 백업\"하는 방식으로 설명되고, AOF는 \"명령(쿼리)들을 저장해두고, 서버가 셧다운되면 재실행\"하는 방식으로 설명되어 있어 두 방식의 차이를 정확히 나타냅니다. 다른 보기들은 문서 내용과 맞지 않습니다.",
+    "optionExplanations": [
+      "문서에는 네트워크/로컬 구분에 대한 언급이 없으므로 이 선택지는 문서 근거가 없습니다.",
+      "문서에서는 snapshot이 메모리 전용이라는 언급이 없고 둘 다 디스크 관련 백업 방식으로 설명되어 있어 틀립니다.",
+      "정답입니다. 문서에는 snapshot은 특정 지점을 디스크에 백업하고, AOF는 명령들을 저장해 재실행한다고 명시되어 있습니다.",
+      "문서에는 snapshot이 특정 지점을 저장한다고 되어 있고 AOF가 모든 명령을 저장한다고만 되어 있으므로 이 보기는 뒤바뀌어 틀립니다."
+    ],
+    "keywords": [
+      "snapshot",
+      "AOF",
+      "백업"
+    ],
+    "sourceEvidence": {
+      "section": "Redis",
+      "quote": "snapshot : 특정 지점을 설정하고 디스크에 백업\n- AOF(Append Only File) : 명령(쿼리)들을 저장해두고, 서버가 셧다운되면 재실행해서 다시 만들어 놓는 것"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "c12baf2c-0380-5082-8ff4-90fe70b38912",
+    "review": {
+      "blind": {
+        "slot": 27,
+        "position": 3,
+        "unambiguous": true,
+        "reason": "본문은 snapshot은 특정 지점을 디스크에 백업하고 AOF는 명령들을 저장해 재실행한다고 설명함."
+      },
+      "evidenceAudit": {
+        "slot": 27,
+        "passed": true,
+        "reason": "Correct answer (snapshot: 특정 지점 백업 vs AOF: 명령 저장·재실행) exactly matches the source; other options contradict the source and are therefore provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 28,
+    "topic": "인덱스 사용 권장/비권장 판단",
+    "learningObjective": "컬럼 특성(중복도, DML 빈도)에 따라 인덱스 사용을 피해야 하는 경우를 판단할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 문서에서 'Index 사용을 피해야 하는 경우'로 명시된 항목은 무엇입니까?",
+    "options": [
+      "Where 절에서 자주 사용되는 컬럼",
+      "외래키가 사용되는 컬럼",
+      "Join에 자주 사용되는 컬럼",
+      "데이터 중복도가 높은 컬럼 또는 DML이 자주 일어나는 컬럼"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서의 'Index 사용을 피해야 하는 경우' 항목에서 (1) Data 중복도가 높은 Column과 (2) DML이 자주 일어나는 Column을 명시하고 있습니다. 따라서 중복도 높거나 DML이 빈번한 컬럼에는 인덱스를 피해야 합니다.",
+    "optionExplanations": [
+      "틀렸습니다. Where 절에서 자주 사용되는 컬럼은 오히려 '사용하면 좋은 경우'로 분류되어 있습니다.",
+      "틀렸습니다. 외래키가 사용되는 컬럼은 '사용하면 좋은 경우'에 포함되어 있습니다.",
+      "틀렸습니다. Join에 자주 사용되는 컬럼도 '사용하면 좋은 경우'로 분류되어 있습니다.",
+      "정답입니다. 본문은 명시적으로 데이터 중복도가 높거나 DML이 자주 일어나는 컬럼에는 인덱스 사용을 피하라고 안내합니다."
+    ],
+    "keywords": [
+      "인덱스 회피 조건",
+      "중복도",
+      "DML 빈도"
+    ],
+    "sourceEvidence": {
+      "section": "Index(인덱스)",
+      "startLine": 56,
+      "endLine": 61,
+      "quote": "- ##### Index 사용을 피해야 하는 경우\n\n  (1) Data 중복도가 높은 Column\n\n  (2) DML이 자주 일어나는 Column"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "d221697a-7f6f-5f97-849a-003048feb7c3",
+    "review": {
+      "blind": {
+        "slot": 28,
+        "correctOptionText": "데이터 중복도가 높은 컬럼 또는 DML이 자주 일어나는 컬럼",
+        "unambiguous": true,
+        "reason": "문서의 'Index 사용을 피해야 하는 경우'로 정확히 이 두 항목을 명시하고 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 28,
+        "passed": true,
+        "reason": "정답(옵션 4)은 소스의 'Index 사용을 피해야 하는 경우' 항목(데이터 중복도가 높은 컬럼, DML이 자주 일어나는 컬럼)을 정확히 담고 있으며 다른 선택지는 소스의 '사용하면 좋은 경우'에 해당합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 29,
+    "topic": "프로시저 성능 장점(캐시)",
+    "learningObjective": "프로시저 캐시와 최초 컴파일의 성능 이점을 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "프로시저의 성능 관련 장점으로 문서에서 직접 언급한 내용은 무엇입니까?",
+    "options": [
+      "프로시저는 최초 실행할 때 최적화되어 컴파일되며 이후에는 프로시저 캐시에서 재사용되어 재컴파일 비용을 줄입니다.",
+      "프로시저는 모든 쿼리를 클라이언트에서 실행하도록 위임하므로 서버의 CPU 부하를 줄여줍니다.",
+      "프로시저는 자동으로 병렬 실행되어 대량의 레코드를 동시에 업데이트할 때 항상 더 빠릅니다.",
+      "프로시저는 네트워크 전송을 늘려 중복 요청을 방지하는 대신 클라이언트 측 캐시를 비활성화합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서의 장점 항목에서 '프로시저의 최초 실행 시 최적화 상태로 컴파일'되고 '그 이후 프로시저 캐시에 저장'되어 여러 번 사용될 때 다시 컴파일하지 않고 캐시에서 가져온다고 명시되어 있어 재컴파일 비용 감소가 장점으로 설명됩니다 (lines 95-100).",
+    "optionExplanations": [
+      "정답입니다. 문서에 최초 실행 시 최적화되어 컴파일되고 이후 캐시에 저장되어 재컴파일을 피한다고 명시되어 있습니다 (lines 95-100).",
+      "틀렸습니다. 문서에서는 프로시저로 인해 클라이언트가 서버의 SQL을 직접 작성하지 않아 트래픽이 감소한다고 하나, 쿼리를 클라이언트에서 실행하도록 위임한다고 하지 않습니다 (lines 106-109).",
+      "틀렸습니다. 문서에는 프로시저가 자동으로 병렬 실행되어 항상 더 빠르다고 하는 설명은 없습니다; 그런 성격의 언급은 없습니다 (해당 근거 없음).",
+      "틀렸습니다. 문서에서는 네트워크 트래픽 감소를 장점으로 언급하지만, 네트워크 전송을 늘리거나 클라이언트 측 캐시를 비활성화한다고 말하지 않습니다 (lines 106-109)."
+    ],
+    "keywords": [
+      "최적화",
+      "컴파일",
+      "캐시"
+    ],
+    "sourceEvidence": {
+      "section": "저장 프로시저(Stored PROCEDURE).md",
+      "startLine": 95,
+      "endLine": 100,
+      "quote": "1. #### 최적화 & 캐시\n\n   프로시저의 최초 실행 시 최적화 상태로 컴파일이 되며, 그 이후 프로시저 캐시에 저장된다.\n\n   만약 해당 프로세스가 여러번 사용될 때, 다시 컴파일 작업을 거치지 않고 캐시에서 가져오게 된다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/저장 프로시저(Stored PROCEDURE).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%80%EC%9E%A5%20%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80%28Stored%20PROCEDURE%29.md",
+    "id": "49b303b8-e1aa-5730-a18e-9c7c00d4f95a",
+    "review": {
+      "blind": {
+        "slot": 29,
+        "correctOptionText": "프로시저는 최초 실행할 때 최적화되어 컴파일되며 이후에는 프로시저 캐시에서 재사용되어 재컴파일 비용을 줄입니다.",
+        "unambiguous": true,
+        "reason": "문서의 장점 1에 '최초 실행 시 최적화... 프로시저 캐시에 저장... 다시 컴파일 작업을 거치지 않고 캐시에서 가져오게 된다'라고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 29,
+        "passed": true,
+        "reason": "정답(1)은 문서의 '최초 실행 시 최적화 후 캐시에 저장되어 재컴파일을 피한다'는 문장과 일치하며 다른 선택지는 문서 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 30,
+    "topic": "에러 이용한 데이터 노출",
+    "learningObjective": "URL 쿼리 스트링을 이용해 에러를 유발하고 데이터베이스 구조를 유추하는 방식을 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "공격자가 GET 방식의 URL 쿼리 스트링을 추가하여 에러를 발생시키는 이유로 올바른 것은 무엇입니까?",
+    "options": [
+      "에러를 발생시키면 데이터베이스가 자동으로 패치되어 보안이 향상되기 때문입니다.",
+      "발생한 오류 메시지를 통해 해당 웹앱의 데이터베이스 구조를 유추하기 위해서입니다.",
+      "GET 쿼리를 통해 서버의 방화벽 설정을 자동으로 변경하기 위해서입니다.",
+      "URL 쿼리 스트링은 항상 인증 토큰을 우회하도록 설계되어 있기 때문입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 해커가 GET 방식의 URL 쿼리 스트링을 추가하여 에러를 발생시키고, 그 오류를 통해 웹앱의 데이터베이스 구조를 유추하여 해킹에 활용한다고 명시되어 있습니다 (lines 31-34). 다른 선택지는 문서의 설명과 일치하지 않습니다.",
+    "optionExplanations": [
+      "오답: 문서에는 에러 발생이 자동 패치로 이어진다고 기술되어 있지 않습니다.",
+      "정답: 문서에 명시된 공격자의 목적과 일치합니다 (lines 31-34).",
+      "오답: 문서에는 GET 쿼리로 방화벽을 변경한다고 언급하지 않습니다.",
+      "오답: 문서에는 URL 쿼리 스트링이 인증 토큰을 우회한다고 설명하지 않습니다."
+    ],
+    "keywords": [
+      "데이터 노출",
+      "에러 메시지",
+      "GET 쿼리 스트링"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL Injection.md",
+      "startLine": 31,
+      "endLine": 34,
+      "quote": "시스템에서 발생하는 에러 메시지를 이용해 공격하는 방법이다. 보통 에러는 개발자가 버그를 수정하는 면에서 도움을 받을 수 있는 존재다. 해커들은 이를 역이용해 악의적인 구문을 삽입하여 에러를 유발시킨다.\n\n즉 예를 들면, 해커는 **GET 방식으로 동작하는 URL 쿼리 스트링을 추가하여 에러를 발생**시킨다. 이에 해당하는 오류가 발생하면, 이를 통해 해당 웹앱의 데이터베이스 구조를 유추할 수 있고 해킹에 활용한다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL Injection.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%20Injection.md",
+    "id": "7f3fe9a6-eef2-507a-88f6-a091311fdbf1",
+    "review": {
+      "blind": {
+        "slot": 30,
+        "correctOptionText": "발생한 오류 메시지를 통해 해당 웹앱의 데이터베이스 구조를 유추하기 위해서입니다.",
+        "unambiguous": true,
+        "reason": "문서에 GET 쿼리 스트링으로 에러를 발생시켜 데이터베이스 구조를 유추한다고 명시되어 있다.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 30,
+        "passed": true,
+        "reason": "정답(2)은 원문에서 'GET 방식의 URL 쿼리 스트링을 추가하여 에러를 발생시키고 그 오류로 DB 구조를 유추'한다고 명확히 설명한 내용과 일치합니다. 다른 선택지는 문서 근거가 없습니다. 난이도(MEDIUM)와 학습 목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 31,
+    "topic": "Anomaly - 삭제 이상",
+    "learningObjective": "삭제 이상(Deletion Anomaly)이 어떤 방식으로 필요한 데이터를 손실시키는지 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 삭제 이상(Deletion Anomaly)의 본질을 가장 올바르게 설명한 것은 무엇입니까?",
+    "options": [
+      "기본키 제약으로 인해 어떤 튜플을 삽입할 수 없어 불필요한 값을 추가해야 하는 상황입니다.",
+      "테이블의 스키마 제약을 완화하여 NULL값을 허용하는 설계 방식입니다.",
+      "튜플을 삭제할 때 그 튜플에 들어 있던 학생 관련 정보(예: Student ID, Department)가 함께 삭제되어 필요 데이터가 손실되는 상황입니다.",
+      "한 속성값을 변경할 때 모든 튜플을 바꿔야 해서 일부만 변경하면 데이터 불일치가 생기는 상황입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 학생이 수강을 철회할 때 관련 튜플을 삭제하면 Student ID, Department 같은 학생 정보까지 함께 삭제되어 필요한 데이터가 없어지는 문제를 삭제 이상으로 정의합니다 (lines 31-37).",
+    "optionExplanations": [
+      "이는 삽입 이상(Insertion Anomaly)에 해당하는 설명으로, 기본키 제약 때문에 삽입 불가 문제가 발생하는 상황입니다 (lines 11-17).",
+      "문서에서는 스키마를 완화하여 NULL을 허용하는 설계에 대해 언급하지 않으며, 해당 선택지는 삭제 이상의 설명이 아닙니다.",
+      "정답입니다. 문서의 삭제 이상 설명은 삭제로 인해 학생에 관한 정보까지 함께 없어지는 상황을 명확히 지적합니다 (lines 31-37).",
+      "이는 갱신 이상(Update Anomaly)에 대한 설명으로, 일부만 변경하여 데이터 불일치가 발생하는 문제입니다 (lines 21-27)."
+    ],
+    "keywords": [
+      "삭제 이상",
+      "데이터 손실",
+      "Student ID",
+      "Department"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Anomaly.md",
+      "startLine": 31,
+      "endLine": 37,
+      "quote": "3. 삭제 이상 (Deletion Anomaly)\n\n   만약 어떤 학생이 수강을 철회하는 경우, {Student ID, Department, Course ID, Grade}의 정보 중\n\n   Student ID, Department 와 같은 학생에 대한 정보도 함께 삭제됨.\n\n   > 튜플 삭제로 인해 꼭 필요한 데이터까지 함께 삭제되는 문제 = Deletion Anomaly"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Anomaly.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+    "id": "34be1bc4-b924-5aaf-a216-36098f611c88",
+    "review": {
+      "blind": {
+        "slot": 31,
+        "correctOptionText": "튜플을 삭제할 때 그 튜플에 들어 있던 학생 관련 정보(예: Student ID, Department)가 함께 삭제되어 필요 데이터가 손실되는 상황입니다.",
+        "unambiguous": true,
+        "reason": "문서의 삭제 이상 설명은 수강 철회로 인해 학생 정보(Student ID, Department)도 함께 삭제되어 필요한 데이터가 사라지는 문제라고 서술함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 31,
+        "passed": true,
+        "reason": "The correct option (삭제 이상 설명) and its explanation match the source lines 31–37; the remaining choices describe insertion, an unstated schema change, or update anomaly and are contradicted or unsupported by the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 32,
+    "topic": "Redis의 분류(관계형 vs 비관계형)",
+    "learningObjective": "Redis가 비관계형(DBMS)으로 분류되는 이유를 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 Redis를 비관계형 데이터베이스로 분류하는 근거로 문서에서 직접 언급된 것은 무엇입니까?",
+    "options": [
+      "관계형 스키마를 엄격히 강제하므로 비관계형으로 본다.",
+      "SQL 기반 쿼리 언어를 사용하지 않기 때문에 비관계형으로 분류한다.",
+      "테이블과 조인을 지원하지 않아서 비관계형으로 본다.",
+      "데이터 구조가 key/value 값으로 이루어져 있어 비정형 데이터를 저장하기 때문입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "원문은 '데이터 구조는 key/value 값으로 이루어져 있다. (따라서 Redis는 비정형 데이터를 저장하는 비관계형 데이터베이스 관리 시스템이다)'라고 명시해, key/value 구조가 비관계형임을 근거로 제시합니다.",
+    "optionExplanations": [
+      "오답: 문서에는 관계형 스키마 강제 관련 설명이 없고, 이것이 비관계형의 근거로 제시되지 않았습니다.",
+      "오답: 문서에 SQL 여부에 대한 직접 언급은 없으므로 근거로 사용될 수 없습니다.",
+      "오답: 테이블/조인 지원 여부에 대한 언급은 문서에 없으므로 근거로 삼을 수 없습니다.",
+      "정답: 문서에서 key/value 구조 때문에 비관계형 DBMS라고 직접 서술하고 있습니다 (16행)."
+    ],
+    "keywords": [
+      "key/value",
+      "비관계형",
+      "비정형"
+    ],
+    "sourceEvidence": {
+      "section": "Redis.md",
+      "startLine": 16,
+      "endLine": 16,
+      "quote": "데이터 구조는 key/value 값으로 이루어져 있다. (따라서 Redis는 비정형 데이터를 저장하는 비관계형 데이터베이스 관리 시스템이다)"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "5341224e-d598-583b-85d2-b829bc3993b3",
+    "review": {
+      "blind": {
+        "slot": 32,
+        "correctOptionText": "데이터 구조가 key/value 값으로 이루어져 있어 비정형 데이터를 저장하기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서에 '데이터 구조는 key/value 값으로 이루어져 있다. (따라서 Redis는 비정형 데이터를 저장하는 비관계형 데이터베이스...)'라고 명시됨.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 32,
+        "passed": true,
+        "reason": "원문에 '데이터 구조는 key/value 값으로 이루어져 있다. (따라서 ... 비관계형 데이터베이스)'라고 직접 서술되어 정답(옵션 4)이 문서 근거로 유일하게 맞으며 다른 선택지는 문서에서 언급되지 않습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 33,
+    "topic": "Candidate Key vs Super Key",
+    "learningObjective": "Candidate Key와 Super Key의 차이를 유일성 및 최소성 측면에서 비교하여 구별할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 Candidate Key와 Super Key의 차이를 가장 정확히 설명한 것은 무엇입니까?",
+    "options": [
+      "Candidate Key는 유일성과 최소성을 모두 만족하지만, Super Key는 유일성만 만족한다",
+      "Candidate Key는 다른 릴레이션의 기본키를 참조하고, Super Key는 후보키들 중 하나를 선택한 키이다",
+      "Candidate Key는 Null 값을 허용하나 Super Key는 Null 값을 허용하지 않는다",
+      "Candidate Key는 반드시 기본키로 선택된 키이고, Super Key는 선택되지 않은 후보키들의 집합이다"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 Candidate Key를 '유일성'과 '최소성'을 만족하는 속성들의 집합으로 정의하고, Super Key는 '유일성은 만족하지만 최소성은 만족하지 못하는 키'로 정의하고 있으므로 첫 번째 선택지가 정확합니다.",
+    "optionExplanations": [
+      "정답: Candidate Key는 유일성과 최소성을 만족하고(lines 11-16), Super Key는 유일성만 만족한다고 명시되어 있습니다(lines 37-39).",
+      "오답: 다른 릴레이션의 기본키를 참조하는 것은 Foreign Key의 정의이며, Candidate Key와 Super Key의 구별 설명과 관련이 없습니다 (lines 43-46, 11-16, 37-39).",
+      "오답: Null 값 허용 여부는 Primary Key에 대한 설명으로 Candidate Key 또는 Super Key의 일반적 허용성을 설명하지 않습니다 (lines 20-28, 11-16, 37-39).",
+      "오답: Candidate Key는 기본키로 '선택될 수 있는' 키들을 의미하며 반드시 선택된 것은 Primary Key입니다; Super Key는 '최소성'을 만족하지 못하는 유일성 보유 키로 표현되므로 이 설명은 부정확합니다 (lines 11-23, 37-39)."
+    ],
+    "keywords": [
+      "Candidate Key",
+      "Super Key",
+      "유일성",
+      "최소성"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Key",
+      "startLine": 11,
+      "endLine": 39,
+      "quote": "> Tuple을 유일하게 식별하기 위해 사용하는 속성들의 부분 집합. (기본키로 사용할 수 있는 속성들)\n\n2가지 조건 만족\n\n* 유일성 : Key로 하나의 Tuple을 유일하게 식별할 수 있음\n* 최소성 : 꼭 필요한 속성으로만 구성\n\n<br>\n\n#### 2. Primary Key (기본키)\n\n> 후보키 중 선택한 Main Key\n\n특징 \n\n* Null 값을 가질 수 없음\n* 동일한 값이 중복될 수 없음\n\n<br>\n\n#### 3. Alternate Key (대체키)\n\n> 후보키 중 기본키를 제외한 나머지 키 = 보조키\n\n<br>\n\n#### 4. Super Key (슈퍼키)\n\n> 유일성은 만족하지만, 최소성은 만족하지 못하는 키"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "4aa311ea-b1d3-5796-bd81-dd2e77d9c565",
+    "review": {
+      "blind": {
+        "slot": 33,
+        "correctOptionText": "Candidate Key는 유일성과 최소성을 모두 만족하지만, Super Key는 유일성만 만족한다",
+        "unambiguous": true,
+        "reason": "The source defines Candidate Key as satisfying both uniqueness and minimality, while Super Key satisfies only uniqueness.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 33,
+        "passed": true,
+        "reason": "정답(1번: Candidate Key는 유일성과 최소성을 모두 만족, Super Key는 유일성만 만족)과 모든 옵션 설명이 제공된 출처 내용(유일성·최소성 정의 및 Super Key 정의)과 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 34,
+    "topic": "데이터베이스 확장성 비교",
+    "learningObjective": "SQL과 NoSQL의 수직적/수평적 확장 지원 차이를 비교하여 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "데이터베이스 확장성에 관해 본문에서 옳게 설명한 것은 무엇입니까?",
+    "options": [
+      "둘 다 수직적 확장만 지원하며 수평적 확장 개념은 적용할 수 없다고 설명합니다.",
+      "일반적으로 SQL 데이터베이스는 주로 수직적 확장만 지원하고, 수평적 확장은 NoSQL에서만 가능하다고 설명합니다.",
+      "SQL과 NoSQL 모두 기본적으로 수평적 확장만 지원한다고 설명합니다.",
+      "SQL은 수평적 확장에 적합하고 NoSQL은 수직적 확장만 가능하다고 설명합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 수직적/수평적 확장 개념을 소개한 뒤 '데이터 저장 방식으로 인해 SQL 데이터베이스는 일반적으로 수직적 확장만 지원함'과 '수평적 확장은 NoSQL 데이터베이스에서만 가능'이라고 명확히 기술하고 있습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 수평적 확장 개념을 명확히 언급하며, 둘 다 수직적 확장만 지원한다고 주장하지 않습니다.",
+      "정답입니다. 본문은 SQL이 주로 수직적 확장만 지원하고 수평적 확장은 NoSQL에서만 가능하다고 명시합니다.",
+      "틀렸습니다. 본문은 SQL이 일반적으로 수직적 확장만 지원한다고 하고, 수평적 확장은 NoSQL에 해당한다고 구분합니다.",
+      "틀렸습니다. 본문은 그 반대로 설명하며, SQL이 수평적 확장에 적합하다고 하지 않습니다."
+    ],
+    "keywords": [
+      "확장성",
+      "수직적 확장",
+      "수평적 확장",
+      "SQL vs NoSQL"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+      "startLine": 91,
+      "endLine": 99,
+      "quote": "- 수직적 확장 : 단순히 데이터베이스 서버의 성능을 향상시키는 것 (ex. CPU 업그레이드)\n- 수평적 확장 : 더 많은 서버가 추가되고 데이터베이스가 전체적으로 분산됨을 의미 (하나의 데이터베이스에서 작동하지만 여러 호스트에서 작동)\n\n<br>\n\n데이터 저장 방식으로 인해 SQL 데이터베이스는 일반적으로 수직적 확장만 지원함\n\n> 수평적 확장은 NoSQL 데이터베이스에서만 가능"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%EA%B3%BC%20NOSQL%EC%9D%98%20%EC%B0%A8%EC%9D%B4.md",
+    "id": "9a61940e-e815-5213-910b-32a239406af4",
+    "review": {
+      "blind": {
+        "slot": 34,
+        "correctOptionText": "일반적으로 SQL 데이터베이스는 주로 수직적 확장만 지원하고, 수평적 확장은 NoSQL에서만 가능하다고 설명합니다.",
+        "unambiguous": true,
+        "reason": "본문은 'SQL 데이터베이스는 일반적으로 수직적 확장만 지원'하고 '수평적 확장은 NoSQL 데이터베이스에서만 가능'이라고 서술하고 있습니다.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 34,
+        "passed": true,
+        "reason": "정답(옵션2) 및 해설이 원문 문장('SQL은 일반적으로 수직적 확장만 지원' 및 '수평적 확장은 NoSQL에서만 가능')과 일치하며 다른 보기는 원문과 일치하지 않음."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 35,
+    "topic": "REDO 복구 - FORCE vs ¬FORCE",
+    "learningObjective": "FORCE와 ¬FORCE의 차이를 비교하여 REDO 필요 여부를 판단할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 FORCE 버퍼 정책에 대한 바른 설명은 무엇입니까?",
+    "options": [
+      "FORCE 정책은 커밋 후에도 수정 내용을 버퍼에만 유지하므로 UNDO가 필요 없습니다.",
+      "FORCE와 ¬FORCE 정책 모두 커밋 시점에 디스크 반영을 보장하므로 REDO가 항상 불필요합니다.",
+      "트랜잭션이 커밋할 때 수정한 모든 페이지를 디스크에 반영하므로 REDO가 필요하지 않습니다.",
+      "커밋 시점에 페이지를 반영하지 않으므로 REDO 복구가 필요합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에는 FORCE는 \"수정했던 모든 페이지를 Transaction commit 시점에 disk에 반영\"한다고 설명되어 있고, 따라서 \"transaction이 commit 되었을 때 수정된 페이지들이 disk 상에 반영되므로 redo 필요 없음\"이라고 명시되어 있습니다. 이로써 FORCE에서는 REDO가 필요하지 않습니다.",
+    "optionExplanations": [
+      "오답입니다. FORCE는 커밋 시점에 디스크 반영을 보장하므로 이 선택지는 UNDO와 관련해 잘못된 설명입니다. 문서는 FORCE가 REDO 불필요함을 설명하고 있지만 UNDO에 대해 해당 선택처럼 단정하지 않습니다 (lines 143-146).",
+      "오답입니다. 문서에서는 ¬FORCE가 존재하며 이것은 커밋 시점에 디스크 반영을 보장하지 않아 REDO가 필요하다고 명시합니다. 따라서 FORCE만이 REDO 불필요를 보장합니다 (lines 143-151).",
+      "정답입니다. 문서에서 FORCE는 커밋 시점에 모든 수정 페이지를 디스크에 반영하므로 REDO가 필요 없다고 분명히 서술되어 있습니다 (lines 143-146).",
+      "오답입니다. 커밋 시점에 반영하지 않아 REDO가 필요한 정책은 ¬FORCE(=no-FORCE)입니다. 문서에 ¬FORCE가 커밋 시점에 반영하지 않으므로 redo 복구가 필요하다고 되어 있습니다 (lines 149-151)."
+    ],
+    "keywords": [
+      "FORCE",
+      "REDO",
+      "¬FORCE",
+      "커밋"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/Transaction.md",
+      "startLine": 143,
+      "endLine": 151,
+      "quote": "FORCE : 수정했던 모든 페이지를 Transaction commit 시점에 disk에 반영\n\n  transaction이 commit 되었을 때 수정된 페이지들이 disk 상에 반영되므로 redo 필요 없음.\n\n  <br>\n\n  ¬FORCE : commit 시점에 반영하지 않는 정책\n\n  transaction이 disk 상의 db에 반영되지 않을 수 있기에 redo 복구가 필요. (대부분의 DBMS 정책)"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Transaction.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction.md",
+    "id": "9f1c22e7-e774-5728-87b5-526083f323d5",
+    "review": {
+      "blind": {
+        "slot": 35,
+        "correctOptionText": "트랜잭션이 커밋할 때 수정한 모든 페이지를 디스크에 반영하므로 REDO가 필요하지 않습니다.",
+        "unambiguous": true,
+        "reason": "본문에서 FORCE 정책은 커밋 시 수정된 모든 페이지를 디스크에 반영하므로 redo가 필요 없다고 명시됨.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 35,
+        "passed": true,
+        "reason": "All four options and explanations align with the source: option 3 correctly states FORCE writes pages at commit so REDO is unnecessary; the other options are correctly rejected per the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 36,
+    "topic": "CROSS JOIN 결과 크기 계산",
+    "learningObjective": "CROSS JOIN이 반환하는 결과 수를 테이블 행수로 계산할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "테이블 A에 3개의 행이 있고 테이블 B에 4개의 행이 있을 때 CROSS JOIN을 수행하면 반환되는 행 수는 얼마입니까?",
+    "options": [
+      "7",
+      "4",
+      "3",
+      "12"
+    ],
+    "correctAnswer": 4,
+    "explanation": "CROSS JOIN은 모든 경우의 수를 전부 표현하는 방식으로, A의 행 수와 B의 행 수를 곱한 만큼의 결과를 반환합니다. 따라서 3 * 4 = 12개의 데이터가 검색됩니다.",
+    "optionExplanations": [
+      "7은 두 테이블의 행을 단순 합한 수이며, CROSS JOIN의 정의(곱하기)와 일치하지 않습니다. (lines 92-95)",
+      "4는 테이블 B의 행 수만 반영한 값으로, CROSS JOIN의 곱셈 규칙을 따르지 않습니다. (lines 92-95)",
+      "3은 테이블 A의 행 수만 반영한 값으로, CROSS JOIN의 곱셈 규칙을 따르지 않습니다. (lines 92-95)",
+      "정답입니다. 자료에서 'A가 3개, B가 4개면 총 3*4 = 12개의 데이터가 검색된다'로 명시되어 있습니다. (lines 92-95)"
+    ],
+    "keywords": [
+      "CROSS JOIN",
+      "카르테시안 곱",
+      "행 수 계산"
+    ],
+    "sourceEvidence": {
+      "section": "[Database SQL] JOIN.md",
+      "startLine": 88,
+      "endLine": 95,
+      "quote": "- #### CROSS JOIN\n\n  <img src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile10.uf.tistory.com%2Fimage%2F993F4E445A8A2D281AC66B\">\n\n  모든 경우의 수를 전부 표현해주는 방식이다.\n\n  A가 3개, B가 4개면 총 3*4 = 12개의 데이터가 검색된다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "632aeec1-6f53-551b-bd9e-9953cb984c95",
+    "review": {
+      "blind": {
+        "slot": 36,
+        "correctOptionText": "12",
+        "unambiguous": true,
+        "reason": "Source describes CROSS JOIN returns all combinations; with 3 and 4 rows it yields 3*4 = 12 rows.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 36,
+        "passed": true,
+        "reason": "정답(12)이 원문에 명시된 'A가 3개, B가 4개면 총 3*4 = 12'와 일치하며, 나머지 선택지는 원문이 설명하는 곱셈 규칙에 따라 모두 틀립니다. (lines 88-95)"
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 37,
+    "topic": "제2정규화(2NF)와 부분 함수적 종속",
+    "learningObjective": "부분 함수적 종속을 식별하여 2NF 위반이 되는 컬럼을 찾을 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "아래 설명된 테이블에서 2NF(제2정규화)를 만족하지 못하는 이유가 되는 컬럼은 무엇입니까?",
+    "options": [
+      "Manufacturer Country",
+      "Model",
+      "Manufacturer",
+      "Model Full Name"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서는 Manufacture와 Model이 복합키가 되어 Model Full Name을 결정한다고 설명합니다. 그러나 Manufacturer Country는 Manufacturer에 의해 결정되므로 복합키의 부분집합에 의해 결정되는 '부분 함수적 종속'이 발생하여 2NF를 위반한다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 Manufacturer Country는 Manufacturer로 인해 결정되는 부분 함수적 종속 사례로 제시되어 2NF 위반의 원인이 됩니다.",
+      "Model 자체는 복합키의 일부로 사용되며, 문서에서는 Model이 단독으로 다른 속성을 결정한다고 하지 않아 부분 함수적 종속의 원인으로 제시되지 않습니다.",
+      "Manufacturer는 부분 함수적 종속을 일으키는 결정자 역할을 하나, 문제는 Manufacturer에 의해 결정되는 속성(Manufacturer Country)이 2NF 위반의 대상입니다; 따라서 'Manufacturer' 자체가 위반 컬럼은 아닙니다.",
+      "Model Full Name은 복합키(Manufacture, Model)로 결정되므로 부분 함수적 종속의 원인이 되는 컬럼이 아닙니다. (참고: 복합키가 Model Full Name을 알 수 있음)"
+    ],
+    "keywords": [
+      "부분 함수적 종속",
+      "2NF",
+      "Manufacturer Country"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/정규화(Normalization).md",
+      "startLine": 72,
+      "endLine": 76,
+      "quote": "`Manufacture`과 `Model`이 키가 되어 `Model Full Name`을 알 수 있다.\n\n`Manufacturer Country`는 `Manufacturer`로 인해 결정된다. (부분 함수 종속)\n\n따라서, `Model`과 `Manufacturer Country`는 아무런 연관관계가 없는 상황이다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/정규화(Normalization).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%95%EA%B7%9C%ED%99%94%28Normalization%29.md",
+    "id": "95e45031-4265-565b-8136-2ce2f466d33b",
+    "review": {
+      "blind": {
+        "slot": 37,
+        "correctOptionText": "Manufacturer Country",
+        "unambiguous": true,
+        "reason": "본문에서 Manufacturer Country가 Manufacturer에 의해 결정되는 부분 함수적 종속(부분적 종속성)을 일으켜 2NF를 위반한다고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 37,
+        "passed": true,
+        "reason": "All options and their explanations are consistent with the supplied source: the source explicitly identifies 'Manufacturer Country' as the column causing partial functional dependency (2NF violation); the three distractors are correctly explained as not being the violating column. Difficulty and learning objective are appropriate and distinct, and the Korean is natural."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 38,
+    "topic": "Redis 자료구조",
+    "learningObjective": "Redis가 지원하는 value 타입들을 나열하고 각 타입의 개념적 용도를 구분할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에서 Redis의 value로 나열된 항목들 중 포함되지 않은 것은 무엇입니까?",
+    "options": [
+      "List",
+      "Bitmap",
+      "String",
+      "Hash"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서의 'value 5가지' 목록에는 String, set, sorted set, Hash, List가 포함되어 있습니다. Bitmap은 목록에 포함되어 있지 않습니다.",
+    "optionExplanations": [
+      "문서에 List가 목록 항목으로 포함되어 있어 틀립니다.",
+      "문서의 목록에 포함되어 있지 않습니다. 따라서 이 선택지는 정답입니다.",
+      "문서에 \"String (text, binary data) - 512MB까지 저장이 가능함\"으로 명시되어 있어 틀립니다.",
+      "문서에 Hash가 목록 항목으로 포함되어 있어 틀립니다."
+    ],
+    "keywords": [
+      "value 타입",
+      "String",
+      "Hash",
+      "List"
+    ],
+    "sourceEvidence": {
+      "section": "Redis",
+      "quote": "value 5가지\n\n1. String (text, binary data) - 512MB까지 저장이 가능함\n2. set (String 집합)\n3. sorted set (set을 정렬해둔 상태)\n4. Hash\n5. List (양방향 연결리스트도 가능)"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "dd614896-9e86-5422-b0cb-4917c1a8858d",
+    "review": {
+      "blind": {
+        "slot": 38,
+        "position": 2,
+        "unambiguous": true,
+        "reason": "문서에 나열된 값 유형은 String, set, sorted set, Hash, List이며 Bitmap은 포함되지 않음."
+      },
+      "evidenceAudit": {
+        "slot": 38,
+        "passed": true,
+        "reason": "Correct answer (Bitmap이 목록에 없음) is supported by the source list of five value types; the other options are explicitly listed in the source and thus provably incorrect as answers."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 39,
+    "topic": "INSERT 시 인덱스 동작 영향",
+    "learningObjective": "INSERT 발생 시 인덱스 분할과 블로킹, 조각화 가능성을 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 인덱스가 존재하는 테이블에 INSERT가 발생할 때 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "인덱스에서는 DELETE 시 실제 데이터가 완전히 제거되므로 INSERT에는 영향이 없다.",
+      "인덱스 split 작업은 병행성을 향상시키며 대기 이벤트를 제거한다.",
+      "기존 블록에 여유가 없으면 새로운 블록을 할당하고 Key를 옮기며, 이 과정에서 인덱스 split 동안 해당 블록의 Key에 대해 DML이 블로킹된다.",
+      "INSERT는 항상 기존 블록에 추가되어 인덱스의 물리적 순서가 절대 영향을 받지 않는다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 INSERT 시 '기존 Block에 여유가 없을 때 새로운 Block을 할당 받은 후 Key를 옮기는 작업'과 'Index split 작업 동안 해당 Block의 Key 값에 대해서 DML이 블로킹 된다(대기 이벤트 발생)' 및 그로 인해 '논리적 순서와 물리적 순서가 달라질 수 있음(인덱스 조각화)'을 설명합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 오히려 인덱스에서 DELETE는 '사용 안 됨 표시'만 해둔다고 하여 실제 제거와 다르다고 설명합니다.",
+      "틀렸습니다. 본문은 split 작업 동안 블로킹과 대기 이벤트가 발생한다고 하여 병행성이 향상된다고 하지 않습니다.",
+      "정답입니다. 본문은 블록이 꽉 찼을 때 새로운 블록 할당, 키 이동, split 동안 블로킹 발생 및 조각화를 명시합니다.",
+      "틀렸습니다. 본문은 경우에 따라 새로운 블록을 할당하고 물리적 순서가 달라질 수 있다고 하여 항상 기존 블록에 추가된다고 하지 않습니다."
+    ],
+    "keywords": [
+      "INSERT",
+      "인덱스 split",
+      "블로킹",
+      "조각화"
+    ],
+    "sourceEvidence": {
+      "section": "Index(인덱스)",
+      "startLine": 66,
+      "endLine": 75,
+      "quote": "- ##### INSERT\n\n  기존 Block에 여유가 없을 때, 새로운 Data가 입력된다.\n\n  → 새로운 Block을 할당 받은 후, Key를 옮기는 작업을 수행한다.\n\n  → Index split 작업 동안, 해당 Block의 Key 값에 대해서 DML이 블로킹 된다. (대기 이벤트 발생)\n\n  → 이때 Block의 논리적인 순서와 물리적인 순서가 달라질 수 있다. (인덱스 조각화)"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "a9c862e1-ec85-5371-9c60-53feb749da6b",
+    "review": {
+      "blind": {
+        "slot": 39,
+        "correctOptionText": "기존 블록에 여유가 없으면 새로운 블록을 할당하고 Key를 옮기며, 이 과정에서 인덱스 split 동안 해당 블록의 Key에 대해 DML이 블로킹된다.",
+        "unambiguous": true,
+        "reason": "문서는 INSERT 시 새 블록 할당과 Key 이동, 인덱스 split 동안 블로킹(대기 이벤트) 발생을 서술함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 39,
+        "passed": true,
+        "reason": "정답(옵션 3)은 소스의 INSERT 항목(블록이 가득 찰 때 새로운 블록 할당, 키 이동, split 동안 블로킹 및 조각화)을 정확하게 반영하므로 타당합니다; 다른 선택지는 소스 내용과 충돌합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 40,
+    "topic": "프로시저 단점(호환성)",
+    "learningObjective": "프로시저의 호환성 한계를 식별하고 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "문서에서 제시한 저장 프로시저의 호환성 관련 단점으로 옳은 설명은 무엇입니까?",
+    "options": [
+      "모든 데이터베이스가 동일한 저장 프로시저 언어를 사용하므로 호환성 문제는 거의 없습니다.",
+      "프로시저는 플랫폼 독립적 표준을 따르므로 코드 자산으로의 재사용성이 매우 높습니다.",
+      "호환성 문제로 인해 프로시저는 네트워크 트래픽을 반드시 증가시킵니다.",
+      "구문 규칙이 SQL/PSM 표준과 호환성이 낮아 다른 환경에서 재사용성이 떨어진다는 점입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서의 프로시저 단점 중 호환성 항목에서 '구문 규칙이 SQL / PSM 표준과의 호환성이 낮기 때문에 코드 자산으로의 재사용성이 나쁘다'고 명시되어 있어, 다른 환경 간 재사용성 저하가 호환성 문제라는 점을 직접 언급합니다 (lines 120-123).",
+    "optionExplanations": [
+      "틀렸습니다. 문서에서는 오히려 호환성이 낮다고 지적하고 있어, 모든 DB가 동일한 언어를 쓴다는 주장은 문서와 반대입니다 (lines 120-123).",
+      "틀렸습니다. 문서에서는 표준과의 호환성이 낮아 재사용성이 나쁘다고 적고 있어 플랫폼 독립적 표준 준수 및 높은 재사용성 주장은 문서와 일치하지 않습니다 (lines 120-123).",
+      "틀렸습니다. 문서에서는 프로시저가 트래픽을 감소시킨다고 언급하며(클라이언트가 SQL을 전송하지 않아) 호환성 문제와 트래픽 증가를 직접 연결하지 않습니다 (lines 106-109, 120-123).",
+      "정답입니다. 문서에 구문 규칙이 표준과의 호환성이 낮아 재사용성이 떨어진다고 명시되어 있습니다 (lines 120-123)."
+    ],
+    "keywords": [
+      "호환성",
+      "SQL/PSM",
+      "재사용성"
+    ],
+    "sourceEvidence": {
+      "section": "저장 프로시저(Stored PROCEDURE).md",
+      "startLine": 120,
+      "endLine": 123,
+      "quote": "1. #### 호환성\n\n   구문 규칙이 SQL / PSM 표준과의 호환성이 낮기 때문에 코드 자산으로의 재사용성이 나쁘다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/저장 프로시저(Stored PROCEDURE).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%80%EC%9E%A5%20%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80%28Stored%20PROCEDURE%29.md",
+    "id": "292bf56a-83ac-58a4-a886-ca5e1db813c3",
+    "review": {
+      "blind": {
+        "slot": 40,
+        "correctOptionText": "구문 규칙이 SQL/PSM 표준과 호환성이 낮아 다른 환경에서 재사용성이 떨어진다는 점입니다.",
+        "unambiguous": true,
+        "reason": "문서의 단점 1에서 '구문 규칙이 SQL / PSM 표준과의 호환성이 낮기 때문에 코드 자산으로의 재사용성이 나쁘다'라고 기술되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 40,
+        "passed": true,
+        "reason": "정답(4)은 문서의 '구문 규칙이 SQL / PSM 표준과의 호환성이 낮아 재사용성이 나쁘다'는 단점 설명을 정확히 반영하고 다른 선택지는 문서 내용과 반대되거나 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 41,
+    "topic": "SQL Injection 방어 조합",
+    "learningObjective": "입력 검증, 에러 메시지 숨김, PrepareStatement 사용을 결합해 주어진 시나리오에서 최적의 방어 조합을 적용할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "어떤 웹앱에서 공격자가 입력창에 악의적 SQL을 삽입해 인증 우회와 데이터베이스 구조 노출을 모두 시도하고 있습니다. 문서에서 제시한 방어 방법 중 이 두 가지 공격을 동시에 가장 효과적으로 줄일 수 있는 조합은 무엇입니까?",
+    "options": [
+      "입력값 특수문자 검사로 악성 입력을 차단하고, 에러 메시지를 감춰 정보 노출을 막으며, preparestatement로 쿼리 인자를 분리해 SQL 삽입을 방지합니다.",
+      "에러 메시지를 자세히 보여주어 개발자가 즉시 버그를 고치게 유도하고, preparestatement 대신 동적 문자열 연결을 사용하여 유연성을 높입니다.",
+      "입력값 검사는 하지 않고, 일반 사용자가 직접 원본 테이블에 접근하도록 하여 뷰(view)를 제거함으로써 오류를 줄입니다.",
+      "preparestatement만 사용하고, 에러 메시지는 그대로 노출시키며 입력값 특수문자 검사는 생략합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 입력값에 대한 특수문자 검사를 통해 악성 요청을 막을 것을 권장하며(lines 41-44), 에러 메시지를 숨겨 데이터베이스 구조 노출을 방지할 것을 제시하고(lines 45-48), preparestatement를 사용하면 전달인자를 ?로 받아 특수문자를 자동으로 escaping해 공격을 방어한다고 설명합니다(lines 49-52). 이 세 가지를 조합하면 인증 우회와 데이터 노출을 동시에 줄일 수 있습니다. 다른 선택지는 문서의 권장 방안과 상충하거나 일부러 위험을 증가시킵니다.",
+    "optionExplanations": [
+      "정답: 문서에서 제시한 세 가지 방어 방법을 모두 포함하고 있어 공격을 광범위하게 방어합니다 (lines 41-52).",
+      "오답: 문서에서는 에러를 자세히 보여주는 것이 공격자에게 유리하다고 하며, preparestatement 대신 동적 연결을 권장하지 않습니다 (lines 31-34, 49-52).",
+      "오답: 뷰 제거와 원본 테이블 직접 접근은 문서에서 권장하지 않으며, 입력값 검사를 생략하면 SQL Injection에 취약합니다 (lines 41-48).",
+      "오답: preparestatement만으로 일부 방어는 가능하지만, 에러 메시지 노출을 그대로 두면 데이터 구조 유추가 가능하므로 문서 권장 조합과 일치하지 않습니다 (lines 45-48, 49-52)."
+    ],
+    "keywords": [
+      "방어 방법",
+      "입력 검증",
+      "preparestatement",
+      "에러 메시지 숨김"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/SQL Injection.md",
+      "startLine": 41,
+      "endLine": 52,
+      "quote": "##### 1) input 값을 받을 때, 특수문자 여부 검사하기\n\n> 로그인 전, 검증 로직을 추가하여 미리 설정한 특수문자들이 들어왔을 때 요청을 막아낸다.\n\n##### 2) SQL 서버 오류 발생 시, 해당하는 에러 메시지 감추기\n\n> view를 활용하여 원본 데이터베이스 테이블에는 접근 권한을 높인다. 일반 사용자는 view로만 접근하여 에러를 볼 수 없도록 만든다.\n\n##### 3) preparestatement 사용하기\n\n> preparestatement를 사용하면, 특수문자를 자동으로 escaping 해준다. (statement와는 다르게 쿼리문에서 전달인자 값을 `?`로 받는 것) 이를 활용해 서버 측에서 필터링 과정을 통해서 공격을 방어한다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/SQL Injection.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%20Injection.md",
+    "id": "7f24345a-4f29-5b89-a3d3-2d592063139d",
+    "review": {
+      "blind": {
+        "slot": 41,
+        "correctOptionText": "입력값 특수문자 검사로 악성 입력을 차단하고, 에러 메시지를 감춰 정보 노출을 막으며, preparestatement로 쿼리 인자를 분리해 SQL 삽입을 방지합니다.",
+        "unambiguous": true,
+        "reason": "문서의 방어 방법으로 세 가지(특수문자 검사, 에러 메시지 감추기, preparestatement 사용)를 함께 제시하고 있어 가장 효과적 조합이다.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 41,
+        "passed": true,
+        "reason": "정답(1)은 문서가 제시한 세 가지 방어(입력 특수문자 검사, 에러 메시지 감춤, preparestatement 사용)를 모두 포함하여 공격을 광범위하게 줄인다는 원문 권고와 정확히 부합합니다. 다른 선택지들은 문서 권고와 상충하거나 근거가 없습니다. 난이도(HARD)와 학습 목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 42,
+    "topic": "Anomaly (이상 현상) — 갱신·삭제 이상",
+    "learningObjective": "이미 수강 중인 학생이 전공 변경을 하고 마지막 수강을 철회할 때 어떤 이상 현상들이 발생하는지 문서의 사례들을 조합하여 식별할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "한 학생이 이미 여러 과목을 수강 중인 상태에서 전공(Department)을 \"컴퓨터에서 음악\"으로 변경한 뒤, 이후 그 학생이 마지막으로 남아있던 수업을 철회하여 해당 학생의 수강 튜플들이 모두 삭제된다고 가정합니다. 이 문서의 사례에 따르면 어떤 이상 현상이 발생합니까?",
+    "options": [
+      "오직 갱신 이상(Update Anomaly)만 발생합니다.",
+      "갱신 이상(Update Anomaly)과 삭제 이상(Deletion Anomaly)이 발생합니다.",
+      "삽입 이상(Insertion Anomaly)과 갱신 이상(Update Anomaly)이 발생합니다.",
+      "삽입 이상(Insertion Anomaly)과 삭제 이상(Deletion Anomaly)이 발생합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서의 사례는 전공 변경 시 모든 관련 튜플의 Department 값을 모두 바꾸어야 하고 일부만 바꾸면 불일치가 생긴다고 설명합니다(갱신 이상). 또한 학생이 수강을 철회하면 그 학생에 대한 Student ID·Department 같은 정보까지 함께 삭제될 수 있다고 설명합니다(삭제 이상). 주어진 시나리오에서 학생은 이미 수강 중이므로 삽입 시의 기본키 Null 문제(삽입 이상)는 발생하지 않습니다.",
+    "optionExplanations": [
+      "오직 갱신 이상만 발생한다고 보기 어렵습니다. 문서에 따라 마지막 수업을 철회하여 관련 튜플들이 모두 삭제되면 학생 정보가 함께 사라지는 삭제 이상도 발생합니다.",
+      "정답입니다. 전공 변경으로 인한 다중 튜플 변경 필요로 인한 불일치(갱신 이상)와, 마지막 수강 철회로 인해 학생 관련 정보가 함께 삭제되는 문제(삭제 이상)가 모두 발생합니다.",
+      "삽입 이상은 문서에서 기본키가 {Student ID, Course ID}인 경우 학생이 수강하지 않으면 Course ID를 가질 수 없어 Table에 추가할 수 없는 상황으로 설명됩니다. 그러나 문제의 시나리오는 이미 수강 중인 학생의 전공 변경을 전제로 하므로 삽입 이상은 해당되지 않습니다.",
+      "삽입-삭제 조합은 한 예에서는 가능하지만(예: 학생이 수강하지 않은 상태를 추가하려 할 때 삽입 이상), 본 시나리오는 이미 수강 중인 학생의 전공 변경과 이후 마지막 수강 철회를 다루므로 삽입 이상은 발생하지 않습니다."
+    ],
+    "keywords": [
+      "갱신 이상",
+      "삭제 이상",
+      "전공 변경",
+      "수강 철회"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Anomaly.md",
+      "startLine": 23,
+      "endLine": 36,
+      "quote": "만약 어떤 학생의 전공 (Department) 이 \"컴퓨터에서 음악\"으로 바뀌는 경우.\n\n   모든 Department를 \"음악\"으로 바꾸어야 함. 그러나 일부를 깜빡하고 바꾸지 못하는 경우, 제대로 파악 못함.\n\n   > 일부만 변경하여, 데이터가 불일치 하는 모순의 문제 = Update Anomaly\n\n   \n\n3. 삭제 이상 (Deletion Anomaly)\n\n   만약 어떤 학생이 수강을 철회하는 경우, {Student ID, Department, Course ID, Grade}의 정보 중\n\n   Student ID, Department 와 같은 학생에 대한 정보도 함께 삭제됨."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Anomaly.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+    "id": "139c74ec-0bd1-5bab-817b-fff0d4751ee2",
+    "review": {
+      "blind": {
+        "slot": 42,
+        "correctOptionText": "갱신 이상(Update Anomaly)과 삭제 이상(Deletion Anomaly)이 발생합니다.",
+        "unambiguous": true,
+        "reason": "문서에 전공 변경은 갱신 이상을, 마지막 수업 철회로 학생 정보까지 삭제되는 경우는 삭제 이상을 예로 들고 있어 두 이상이 발생한다고 설명함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 42,
+        "passed": true,
+        "reason": "Source explicitly describes Update Anomaly (multiple tuples must be changed when Department changes) and Deletion Anomaly (withdrawing last course removes student info). Option 2 correctly combines both; the other three options conflict with the source and are therefore wrong. Explanations, difficulty (HARD), learning objective, and Korean wording align with the supplied document."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 43,
+    "topic": "실무 적용: 대용량 바이너리 저장 한계",
+    "learningObjective": "문서에 근거해 주어진 저장 요구(단일 바이너리 블롭 크기)와 Redis의 제약을 조합하여 설계 결정을 내릴 수 있습니다",
+    "difficulty": "HARD",
+    "question": "어떤 애플리케이션이 단일 파일을 Redis에 String 타입으로 저장하려 합니다. 파일 크기가 700MB일 때 문서에 근거해 올바른 설계 결정은 무엇입니까?",
+    "options": [
+      "AOF 백업을 활성화하면 700MB 파일을 자동으로 분할하여 저장하므로 문제가 없습니다.",
+      "스냅샷 방식으로만 백업하면 700MB 파일을 저장할 수 있으므로 그대로 사용하면 됩니다.",
+      "Redis의 String은 512MB 제한이 있어 700MB 파일은 직접 저장할 수 없으므로 다른 저장소를 사용하거나 파일을 분할해야 합니다.",
+      "Redis는 메모리 기반이므로 700MB 저장은 가능하며 특별한 제한이 없습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서는 String 타입이 512MB까지 저장 가능하다고 명시하므로(20행), 700MB 단일 파일은 String으로 저장할 수 없습니다. 또한 Redis는 메모리 기반이므로 큰 객체를 저장하면 RAM 부담이 커집니다(5행). 따라서 다른 저장소 사용 또는 파일 분할이 필요합니다.",
+    "optionExplanations": [
+      "오답: AOF는 명령을 기록해 재실행하는 백업 방식이라는 설명은 있으나(14행), 파일을 자동 분할해 저장한다는 언급은 없습니다.",
+      "오답: 스냅샷은 특정 시점을 디스크에 백업하는 방식이라고 되어 있으나(13행), 이것만으로 512MB 제한을 우회해 저장 가능하다고 언급하지 않습니다.",
+      "정답: 문서에 String 최대 512MB라는 제한이 있으므로 700MB는 초과하여 직접 저장할 수 없고, 메모리 기반 특성도 고려해 대체 설계가 필요합니다 (20행, 5행).",
+      "오답: 문서는 String에 512MB 제한을 명확히 제시하므로 '제한 없음'이라는 주장은 문서와 모순됩니다."
+    ],
+    "keywords": [
+      "String 한계",
+      "메모리 기반",
+      "대용량 파일"
+    ],
+    "sourceEvidence": {
+      "section": "Redis.md",
+      "startLine": 20,
+      "endLine": 20,
+      "quote": "1. String (text, binary data) - 512MB까지 저장이 가능함"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "dd3de957-b155-50b3-90fd-4befd671c55a",
+    "review": {
+      "blind": {
+        "slot": 43,
+        "correctOptionText": "Redis의 String은 512MB 제한이 있어 700MB 파일은 직접 저장할 수 없으므로 다른 저장소를 사용하거나 파일을 분할해야 합니다.",
+        "unambiguous": true,
+        "reason": "문서에서 String 최대 512MB라고 했으므로 700MB는 초과하여 직접 저장할 수 없음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 43,
+        "passed": true,
+        "reason": "원문에 String의 최대가 512MB라고 명확히 되어 있으므로 700MB는 저장 불가하다는 정답(옵션 3)이 문서에 의해 직접 지지되며, AOF 자동 분할·스냅샷으로 우회·무제한 주장 등은 원문 근거가 없어 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 44,
+    "topic": "Primary/Alternate/Foreign Key 관계 적용",
+    "learningObjective": "주어진 후보키들 중 어떤 속성이 외래키로 참조되어야 하는지를 Primary Key의 특성과 외래키 정의를 적용해 판단할 수 있다",
+    "difficulty": "HARD",
+    "question": "관계 R이 두 개의 후보키 {id, email}을 가지며 관리자가 email을 기본키로 선택했다고 가정합시다. 다른 릴레이션 S에서 R을 참조하는 외래키(fk)를 정의할 때 어떤 속성을 참조해야 합니까?",
+    "options": [
+      "항상 id를 참조해야 하며 기본키 선택과 무관합니다",
+      "참조는 후보키 집합 전체({id, email})를 동시에 사용해야 합니다",
+      "외래키는 기본키가 아닌 속성만 참조할 수 있으므로 id와 email 둘 다 사용할 수 없습니다",
+      "선택된 기본키인 email을 참조해야 합니다"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 'Primary Key은 후보키 중 선택한 Main Key'이며 'Foreign Key: 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합'이라고 정의합니다. 따라서 S의 외래키는 R에서 관리자가 선택한 기본키인 email을 참조해야 합니다.",
+    "optionExplanations": [
+      "오답입니다. 문서에 따르면 외래키는 참조 대상으로 '기본키'를 사용하므로 기본키 선택은 중요한 사항이며 항상 id를 참조해야 한다는 내용은 없습니다.",
+      "오답입니다. 외래키가 후보키 전체를 동시에 참조해야 한다는 내용은 문서에 없고, 외래키는 특정 릴레이션의 기본키를 참조한다고 되어 있습니다.",
+      "오답입니다. 문서에서는 외래키가 다른 릴레이션의 기본키를 참조한다고 명확히 하므로 '기본키가 아닌 속성만 참조'한다는 주장은 문서와 상충합니다.",
+      "정답입니다. 문서에 따르면 외래키는 '다른 릴레이션의 기본키를 그대로 참조'하므로, 기본키로 선택된 email을 참조해야 합니다."
+    ],
+    "keywords": [
+      "Primary Key",
+      "Alternate Key",
+      "Foreign Key",
+      "참조"
+    ],
+    "sourceEvidence": {
+      "section": "[DB] Key.md",
+      "startLine": 20,
+      "endLine": 46,
+      "quote": "#### 2. Primary Key (기본키)\n\n> 후보키 중 선택한 Main Key\n\n특징 \n\n* Null 값을 가질 수 없음\n* 동일한 값이 중복될 수 없음\n\n<br>\n\n#### 3. Alternate Key (대체키)\n\n> 후보키 중 기본키를 제외한 나머지 키 = 보조키\n\n<br>\n\n#### 4. Super Key (슈퍼키)\n\n> 유일성은 만족하지만, 최소성은 만족하지 못하는 키\n\n<br>\n\n#### 5. Foreign Key (외래키)\n\n> 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Key.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+    "id": "ec7336d6-833a-59f0-ac29-c4bed2dfb9bf",
+    "review": {
+      "blind": {
+        "slot": 44,
+        "correctOptionText": "선택된 기본키인 email을 참조해야 합니다",
+        "unambiguous": true,
+        "reason": "문서에 외래키는 다른 릴레이션의 기본키를 참조한다고 명시되어 있으며, 기본키로 선택된 email을 참조해야 함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 44,
+        "passed": true,
+        "reason": "정답(4)은 출처의 'Foreign Key: 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합' 정의와 직접적으로 일치합니다. 다른 선택지(1,2,3)는 출처 정의와 모순되므로 오답으로 판별됩니다. 각 선택지에 대한 설명은 출처 근거에 기반해 잘못됨을 설명하고 있으며, 난이도(HARD)와 학습목표는 출처 내용에 부합하고 상호간에 명확히 구분됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 45,
+    "topic": "SELF JOIN 활용",
+    "learningObjective": "하나의 테이블을 자기 자신과 조인할 때의 구현 방식을 적용할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "한 테이블을 여러 번 사용하여 자기 자신과 조인하려고 합니다. 문서에 따르면 SELF JOIN을 구현하는 올바른 표현은 무엇입니까?",
+    "options": [
+      "FROM EX_TABLE A, EX_TABLE B",
+      "FROM EX_TABLE AS INDEX",
+      "FROM EX_TABLE CROSS JOIN NONE",
+      "FROM EX_TABLE LEFT OUTER JOIN NULL"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서의 SELF JOIN 설명 및 예시에서는 \"하나의 테이블을 여러번 복사해서 조인한다고 생각하면 편하다\"고 하며, 예제로 \"FROM EX_TABLE A, EX_TABLE B\"를 제시합니다. 따라서 동일한 테이블을 두 개의 별칭으로 나열하는 표현이 SELF JOIN의 구현 방법으로 문서에 나타납니다. 다른 선택지는 문서의 예시나 설명과 일치하지 않습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서의 SELF JOIN 예시로 정확히 제시된 구문입니다.",
+      "오답입니다. 문서에 'AS INDEX' 같은 표현은 나오지 않으며 SELF JOIN 예시와 다릅니다.",
+      "오답입니다. 'CROSS JOIN NONE'은 문서에 없는 표현이며 SELF JOIN 예시와 무관합니다.",
+      "오답입니다. 'LEFT OUTER JOIN NULL'은 문서의 SELF JOIN 설명과 일치하지 않습니다."
+    ],
+    "keywords": [
+      "SELF JOIN",
+      "자기자신 조인",
+      "테이블 별칭"
+    ],
+    "sourceEvidence": {
+      "section": "SELF JOIN",
+      "quote": "하나의 테이블을 여러번 복사해서 조인한다고 생각하면 편하다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "7d21bb9f-1101-5086-a6b9-8c89d3aa9cf4",
+    "review": {
+      "blind": {
+        "slot": 45,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "Source shows SELF JOIN example using the same table aliased twice: FROM EX_TABLE A, EX_TABLE B (matches option 1)."
+      },
+      "evidenceAudit": {
+        "slot": 45,
+        "passed": true,
+        "reason": "문서의 SELF JOIN 예시에 ‘FROM EX_TABLE A, EX_TABLE B’가 제시되어 있어 정답과 옵션 설명이 문서와 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 46,
+    "topic": "JOIN 유형별 포함 행 판정",
+    "learningObjective": "한쪽 테이블에만 존재하는 행들을 포함하는 JOIN 유형을 판단할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "두 테이블 A와 B가 있습니다. 어떤 행은 A에만 존재하고, 다른 행은 B에만 존재하며, 일부 행은 A와 B에 모두 존재합니다. 이들 중 A에만 있는 행과 B에만 있는 행을 모두 결과에 포함하도록 보장하는 JOIN 유형은 무엇입니까?",
+    "options": [
+      "RIGHT OUTER JOIN",
+      "FULL OUTER JOIN",
+      "INNER JOIN",
+      "LEFT OUTER JOIN"
+    ],
+    "correctAnswer": 2,
+    "explanation": "FULL OUTER JOIN은 A와 B의 모든 데이터를 검색하는 합집합을 의미하므로, A에만 있는 행과 B에만 있는 행 모두 결과에 포함됩니다. 문서에서는 FULL OUTER JOIN을 '합집합'으로 설명하며 'A와 B 테이블의 모든 데이터가 검색된다'고 명시하고 있습니다.",
+    "optionExplanations": [
+      "RIGHT OUTER JOIN은 오른쪽 테이블 기준으로 조인하므로 B(오른쪽)에만 있는 행은 포함되지만 A에만 있는 행은 포함하지 않습니다.",
+      "FULL OUTER JOIN은 문서에서 '합집합'이라고 설명되며 A와 B의 모든 데이터를 검색한다고 명시되어 있으므로 양쪽에만 존재하는 행들을 모두 포함합니다.",
+      "INNER JOIN은 두 테이블의 교집합만 반환하므로, A에만 존재하거나 B에만 존재하는 행은 포함되지 않습니다.",
+      "LEFT OUTER JOIN은 왼쪽(기준) 테이블의 모든 행과 조인 테이블과 중복된 값을 보여준다고 설명되어 있으므로 A(왼쪽)에만 있는 행은 포함되지만 B에만 있는 행은 포함하지 않습니다."
+    ],
+    "keywords": [
+      "FULL OUTER JOIN",
+      "LEFT OUTER JOIN",
+      "RIGHT OUTER JOIN",
+      "INNER JOIN",
+      "합집합",
+      "교집합",
+      "포함 여부"
+    ],
+    "sourceEvidence": {
+      "section": "[Database SQL] JOIN.md",
+      "startLine": 73,
+      "endLine": 84,
+      "quote": "- #### FULL OUTER JOIN\n\n  <img src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile24.uf.tistory.com%2Fimage%2F99195F345A8149391BE0C3\">\n\n  합집합을 말한다. A와 B 테이블의 모든 데이터가 검색된다.\n\n  ```sql\n  SELECT\n  A.NAME, B.AGE\n  FROM EX_TABLE A\n  FULL OUTER JOIN JOIN_TABLE B ON A.NO_EMP = B.NO_EMP\n  ```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "0d2f0f22-55d1-55b0-8de7-c54e44ead1d8",
+    "review": {
+      "blind": {
+        "slot": 46,
+        "correctOptionText": "FULL OUTER JOIN",
+        "unambiguous": true,
+        "reason": "Source states FULL OUTER JOIN returns the union of A and B, including rows only in A and only in B.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 46,
+        "passed": true,
+        "reason": "정답(FULL OUTER JOIN)이 원문에서 ‘합집합’·‘A와 B 테이블의 모든 데이터가 검색된다’로 명확히 서술되어 있어 유일하게 근거가 있으며, 나머지 보기들(LEFT/RIGHT/INNER)은 원문 설명과 일치하게 각각 한쪽 또는 교집합만 포함한다고 반박 가능함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 47,
+    "topic": "JOIN 유형 적용 시나리오",
+    "learningObjective": "주어진 두 테이블의 행 분포와 JOIN 유형을 결합하여 결과 행 수와 포함 여부를 판단할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "테이블 A에는 키 값 1,2만 있고(총 2행), 테이블 B에는 키 값 2,3,4(총 3행)가 있을 때 다음 중 FULL OUTER JOIN 결과에 대해 옳은 설명은 무엇입니까?",
+    "options": [
+      "결과는 A와 B의 교집합인 키 2만 포함합니다.",
+      "결과는 A의 모든 행만 포함하고 B의 일치하는 행만 더해집니다.",
+      "결과에는 키 1,2,3,4가 모두 나타나며 일치하지 않는 쪽의 컬럼은 NULL로 표시됩니다.",
+      "결과에는 오직 키 1과 2만 나타나며 B의 3,4는 제외됩니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "FULL OUTER JOIN은 합집합으로 A와 B 테이블의 모든 데이터가 검색됩니다. 따라서 양쪽에만 있는 값(2)과 한쪽에만 있는 값(1,3,4) 모두 결과에 포함되고, 일치하지 않는 쪽의 컬럼은 NULL로 표시되는 것이 FULL OUTER JOIN의 동작입니다.",
+    "optionExplanations": [
+      "이는 INNER JOIN(교집합)의 설명으로, FULL OUTER JOIN은 교집합뿐 아니라 한쪽에만 있는 값도 포함합니다. (lines 26-37,73-84)",
+      "이는 LEFT OUTER JOIN의 동작에 더 가깝지만, 질문은 FULL OUTER JOIN에 관한 것이며 FULL은 양쪽의 모든 행을 포함합니다. (lines 41-54,73-84)",
+      "정답입니다. 자료에서 FULL OUTER JOIN을 '합집합을 말한다. A와 B 테이블의 모든 데이터가 검색된다'라고 설명하고 있어, 키 1,2,3,4가 모두 결과에 포함되는 것이 옳습니다. (lines 73-84)",
+      "이는 LEFT OUTER JOIN(왼쪽 테이블 기준으로 A의 모든 행 포함)과 혼동된 설명입니다. FULL OUTER JOIN은 B의 3,4도 포함합니다. (lines 73-84,41-54)"
+    ],
+    "keywords": [
+      "FULL OUTER JOIN",
+      "합집합",
+      "NULL",
+      "포함 여부"
+    ],
+    "sourceEvidence": {
+      "section": "[Database SQL] JOIN.md",
+      "startLine": 73,
+      "endLine": 84,
+      "quote": "- #### FULL OUTER JOIN\n\n  <img src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile24.uf.tistory.com%2Fimage%2F99195F345A8149391BE0C3\">\n\n  합집합을 말한다. A와 B 테이블의 모든 데이터가 검색된다.\n\n  ```sql\n  SELECT\n  A.NAME, B.AGE\n  FROM EX_TABLE A\n  FULL OUTER JOIN JOIN_TABLE B ON A.NO_EMP = B.NO_EMP\n  ```"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[Database SQL] JOIN.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+    "id": "b8dddfaf-598e-5193-9205-522e87d590c9",
+    "review": {
+      "blind": {
+        "slot": 47,
+        "correctOptionText": "결과에는 키 1,2,3,4가 모두 나타나며 일치하지 않는 쪽의 컬럼은 NULL로 표시됩니다.",
+        "unambiguous": true,
+        "reason": "Source defines FULL OUTER JOIN as the union of A and B with all data shown; non-matching side columns are NULL.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 47,
+        "passed": true,
+        "reason": "정답(키 1,2,3,4 모두 포함되고 불일치 쪽은 NULL) 은 원문의 FULL OUTER JOIN 설명('합집합... A와 B 테이블의 모든 데이터가 검색된다')과 일치하고, 나머지 세 선택지는 INNER/LEFT/부분배제 등 원문 설명과 대조해 모두 틀립니다. (lines 73-84, 26-37, 41-54)"
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 48,
+    "topic": "제3정규화(3NF) 적용과 이행적 종속 제거",
+    "learningObjective": "이행적 종속을 발견하고 3NF를 만족시키기 위해 테이블을 분리하는 설계를 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "다음 설명과 그림이 있는 테이블에서 Tournament와 Year를 복합 기본키로 사용할 때, Winner의 생년월일(Winner Date of Birth)이 3NF를 위반하는 이유로 가장 적절한 조치는 무엇입니까?",
+    "options": [
+      "Tournament와 Year 대신 Winner를 복합 기본키에 추가하여 기본키를 확장한다.",
+      "Year 컬럼을 제거하여 기본키를 단일키로 만든다.",
+      "Winner Date of Birth를 계산식 컬럼으로 바꿔 데이터 중복을 허용한다.",
+      "Winner의 속성(예: 생년월일)을 별도의 Winner(참가자) 테이블로 분리한다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 Winner가 복합키(Tournament, Year)에 의해 결정되지만 Winner Date of Birth는 기본키가 아닌 Winner에 의해 결정된다고 하여 이행적 종속을 일으키며 3NF를 위반한다고 명시합니다. 따라서 Winner 관련 비기본키 속성(생년월일)은 별도의 참가자( Winner ) 테이블로 분리하여 이행적 종속을 제거해야 한다고 제시되어 있습니다.",
+    "optionExplanations": [
+      "Winner를 기본키에 추가하는 것은 Winner가 이미 기본키(아님)의 속성을 결정하는 형태여서 이행적 종속 문제를 올바르게 해결하지 못하며, 문서에서는 분리를 통해 해결할 것을 제시합니다.",
+      "Year를 제거하는 것은 문서에서 제시된 이행적 종속 문제(기본키가 아닌 속성이 다른 비기본키 속성에 의존)를 해결하는 방법으로 제시되지 않습니다; 또한 기본키 구조를 임의로 변경하는 것은 문제의 근본 원인을 제거하지 않습니다.",
+      "생년월일을 계산식 컬럼으로 바꾸는 방법은 문서에 제시된 이행적 종속 제거 방식이 아니며, 계산식으로 바꾸더라도 Winner에 의존하는 속성이라는 사실은 변하지 않아 3NF 위반을 해결하지 못합니다.",
+      "정답입니다. 문서는 Winner Date of Birth가 기본키가 아닌 Winner에 의해 결정되므로 이를 분리하여 3NF 위반(이행적 종속)을 해결하도록 테이블을 나눌 것을 권장합니다."
+    ],
+    "keywords": [
+      "이행적 종속",
+      "3NF",
+      "테이블 분리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Database/정규화(Normalization).md",
+      "startLine": 107,
+      "endLine": 113,
+      "quote": "현재 테이블에서는 `Tournament`와 `Year`이 기본키다.\n\n`Winner`는 이 두 복합키를 통해 결정된다.\n\n하지만 `Winner Date of Birth`는 기본키가 아닌 `Winner`에 의해 결정되고 있다. \n\n따라서 이는 3NF를 위반하고 있으므로 아래와 같이 분리해야 한다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/정규화(Normalization).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%95%EA%B7%9C%ED%99%94%28Normalization%29.md",
+    "id": "b99455bc-e19b-57b3-b6c2-2c0037049d3d",
+    "review": {
+      "blind": {
+        "slot": 48,
+        "correctOptionText": "Winner의 속성(예: 생년월일)을 별도의 Winner(참가자) 테이블로 분리한다.",
+        "unambiguous": true,
+        "reason": "본문은 Winner Date of Birth가 기본키가 아닌 Winner에 의해 결정되는 이행적(또는 비기본키에 대한) 종속이라며 이를 해결하기 위해 Winner 관련 속성들을 별도 테이블로 분리하라고 설명하고 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 48,
+        "passed": true,
+        "reason": "All options and explanations match the source: the source states Winner Date of Birth is transitively dependent on Winner and recommends splitting Winner-related attributes into a separate table to satisfy 3NF. The three distractors are correctly shown as unsupported by the source. Difficulty and learning objective are appropriate and distinct, and the Korean is natural."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 49,
+    "topic": "Redis 보존 전략 적용",
+    "learningObjective": "주어진 서버 중단 시나리오에서 snapshot과 AOF의 동작을 조합해 데이터 보존을 평가할 수 있다.",
+    "difficulty": "HARD",
+    "question": "한 Redis 서버가 메모리에만 있는 데이터로 운영되다가 예고 없이 셧다운되었습니다. 문서에 기초하면 다음 중 데이터 복구를 위해 가장 효과적인 조합은 무엇입니까?",
+    "options": [
+      "AOF로 저장된 명령을 재실행하고, 필요하면 snapshot으로 복구한 시점 이후를 보완한다",
+      "snapshot만 있으면 항상 모든 최신 명령을 보존하므로 AOF는 불필요하다",
+      "메모리 특성 때문에 어떤 백업도 데이터 복구에 도움이 되지 않는다",
+      "디스크 스캐닝을 통해 자동으로 메모리를 복원하므로 백업이 필요 없다"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에서 AOF는 \"명령(쿼리)들을 저장해두고, 서버가 셧다운되면 재실행해서 다시 만들어 놓는 것\"으로 설명되어, 셧다운 시 명령 재실행으로 데이터를 복구하는 데 유용합니다. snapshot은 \"특정 지점을 설정하고 디스크에 백업\"하므로 특정 시점의 상태를 복구하는 데 사용됩니다. 따라서 둘을 조합해 사용하는 설명이 문서 내용과 부합합니다. 다른 선택지들은 문서 내용과 충돌합니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에 AOF는 명령을 저장해 서버 셧다운 시 재실행한다고 하고, snapshot은 특정 지점을 디스크에 백업한다고 하여 두 방식을 보완적으로 활용할 수 있음을 뒷받침합니다.",
+      "문서에는 snapshot이 특정 지점을 백업한다고만 되어 있고, 항상 최신 명령을 보존한다고 말하지 않으므로 이 선택지는 문서와 맞지 않습니다.",
+      "문서에서는 백업 과정(스냅샷, AOF)이 존재한다고 설명하여 백업이 데이터 복구에 도움이 된다고 명시합니다; 따라서 이 선택지는 틀립니다.",
+      "문서에는 디스크 스캐닝으로 자동 복원된다는 내용이 없고 오히려 메모리 저장으로 인해 백업 방식을 설명하고 있으므로 틀립니다."
+    ],
+    "keywords": [
+      "AOF",
+      "snapshot",
+      "복구",
+      "셧다운"
+    ],
+    "sourceEvidence": {
+      "section": "Redis",
+      "quote": "AOF(Append Only File) : 명령(쿼리)들을 저장해두고, 서버가 셧다운되면 재실행해서 다시 만들어 놓는 것"
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/Redis.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+    "id": "00b9948c-7af6-509d-953f-bee68b5f451c",
+    "review": {
+      "blind": {
+        "slot": 49,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "문서에 따르면 AOF는 명령을 저장해 재실행하고 snapshot은 특정 지점을 백업하므로 둘을 조합하는 것이 효과적임."
+      },
+      "evidenceAudit": {
+        "slot": 49,
+        "passed": true,
+        "reason": "Correct answer (AOF 재실행 + snapshot 보완) follows directly from the source descriptions of AOF and snapshot; the other choices contradict the source and are provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 50,
+    "topic": "인덱스와 UPDATE 비용 평가",
+    "learningObjective": "인덱스가 걸린 필드에 대한 빈번한 UPDATE가 시스템 성능과 인덱스 유지관리(재작성, delete+insert 비용)에 미치는 영향을 적용된 시나리오로 평가할 수 있다.",
+    "difficulty": "HARD",
+    "question": "어떤 테이블의 특정 컬럼에 인덱스가 설정되어 있고 그 컬럼에 대한 UPDATE가 매우 빈번하게 발생합니다. 문서의 기술에 따라 이 상황에서 기대되는 영향으로 가장 타당한 설명은 무엇입니까?",
+    "options": [
+      "인덱스가 설정된 컬럼의 UPDATE는 인덱스 파일(MYI)에만 영향을 미치며 테이블의 데이터 파일(MYD)에는 전혀 영향을 주지 않는다.",
+      "인덱스는 UPDATE 시 삭제 표시 후 재삽입 과정이 일어나므로 작업량이 2배로 증가하고, 데이터 변경이 잦으면 인덱스를 재작성해야 하여 성능 저하가 발생한다.",
+      "인덱스는 UPDATE를 내부적으로 자동 병합하여 추가 작업이 거의 발생하지 않으므로 오히려 성능이 향상된다.",
+      "테이블의 데이터가 업데이트되면 인덱스는 항상 자동으로 제거되고 재생성되므로 일시적인 성능 향상이 있다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 '인덱스 된 Field에서 Data를 업데이트하거나, Record를 추가 또는 삭제시 성능이 떨어진다'고 하며, UPDATE의 경우 'Index에서는 Delete가 발생한 후, 새로운 작업의 Insert 작업 / 2배의 작업이 소요'되고 '데이터 변경 작업이 자주 일어나는 경우, Index를 재작성해야 하므로 성능에 영향을 미친다'고 분명히 기술되어 있습니다. 따라서 첫 항목이 문서의 설명을 종합적으로 반영합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 본문은 테이블과 인덱스 각각의 동작을 설명하며 인덱스 변경이 테이블 데이터에 전혀 영향이 없다고 하지 않습니다; 오히려 인덱스 유지비용을 설명합니다.",
+      "정답입니다. 본문은 UPDATE 시 인덱스에서는 delete 표시 후 insert 과정이 발생해 작업이 늘고, 빈번한 변경은 인덱스 재작성으로 성능에 영향이 있다고 명시합니다.",
+      "틀렸습니다. 본문은 UPDATE 시 오히려 추가 작업과 성능 저하가 발생한다고 설명합니다.",
+      "틀렸습니다. 본문은 인덱스가 항상 자동으로 제거·재생성된다고 하지 않으며, 빈번한 변경 시 재작성 필요로 성능에 부정적 영향을 준다고 합니다."
+    ],
+    "keywords": [
+      "UPDATE 비용",
+      "인덱스 재작성",
+      "delete+insert"
+    ],
+    "sourceEvidence": {
+      "section": "Index(인덱스)",
+      "startLine": 35,
+      "endLine": 41,
+      "quote": "#### 단점\n\n- Index 생성시, .mdb 파일 크기가 증가한다.\n- **한 페이지를 동시에 수정할 수 있는 병행성**이 줄어든다.\n- 인덱스 된 Field에서 Data를 업데이트하거나, **Record를 추가 또는 삭제시 성능이 떨어진다.**\n- 데이터 변경 작업이 자주 일어나는 경우, **Index를 재작성**해야 하므로 성능에 영향을 미친다."
+    },
+    "category": "DATABASE",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Database/[DB] Index.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+    "id": "676db943-e357-553e-8ae9-f542f51c419e",
+    "review": {
+      "blind": {
+        "slot": 50,
+        "correctOptionText": "인덱스는 UPDATE 시 삭제 표시 후 재삽입 과정이 일어나므로 작업량이 2배로 증가하고, 데이터 변경이 잦으면 인덱스를 재작성해야 하여 성능 저하가 발생한다.",
+        "unambiguous": true,
+        "reason": "문서는 UPDATE 시 'Index에서는 Delete가 발생한 후, 새로운 작업의 Insert 작업 / 2배의 작업' 및 잦은 변경 시 인덱스 재작성 필요를 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 50,
+        "passed": true,
+        "reason": "정답(옵션 2)은 소스의 단점 및 UPDATE 설명(인덱스에서 delete 표기 후 insert 과정으로 작업이 늘고, 자주 변경 시 인덱스 재작성 필요)을 직접 반영합니다. 다른 선택지들은 소스와 일치하지 않거나 근거가 없습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  }
+]
