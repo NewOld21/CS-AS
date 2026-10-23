@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "backend/ai/src"))
 from csas_rag.api.server import serve
 from csas_rag.generation.answering import AnswerService
 from csas_rag.generation.quiz import QuizService
+from csas_rag.generation.quiz.validation import validate_candidate
 from csas_rag.providers.chroma import ChromaVectorStore
 from csas_rag.providers.embeddings import OpenAIEmbedding
 from csas_rag.providers.llm import OpenAIAnswerGenerator
@@ -34,7 +35,7 @@ def main(argv=None):
     retriever = VectorRetriever(ChromaVectorStore(manifest["index_version"]), embedding, manifest)
     generator = OpenAIAnswerGenerator()
     serve(AnswerService(retriever, generator), token, manifest["index_version"], args.host, args.port,
-          quiz_service=QuizService(retriever, generator))
+          quiz_service=QuizService(retriever, generator, validate_candidate))
 
 
 if __name__ == "__main__":

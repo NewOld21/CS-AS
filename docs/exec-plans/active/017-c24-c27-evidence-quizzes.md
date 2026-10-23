@@ -33,3 +33,7 @@ Chrome UI fixture 8개 통과: 저장된 청크 본문, 안전한 원문 링크,
 ### C25
 
 Docker Python 72개 중 70 통과·조건부 Chroma 2 skip. GMS mock의 JSON 후보·실제 검색 근거 ID 전달, 근거 부족 시 모델 미호출, 잘못된 JSON/provider 오류 분리, 등록 개념 입력·deadline 검증을 확인했다. 후보는 독립 검증 전 candidate=null이다. 실제 GMS 키/ACTIVE 데이터는 이 작업 환경에 제공되지 않아 라이브 호출은 미실행이다.
+
+### C26
+
+Docker Python 77개 중 75 통과·조건부 Chroma 2 skip. 정상 후보의 독립 3단계, 선택지 3/5개·누락·boolean 정답·중복·가짜 ID·복수 정답·정답 없음·정답 불일치·모호함·해설/오답/버전·검증 공급자 장애를 확인했다. 거부 결과에 후보 본문은 포함되지 않는다. 실제 사람 검토 표본과 GMS 의미 품질은 미검증이다.
