@@ -84,6 +84,8 @@ class AnsweringTests(unittest.TestCase):
         AnswerService(retriever, generator).answer(request)
         self.assertIn("인덱스 단점", retriever.last_question)
         self.assertIn("untrusted data", generator.system)
+        self.assertIn("존댓말", generator.system)
+        self.assertIn("even if the user", generator.system)
         self.assertIn("<evidence", generator.prompt)
 
     def test_internal_http_auth_validation_deadline_and_success(self):
