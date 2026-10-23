@@ -1,0 +1,21 @@
+{
+  "total": 240,
+  "counts": {
+    "ALGORITHM": 20,
+    "COMPUTER_ARCHITECTURE": 50,
+    "DATABASE": 50,
+    "DATA_STRUCTURE": 20,
+    "NETWORK": 50,
+    "OPERATING_SYSTEM": 50
+  },
+  "difficulties": {
+    "EASY": 72,
+    "MEDIUM": 120,
+    "HARD": 48
+  },
+  "source_files": 69,
+  "source_commit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+  "errors": [],
+  "passed": true,
+  "human_semantic_review": "NOT_PERFORMED"
+}
