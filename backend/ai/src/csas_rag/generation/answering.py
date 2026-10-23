@@ -87,7 +87,9 @@ class AnswerService:
             result.append({"source_id": metadata["source_id"], "document_id": metadata["document_id"],
                            "revision": metadata["revision"], "chunk_id": row["chunk_id"],
                            "title": metadata["title"], "url": metadata.get("url", metadata.get("source_url")),
-                           "locator": metadata["locator"]})
+                           "locator": metadata["locator"], "evidence_text": row["content"],
+                           "category": metadata.get("category"),
+                           "technology_version": metadata.get("version")})
         return result
 
 

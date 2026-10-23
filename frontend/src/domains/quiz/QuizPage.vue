@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '../auth/store'
 import { errorMessage } from '../auth/validation'
 import SafeAnswer from '../chat/SafeAnswer.vue'
+import EvidencePanel from '../chat/EvidencePanel.vue'
 import BaseButton from '../../shared/ui/BaseButton.vue'
 import StatusMessage from '../../shared/ui/StatusMessage.vue'
 import {
@@ -14,13 +15,13 @@ import {
   listChatSessions,
   listCategories,
   listQuizzes,
-  safeSourceUrl,
   submitAttempt,
   type Attempt,
   type Category,
   type ChatAnswer,
   type ChatSession,
   type Quiz,
+  type Source,
 } from './api'
 
 const auth = useAuth()
@@ -48,6 +49,12 @@ const messages = ref<
     answer?: ChatAnswer
   }>
 >([])
+const evidence = ref<Source | null>(null)
+const evidenceSources = ref<Source[]>([])
+function showEvidence(source: Source, sources: Source[]) {
+  evidence.value = source
+  evidenceSources.value = sources
+}
 const quiz = computed(() => quizzes.value[index.value] ?? null)
 
 async function start() {
@@ -297,16 +304,16 @@ onMounted(start)
               :class="['message', message.role, { failed: message.status === 'failed' }]"
             >
               <span class="mono">{{ message.role === 'user' ? 'YOU' : 'AS' }}</span
-              ><SafeAnswer :content="message.text" />
+              ><SafeAnswer
+                :content="message.text"
+                :sources="message.answer?.sources"
+                @evidence="showEvidence($event, message.answer!.sources)"
+              />
               <ul v-if="message.answer?.sources.length" class="source-list">
                 <li v-for="source in message.answer.sources" :key="source.chunk_id">
-                  <a
-                    v-if="safeSourceUrl(source.url)"
-                    :href="safeSourceUrl(source.url)!"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >{{ source.title }} ↗</a
-                  ><span v-else>{{ source.title }} · URL 확인 불가</span>
+                  <button type="button" @click="showEvidence(source, message.answer!.sources)">
+                    {{ source.title }} · 근거 보기
+                  </button>
                 </li>
               </ul>
             </article>
@@ -335,5 +342,12 @@ onMounted(start)
       </section>
       <div v-else class="learn-state">이 분야에 학습 가능한 문제가 아직 없습니다.</div>
     </template>
+    <EvidencePanel
+      v-if="evidence"
+      :source="evidence"
+      :sources="evidenceSources"
+      @select="evidence = $event"
+      @close="evidence = null"
+    />
   </main>
 </template>

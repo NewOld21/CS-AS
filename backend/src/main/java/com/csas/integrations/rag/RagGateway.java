@@ -51,5 +51,19 @@ public interface RagGateway {
       String chunkId,
       String title,
       String url,
-      String locator) {}
+      String locator,
+      String evidenceText,
+      String category,
+      String technologyVersion) {
+    public RetrievedChunk(
+        String sourceId,
+        String documentId,
+        String revision,
+        String chunkId,
+        String title,
+        String url,
+        String locator) {
+      this(sourceId, documentId, revision, chunkId, title, url, locator, null, null, null);
+    }
+  }
 }

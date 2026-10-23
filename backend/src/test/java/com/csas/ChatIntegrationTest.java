@@ -41,7 +41,10 @@ class ChatIntegrationTest extends HttpTestSupport {
                       "chunk:index",
                       "Database index",
                       "https://example.test/index",
-                      "index.md#cost");
+                      "index.md#cost",
+                      "Saved evidence: index maintenance costs",
+                      "DATABASE",
+                      "17");
               return new RagGateway.Answer(
                   request.requestId(),
                   "answered",
@@ -83,6 +86,8 @@ class ChatIntegrationTest extends HttpTestSupport {
                 Map.of("Idempotency-Key", UUID.randomUUID().toString()));
     assertThat(answer.status()).isEqualTo(200);
     assertThat(answer.body().get("status").asText()).isEqualTo("answered");
+    assertThat(answer.body().get("sources").get(0).get("evidence_text").asText())
+        .isEqualTo("Saved evidence: index maintenance costs");
     assertThat(answer.body().get("sources").get(0).get("chunk_id").asText())
         .isEqualTo("chunk:index");
 
@@ -139,6 +144,9 @@ class ChatIntegrationTest extends HttpTestSupport {
                 null,
                 false);
     assertThat(messages.status()).isEqualTo(200);
+    assertThat(
+            messages.body().get("items").get(1).get("sources").get(0).get("evidence_text").asText())
+        .isEqualTo("Saved evidence: index maintenance costs");
     assertThat(messages.body().get("items")).hasSize(2);
     assertThat(messages.body().get("items").get(0).get("role").asText()).isEqualTo("USER");
     assertThat(messages.body().get("items").get(1).get("role").asText()).isEqualTo("ASSISTANT");

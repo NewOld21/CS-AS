@@ -198,6 +198,9 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
                       title: 'PostgreSQL Indexes',
                       url: 'https://www.postgresql.org/docs/current/indexes.html',
                       locator: '11.1',
+                      evidence_text: 'Saved evidence: indexes incur write maintenance costs.',
+                      category: 'DATABASE',
+                      technology_version: '18',
                     },
                   ],
                 },
@@ -226,6 +229,9 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
             title: 'PostgreSQL Indexes',
             url: 'https://www.postgresql.org/docs/current/indexes.html',
             locator: '11.1',
+            evidence_text: 'Saved evidence: indexes incur write maintenance costs.',
+            category: 'DATABASE',
+            technology_version: '18',
           },
         ],
         concept_ids: ['concept:database-index'],
@@ -239,10 +245,20 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
   await page.getByRole('button', { name: 'AS에게 질문하기' }).click()
   await page.getByRole('button', { name: '질문 보내기' }).click()
   await expect(page.getByText('인덱스는 읽기를 빠르게 하지만')).toBeVisible()
-  await expect(page.getByRole('link', { name: /PostgreSQL Indexes/ })).toHaveAttribute(
+  await page.getByRole('button', { name: /PostgreSQL Indexes · 근거 보기/ }).click()
+  await expect(page.getByRole('dialog')).toBeVisible()
+  await expect(page.getByText('Saved evidence: indexes incur write maintenance costs.')).toBeVisible()
+  await expect(page.getByRole('link', { name: /원본 문서 열기/ })).toHaveAttribute(
     'href',
     'https://www.postgresql.org/docs/current/indexes.html',
   )
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).not.toBeVisible()
+  await expect(page.getByRole('button', { name: /PostgreSQL Indexes · 근거 보기/ })).toBeFocused()
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.getByRole('button', { name: /PostgreSQL Indexes · 근거 보기/ }).click()
+  await expect(page.getByRole('dialog')).toBeVisible()
+  await page.getByRole('button', { name: '근거 패널 닫기' }).click()
   await page.reload()
   await page.getByRole('button', { name: '이전 대화' }).click()
   await expect(page.getByText('인덱스는 읽기를 빠르게 하지만')).toBeVisible()

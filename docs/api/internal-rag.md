@@ -80,3 +80,5 @@ concept_ids는 이번 질문에서 확인한 등록 개념 ID이며 Spring이 �
 candidate는 stem, options(4개, position/text), correct_option_position, explanation, concept_ids, evidence_chunk_ids를 가진다. 검증 규칙은 [생성 도메인](../domain/quiz-generation.md)을 따른다. JSON 파싱 성공이나 LLM의 `validated=true`만으로 발행하지 않는다. 실제 검증 단계·결과와 인용을 확인한다.
 
 Spring에서 새로운 UUID와 소유자를 부여한다. Python이 생성한 quiz_id나 user_id로 서비스 DB에 쓰지 않는다. 내부 API 실패 시 생성 요청 상태를 FAILED로 기록하고 공개 오류 코드로 매핑한다.
+
+C24 retrieved_chunks는 실제 검색 본문 evidence_text와 선택적 category/technology_version을 포함한다. Spring은 저장된 인용 snapshot만 공개하며 원문 업데이트와 독립적으로 보존한다.

@@ -81,7 +81,12 @@ public class HttpRagGateway implements RagGateway {
                 text(row, "chunk_id"),
                 text(row, "title"),
                 text(row, "url"),
-                text(row, "locator")));
+                text(row, "locator"),
+                row.path("evidence_text").isTextual() ? row.path("evidence_text").asText() : null,
+                row.path("category").isTextual() ? row.path("category").asText() : null,
+                row.path("technology_version").isTextual()
+                    ? row.path("technology_version").asText()
+                    : null));
       }
       return new Answer(
           text(body, "request_id"),

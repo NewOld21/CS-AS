@@ -317,8 +317,8 @@ public class ChatService {
       jdbc.update(
           """
           INSERT INTO csas.message_citations(
-            message_id,ordinal,source_id,document_id,revision,chunk_id,index_version,title,url,locator)
-          VALUES (?,?,?,?,?,?,?,?,?,?)
+            message_id,ordinal,source_id,document_id,revision,chunk_id,index_version,title,url,locator,evidence_text,category,technology_version)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
           """,
           messageId,
           ordinal++,
@@ -329,7 +329,10 @@ public class ChatService {
           response.indexVersion(),
           chunk.title(),
           chunk.url(),
-          chunk.locator());
+          chunk.locator(),
+          chunk.evidenceText(),
+          chunk.category(),
+          chunk.technologyVersion());
       sources.add(source(chunk, response.indexVersion()));
     }
     return sources;
@@ -370,7 +373,7 @@ public class ChatService {
   private List<SourceResponse> citations(UUID messageId) {
     return jdbc.query(
         """
-        SELECT source_id,document_id,revision,chunk_id,index_version,title,url,locator
+        SELECT source_id,document_id,revision,chunk_id,index_version,title,url,locator,evidence_text,category,technology_version
           FROM csas.message_citations WHERE message_id=? ORDER BY ordinal
         """,
         (rs, row) ->
@@ -382,7 +385,10 @@ public class ChatService {
                 rs.getString("index_version"),
                 rs.getString("title"),
                 rs.getString("url"),
-                rs.getString("locator")),
+                rs.getString("locator"),
+                rs.getString("evidence_text"),
+                rs.getString("category"),
+                rs.getString("technology_version")),
         messageId);
   }
 
@@ -395,7 +401,10 @@ public class ChatService {
         indexVersion,
         chunk.title(),
         chunk.url(),
-        chunk.locator());
+        chunk.locator(),
+        chunk.evidenceText(),
+        chunk.category(),
+        chunk.technologyVersion());
   }
 
   private SessionContext loadContext(UUID userId, UUID sessionId) {
@@ -475,7 +484,22 @@ public class ChatService {
       throw new ApiException(502, "RAG_FAILED", "RAG response validation failed.");
     }
     Set<String> retrieved = new HashSet<>();
-    answer.retrievedChunks().forEach(chunk -> retrieved.add(chunk.chunkId()));
+    for (var chunk : answer.retrievedChunks()) {
+      java.net.URI uri;
+      try {
+        uri = java.net.URI.create(chunk.url());
+      } catch (IllegalArgumentException ex) {
+        throw new ApiException(502, "RAG_FAILED", "Invalid citation URL.");
+      }
+      if (!"https".equals(uri.getScheme())
+          || uri.getHost() == null
+          || uri.getUserInfo() != null
+          || !retrieved.add(chunk.chunkId())
+          || chunk.documentId().isBlank()
+          || chunk.revision().isBlank()) {
+        throw new ApiException(502, "RAG_FAILED", "Invalid citation metadata.");
+      }
+    }
     if (!retrieved.containsAll(answer.citedChunkIds())
         || ("answered".equals(answer.status())
             && (answer.answer() == null || answer.citedChunkIds().isEmpty()))

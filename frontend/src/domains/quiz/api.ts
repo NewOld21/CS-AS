@@ -29,6 +29,9 @@ export interface Source {
   title: string
   url: string
   locator: string
+  evidence_text?: string | null
+  category?: string | null
+  technology_version?: string | null
 }
 export interface Attempt {
   id: string
@@ -100,7 +103,7 @@ export const ask = (sessionId: string, question: string) =>
 export function safeSourceUrl(value: string): string | null {
   try {
     const url = new URL(value)
-    return url.protocol === 'https:' ? url.href : null
+    return url.protocol === 'https:' && !url.username && !url.password ? url.href : null
   } catch {
     return null
   }
