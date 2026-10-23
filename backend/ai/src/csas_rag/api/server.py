@@ -4,7 +4,7 @@ import secrets
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from csas_rag.generation.answering import GenerationError, validate_request
+from csas_rag.generation.answering import GenerationError, RagUnavailable, validate_request
 from csas_rag.generation.quiz import validate_quiz_request
 
 
@@ -43,7 +43,8 @@ def handler(service, token: str, active_index: str, quiz_service=None):
 
         def do_GET(self):
             if self.path == "/health":
-                self.send_json(200, {"status": "UP", "index_version": active_index})
+                self.send_json(200, {"status": "UP", "index_version": active_index,
+                                    **getattr(service, "runtime_status", {})})
                 return
             self.error(404, self.headers.get("X-Request-Id", "unknown"),
                        "NOT_FOUND", "Internal endpoint not found")
@@ -80,6 +81,8 @@ def handler(service, token: str, active_index: str, quiz_service=None):
                     self.send_json(200, service.answer(data))
             except (ValueError, json.JSONDecodeError):
                 self.error(400, request_id, "INVALID_INPUT", "Invalid answer request")
+            except RagUnavailable as error:
+                self.error(503, request_id, error.code, "RAG configuration is incomplete")
             except GenerationError:
                 self.error(502, request_id, "PROVIDER_FAILED", "RAG provider failed")
             except TimeoutError:

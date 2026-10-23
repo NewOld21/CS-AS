@@ -49,6 +49,41 @@ public class HttpRagGateway implements RagGateway {
     return Instant.now().plusSeconds(requestTimeoutSeconds - 2L).toString();
   }
 
+  public java.util.Map<String, Object> status() {
+    try {
+      var request =
+          HttpRequest.newBuilder(endpoint.resolve("/health"))
+              .timeout(Duration.ofSeconds(3))
+              .GET()
+              .build();
+      var response = http.send(request, HttpResponse.BodyHandlers.ofString());
+      if (response.statusCode() != 200) {
+        throw new IOException("RAG unavailable");
+      }
+      var body = mapper.readTree(response.body());
+      return java.util.Map.of(
+          "mode",
+          body.path("mode").asText("unknown"),
+          "model",
+          body.path("model").asText("unknown"),
+          "index_version",
+          body.path("index_version").asText("unknown"),
+          "live",
+          body.path("live").asBoolean(false),
+          "configured",
+          body.path("configured").asBoolean(false),
+          "corpus_kind",
+          body.path("corpus_kind").asText("unknown"),
+          "error_code",
+          body.path("error_code").asText(""));
+    } catch (InterruptedException ex) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(503, "RAG_UNAVAILABLE", "RAG service unavailable.");
+    } catch (IOException ex) {
+      throw new ApiException(503, "RAG_UNAVAILABLE", "RAG service unavailable.");
+    }
+  }
+
   @Override
   public JsonNode generate(JsonNode request) {
     if (token.length() < 32) {
@@ -100,6 +135,10 @@ public class HttpRagGateway implements RagGateway {
         throw new ApiException(504, "RAG_TIMEOUT", "RAG service timed out.");
       }
       if (response.statusCode() != 200) {
+        String code = mapper.readTree(response.body()).path("code").asText();
+        if (java.util.Set.of("GMS_KEY_MISSING", "INDEX_MISSING").contains(code)) {
+          throw new ApiException(503, code, "RAG configuration is incomplete.");
+        }
         throw new ApiException(502, "RAG_FAILED", "RAG service failed.");
       }
       JsonNode body = mapper.readTree(response.body());

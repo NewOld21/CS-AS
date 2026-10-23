@@ -26,7 +26,10 @@ class OpenAIAnswerGenerator:
             "model": self.model,
             "messages": [{"role": "developer", "content": system}, {"role": "user", "content": prompt}],
             "response_format": {"type": "json_object"},
+            "max_completion_tokens": 4096,
         }
+        if self.model.startswith("gpt-5"):
+            payload["reasoning_effort"] = "low"
         try:
             response = post_json(self.endpoint + "/chat/completions", self.api_key, payload,
                                  timeout=timeout, max_retries=max_retries)

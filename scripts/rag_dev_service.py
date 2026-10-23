@@ -10,13 +10,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend/ai/src"))
 
 from csas_rag.api.server import serve
-from csas_rag.generation.answering import AnswerService
+from csas_rag.generation.answering import AnswerService, RagUnavailable
 from csas_rag.generation.quiz import QuizService
 from csas_rag.generation.quiz.validation import validate_candidate
 from csas_rag.providers.chroma import ChromaVectorStore
 from csas_rag.providers.embeddings import DeterministicTestEmbedding, OpenAIEmbedding
 from csas_rag.providers.llm import OpenAIAnswerGenerator
 from csas_rag.retrieval.vector import VectorRetriever
+from csas_rag.retrieval.planning import QueryPlanner
 
 
 class LocalGroundedGenerator:
@@ -84,6 +85,15 @@ def main() -> None:
         "RAG_INDEX_MANIFEST", ROOT / "data/processed/indexes" / (index_version + ".json")
     ))
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else None
+    if provider == "gms" and (not (os.environ.get("GMS_KEY") or os.environ.get("OPENAI_API_KEY")) or not manifest):
+        code = "GMS_KEY_MISSING" if not (os.environ.get("GMS_KEY") or os.environ.get("OPENAI_API_KEY")) else "INDEX_MISSING"
+        class Unavailable:
+            runtime_status = {"mode": "gms", "model": os.environ.get("GMS_CHAT_MODEL", "unknown"),
+                              "live": False, "configured": False, "error_code": code, "corpus_kind": "unavailable"}
+            def answer(self, request):
+                raise RagUnavailable(code)
+        serve(Unavailable(), token, index_version, host="0.0.0.0", port=8090)
+        return
     if manifest and (manifest.get("status") != "ACTIVE"
                      or manifest.get("index_version") != index_version):
         raise SystemExit("RAG_INDEX_MANIFEST must describe the configured ACTIVE index")
@@ -106,8 +116,14 @@ def main() -> None:
         seed(store, embedding, load_documents(fixture), index_version)
         manifest = {"model": embedding.model, "dimensions": embedding.dimensions}
     retriever = VectorRetriever(store, embedding, manifest)
+    service = AnswerService(retriever, generator, min_score=-1.0 if provider == "deterministic-test" else 0.2,
+                            max_chunks=int(os.environ.get("RAG_TOP_K", "5")),
+                            planner=QueryPlanner() if provider == "gms" else None)
+    service.runtime_status = {"mode": provider, "model": generator.model,
+                              "live": provider == "gms", "configured": True,
+                              "corpus_kind": "active" if manifest_path.exists() else "demo"}
     serve(
-        AnswerService(retriever, generator, min_score=-1.0),
+        service,
         token,
         index_version,
         host="0.0.0.0",

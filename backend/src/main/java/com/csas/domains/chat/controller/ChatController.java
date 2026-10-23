@@ -26,10 +26,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatController {
   private final CurrentUser currentUser;
   private final ChatService chats;
+  private final com.csas.integrations.rag.HttpRagGateway rag;
 
-  public ChatController(CurrentUser currentUser, ChatService chats) {
+  public ChatController(
+      CurrentUser currentUser, ChatService chats, com.csas.integrations.rag.HttpRagGateway rag) {
     this.currentUser = currentUser;
     this.chats = chats;
+    this.rag = rag;
+  }
+
+  @GetMapping("/api/v1/chat/status")
+  java.util.Map<String, Object> status() {
+    currentUser.id();
+    return rag.status();
   }
 
   @PostMapping("/api/v1/chat/sessions")

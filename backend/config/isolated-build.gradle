@@ -1,0 +1,4 @@
+// Keep integration compilation away from a concurrently running Docker bootRun.
+allprojects {
+    layout.buildDirectory.set(file('build/checklist-tests'))
+}

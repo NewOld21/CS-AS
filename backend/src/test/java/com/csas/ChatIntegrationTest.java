@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,6 +59,61 @@ class ChatIntegrationTest extends HttpTestSupport {
             })
         .when(rag)
         .answer(any());
+  }
+
+  @Test
+  void followupHistoryIsSessionScopedAndNeverCopiedIntoANewSession() throws Exception {
+    var owner = account();
+    var browser = owner.browser();
+    var first =
+        browser
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "First"), true)
+            .body()
+            .path("id")
+            .asText();
+    var second =
+        browser
+            .request("POST", "/api/v1/chat/sessions", Map.of("title", "Second"), true)
+            .body()
+            .path("id")
+            .asText();
+    for (String question : List.of("Explain transaction isolation", "Explain more simply")) {
+      assertThat(
+              browser
+                  .request(
+                      "POST",
+                      "/api/v1/chat/sessions/" + first + "/messages",
+                      Map.of("question", question),
+                      true,
+                      Map.of("Idempotency-Key", UUID.randomUUID().toString()))
+                  .status())
+          .isEqualTo(200);
+    }
+    assertThat(
+            browser
+                .request(
+                    "POST",
+                    "/api/v1/chat/sessions/" + second + "/messages",
+                    Map.of("question", "Explain memory"),
+                    true,
+                    Map.of("Idempotency-Key", UUID.randomUUID().toString()))
+                .status())
+        .isEqualTo(200);
+    var captured = ArgumentCaptor.forClass(RagGateway.AnswerRequest.class);
+    verify(rag, times(3)).answer(captured.capture());
+    assertThat(captured.getAllValues().get(0).history()).isEmpty();
+    assertThat(captured.getAllValues().get(1).history())
+        .extracting(RagGateway.History::content)
+        .contains("Explain transaction isolation");
+    assertThat(captured.getAllValues().get(2).history()).isEmpty();
+    assertThat(captured.getAllValues().get(2).quizContext()).isNull();
+    var stranger = account();
+    assertThat(
+            stranger
+                .browser()
+                .request("GET", "/api/v1/chat/sessions/" + first + "/messages", null, false)
+                .status())
+        .isEqualTo(404);
   }
 
   @Test

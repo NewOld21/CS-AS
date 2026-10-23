@@ -1044,6 +1044,27 @@
           }
         }
       }
+    },
+    "/api/v1/chat/status": {
+      "get": {
+        "summary": "Authenticated RAG runtime mode without credentials",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mode/index/model/configuration state; demo is explicitly identified"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "503": {
+            "description": "RAG unavailable"
+          }
+        }
+      }
     }
   },
   "components": {
