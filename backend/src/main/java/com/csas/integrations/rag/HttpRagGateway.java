@@ -50,6 +50,38 @@ public class HttpRagGateway implements RagGateway {
   }
 
   @Override
+  public JsonNode generate(JsonNode request) {
+    if (token.length() < 32) {
+      throw new ApiException(503, "RAG_UNAVAILABLE", "RAG service is not configured.");
+    }
+    try {
+      HttpRequest httpRequest =
+          HttpRequest.newBuilder(endpoint.resolve("quiz-candidates"))
+              .timeout(Duration.ofSeconds(requestTimeoutSeconds))
+              .header("Content-Type", "application/json")
+              .header("X-Request-Id", request.path("request_id").asText())
+              .header("Authorization", "Bearer " + token)
+              .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(request)))
+              .build();
+      var response = http.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+      if (response.statusCode() == 504) {
+        throw new ApiException(504, "RAG_TIMEOUT", "Quiz service timed out.");
+      }
+      if (response.statusCode() != 200) {
+        throw new ApiException(502, "RAG_FAILED", "Quiz service failed.");
+      }
+      return mapper.readTree(response.body());
+    } catch (java.net.http.HttpTimeoutException ex) {
+      throw new ApiException(504, "RAG_TIMEOUT", "Quiz service timed out.");
+    } catch (InterruptedException ex) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(504, "RAG_TIMEOUT", "Quiz service timed out.");
+    } catch (IOException | IllegalArgumentException ex) {
+      throw new ApiException(502, "RAG_FAILED", "Quiz service failed.");
+    }
+  }
+
+  @Override
   public Answer answer(AnswerRequest request) {
     if (token.length() < 32) {
       throw new ApiException(503, "RAG_UNAVAILABLE", "RAG service is not configured.");

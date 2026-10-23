@@ -3,6 +3,7 @@ package com.csas.domains.learning.service;
 import com.csas.common.exception.ApiException;
 import com.csas.domains.learning.dto.AttemptRequest;
 import com.csas.domains.learning.dto.AttemptResultResponse;
+import com.csas.domains.learning.dto.SourceResponse;
 import com.csas.domains.quiz.service.QuizCatalogService;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -178,8 +179,27 @@ public class QuizAttemptService {
         row.correctOptionId(),
         row.isCorrect(),
         row.explanation(),
-        List.of(),
+        evidence(row.quizId()),
         row.submittedAt());
+  }
+
+  private List<SourceResponse> evidence(UUID quizId) {
+    return jdbc.query(
+        "SELECT * FROM csas.quiz_evidence WHERE quiz_id=? ORDER BY ordinal",
+        (rs, row) ->
+            new SourceResponse(
+                rs.getString("source_id"),
+                rs.getString("document_id"),
+                rs.getString("revision"),
+                rs.getString("chunk_id"),
+                rs.getString("index_version"),
+                rs.getString("title"),
+                rs.getString("url"),
+                rs.getString("locator"),
+                rs.getString("evidence_text"),
+                rs.getString("category"),
+                rs.getString("technology_version")),
+        quizId);
   }
 
   private String hash(UUID quizId, AttemptRequest request) {

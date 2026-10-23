@@ -245,9 +245,77 @@ test('quiz submission opens an owned contextual AS chat and renders trusted sour
   await page.getByRole('button', { name: 'AS에게 질문하기' }).click()
   await page.getByRole('button', { name: '질문 보내기' }).click()
   await expect(page.getByText('인덱스는 읽기를 빠르게 하지만')).toBeVisible()
+  const generatedQuiz = {
+    id: 'generated-1',
+    version: 1,
+    stem: 'AI generated index question',
+    category: 'DATABASE',
+    difficulty: 'EASY',
+    origin: 'AI_GENERATED',
+    concept_ids: ['concept:database-index'],
+    options: [1, 2, 3, 4].map((position) => ({
+      id: `generated-option-${position}`,
+      position,
+      text: `Generated option ${position}`,
+    })),
+  }
+  let generationCalls = 0
+  await page.route('**/api/v1/quiz-generations', async (route) => {
+    generationCalls++
+    expect(route.request().headers()['idempotency-key']).toBeTruthy()
+    await route.fulfill({
+      json: { generation_id: 'generation-1', status: 'ready', quiz: generatedQuiz },
+    })
+  })
+  await page.route('**/api/v1/quiz-generations/*', (route) =>
+    route.fulfill({
+      json: { generation_id: 'generation-1', status: 'ready', quiz: generatedQuiz },
+    }),
+  )
+  await page.route('**/api/v1/quizzes/generated-1/attempts', (route) =>
+    route.fulfill({
+      json: {
+        id: 'generated-attempt',
+        quiz: generatedQuiz,
+        selected_option_id: 'generated-option-1',
+        correct_option_id: 'generated-option-1',
+        is_correct: true,
+        explanation: 'Generated explanation after submission',
+        sources: [
+          {
+            source_id: 'fixture',
+            document_id: 'doc-1',
+            revision: 'r1',
+            chunk_id: 'chunk-1',
+            index_version: 'cs-v1',
+            title: 'Generated evidence',
+            url: 'https://example.org/index',
+            locator: 'section:1',
+            evidence_text: 'Actual saved generation evidence',
+          },
+        ],
+      },
+    }),
+  )
+  await page.getByRole('button', { name: '관련 퀴즈 만들기' }).click()
+  await expect(page.getByRole('heading', { name: 'AI generated index question' })).toBeVisible()
+  await expect(page.getByText('AI 생성 문제 · 개인 학습')).toBeVisible()
+  await expect(page.getByText('Generated explanation after submission')).not.toBeVisible()
+  await page.getByText('Generated option 1').click()
+  await page.getByRole('button', { name: '답안 제출' }).click()
+  await expect(page.getByText('Generated explanation after submission')).toBeVisible()
+  await page.getByRole('button', { name: 'Generated evidence · 생성 근거 보기' }).click()
+  await expect(page.getByText('Actual saved generation evidence')).toBeVisible()
+  await page.keyboard.press('Escape')
+  await page.reload()
+  await page.getByRole('button', { name: '이전 대화' }).click()
+  await expect(page.getByRole('heading', { name: 'AI generated index question' })).toBeVisible()
+  expect(generationCalls).toBe(1)
   await page.getByRole('button', { name: /PostgreSQL Indexes · 근거 보기/ }).click()
   await expect(page.getByRole('dialog')).toBeVisible()
-  await expect(page.getByText('Saved evidence: indexes incur write maintenance costs.')).toBeVisible()
+  await expect(
+    page.getByText('Saved evidence: indexes incur write maintenance costs.'),
+  ).toBeVisible()
   await expect(page.getByRole('link', { name: /원본 문서 열기/ })).toHaveAttribute(
     'href',
     'https://www.postgresql.org/docs/current/indexes.html',

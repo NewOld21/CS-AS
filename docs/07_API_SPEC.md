@@ -68,6 +68,8 @@ Answer와 대화 메시지에는 등록 원장과 매핑한 concept_ids를 반�
 
 ## 계약 변경·검사
 
+C24 Source는 evidence_text/category/technology_version을 추가하며 과거 인용은 null을 허용한다. C27 POST /api/v1/quiz-generations는 등록 concept_ids·difficulty·본인 chat_session_id와 UUID Idempotency-Key로 한 문항을 생성한다. 빈 concept_ids는 본인 대화/풀이와 원장 이름 매칭으로만 해석하며 확정할 수 없으면 CONCEPT_REQUIRED다. GET /api/v1/quiz-generations/{key}는 같은 사용자의 저장 결과만 복원하며 모델을 재호출하지 않는다. ready만 정답/해설/근거 없는 개인 Quiz를 반환하고 다른 상태는 quiz=null이다. 같은 키의 완료·실패 결과는 재생하고 처리 중은 409다. 생성 문제의 제출은 기존 attempts API이며 이때 정답·해설·근거가 공개된다.
+
 OpenAPI → 요청/응답 예시·계약 검사 → Java DTO·Python 매핑·Vue 타입 순서로 함께 갱신한다. 수동 작성 타입의 중복은 줄이고 실제 생성 도구는 버전 고정 후 결정한다. 숫자/길이 제한은 제안 기본값이며 변경 시 계약·검사도 갱신한다.
 
 스키마로 표현하기 어려운 문맥 ID 일치·정답 비노출·상태별 null·소유권·멱등성은 계약 테스트로 검증한다. [testing](09_TEST_SCENARIO.md)과 [하네스 연계](harness-workflow.md)를 따른다.

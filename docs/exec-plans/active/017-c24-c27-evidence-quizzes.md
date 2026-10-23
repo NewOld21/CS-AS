@@ -1,6 +1,6 @@
 # 017 C24~C27 근거 패널과 생성 퀴즈
 
-Status: active
+Status: implemented; live GMS/corpus validation pending
 
 ## 범위
 
@@ -37,3 +37,42 @@ Docker Python 72개 중 70 통과·조건부 Chroma 2 skip. GMS mock의 JSON 후
 ### C26
 
 Docker Python 77개 중 75 통과·조건부 Chroma 2 skip. 정상 후보의 독립 3단계, 선택지 3/5개·누락·boolean 정답·중복·가짜 ID·복수 정답·정답 없음·정답 불일치·모호함·해설/오답/버전·검증 공급자 장애를 확인했다. 거부 결과에 후보 본문은 포함되지 않는다. 실제 사람 검토 표본과 GMS 의미 품질은 미검증이다.
+
+### C27 최종 검증
+
+| 실행 | 결과 |
+|---|---|
+| Docker Python unittest, CSAS_CHROMA_INTEGRATION=1 | 78개 전부 통과, skip 0. 임시 ChromaDB에 실제 upsert/query/증분/삭제 수행. 생성 모델은 mock |
+| Docker 전용 PostgreSQL, gradle spotlessApply check bootJar | Spring 45개 통과, 실패/skip 0. Spotless·Checkstyle·jar 빌드 통과 |
+| Vue npm run test | 15개 통과 |
+| Vue npm run build / lint / format:check | 타입·production build·ESLint·Prettier 통과 |
+| Chrome tests/e2e/ui.spec.ts | 8개 통과. 근거 패널→생성 버튼→생성 문제→기존 제출→제출 후 근거→새로고침 복구, 생성 POST 1회 확인 |
+| Linux python3 scripts/verify.py | 문서 316개 내부 링크·설정 17개·하네스 회귀 19개 통과 |
+
+Spring의 실제 PostgreSQL 검사는 검증된 개인 퀴즈/4선택지/개념/근거·검증 이력 저장, 정답/오답·quiz_attempts, 타인 조회 차단, 동일 키 재생·동시 키 409·모델 1회, 실패 키의 상태 코드 재생을 확인했다. 강제 옵션 INSERT 실패 시 퀴즈·근거·검증 이력이 함께 롤백되고 생성 요청만 FAILED로 남았다. 사용자 공개 응답에 후보 정답·해설·근거가 없는 것도 확인했다.
+
+최종 Python 검사는 서비스 Bearer 인증, 다른 index 거부, 잘못된 개념 입력, 만료 deadline과 검증된 내부 HTTP 응답까지 포함한다. 실제 Chroma 통합은 격리 네트워크의 임시 /data를 사용했으며 개발/운영 볼륨을 사용하지 않았다. 고정된 requirements-local-db.lock.txt만 설치하고 외부 모델 호출은 하지 않았다.
+
+검사 중 발견한 문제는 Java 신규 if 문의 중괄호와 Windows 체크아웃 CRLF에 따른 기존 Vue 포맷 검사였다. 중괄호를 추가하고 체크아웃의 텍스트 줄바꿈만 LF로 정규화했다. 관련 검사와 전체 검사가 통과했으며 무관한 파일의 Git 내용 변경은 없다.
+
+## 변경 파일과 동작
+
+- Python: generation/answering.py 본문 메타데이터, generation/quiz/ 후보와 validation.py 독립 검증, api/server.py 인증 경로, providers/llm.py 남은 timeout·재시도 0, rag_service.py/rag_dev_service.py 공급자 재사용.
+- Spring: SourceResponse/RagGateway/HttpRagGateway와 ChatService snapshot, V8 migration. generation의 Controller/Service/Request/Result, V9 요청/검증/근거·발행 trigger. QuizAttemptService의 제출 후 근거. 기존 QuizCatalogService·채점 정책 재사용.
+- Vue: EvidencePanel/SafeAnswer/QuizPage, quiz api와 shared client의 생성 요청 timeout. 사용자/대화별 요청 키로 GET 복구하고 중복 생성하지 않는다. 후보와 내부 검증 추론은 표시하지 않는다.
+- 검사: Python test_quiz_generation.py, Java ChatIntegrationTest/GenerationIntegrationTest, Vue evidence/quiz 단위와 ui.spec.ts.
+- 문서: architecture/ERD/API/RAG/answering/quiz-generation/테스트/개발/현재 작업 및 이 실행 계획.
+
+## 예시와 거부 결과
+
+실제 GMS 생성 예시는 확보하지 못했다. 모의 fixture 예시는 `Which statement about indexes is correct?`, 선택지는 `Indexes require maintenance on writes` / `Indexes have no storage cost` / `Indexes always speed up every write` / `Indexes replace all tables`다. 근거는 `Indexes require storage and incur maintenance costs on writes.`, 정답은 첫 선택지이며 원문 청크 chunk:1과 연결한다. 이는 모델 품질이나 승인 코퍼스의 예시가 아니다.
+
+거부 코드는 INVALID_SCHEMA/OPTION_COUNT/DUPLICATE_OPTIONS/INVALID_CORRECT_OPTION/UNVERIFIED_CONCEPT/UNRETRIEVED_EVIDENCE, ANSWER_AMBIGUOUS_OR_UNSUPPORTED, EXPLANATION_OR_DISTRACTOR_UNSUPPORTED다. 거부 후보는 사용자 응답에 포함하지 않는다. 공급자 오류는 근거 부족으로 위장하지 않고 FAILED로 기록한다.
+
+## 미실행·인계
+
+- 이 작업 환경에는 backend/.env, 루트 .env, data/processed/indexes가 없다. 실제 GMS 키를 읽거나 새로 만들지 않았다. 따라서 실제 gpt-5-mini/text-embedding-3-large·승인 ACTIVE 인덱스와 연결한 전체 E2E는 미실행이다. GMS JSON 지원은 기존 provider/mock 경로로만 재사용했으며 현 환경의 라이브 지원을 새로 검증한 것은 아니다.
+- 실제 코퍼스의 20문항 사람 검토와 모델 의미 정확성은 미완료다. 완료 증거가 생기기 전 계획은 active에 유지한다. 기존 016/015의 라이브 성공을 이번 변경의 성공으로 재사용하지 않는다.
+- 다음 실행: 승인된 런타임 GMS·DB 설정과 ACTIVE manifest를 제공한 뒤 Compose 전체 스택에서 생성/검증/저장/채점 E2E를 제한된 1요청으로 확인한다. secret은 문서·로그·커밋에 넣지 않는다.
+- 장시간 GENERATING 상태가 프로세스 종료로 남은 경우 자동 재생성하지 않는다. 요청 키로 상태를 확인하고 외부 호출 완료 여부를 확인한 후 운영자가 정리한다.
+- 커밋: C24 4c70c05, C25 0b07fb9, C26 4040e72. C27은 이 기록을 포함한 `feat(quiz): support generated quiz submission` 커밋이다. 원격 push는 수행하지 않는다.

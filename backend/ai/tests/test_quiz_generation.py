@@ -89,6 +89,36 @@ def audit(**changes):
 
 
 class QuizValidationTests(unittest.TestCase):
+    def test_authenticated_internal_quiz_http(self):
+        import json
+        import threading
+        from http.server import ThreadingHTTPServer
+        from urllib.error import HTTPError
+        from urllib.request import Request, urlopen
+        from csas_rag.api.server import handler
+        service = QuizService(Retriever(), Generator([candidate(), blind(), audit()]), validate_candidate)
+        server = ThreadingHTTPServer(("127.0.0.1", 0), handler(None, "test-token", "test-v1", service))
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        def call(payload, token="test-token"):
+            req = Request(f"http://127.0.0.1:{server.server_port}/internal/v1/quiz-candidates",
+                          data=json.dumps(payload).encode(), method="POST",
+                          headers={"Authorization": "Bearer " + token, "X-Request-Id": payload["request_id"]})
+            try:
+                with urlopen(req) as response:
+                    return response.status, json.load(response)
+            except HTTPError as error:
+                return error.code, json.load(error)
+        try:
+            self.assertEqual(call(request(), "wrong")[0], 401)
+            self.assertEqual(call({**request(), "index_version": "old"})[0], 409)
+            self.assertEqual(call({**request(), "concept_ids": []})[0], 400)
+            self.assertEqual(call({**request(), "deadline_at": "2020-01-01T00:00:00Z"})[0], 504)
+            code, result = call(request())
+            self.assertEqual((code, result["status"]), (200, "validated"))
+        finally:
+            server.shutdown()
+            server.server_close()
+
     def run_candidate(self, value, solving=None, auditing=None):
         generator = Generator([value, solving if solving is not None else blind(),
                                auditing if auditing is not None else audit()])

@@ -755,7 +755,7 @@
                     "items": {
                       "type": "string"
                     },
-                    "minItems": 1,
+                    "minItems": 0,
                     "maxItems": 5,
                     "uniqueItems": true,
                     "description": "Registered concept identifiers, from a quiz or the last answer. Must belong to the supplied chat context when that context is present."
@@ -934,6 +934,53 @@
           },
           "503": {
             "description": "DOWN (database unavailable)"
+          }
+        }
+      }
+    },
+    "/api/v1/quiz-generations/{key}": {
+      "get": {
+        "operationId": "recoverQuizGeneration",
+        "summary": "Recover an owned generation by idempotency key without invoking a model",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stored result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "502": {
+            "$ref": "#/components/responses/UpstreamFailed"
+          },
+          "504": {
+            "$ref": "#/components/responses/Timeout"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
           }
         }
       }

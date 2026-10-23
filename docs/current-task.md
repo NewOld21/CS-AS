@@ -1,5 +1,7 @@
 # Current task
 
+현재 구현: [017 C24~C27 근거 패널·관련 퀴즈](exec-plans/active/017-c24-c27-evidence-quizzes.md). Citation 본문 snapshot·접근 가능한 패널, 근거 기반 후보 생성·독립 검증·개인 저장·기존 채점과 새로고침 복구를 구현했다. 테스트와 라이브 검증 여부는 해당 계획에서 구분한다.
+
 현재 작업: C21~C23을 완료했으며 다음 구현 범위는 [005 학습 루프 완성](exec-plans/active/005-complete-learning-loop.md)의 복습 상태·학습 이력·관련 문제 생성이다.
 
 최신 완료 마일스톤: [016 C21~C23 운영형 RAG와 사용자 대화 복원](exec-plans/completed/016-c21-c23-operational-rag.md). content hash 기반 증분 인덱싱, 실제 코퍼스 20문항 검색 평가, 사용자별 일반/퀴즈 대화 목록·복원과 멱등·실패 처리를 구현했다. Docker 전체 스택에서 Spring 통합 검사, Vue 단위·브라우저 검사와 실제 RAG E2E를 검증했다.

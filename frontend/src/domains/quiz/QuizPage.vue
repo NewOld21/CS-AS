@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../auth/store'
 import { errorMessage } from '../auth/validation'
+import { ApiError } from '../../shared/api/client'
 import SafeAnswer from '../chat/SafeAnswer.vue'
 import EvidencePanel from '../chat/EvidencePanel.vue'
 import BaseButton from '../../shared/ui/BaseButton.vue'
@@ -12,6 +13,8 @@ import {
   createContextChat,
   createGeneralChat,
   getChatMessages,
+  generateQuiz,
+  recoverGeneration,
   listChatSessions,
   listCategories,
   listQuizzes,
@@ -40,6 +43,69 @@ const chatSession = ref('')
 const chatQuestion = ref('왜 틀렸어?')
 const chatBusy = ref(false)
 const chatFailure = ref('')
+const generating = ref(false)
+const generationNotice = ref('')
+function generationKey() {
+  return `csas:generation:${auth.user?.id}:${chatSession.value}`
+}
+function showGenerated(response: import('./api').GenerationResult) {
+  if (response.status === 'ready' && response.quiz) {
+    quizzes.value = [
+      response.quiz,
+      ...quizzes.value.filter((item) => item.id !== response.quiz!.id),
+    ]
+    index.value = 0
+    selected.value = ''
+    result.value = null
+    generationNotice.value = '검증 단계를 통과한 AI 생성 문제입니다. 답안을 제출해 확인해 보세요.'
+  } else {
+    generationNotice.value =
+      response.status === 'insufficient_evidence'
+        ? '문제를 만들 근거가 부족합니다.'
+        : '문제 검증을 통과하지 못했습니다. 후보는 공개하지 않습니다.'
+  }
+}
+async function generateRelated() {
+  if (!chatSession.value || generating.value) return
+  generating.value = true
+  generationNotice.value = ''
+  const pending = sessionStorage.getItem(generationKey())
+  const key = pending || crypto.randomUUID()
+  sessionStorage.setItem(generationKey(), key)
+  const recent = [...messages.value].reverse().find((item) => item.answer?.concept_ids.length)
+  try {
+    let response
+    if (pending) {
+      try {
+        response = await recoverGeneration(key)
+      } catch (error) {
+        if (!(error instanceof ApiError) || error.status !== 404) throw error
+      }
+    }
+    response ??= await generateQuiz(recent?.answer?.concept_ids ?? [], chatSession.value, key)
+    showGenerated(response)
+    sessionStorage.setItem(generationKey() + ':last', key)
+    sessionStorage.removeItem(generationKey())
+  } catch (error) {
+    if (
+      error instanceof ApiError &&
+      [
+        'GENERATION_FAILED',
+        'RAG_TIMEOUT',
+        'RAG_UNAVAILABLE',
+        'RAG_FAILED',
+        'GENERATION_SAVE_FAILED',
+        'GENERATION_INVALID',
+        'DUPLICATE_GENERATED_QUIZ',
+      ].includes(error.code)
+    )
+      sessionStorage.removeItem(generationKey())
+    generationNotice.value =
+      errorMessage(error) + ' 같은 요청은 다시 확인하며 중복 생성하지 않습니다.'
+  } finally {
+    generating.value = false
+  }
+}
 const chatSessions = ref<ChatSession[]>([])
 const messages = ref<
   Array<{
@@ -152,6 +218,17 @@ async function selectChat(session: ChatSession) {
           }
         : undefined,
   }))
+  const pending =
+    sessionStorage.getItem(generationKey()) || sessionStorage.getItem(generationKey() + ':last')
+  if (pending) {
+    try {
+      showGenerated(await recoverGeneration(pending))
+      sessionStorage.removeItem(generationKey())
+    } catch {
+      generationNotice.value =
+        '이전 생성 요청을 확인 중입니다. 같은 요청으로 다시 확인할 수 있습니다.'
+    }
+  }
 }
 async function newGeneralChat() {
   chatFailure.value = ''
@@ -223,6 +300,7 @@ onMounted(start)
       <section v-if="quiz" class="learning-layout">
         <article class="quiz-card" aria-labelledby="quiz-stem">
           <div class="quiz-meta">
+            <span v-if="quiz.origin === 'AI_GENERATED'">AI 생성 문제 · 개인 학습</span>
             <span class="mono">Q {{ index + 1 }} / {{ quizzes.length }}</span
             ><span>{{ quiz.difficulty }}</span>
           </div>
@@ -255,6 +333,14 @@ onMounted(start)
           >
             <strong>{{ result.is_correct ? '정답이에요.' : '다시 연결해 볼 지점이에요.' }}</strong>
             <p>{{ result.explanation }}</p>
+            <button
+              v-for="source in result.sources"
+              :key="source.chunk_id"
+              type="button"
+              @click="showEvidence(source, result.sources)"
+            >
+              {{ source.title }} · 생성 근거 보기
+            </button>
           </div>
           <div class="quiz-actions">
             <BaseButton variant="secondary" @click="openHistory">이전 대화</BaseButton>
@@ -322,6 +408,14 @@ onMounted(start)
             </div>
           </div>
           <StatusMessage v-if="chatFailure" kind="error">{{ chatFailure }}</StatusMessage>
+          <StatusMessage v-if="generationNotice">{{ generationNotice }}</StatusMessage>
+          <BaseButton
+            v-if="messages.some((item) => item.answer?.status === 'answered')"
+            :disabled="chatBusy || generating"
+            :loading="generating"
+            @click="generateRelated"
+            >관련 퀴즈 만들기</BaseButton
+          >
           <form class="chat-form" @submit.prevent="sendQuestion">
             <label for="chat-question" class="sr-only">AS 질문</label
             ><textarea

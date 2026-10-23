@@ -100,6 +100,21 @@ export const ask = (sessionId: string, question: string) =>
     { 'Idempotency-Key': crypto.randomUUID() },
   )
 
+export interface GenerationResult {
+  generation_id: string
+  status: 'ready' | 'insufficient_evidence' | 'validation_failed'
+  quiz: Quiz | null
+}
+export const generateQuiz = (conceptIds: string[], sessionId: string, key: string) =>
+  post<GenerationResult>(
+    '/quiz-generations',
+    { concept_ids: conceptIds, difficulty: 'EASY', chat_session_id: sessionId },
+    { 'Idempotency-Key': key },
+    125000,
+  )
+export const recoverGeneration = (key: string) =>
+  request<GenerationResult>(`/quiz-generations/${encodeURIComponent(key)}`)
+
 export function safeSourceUrl(value: string): string | null {
   try {
     const url = new URL(value)

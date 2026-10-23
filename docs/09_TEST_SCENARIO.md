@@ -83,4 +83,6 @@ Python 독립 검사: `python3 -m unittest discover -s backend/ai/tests -p 'test
 
 ## 증거와 완료
 
+C24~C27 회귀: 저장된 실제 청크 snapshot·없는 과거 본문·HTTPS URL·다중 citation·Escape/포커스·모바일, 새 검색과 GMS mock 생성, 엄격 JSON/자료형/옵션/ID, 정답을 가린 독립 풀이와 별도 해설 검증, 거부 후보 비공개, 개인 생성 저장·멱등/실패 재생·소유권·동일 채점·제출 후 근거·저장 실패 롤백을 검사한다. UI fixture E2E와 Spring/PostgreSQL 통합, Python HTTP/mock 검사를 구분한다. 실제 GMS·Chroma·승인 코퍼스와 사람 검토는 그 실행 환경과 증거가 있어야 성공으로 기록한다.
+
 실제 명령·종료 코드·시각·환경·코드·코퍼스 manifest·모델·프롬프트·검증기·인덱스 버전을 실행 결과와 묶는다. 미실행·환경 실패·제품 실패를 구분한다. 문서 링크 검사는 OpenAPI 문법·Mermaid 렌더링·서비스 동작을 보증하지 않는다. 계획 완료 증거는 exec-plans/completed/에 남긴다.

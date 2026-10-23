@@ -6,6 +6,8 @@
 
 ## 저장소 책임
 
+C24 V8은 message_citations에 evidence_text/category/technology_version snapshot을 추가한다. C27 V9은 generation_requests(사용자·멱등 키 UNIQUE·요청 hash·상태·생성 버전), generation_validations(단계 보고서·거부 사유·통과 여부), quiz_evidence(청크·리비전·본문 snapshot)를 추가한다. READY AI 문제는 통과한 생성 요청과 검증 이력이 존재해야 하는 지연 constraint trigger로 보호한다. 문제·선택지·개념·근거·검증·READY 전환을 원자적으로 저장한다. quiz_attempts는 기존 테이블과 채점 경로를 그대로 사용하며 생성 근거는 제출 후 반환한다.
+
 | 저장소 | 데이터 |
 |---|---|
 | PostgreSQL 서비스 스키마 | 사용자·개념·퀴즈/선택지·풀이·복습·대화·생성 검증 이력 |

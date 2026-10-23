@@ -12,6 +12,20 @@ AI 테스트도 호스트 Python 대신 Docker에서 `python -m unittest discove
 
 ## Docker 전체 개발 스택
 
+C24~C27의 변경 후 검증 명령:
+
+```sh
+docker compose -f compose.backend-test.yaml run --rm checks gradle --no-daemon spotlessApply check bootJar
+# frontend/에서
+npm ci
+npm run test
+npm run build
+npm run lint
+PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- tests/e2e/ui.spec.ts
+```
+
+Python은 generation/quiz의 GMS mock·독립 검증·내부 HTTP를 unittest로 검사한다. 실제 생성은 설정된 GMS·ACTIVE manifest·Chroma가 필요하다. 관련 퀴즈 버튼은 모델 생성과 검증 후에만 개인 문제를 표시하며 새로고침은 기존 생성 키로 복구한다. 실패 확정 후 새 요청은 새 키를 사용하고 불명확한 네트워크 실패는 같은 키의 결과를 먼저 조회한다. 운영 공개 전 실제 표본 검수 결과를 별도로 남긴다.
+
 일상 개발 실행은 저장소 루트의 Compose를 기준으로 한다. 호스트에 Node.js·JDK·Python을 설치하지 않아도 frontend, Spring Boot backend, 로컬 RAG adapter, PostgreSQL, ChromaDB가 함께 실행된다.
 
 ```sh

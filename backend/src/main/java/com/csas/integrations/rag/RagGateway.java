@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface RagGateway {
   Answer answer(AnswerRequest request);
 
+  com.fasterxml.jackson.databind.JsonNode generate(com.fasterxml.jackson.databind.JsonNode request);
+
   @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
   record AnswerRequest(
       String requestId,
