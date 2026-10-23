@@ -1,5 +1,7 @@
 # Current task
 
+현재 작업: [021 gyoogle 240문항·존댓말](exec-plans/active/021-gyoogle-240-questions.md). 고정 SHA의 gyoogle 원문만으로 신규 데이터셋을 생성·검증·시드하며, 기존 문제/기록을 보존하고 일반/퀴즈 AS의 공통 존댓말 규칙을 적용한다.
+
 최신 UI 수정 완료: [020 알고리즘 아이콘·글꼴](exec-plans/completed/020-icon-typography.md). 중괄호를 네모 내부 한 줄로 고정하고 로컬 Pretendard Variable을 적용했다. Chrome 네 화면 폭·글꼴 로딩/텍스트 경계·UI 8개와 frontend build/lint/format을 확인했다. 아래 019의 실제 생성 검증 후속은 유지한다.
 
 현재 작업: [019 독립 CS 챗봇·27항목](exec-plans/active/019-standalone-rag-checklist.md). PDF 원본과 재생성된 GMS 설정을 확인했으며, 실제 모델·Chroma 결과와 테스트 대역 증거를 구분해 기록한다.
