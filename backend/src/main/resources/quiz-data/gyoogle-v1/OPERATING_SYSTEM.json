@@ -1,0 +1,2743 @@
+[
+  {
+    "slot": 1,
+    "topic": "메인 메모리의 역할",
+    "learningObjective": "메인 메모리가 CPU와 어떤 관계로 동작하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "메인 메모리(main memory)에 대해 옳은 설명은 무엇입니까?",
+    "options": [
+      "메인 메모리는 CPU가 직접 접근하는 기억 장치이며, 프로세스가 실행되려면 프로그램이 메모리에 올라와야 합니다.",
+      "메인 메모리는 디스크처럼 영구 저장을 위해 설계되어, 전원이 꺼져도 데이터가 유지됩니다.",
+      "메인 메모리는 캐시보다 느리지만 보통 레지스터보다 더 빠르게 접근할 수 없도록 설계됩니다.",
+      "메인 메모리는 CPU가 직접 명령어를 생성하여 프로그램을 작성하는 장치입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 메인 메모리를 'CPU가 직접 접근할 수 있는 기억 장치'라고 정의하고, '프로세스가 실행되려면 프로그램이 메모리에 올라와야 함'을 명시하고 있습니다(라인 3–5). 따라서 옵션 1이 정답입니다.",
+    "optionExplanations": [
+      "올바름: 파일의 처음 부분에서 메인 메모리를 CPU가 직접 접근하는 기억 장치로 정의하고, 프로그램이 실행되려면 메모리에 올라와야 한다고 설명합니다 (라인 3–5).",
+      "오답: 본문에는 메인 메모리가 디스크처럼 영구 저장을 보장한다는 내용이 없습니다; 오히려 메인 메모리와 영구 저장 장치(디스크)의 구분이 문맥상 존재합니다 (관련 서술 없음).",
+      "오답: 본문은 캐시와 메인 메모리의 상대적 속도 차이를 설명하지만, '레지스터보다 더 빠르게 접근할 수 없도록'이라는 표현은 없습니다; 레지스터는 별도로 언급되어 있지 않습니다 (관련 서술 없음).",
+      "오답: 메인 메모리는 데이터를 저장하고 CPU가 접근하는 기억 장치이지, CPU가 명령어를 생성하여 프로그램을 작성하는 장치는 아닙니다 (관련 서술 없음)."
+    ],
+    "keywords": [
+      "메인 메모리",
+      "CPU 접근",
+      "프로세스 실행"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Memory.md",
+      "startLine": 3,
+      "endLine": 5,
+      "quote": "> 메인 메모리는 CPU가 직접 접근할 수 있는 기억 장치\n>\n> 프로세스가 실행되려면 프로그램이 메모리에 올라와야 함"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Memory.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Memory.md",
+    "id": "57feb983-0ed1-56c9-b5c8-aadf2aaae101",
+    "review": {
+      "blind": {
+        "slot": 1,
+        "correctOptionText": "메인 메모리는 CPU가 직접 접근하는 기억 장치이며, 프로세스가 실행되려면 프로그램이 메모리에 올라와야 합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 메인 메모리는 CPU가 직접 접근할 수 있는 기억 장치이며 프로세스 실행을 위해 프로그램이 메모리에 올라와야 한다고 명시함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 1,
+        "passed": true,
+        "reason": "문항의 정답(옵션1)은 원문에서 직접적으로 명시되어 있으며(메인 메모리는 CPU가 직접 접근하는 기억 장치, 프로세스 실행 위해 프로그램이 메모리에 올라와야 함), 나머지 보기들은 원문에 근거가 없거나 반대되는 내용을 담아 정확히 오답임이 증명됩니다. 설명·난이도·학습목표·한국어 표현 모두 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 2,
+    "topic": "wait 시스템콜의 기본 동작",
+    "learningObjective": "wait 시스템콜이 부모 프로세스에 미치는 기본 동작을 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "wait() 시스템콜의 역할로 옳은 것은 무엇입니까?",
+    "options": [
+      "자식 프로세스를 백그라운드로 전환하여 즉시 반환한다.",
+      "부모 프로세스가 자식 프로세스의 종료를 기다리게 한다.",
+      "자식 프로세스가 부모 프로세스의 종료를 기다리게 한다.",
+      "새로운 프로세스를 생성하여 부모와 자식이 동시에 종료되도록 한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 wait가 “child 프로세스가 종료될 때까지 기다리는 작업”이라고 분명히 설명합니다. 또한 wait()는 child가 끝나기 전에는 return하지 않으므로 부모가 자식의 종료를 기다리게 함을 명시하고 있습니다.",
+    "optionExplanations": [
+      "wait는 즉시 반환하여 백그라운드 전환시키는 기능이 아니라, 자식 종료까지 블록합니다.",
+      "정답입니다. (입증 근거: wait는 부모가 자식의 종료를 기다리게 합니다.)",
+      "자식이 부모를 기다린다는 설명은 본문에 없습니다; 실제로는 부모가 자식을 기다립니다.",
+      "wait는 새로운 프로세스를 생성하지 않습니다; 자식의 종료를 기다리는 동작입니다."
+    ],
+    "keywords": [
+      "wait",
+      "부모",
+      "자식",
+      "종료 대기"
+    ],
+    "sourceEvidence": {
+      "section": "[Operating System] System Call",
+      "startLine": 73,
+      "endLine": 76,
+      "quote": "##### wait\n\n> child 프로세스가 종료될 때까지 기다리는 작업"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/[OS] System Call (Fork Wait Exec).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/%5BOS%5D%20System%20Call%20%28Fork%20Wait%20Exec%29.md",
+    "id": "fdcee600-ecdd-58b5-be39-dae359b5c78f",
+    "review": {
+      "blind": {
+        "slot": 2,
+        "correctOptionText": "부모 프로세스가 자식 프로세스의 종료를 기다리게 한다.",
+        "unambiguous": true,
+        "reason": "본문: 'wait는 Process (Parent)가 만든 다른 Process(child) 가 끝날 때까지 기다리는 명령어임.'",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 2,
+        "passed": true,
+        "reason": "질문, 정답(부모가 자식 종료 대기), 오답 해설 모두 출처의 'wait는 child 프로세스가 종료될 때까지 기다리는 작업' 설명과 일치함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 3,
+    "topic": "선점 vs 비선점 스케줄링",
+    "learningObjective": "선점 스케줄링의 기본 동작을 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "선점(preemptive) 스케줄링의 특징으로 옳은 것은 무엇입니까?",
+    "options": [
+      "프로세스는 입출력 완료 시에만 준비 상태로 전환되므로 운영체제가 개입하지 않습니다.",
+      "선점 스케줄링은 항상 처리시간 예측이 가능할 때만 사용됩니다.",
+      "운영체제가 현재 실행 중인 프로세스의 CPU 사용권을 강제로 회수할 수 있습니다.",
+      "운영체제는 프로세스가 종료될 때까지나 스스로 CPU를 반납할 때만 문맥 전환을 수행합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "선점 스케줄링은 운영체제가 현재 CPU를 사용 중인 프로세스를 강제로 회수할 수 있는 경우를 의미합니다. 문서에서는 선점을 'OS가 CPU의 사용권을 선점할 수 있는 경우, 강제 회수하는 경우'라고 정의하고 있습니다.",
+    "optionExplanations": [
+      "입출력 완료 시 준비 상태로 전환되는 것은 맞지만, 이 선택지는 선점의 특징을 잘못 일반화하고 있습니다. 선점에서는 인터럽트 등으로 운영체제가 개입하여 실행 중인 프로세스를 준비 상태로 만들 수 있다고 문서에 설명되어 있습니다.",
+      "문서에는 선점이 '처리시간 예측 어려움'과 관련이 있다고 적혀 있지만, 선점이 '항상 처리시간 예측 가능할 때만 사용된다'는 내용은 없습니다.",
+      "정답입니다. 문서에서 선점은 'OS가 CPU의 사용권을 선점할 수 있는 경우, 강제 회수하는 경우'로 정의되어 있습니다 (선점의 정의).",
+      "이 설명은 비선점(nonpreemptive)의 특성에 해당합니다. 문서에 따르면 비선점은 프로세스 종료나 I/O 등의 이벤트가 있을 때까지 실행을 보장한다고 되어 있습니다."
+    ],
+    "keywords": [
+      "선점",
+      "preemptive",
+      "CPU 회수",
+      "스케줄링 정의"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/CPU Scheduling.md",
+      "startLine": 17,
+      "endLine": 18,
+      "quote": "- 선점 (preemptive) : OS가 CPU의 사용권을 선점할 수 있는 경우, 강제 회수하는 경우 (처리시간 예측 어려움)\n- 비선점 (nonpreemptive) : 프로세스 종료 or I/O 등의 이벤트가 있을 때까지 실행 보장 (처리시간 예측 용이함)"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/CPU Scheduling.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/CPU%20Scheduling.md",
+    "id": "e2eb201c-16c7-5b9a-869a-4ed9dc933d15",
+    "review": {
+      "blind": {
+        "slot": 3,
+        "correctOptionText": "운영체제가 현재 실행 중인 프로세스의 CPU 사용권을 강제로 회수할 수 있습니다.",
+        "unambiguous": true,
+        "reason": "자료에서 선점 스케줄링은 OS가 CPU 사용권을 선점(강제 회수)할 수 있다고 명시함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 3,
+        "passed": true,
+        "reason": "Correct answer and explanations match the provided source quote stating 선점 = 'OS가 CPU의 사용권을 선점... 강제 회수'. Distractors are contradicted by the same source (interrupt-based preemption, '처리시간 예측 어려움', and 비선점 특성). Difficulty and learning objective align; Korean is natural."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 4,
+    "topic": "세마포어의 목적",
+    "learningObjective": "세마포어가 멀티프로그래밍 환경에서 어떤 문제를 해결하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "세마포어(Semaphore)의 주된 목적은 무엇입니까?",
+    "options": [
+      "프로세스 간 데이터 전송을 위한 전용 통신 채널을 제공합니다.",
+      "프로세스의 우선순위를 동적으로 재조정하여 실시간 처리를 보장합니다.",
+      "메모리 단편화를 방지하기 위해 프로세스의 메모리 배치를 관리합니다.",
+      "멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하여 동시에 접근으로 인한 문제를 방지합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에 따르면 세마포어는 멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하는 방법으로 소개되어 있으며, 이는 여러 프로세스가 동시에 접근할 때 발생하는 문제를 방지하기 위해 사용됩니다.",
+    "optionExplanations": [
+      "자료에는 세마포어가 프로세스 간 전용 통신 채널을 제공한다고 기술되어 있지 않습니다; 세마포어는 접근 제어 수단입니다.",
+      "자료에는 세마포어가 우선순위 재조정이나 실시간 보장을 위한 메커니즘이라고 설명되어 있지 않습니다.",
+      "자료에는 세마포어가 메모리 단편화나 메모리 배치를 관리한다고 언급되어 있지 않습니다.",
+      "정답입니다. 본문은 세마포어를 \"멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하는 방법\"으로 정의하고 있으며, 또한 공유된 자원에 여러 프로세스가 동시에 접근하면서 문제가 발생할 수 있음을 문제 제기하고 있습니다."
+    ],
+    "keywords": [
+      "세마포어",
+      "공유 자원",
+      "접근 제한",
+      "멀티프로그래밍"
+    ],
+    "sourceEvidence": {
+      "section": "Semaphore & Mutex.md",
+      "startLine": 5,
+      "endLine": 9,
+      "quote": "공유된 자원에 여러 프로세스가 동시에 접근하면서 문제가 발생할 수 있다. 이때 공유된 자원의 데이터는 한 번에 하나의 프로세스만 접근할 수 있도록 제한을 둬야 한다.\n\n이를 위해 나온 것이 바로 **'세마포어'**\n\n**세마포어** : 멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하는 방법"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Semaphore & Mutex.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Semaphore%20%26%20Mutex.md",
+    "id": "f1eaa028-91b7-5824-9b89-ac24ca6efe24",
+    "review": {
+      "blind": {
+        "slot": 4,
+        "correctOptionText": "멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하여 동시에 접근으로 인한 문제를 방지합니다.",
+        "unambiguous": true,
+        "reason": "Source defines semaphore as a method to limit access to shared resources in multiprogramming to prevent issues from simultaneous access.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 4,
+        "passed": true,
+        "reason": "정답(옵션 4)은 원문에 명확히 '멀티프로그래밍 환경에서 공유 자원에 대한 접근을 제한하는 방법'이라고 되어 있으며, 나머지 선택지들은 본문에 언급되지 않아 오답으로 판별 가능합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 5,
+    "topic": "데드락 정의",
+    "learningObjective": "데드락이 무엇인지 기본적으로 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "데드락(교착 상태)의 본질을 가장 잘 설명한 것은 무엇입니까?",
+    "options": [
+      "둘 이상의 프로세스나 스레드가 서로가 점유한 자원을 기다리며 무한히 대기하는 상태입니다.",
+      "한 프로세스가 자원을 독점하여 다른 모든 프로세스가 즉시 종료되는 상태입니다.",
+      "프로세스들이 자원을 공유하여 병렬로 문제없이 실행되는 정상 상태입니다.",
+      "프로세스가 I/O 작업을 수행할 때 발생하는 일시적인 차단 상태로 곧 해제되는 현상입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "데드락은 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해 다음 처리를 하지 못하고 무한히 다음 자원을 기다리는 상태로 정의됩니다. 따라서 '서로가 점유한 자원을 기다리며 무한히 대기하는 상태'가 본문 정의와 일치합니다.",
+    "optionExplanations": [
+      "정답: 본문에서 데드락을 \"두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태\"와 \"무한히 다음 자원을 기다리게 되는 상태\"로 정의하고 있어 이 선택지가 맞습니다. (lines 3-5)",
+      "오답: 본문은 데드락을 프로세스들이 무한 대기하는 상태로 설명하며, \"다른 모든 프로세스가 즉시 종료\"된다는 내용은 없습니다. (lines 3-7)",
+      "오답: 본문은 데드락을 문제 상태로 설명하며, 자원 공유로 인해 정상적으로 병렬 실행되는 상태가 데드락이 아닙니다. (lines 3-7)",
+      "오답: 데드락은 일시적 차단이 아니라 무한 대기 상태를 의미하므로 곧 해제된다는 설명과 맞지 않습니다. (lines 3-5, 25-27)"
+    ],
+    "keywords": [
+      "데드락",
+      "교착 상태",
+      "무한 대기"
+    ],
+    "sourceEvidence": {
+      "section": "DeadLock.md",
+      "startLine": 3,
+      "endLine": 5,
+      "quote": "> 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태\n>\n> 무한히 다음 자원을 기다리게 되는 상태를 말한다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/DeadLock.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/DeadLock.md",
+    "id": "28eb6daf-fff0-5574-9485-711f71aa936c",
+    "review": {
+      "blind": {
+        "slot": 5,
+        "correctOptionText": "둘 이상의 프로세스나 스레드가 서로가 점유한 자원을 기다리며 무한히 대기하는 상태입니다.",
+        "unambiguous": true,
+        "reason": "본문 정의와 정확히 일치: 데드락은 두 개 이상이 서로 자원을 얻지 못해 무한히 대기하는 상태라 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 5,
+        "passed": true,
+        "reason": "Correct answer and all distractors are contradicted by or unsupported in the supplied source; option explanations cite the exact source lines and the difficulty and learning objective are appropriate and distinct."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 6,
+    "topic": "victim page 선택 기준",
+    "learningObjective": "페이지 교체 시 수정되지 않은 페이지를 우선 선택해야 하는 이유를 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "페이지 교체 시 'victim page'로 어떤 페이지를 선택하는 것이 바람직합니까?",
+    "options": [
+      "참조 횟수가 가장 많은 페이지를 선택하는 것이 바람직합니다.",
+      "수정되지 않은 페이지를 선택하는 것이 바람직합니다.",
+      "가장 최근에 사용된 페이지를 선택하는 것이 바람직합니다.",
+      "페이지 번호가 가장 큰 페이지를 선택하는 것이 바람직합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "출력해야 할 페이지가 수정된 상태라면 디스크에 다시 기록하는 작업이 필요하여 시간이 더 걸립니다. 따라서 수정되지 않은 페이지를 내보내는 것이 더 효율적입니다.",
+    "optionExplanations": [
+      "틀렸습니다. 원문에서는 참조 횟수 기반 선택에 대한 설명이 없으며, 수정 여부가 중요한 기준이라고 설명하고 있습니다.",
+      "정답입니다. 출처에는 수정된 페이지는 메인 메모리에서 내보낼 때 하드디스크에 기록(수정)해야 하므로 시간이 오래 걸리므로, 가능한 수정되지 않은 페이지를 선택하는 것이 좋다고 명시되어 있습니다.",
+      "틀렸습니다. 원문은 수정 여부를 우선 고려해야 한다고 말하며, '최근 사용'을 바로 우선 기준으로 삼으라고 하지 않습니다.",
+      "틀렸습니다. 원문에는 페이지 번호 크기가 교체 기준이 된다는 언급이 없습니다."
+    ],
+    "keywords": [
+      "victim page",
+      "수정 비트",
+      "디스크 쓰기 오버헤드"
+    ],
+    "sourceEvidence": {
+      "section": "Page Replacement Algorithm.md",
+      "startLine": 19,
+      "endLine": 21,
+      "quote": "기왕이면 수정이 되지 않는 페이지를 선택해야 좋음\n(Why? : 만약 수정되면 메인 메모리에서 내보낼 때, 하드디스크에서 또 수정을 진행해야 하므로 시간이 오래 걸림)"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Page Replacement Algorithm.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Page%20Replacement%20Algorithm.md",
+    "id": "634f323b-ecc1-549e-b653-bd86640c9279",
+    "review": {
+      "blind": {
+        "slot": 6,
+        "correctOptionText": "수정되지 않은 페이지를 선택하는 것이 바람직합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 '기왕이면 수정이 되지 않는 페이지를 선택해야 좋음'이라고 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 6,
+        "passed": true,
+        "reason": "출처 문장(‘기왕이면 수정이 되지 않는 페이지를 선택해야 좋음… 디스크에서 또 수정을 진행해야 하므로 시간이 오래 걸림’)이 정답(수정되지 않은 페이지 선택)을 직접 뒷받침하고 있으며, 다른 보기들은 출처에 언급이 없어 오답임."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 7,
+    "topic": "익명 파이프(Anonymous PIPE)의 통신 방향성",
+    "learningObjective": "익명 파이프의 통신 특성이 반이중(한쪽 방향)임을 설명할 수 있다.",
+    "difficulty": "EASY",
+    "question": "익명 파이프(anonymous PIPE)에 관한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "익명 파이프는 메모리 공간을 공유하므로 커널을 거치지 않고 가장 빠르게 동작합니다.",
+      "익명 파이프는 네트워크 소켓과 동일한 방식으로 원격 호스트와 통신할 수 있습니다.",
+      "익명 파이프는 한쪽 프로세스가 쓰기만 하고 다른 쪽이 읽기만 하는 반이중 통신을 제공하므로 전이중 통신을 원하면 두 개를 사용해야 합니다.",
+      "익명 파이프는 이름을 가진 파일을 사용하므로 부모-자식 관계가 아닌 프로세스들 간에도 바로 통신이 가능합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "자료에 따르면 파이프는 한 프로세스는 쓰기만 하고 다른 하나는 읽기만 하는 '한쪽 방향의 반이중 통신'이며, 전이중 통신이 필요하면 2개의 파이프를 만들어야 한다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 메모리를 직접 공유하여 가장 빠르게 동작하는 것은 공유 메모리입니다; 익명 파이프는 통신 설비로 분류됩니다. (라인 72-85)",
+      "틀렸습니다. 네트워크를 통한 원격 통신은 소켓의 설명에 해당하며 익명 파이프는 프로세스 간 로컬 통신 설비입니다. (라인 96-103)",
+      "정답입니다. 본문은 파이프가 한쪽은 쓰기, 다른 쪽은 읽기만 가능한 반이중 통신이며 전이중을 위해 2개가 필요하다고 설명합니다. (라인 31-36, 39-41)",
+      "틀렸습니다. 이름을 사용하는 것은 Named PIPE(FIFO)에 대한 설명이며 익명 파이프는 보통 부모-자식처럼 통신할 프로세스를 명확히 알 때 사용된다고 되어 있습니다. (라인 44-51, 46-47)"
+    ],
+    "keywords": [
+      "익명 파이프",
+      "반이중",
+      "전이중"
+    ],
+    "sourceEvidence": {
+      "section": "IPC(Inter Process Communication).md",
+      "startLine": 31,
+      "endLine": 41,
+      "quote": "> 파이프는 두 개의 프로세스를 연결하는데 하나의 프로세스는 데이터를 쓰기만 하고, 다른 하나는 데이터를 읽기만 할 수 있다.\n   >\n   > **한쪽 방향으로만 통신이 가능한 반이중 통신**이라고도 부른다.\n   >\n   > 따라서 양쪽으로 모두 송/수신을 하고 싶으면 2개의 파이프를 만들어야 한다.\n   >\n   > \n   >\n   >\n   > 매우 간단하게 사용할 수 있는 장점이 있고, 단순한 데이터 흐름을 가질 땐 파이프를 사용하는 것이 효율적이다. 단점으로는 전이중 통신을 위해 2개를 만들어야 할 때는 구현이 복잡해지게 된다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/IPC(Inter Process Communication).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/IPC%28Inter%20Process%20Communication%29.md",
+    "id": "1e92cd38-d102-536d-b633-ace01e87a275",
+    "review": {
+      "blind": {
+        "slot": 7,
+        "correctOptionText": "익명 파이프는 한쪽 프로세스가 쓰기만 하고 다른 쪽이 읽기만 하는 반이중 통신을 제공하므로 전이중 통신을 원하면 두 개를 사용해야 합니다.",
+        "unambiguous": true,
+        "reason": "Source states anonymous pipe is half-duplex (one writes, other reads) and you need two pipes for full-duplex.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 7,
+        "passed": true,
+        "reason": "All four options and their explanations are directly supported or contradicted by the supplied source: option 3 is correctly identified as the only true statement; the three distractors are provably false per the source passages about pipes, shared memory, and named pipes."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 8,
+    "topic": "운영체제의 기본 정의",
+    "learningObjective": "운영체제가 하드웨어·자원 관리와 응용 프로그램과 하드웨어 간 인터페이스 제공 역할을 한다는 것을 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "운영체제(OS)의 주요 역할로 옳은 것은 무엇입니까?",
+    "options": [
+      "응용 프로그램을 직접 하드웨어 수준에서 변경하여 최적화된 바이너리를 생성한다.",
+      "사용자 계정 없이도 모든 사용자의 파일에 무제한 접근을 허용한다.",
+      "운영체제는 단순히 파일만 관리하는 유틸리티 소프트웨어이다.",
+      "하드웨어를 관리하고 시스템 자원을 효율적으로 관리하며 응용 프로그램과 하드웨어 사이의 인터페이스를 제공한다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "원문에서는 운영체제가 하드웨어를 관리하고, 컴퓨터 자원을 효율적으로 관리하며 응용 프로그램과 하드웨어 간의 인터페이스로 환경을 제공한다고 설명합니다. 즉 운영체제는 하드웨어 관리와 자원 관리, 그리고 응용 프로그램이 하드웨어를 사용할 수 있게 하는 인터페이스 제공이 주요 역할입니다.",
+    "optionExplanations": [
+      "틀렸습니다. 원문은 운영체제가 응용 프로그램과 하드웨어 간의 인터페이스를 제공한다고 하지만, 응용 프로그램을 직접 하드웨어 수준에서 변경해 최적화된 바이너리를 생성한다는 내용은 없습니다.",
+      "틀렸습니다. 원문은 사용자별 계정 관리와 접근권한 관리 같은 사용자 관리 기능을 설명하며 무제한 접근을 허용한다는 내용은 없습니다.",
+      "틀렸습니다. 원문은 운영체제를 시스템 소프트웨어로 정의하며 단순 파일 관리만 하는 유틸리티라는 설명은 포함되어 있지 않습니다.",
+      "정답입니다. 출처 문장은 운영체제가 하드웨어 관리·자원 관리·응용 프로그램과 하드웨어 간 인터페이스 제공을 주요 역할로 설명하고 있습니다."
+    ],
+    "keywords": [
+      "운영체제 정의",
+      "하드웨어 관리",
+      "자원 관리",
+      "인터페이스"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Operation System.md",
+      "startLine": 5,
+      "endLine": 7,
+      "quote": "> : 하드웨어를 관리하고, 컴퓨터 시스템의 자원들을 효율적으로 관리하며, 응용 프로그램과 하드웨어 간의 인터페이스로서 다른 응용 프로그램이 유용한 작업을 할 수 있도록 환경을 제공해 준다.\n>\n> 즉, 운영 체제는 **사용자가 컴퓨터를 편리하고 효과적으로 사용할 수 있도록 환경을 제공하는 시스템 소프트웨어**라고 할 수 있다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Operation System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Operation%20System.md",
+    "id": "02b4f593-e7be-549a-ba95-8a87ee17d6e7",
+    "review": {
+      "blind": {
+        "slot": 8,
+        "correctOptionText": "하드웨어를 관리하고 시스템 자원을 효율적으로 관리하며 응용 프로그램과 하드웨어 사이의 인터페이스를 제공한다.",
+        "unambiguous": true,
+        "reason": "원문 첫 문단에서 운영체제는 하드웨어를 관리하고 자원을 효율적으로 관리하며 응용프로그램과 하드웨어 간의 인터페이스를 제공한다고 명시됨.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 8,
+        "passed": true,
+        "reason": "문항의 정답(옵션 4)과 오답 설명들이 출처 문장(운영체제의 정의: 하드웨어·자원 관리 및 응용프로그램-하드웨어 인터페이스 제공)에 충실하게 일치합니다. 정답이 유일하게 출처로 뒷받침됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 9,
+    "topic": "파일 시스템의 목적",
+    "learningObjective": "파일 시스템이 저장매체의 파일을 관리하는 기본 목적을 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "파일 시스템의 주된 목적은 무엇입니까?",
+    "options": [
+      "저장매체에 존재하는 많은 파일들을 쉽게 찾고 유지·관리할 수 있도록 하는 것",
+      "CPU 연산 속도를 향상시키기 위한 프로세스 스케줄링 제공",
+      "네트워크를 통한 파일 전송 프로토콜을 구현하는 것",
+      "그래픽 사용자 인터페이스에서 파일 아이콘을 렌더링하는 것"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에는 파일 시스템이 '컴퓨터에서 파일이나 자료를 쉽게 발견할 수 있도록, 유지 및 관리하는 방법'이며 '저장매체에는 수많은 파일이 있기 때문에, 이런 파일들을 관리하는 방법'이라고 명시되어 있어, 주된 목적은 저장매체의 파일들을 쉽게 찾고 관리하는 것입니다.",
+    "optionExplanations": [
+      "정답입니다. 출처는 파일 시스템의 정의와 목적으로, 많은 파일을 관리하기 위한 방법임을 분명히 설명합니다.",
+      "오답입니다. 문서에는 파일 시스템이 CPU 스케줄링이나 연산 속도 향상을 담당한다고 언급되어 있지 않습니다.",
+      "오답입니다. 네트워크 전송 프로토콜 구현은 문서에서 파일 시스템의 역할로 제시되지 않았습니다.",
+      "오답입니다. GUI 렌더링은 문서의 파일 시스템 설명에 포함되지 않은 항목입니다."
+    ],
+    "keywords": [
+      "파일 시스템",
+      "파일 관리",
+      "저장매체"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/File System.md",
+      "startLine": 5,
+      "endLine": 7,
+      "quote": "컴퓨터에서 파일이나 자료를 쉽게 발견할 수 있도록, 유지 및 관리하는 방법이다.\n\n저장매체에는 수많은 파일이 있기 때문에, 이런 파일들을 관리하는 방법을 말한다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/File System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/File%20System.md",
+    "id": "5d11ec57-a3c8-5475-ab58-bf0f6f0a7725",
+    "review": {
+      "blind": {
+        "slot": 9,
+        "correctOptionText": "저장매체에 존재하는 많은 파일들을 쉽게 찾고 유지·관리할 수 있도록 하는 것",
+        "unambiguous": true,
+        "reason": "Source defines file system as method to make files/data on storage easy to find, maintain, and manage.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 9,
+        "passed": true,
+        "reason": "Correct answer and explanation directly match the quoted source text. All three distractors are contradicted by the source (no mention of CPU scheduling, network protocol implementation, or GUI rendering). Difficulty and learning objective are appropriate and distinct; wording is natural Korean."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 10,
+    "topic": "스레드 메모리 분할",
+    "learningObjective": "스레드가 프로세스 내에서 어떤 메모리 영역을 독립적으로 가지며 어떤 영역을 공유하는지 식별할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "다음 중 스레드가 다른 스레드와 '따로 할당받아야 하는' 메모리 영역은 무엇입니까?",
+    "options": [
+      "전역(Static) 데이터 영역",
+      "각 스레드의 Stack",
+      "Code 영역",
+      "Heap 영역"
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 스레드가 독립적으로 함수를 호출하고 함수의 매개변수와 지역변수를 저장하기 위해 Stack 영역을 따로 할당받는다고 명시합니다. 반면 코드·데이터·Heap 등은 스레드들끼리 공유한다고 설명되어 있습니다.",
+    "optionExplanations": [
+      "오답: 전역 변수 및 정적 변수는 Data 영역에 존재하며 스레드들이 공유한다고 되어 있습니다.",
+      "정답: 스레드는 함수의 매개변수와 지역변수를 저장하기 위해 독립적인 Stack을 할당받는다고 명시되어 있습니다.",
+      "오답: Code 영역은 프로세스 내에서 공유되는 메모리 영역으로 스레드별로 따로 할당된다고 하지 않습니다.",
+      "오답: Heap은 동적 할당을 위한 영역으로 스레드들끼리 공유된다고 기술되어 있습니다."
+    ],
+    "keywords": [
+      "스레드",
+      "Stack",
+      "공유 메모리"
+    ],
+    "sourceEvidence": {
+      "section": "source",
+      "startLine": 31,
+      "endLine": 35,
+      "quote": "스레드는 Stack만 따로 할당받고 나머지 영역은 공유한다.\n\n- 스레드는 독립적인 동작을 수행하기 위해 존재 = 독립적으로 함수를 호출할 수 있어야 함\n- 함수의 매개 변수, 지역 변수 등을 저장하는 Stack 영역은 독립적으로 할당받아야 함"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process vs Thread.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20vs%20Thread.md",
+    "id": "6444991b-4ef4-5716-988f-09bf944faf1a",
+    "review": {
+      "blind": {
+        "slot": 10,
+        "correctOptionText": "각 스레드의 Stack",
+        "unambiguous": true,
+        "reason": "원문에서 '스레드는 Stack만 따로 할당받고 나머지 영역은 공유한다'라고 명시되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 10,
+        "passed": true,
+        "reason": "정답(각 스레드의 Stack)이 원문 문장 '스레드는 Stack만 따로 할당받고 나머지 영역은 공유한다'에 정확히 근거하며, 나머지 선택지는 원문에서 스레드들이 공유한다고 명시되어 있어 오답임이 입증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 11,
+    "topic": "PCB에 저장되는 프로세스 메타데이터",
+    "learningObjective": "PCB에 저장되는 프로세스 메타데이터 중 하나를 식별할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "다음 중 PCB(Process Control Block)에 저장되는 프로세스 메타데이터로 문서에서 명시한 것은 무엇입니까?",
+    "options": [
+      "스레드의 스택 내용",
+      "스케줄러 알고리즘 종류",
+      "Process ID",
+      "파일 디스크립터 리스트"
+    ],
+    "correctAnswer": 3,
+    "explanation": "원문은 PCB에 프로세스 메타데이터들이 저장된다고 설명하며, 메타데이터 항목 목록에 Process ID가 포함되어 있습니다. 따라서 PCB에 저장되는 항목으로 Process ID가 정답입니다.",
+    "optionExplanations": [
+      "오답입니다. 문서에서는 프로세스 주소 공간에 코드·데이터·스택이 생성된다고 하였고, 스택은 주소 공간의 일부로 언급되어 PCB에 저장되는 메타데이터 항목으로 직접 열거되지는 않았습니다 (lines 34–36, 11–21).",
+      "오답입니다. 문서는 PCB에 저장되는 항목 목록으로 스케줄러 알고리즘 종류를 포함하고 있지 않습니다 (lines 11–21).",
+      "정답입니다. 문서의 메타데이터 목록에 'Process ID'가 명시되어 있습니다 (lines 11–21).",
+      "오답입니다. 문서에 제시된 메타데이터 목록에는 '파일 디스크립터 리스트'가 포함되지 않습니다 (lines 11–21)."
+    ],
+    "keywords": [
+      "PCB",
+      "Process ID",
+      "프로세스 메타데이터"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/PCB & Context Switcing.md",
+      "startLine": 11,
+      "endLine": 21,
+      "quote": "프로세스들의 특징을 갖고있는 것이 바로 `Process Metadata`\n\n- Process Metadata\n  - Process ID\n  - Process State\n  - Process Priority\n  - CPU Registers\n  - Owner\n  - CPU Usage\n  - Memeory Usage"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/PCB & Context Switcing.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/PCB%20%26%20Context%20Switcing.md",
+    "id": "d3bb0c57-b513-5e6a-92a9-483fcb433666",
+    "review": {
+      "blind": {
+        "slot": 11,
+        "correctOptionText": "Process ID",
+        "unambiguous": true,
+        "reason": "The source explicitly lists 'Process ID' in the Process Metadata stored in the PCB.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 11,
+        "passed": true,
+        "reason": "정답(3: Process ID)은 원문 메타데이터 목록에 명시되어 있으며, 세 개의 오답(스택 내용·스케줄러 알고리즘·파일 디스크립터 리스트)은 해당 목록에 없으므로 모두 문서로 검증 가능함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 12,
+    "topic": "PCB 저장 항목",
+    "learningObjective": "PCB에 어떤 프로세스 메타데이터 항목들이 저장되는지 기본 항목을 식별할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "PCB(Process Control Block)에 저장되는 항목으로 옳은 것은 무엇입니까?",
+    "options": [
+      "하드웨어 디바이스 드라이버의 전체 코드",
+      "파일 시스템 내 파일 블록의 물리적 위치",
+      "네트워크 패킷의 페이로드 데이터",
+      "CPU 레지스터 값과 프로세스 상태"
+    ],
+    "correctAnswer": 4,
+    "explanation": "소스는 프로세스 메타데이터로 CPU 레지스터와 프로세스 상태 등이 있으며, 이 메타데이터들이 PCB에 저장된다고 설명합니다. 따라서 PCB에는 CPU 레지스터 값과 프로세스 상태 같은 항목이 포함됩니다.",
+    "optionExplanations": [
+      "오답: 디바이스 드라이버 코드 전체는 PCB 항목으로 언급되지 않았습니다; 소스는 PCB가 프로세스 메타데이터를 저장한다고만 합니다.",
+      "오답: 파일 시스템의 물리적 블록 위치는 해당 소스의 PCB 항목 목록에 포함되어 있지 않습니다.",
+      "오답: 네트워크 페이로드 데이터는 프로세스 메타데이터 항목으로 명시되지 않았습니다.",
+      "정답: 문서에서 Process Metadata 항목으로 CPU Registers와 Process State가 나열되어 있고, 이러한 메타데이터들이 PCB에 저장된다고 직접 기술되어 있습니다."
+    ],
+    "keywords": [
+      "PCB",
+      "CPU 레지스터",
+      "프로세스 상태",
+      "Process Metadata"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Management & PCB.md",
+      "startLine": 11,
+      "endLine": 18,
+      "quote": "프로세스들의 특징을 갖고있는 것이 바로 `Process Metadata`\n\n- Process Metadata\n  - Process ID\n  - Process State\n  - Process Priority\n  - CPU Registers\n  - Owner"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Management & PCB.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Management%20%26%20PCB.md",
+    "id": "ad218bb3-c9f1-5743-b9b5-21173d552239",
+    "review": {
+      "blind": {
+        "slot": 12,
+        "correctOptionText": "CPU 레지스터 값과 프로세스 상태",
+        "unambiguous": true,
+        "reason": "문서의 프로세스 메타데이터 항목에 'CPU Registers'와 'Process State'가 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 12,
+        "passed": true,
+        "reason": "정답(‘CPU 레지스터 값과 프로세스 상태’)이 소스의 Process Metadata 목록(CPU Registers, Process State 등)에 직접 대응하고, 다른 선택지들은 해당 목록에 기재되지 않아 문서 근거로 오답임이 확실합니다. 난이도·학습목표·한국어 표현도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 13,
+    "topic": "인터럽트의 기본 동작",
+    "learningObjective": "인터럽트가 발생했을 때 CPU가 현재 작업을 어떻게 처리하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "인터럽트가 발생하면 CPU는 현재 실행 중인 작업을 즉시 어떻게 처리합니까?",
+    "options": [
+      "현재 작업을 중단하고 상태(레지스터·PC)를 저장한 뒤 인터럽트 서비스 루틴으로 이동합니다.",
+      "현재 작업을 계속 실행하면서 인터럽트 발생을 큐에 적재한 후 순서대로 처리합니다.",
+      "현재 작업을 완전히 버리고 새 작업만 수행하며 이전 상태는 무시합니다.",
+      "인터럽트는 항상 다음 스케줄링 시점까지 무시되고 이후 처리됩니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "인터럽트가 발생하면 지금 수행 중인 프로그램을 멈추고 상태 레지스터와 PC 등을 스택에 잠시 저장한 뒤 인터럽트 서비스 루틴으로 간다고 설명되어 있습니다. 이는 인터럽트 처리 후 원래 작업으로 복귀하기 위해 상태를 보존하는 동작입니다.",
+    "optionExplanations": [
+      "정답: 인터럽트 처리 시 현재 상태를 저장하고 인터럽트 서비스 루틴으로 이동한다는 설명이 문서에 직접 나와 있습니다.",
+      "오답: 큐에 적재해 계속 실행한다는 설명은 문서에서 인터럽트의 동작으로 제시되지 않았습니다; 인터럽트는 즉시 제어를 넘깁니다.",
+      "오답: 이전 상태를 무시하고 버린다는 설명은 문서와 모순됩니다; 문서에는 상태를 저장하고 복귀한다고 되어 있습니다.",
+      "오답: 인터럽트를 다음 스케줄링 시점까지 무시한다는 내용은 문서에 없으며, 오히려 즉시 처리하는 것이 목적입니다."
+    ],
+    "keywords": [
+      "인터럽트",
+      "상태 저장",
+      "인터럽트 서비스 루틴",
+      "PC",
+      "레지스터"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Interrupt.md",
+      "startLine": 46,
+      "endLine": 46,
+      "quote": "현재 수행 중인 프로그램을 멈추고, 상태 레지스터와 PC 등을 스택에 잠시 저장한 뒤에 인터럽트 서비스 루틴으로 간다. (잠시 저장하는 이유는, 인터럽트 서비스 루틴이 끝난 뒤 다시 원래 작업으로 돌아와야 하기 때문)"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Interrupt.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Interrupt.md",
+    "id": "bb00c28a-6ebf-5571-ab5b-d5852d8c8986",
+    "review": {
+      "blind": {
+        "slot": 13,
+        "correctOptionText": "현재 작업을 중단하고 상태(레지스터·PC)를 저장한 뒤 인터럽트 서비스 루틴으로 이동합니다.",
+        "unambiguous": true,
+        "reason": "본문에 인터럽트 발생 시 현재 작업을 멈추고 레지스터·PC 등을 스택에 저장한 뒤 ISR로 간다고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 13,
+        "passed": true,
+        "reason": "정답 선택지와 오답 설명들이 원문(인터럽트 발생 시 상태를 스택에 저장하고 ISR로 이동한다는 문장)을 직접 근거로 삼고 있으며, 세 개의 오답 선택지는 원문과 명백히 모순되어 있어 모두 배타적으로 틀립니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 14,
+    "topic": "페이징과 세그먼테이션의 블록 크기 특성",
+    "learningObjective": "페이징과 세그먼테이션이 각각 고정 크기인지 가변 크기인지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "시스템 설계자가 메모리 블록 크기가 항상 동일하기를 원할 때, 다음 중 어떤 기법을 사용하는 것이 문서에서 권장된 특성에 부합합니까?",
+    "options": [
+      "고정 분할(Fixed partitioning)",
+      "페이징(Paging)",
+      "세그먼테이션(Segmentation)",
+      "동적 분할(Dynamic partitioning)"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에서 '고정 크기'로 명시된 기법은 페이징입니다. 페이징은 페이지가 균등한 길이의 블록으로 나뉘므로 블록 크기가 항상 동일합니다(라인 35-36).",
+    "optionExplanations": [
+      "오답: 고정 분할은 고정된 파티션을 사용하지만 문서의 '고정 크기' 고유 분류는 페이징/세그먼테이션 항목에서 페이징으로 표기되어 있습니다; 또한 고정 분할은 내부 단편화 관련 내용으로 설명됩니다 (라인 17, 35-36).",
+      "정답: 문서에서 페이징은 '고정 크기'로 분류되어 있으며 페이지가 균등한 길이로 나뉜다고 설명되어 있습니다 (라인 35-36, 40-43).",
+      "오답: 세그먼테이션은 '가변 크기'로 분류되어 서로 다른 크기의 논리적 블록을 사용한다고 되어 있습니다 (라인 32-37).",
+      "오답: 동적 분할은 연속 메모리 관리의 한 기법으로 파티션이 동적으로 생성되지만 이는 연속 할당 맥락이며 문서에서 고정/가변 블록 특성에 해당하지 않습니다 (라인 18)."
+    ],
+    "keywords": [
+      "페이징",
+      "세그먼테이션",
+      "고정 크기",
+      "가변 크기"
+    ],
+    "sourceEvidence": {
+      "section": "Paging and Segmentation.md",
+      "startLine": 35,
+      "endLine": 43,
+      "quote": "**고정 크기** : 페이징(Paging)\n\n   **가변 크기** : 세그먼테이션(Segmentation)\n   <br>\n\n   - 단순 페이징\n\n     > 각 프로세스는 프레임들과 같은 길이를 가진 균등 페이지로 나뉨\n     >"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Paging and Segmentation.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Paging%20and%20Segmentation.md",
+    "id": "5f1ca589-51a7-5ac0-bcc1-ae77b1da06e4",
+    "review": {
+      "blind": {
+        "slot": 14,
+        "correctOptionText": "페이징(Paging)",
+        "unambiguous": true,
+        "reason": "문서에서 '고정 크기 : 페이징(Paging)'이라 명시되어 있으며 블록 크기가 동일하기를 원할 때 페이징을 권장함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 14,
+        "passed": true,
+        "reason": "정답(페이징)은 소스의 '**고정 크기** : 페이징(Paging)'(라인 35-36)과 일치하며, 모든 보기의 설명도 소스 문장(고정 분할의 내부 단편화 언급 등)을 근거로 판단되어 타당합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 15,
+    "topic": "Race Condition 정의",
+    "learningObjective": "공유 자원에 대한 동시 접근이 어떤 상황을 Race Condition으로 분류되는지 식별할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "다음 중 'Race Condition'의 가장 정확한 설명은 무엇입니까?",
+    "options": [
+      "하나의 프로세스가 다른 프로세스의 메모리를 완전히 복사하여 독립적으로 실행되는 상태입니다.",
+      "프로세스가 입출력 장치의 데이터 전송 속도보다 빠르게 실행되어 CPU 사용률이 과도해지는 상태입니다.",
+      "서로 다른 프로세스가 공유 자원에 동시에 접근하여 최종 결과가 달라질 수 있는 상태입니다.",
+      "단일 프로세스가 블록된 I/O를 기다리는 동안 다른 프로세스가 CPU를 전혀 사용하지 못하게 되는 상태입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 공유 자원에 대해 여러 프로세스가 동시에 접근할 때 결과값에 영향을 줄 수 있는 상태를 Race Condition으로 정의하고, 동시 접근 시 자료의 일관성이 해치는 결과가 나타난다고 설명합니다. 나머지 보기들은 문서의 Race Condition 정의와 일치하지 않습니다.",
+    "optionExplanations": [
+      "오답: 설명은 프로세스의 메모리 복사(예: fork 관련)와 관련되며 Race Condition 정의와 다릅니다.",
+      "오답: CPU 사용률 문제에 대한 설명으로 문서의 Race Condition 정의와 관련이 없습니다.",
+      "정답: 문서의 정의와 일치합니다(공유 자원에 대한 동시 접근이 결과에 영향을 줌).",
+      "오답: 문서에서는 Race Condition을 동시 접근으로 인한 자료 불일치로 설명하며, 블로킹 상태만으로 Race Condition이라 하지 않습니다."
+    ],
+    "keywords": [
+      "공유 자원",
+      "동시 접근",
+      "자료 일관성"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Race Condition.md",
+      "startLine": 3,
+      "endLine": 5,
+      "quote": "공유 자원에 대해 여러 프로세스가 동시에 접근할 때, 결과값에 영향을 줄 수 있는 상태\n\n> 동시 접근 시 자료의 일관성을 해치는 결과가 나타남"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Race Condition.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Race%20Condition.md",
+    "id": "b5832d30-7e91-5cbe-9852-3e33c249fbc8",
+    "review": {
+      "blind": {
+        "slot": 15,
+        "correctOptionText": "서로 다른 프로세스가 공유 자원에 동시에 접근하여 최종 결과가 달라질 수 있는 상태입니다.",
+        "unambiguous": true,
+        "reason": "Source defines Race Condition as multiple processes accessing a shared resource simultaneously causing differing results.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 15,
+        "passed": true,
+        "reason": "정답(3)은 제공된 출처의 정의 문구와 정확히 일치하며, 나머지 보기들은 출처에 언급되지 않아 오답으로 판정 가능합니다. 설명·난이도·학습목표도 출처와 부합합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 16,
+    "topic": "프로세스 주소 공간의 세그먼트 구성",
+    "learningObjective": "프로세스 주소 공간의 각 세그먼트가 무엇을 저장하는지 식별할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "프로세스 주소 공간에서 전역 변수가 주로 저장되는 영역은 어느 것입니까?",
+    "options": [
+      "코드 세그먼트",
+      "스택 세그먼트",
+      "힙 세그먼트",
+      "데이터 세그먼트"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에 따르면 프로세스 주소 공간은 코드, 데이터, 스택으로 이루어지며 전역 변수는 데이터 세그먼트에 저장된다고 명시되어 있습니다. 따라서 전역 변수는 데이터 세그먼트에 위치합니다.",
+    "optionExplanations": [
+      "코드 세그먼트는 프로그램의 소스 코드(실행 코드)를 저장하는 영역으로, 전역 변수를 저장하지 않습니다 (라인 5,7-9).",
+      "스택 세그먼트는 함수와 지역 변수를 위한 LIFO 구조로 동작하므로 전역 변수를 저장하지 않습니다 (라인 5,9,25-27).",
+      "원문에는 '힙 세그먼트'에 대한 설명이 제공되지 않았고 전역 변수 저장소로 명시되어 있지 않습니다 (자료의 세분화는 코드·데이터·스택으로 제시됨, 라인 5-9).",
+      "정답입니다. '데이터 Segment'가 전역 변수를 저장하는 영역으로 명시되어 있습니다 (라인 5-9)."
+    ],
+    "keywords": [
+      "데이터 세그먼트",
+      "전역 변수",
+      "프로세스 주소 공간"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Address Space.md",
+      "startLine": 5,
+      "endLine": 9,
+      "quote": "프로세스 주소 공간에는 코드, 데이터, 스택으로 이루어져 있다.\n\n- **코드 Segment** : 프로그램 소스 코드 저장\n- **데이터 Segment** : 전역 변수 저장\n- **스택 Segment** : 함수, 지역 변수 저장"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Address Space.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Address%20Space.md",
+    "id": "159ef1b0-228d-592a-a480-60ace7bf9922",
+    "review": {
+      "blind": {
+        "slot": 16,
+        "correctOptionText": "데이터 세그먼트",
+        "unambiguous": true,
+        "reason": "본문에 '데이터 Segment : 전역 변수 저장'이라고 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 16,
+        "passed": true,
+        "reason": "원문(라인 5-9)에 '데이터 Segment : 전역 변수 저장'으로 명시되어 있어 정답(데이터 세그먼트)과 모든 오답 설명이 근거 있게 틀렸습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 17,
+    "topic": "MMU의 기능과 이점",
+    "learningObjective": "MMU가 가상 주소 변환과 메모리 보호에서 어떤 편의를 제공하는지 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "MMU(Memory Management Unit)가 제공하는 기능으로 옳은 것을 고르십시오.",
+    "options": [
+      "MMU는 논리 주소를 물리 주소로 변환하고, 메모리 보호와 캐시 관리를 포함해 CPU의 메모리 접근을 총관리합니다.",
+      "MMU는 사용자 프로그램이 직접 물리 주소를 할당하도록 요구하여 메모리 관리의 부담을 사용자에게 전가합니다.",
+      "MMU는 프로세스 크기가 실제 메모리 용량을 초과하면 실행을 불가능하게 합니다.",
+      "MMU는 디스크의 내용을 자동으로 메모리로 복사해 주는 장치로서 페이지 폴트를 완전히 제거합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문에 MMU는 '논리 주소를 물리 주소로 변환'하고 '메모리 보호나 캐시 관리 등 CPU가 메모리에 접근하는 것을 총관리해 주는 하드웨어'라고 명시되어 있습니다(라인 19–21). 또한 MMU가 있으면 사용자가 기억 장소를 일일이 할당할 필요가 없고, 프로세스가 실제 메모리 용량을 초과해도 실행될 수 있게 한다고 설명합니다(라인 31–33). 따라서 옵션 1이 정답입니다.",
+    "optionExplanations": [
+      "올바름: MMU가 논리→물리 주소 변환을 수행하고 메모리 보호 및 캐시 관리를 포함해 CPU의 메모리 접근을 총관리한다고 본문에 명시되어 있습니다 (라인 19–21).",
+      "오답: 본문은 오히려 'MMU가 지원되지 않으면 물리 주소에 직접 접근해야 하기 때문에 부담이 있다'고 하여, MMU가 사용자 부담을 덜어준다고 기술합니다 (라인 31–32).",
+      "오답: 본문은 MMU가 '프로세스의 크기가 실제 메모리의 용량을 초과해도 실행될 수 있게 해 준다'고 하여, 오히려 실행 가능하도록 돕는다고 설명합니다 (라인 33).",
+      "오답: MMU는 주소 변환과 보호 등을 담당하는 하드웨어로 페이지 폴트를 완전히 제거하거나 디스크-메모리 복사를 자동으로 없애는 장치라고는 설명하지 않습니다 (관련 서술 없음)."
+    ],
+    "keywords": [
+      "MMU",
+      "논리 주소 변환",
+      "메모리 보호",
+      "캐시 관리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Memory.md",
+      "startLine": 19,
+      "endLine": 21,
+      "quote": "> 논리 주소를 물리 주소로 변환해 줌\n>\n> 메모리 보호나 캐시 관리 등 CPU가 메모리에 접근하는 것을 총관리해 주는 하드웨어"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Memory.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Memory.md",
+    "id": "8daa7cca-1d7b-57f9-a489-7fa3516198ac",
+    "review": {
+      "blind": {
+        "slot": 17,
+        "correctOptionText": "MMU는 논리 주소를 물리 주소로 변환하고, 메모리 보호와 캐시 관리를 포함해 CPU의 메모리 접근을 총관리합니다.",
+        "unambiguous": true,
+        "reason": "본문은 MMU의 역할을 '논리 주소를 물리 주소로 변환' 및 '메모리 보호나 캐시 관리 등 CPU가 메모리에 접근하는 것을 총관리'라고 기술함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 17,
+        "passed": true,
+        "reason": "정답(옵션1)은 원문에서 MMU의 기능으로 명확히 서술되어 있고(논리→물리 주소 변환, 메모리 보호·캐시 관리 등), 다른 보기들은 원문과 모순되거나 unsupported합니다. 모든 보기 설명과 메타정보도 원문 근거에 부합합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 18,
+    "topic": "fork의 반환값 비교",
+    "learningObjective": "fork()가 부모와 자식에서 반환하는 값을 비교하여 식별할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "fork() 호출 직후 부모와 자식 프로세스에서의 반환값 관계로 옳은 것은 무엇입니까?",
+    "options": [
+      "부모의 fork() 반환값은 항상 1이며 자식은 부모의 PID를 반환한다.",
+      "부모의 fork() 반환값은 child의 PID이고, child의 fork() 반환값은 0이다.",
+      "부모와 자식 모두 fork()에서 0을 반환한다.",
+      "부모의 fork() 반환값은 -1이고, 자식은 부모의 PID를 반환한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 부모의 fork() 값이 child의 PID이고, child의 fork() 값이 0이라고 명확히 설명합니다. 이 차이로 부모와 자식을 구분할 수 있다고 되어 있습니다.",
+    "optionExplanations": [
+      "본문에 1이라는 값에 대한 언급이 없으며, 부모가 항상 1을 반환한다는 내용도 없습니다.",
+      "정답입니다. 본문은 부모가 child의 pid를, child는 0을 반환한다고 설명합니다.",
+      "본문은 부모와 자식이 모두 0을 반환한다고 하지 않습니다; 차이가 있다고 명시되어 있습니다.",
+      "-1은 fork 실패 시의 값으로, 정상 동작시 부모가 -1을 받는다는 설명은 본문에 없습니다."
+    ],
+    "keywords": [
+      "fork 반환값",
+      "parent",
+      "child",
+      "PID"
+    ],
+    "sourceEvidence": {
+      "section": "[Operating System] System Call",
+      "startLine": 54,
+      "endLine": 60,
+      "quote": "그러나, 차이점이 있었다. 바로 child와 parent의 fork() 값이 다르다는 점이다.\n 따라서, 완전히 동일한 복사본이라 할 수 없다. \n\n> Parent의 fork()값 => child의 pid 값\n>\n> Child의 fork()값 => 0"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/[OS] System Call (Fork Wait Exec).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/%5BOS%5D%20System%20Call%20%28Fork%20Wait%20Exec%29.md",
+    "id": "83bad157-61f3-52ca-a545-087de04d9353",
+    "review": {
+      "blind": {
+        "slot": 18,
+        "correctOptionText": "부모의 fork() 반환값은 child의 PID이고, child의 fork() 반환값은 0이다.",
+        "unambiguous": true,
+        "reason": "본문: 'Parent의 fork()값 => child의 pid 값' 및 'Child의 fork()값 => 0'",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 18,
+        "passed": true,
+        "reason": "정답(부모는 자식 PID 반환, 자식은 0)과 모든 선택지에 대한 근거 설명이 출처의 fork 반환값 설명과 정확히 일치함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 19,
+    "topic": "Round Robin의 Time Quantum 영향",
+    "learningObjective": "Time Quantum 크기가 Round Robin 스케줄링의 동작과 오버헤드에 미치는 영향을 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "Round Robin 스케줄링에서 Time Quantum(또는 Time Slice)을 크게 설정하면 그리고 작게 설정하면 각각 어떤 결과가 나타납니까?",
+    "options": [
+      "Time Quantum이 작으면 짧은 작업의 평균 대기시간이 증가하고, 크면 응답시간이 항상 빨라집니다.",
+      "Time Quantum 크기는 스케줄링 동작에 영향이 없으며 오로지 프로세스 우선순도로만 결정됩니다.",
+      "Time Quantum이 크면 FCFS와 유사해지고, 작으면 문맥 교환이 잦아져 오버헤드가 증가합니다.",
+      "Time Quantum이 크면 문맥 교환이 잦아져 오버헤드가 증가하고, 작으면 FCFS와 동일해집니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 Round Robin에서 Time Quantum이 크면 FCFS와 같게 되고, 작으면 문맥 교환이 잦아져 오버헤드가 증가한다고 명확히 설명합니다. 따라서 큰 양측은 FCFS-like, 작은 양측은 문맥 교환 증가로 정리됩니다.",
+    "optionExplanations": [
+      "문서에서는 Time Quantum의 크기와 짧은 작업의 평균 대기시간/응답시간 간의 일반적 관계를 그렇게 기술하지 않습니다. 제시된 진술은 문서 근거와 일치하지 않습니다.",
+      "문서에 따르면 Time Quantum은 Round Robin 동작에 직접적인 영향을 미치며, 우선순위만으로 결정된다는 주장은 근거가 없습니다.",
+      "정답입니다. 문서에 'Time Quantum이 크면 FCFS와 같게 되고, 작으면 문맥 교환 (Context Switching) 잦아져서 오버헤드 증가'라고 기술되어 있습니다.",
+      "문서와 반대입니다. 실제로 문서에는 '크면 FCFS와 같게 되고, 작으면 문맥 교환 잦아져 오버헤드 증가'라고 되어 있습니다."
+    ],
+    "keywords": [
+      "Round Robin",
+      "Time Quantum",
+      "문맥 교환",
+      "오버헤드"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/CPU Scheduling.md",
+      "startLine": 59,
+      "endLine": 61,
+      "quote": "- FCFS에 의해 프로세스들이 보내지면 각 프로세스는 동일한 시간의 `Time Quantum` 만큼 CPU를 할당 받음\n            - `Time Quantum` or `Time Slice` : 실행의 최소 단위 시간\n        - 할당 시간(`Time Quantum`)이 크면 FCFS와 같게 되고, 작으면 문맥 교환 (Context Switching) 잦아져서 오버헤드 증가"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/CPU Scheduling.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/CPU%20Scheduling.md",
+    "id": "3e393e2d-36d1-5ef7-9b91-dfa2f42e292a",
+    "review": {
+      "blind": {
+        "slot": 19,
+        "correctOptionText": "Time Quantum이 크면 FCFS와 유사해지고, 작으면 문맥 교환이 잦아져 오버헤드가 증가합니다.",
+        "unambiguous": true,
+        "reason": "자료의 Round Robin 설명에 동일한 문장이 명시되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 19,
+        "passed": true,
+        "reason": "Correct answer and explanation directly reflect the source: 'Time Quantum이 크면 FCFS와 같게 되고, 작으면 문맥 교환... 오버헤드 증가'. Other options contradict that quote. Difficulty, objective, and Korean phrasing are appropriate."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 20,
+    "topic": "P, V 연산의 역할",
+    "learningObjective": "P와 V 연산이 임계 구역 진입과 종료 시 각각 어떤 역할을 하는지 구분할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "세마포어의 P(S)와 V(S) 연산 중 V 연산에 해당하는 설명은 무엇입니까?",
+    "options": [
+      "임계 구역에 들어가기 전에 수행되며 S값을 감소시켜 다른 프로세스 진입을 막습니다.",
+      "임계 구역 내부에서만 호출되며 임계 구역을 즉시 재진입하도록 허용합니다.",
+      "프로세스가 중단되었을 때 상태를 저장하여 나중에 복원하는 역할을 합니다.",
+      "임계 구역에서 나올 때 수행되며 자원을 반납하고 대기 중인 프로세스를 깨우는 신호를 보냅니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료는 V 연산을 '임계 구역에서 나올 때 수행'하며 '자원 반납 알림, 대기 중인 프로세스를 깨우는 신호'라고 명확히 설명하고 있습니다. 따라서 V는 종료 시 자원 반환과 대기 프로세스 깨우기 역할을 합니다.",
+    "optionExplanations": [
+      "이는 P 연산의 설명입니다. 자료는 P를 임계 구역에 들어가기 전에 수행한다고 적고 S를 감소시킨다고 설명합니다.",
+      "자료에는 V가 임계 구역 내부에서만 호출되어 재진입을 허용한다는 설명이 없습니다; 오히려 V는 자원 반납을 의미합니다.",
+      "자료에는 프로세스 상태 저장/복원과 관련된 설명이 없으며, 이는 세마포어의 V 연산 역할과 무관합니다.",
+      "정답입니다. 본문은 V를 임계 구역에서 나올 때 수행하며 자원 반납과 대기 중인 프로세스를 깨우는 신호라고 기술하고 있습니다."
+    ],
+    "keywords": [
+      "P 연산",
+      "V 연산",
+      "임계 구역",
+      "자원 반납"
+    ],
+    "sourceEvidence": {
+      "section": "Semaphore & Mutex.md",
+      "startLine": 21,
+      "endLine": 26,
+      "quote": "#### 세마포어 P, V 연산\n\nP : 임계 구역 들어가기 전에 수행 ( 프로세스 진입 여부를 자원의 개수(S)를 통해 결정)\n\nV : 임계 구역에서 나올 때 수행 ( 자원 반납 알림, 대기 중인 프로세스를 깨우는 신호 )"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Semaphore & Mutex.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Semaphore%20%26%20Mutex.md",
+    "id": "1e592d88-0b0f-5aa2-a279-37a541601416",
+    "review": {
+      "blind": {
+        "slot": 20,
+        "correctOptionText": "임계 구역에서 나올 때 수행되며 자원을 반납하고 대기 중인 프로세스를 깨우는 신호를 보냅니다.",
+        "unambiguous": true,
+        "reason": "Source states V is performed when leaving the critical section, returning the resource and signaling waiting processes.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 20,
+        "passed": true,
+        "reason": "정답(옵션 4)은 원문의 'V : 임계 구역에서 나올 때 수행 ( 자원 반납 알림, 대기 중인 프로세스를 깨우는 신호 )'와 일치하며, 다른 보기는 P의 설명 또는 본문에 없는 기능으로 원문에 의해 배제됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 21,
+    "topic": "은행원 알고리즘 (Banker's Algorithm)",
+    "learningObjective": "은행원 알고리즘이 자원 할당 시 어떤 검사를 수행하는지 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "은행원 알고리즘이 프로세스의 자원 요청을 처리할 때 시스템이 수행하는 주된 동작은 무엇입니까?",
+    "options": [
+      "요청한 자원을 할당한 뒤에도 전체 시스템이 '안정 상태(safe state)'인지 사전에 검사하여, 안정 상태이면 할당하고 아니면 기다리게 합니다.",
+      "요청이 들어오면 무조건 자원을 선점해 할당하고, 이후 교착이 발생하면 탐지 알고리즘으로 복구합니다.",
+      "요청된 자원이 존재하면 항상 할당하되, 자원 그래프 사이클이 생기면 즉시 모든 관련 프로세스를 중지합니다.",
+      "요청이 있을 때마다 요청 간선을 즉시 할당 간선으로 변경하여 사이클이 생기면 자원을 여러 인스턴스로 분리합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 은행원 알고리즘이 프로세스가 자원을 요구할 때 시스템이 자원 할당 후에도 '안정 상태'로 남아있는지 사전에 검사하여 안정 상태이면 자원을 할당하고, 그렇지 않으면 다른 프로세스들이 자원 해제될 때까지 대기시킨다고 설명합니다. 따라서 첫 번째 선택지가 본문 설명과 일치합니다.",
+    "optionExplanations": [
+      "정답: 본문에 은행원 알고리즘이 \"프로세스가 자원을 요구할 때, 시스템은 자원을 할당한 후에도 안정 상태로 남아있게 되는지 사전에 검사하여 교착 상태 회피\"한다고 명시되어 있습니다. (lines 84-88)",
+      "오답: 본문은 은행원 알고리즘이 사전 검사로 안전 여부를 판단해 할당 여부를 결정한다고 설명하며, 무조건 선점 후 탐지·복구를 한다는 설명은 없습니다. (lines 84-88, 101-111)",
+      "오답: 본문은 자원 존재 시 항상 할당하고 사이클 시 즉시 프로세스 중지를 한다고 하지 않습니다. 은행원 알고리즘은 사전 안전 검사로 할당을 결정합니다. (lines 84-88, 92-98)",
+      "오답: 본문은 요청 간선을 할당 간선으로 변경해 사이클이 생기는지 확인하는 자원 할당 그래프 알고리즘에 대해 설명하지만, '즉시 변경'·'자원을 여러 인스턴스로 분리'한다고 하지 않습니다. (lines 90-96)"
+    ],
+    "keywords": [
+      "은행원 알고리즘",
+      "안전 상태",
+      "회피"
+    ],
+    "sourceEvidence": {
+      "section": "DeadLock.md",
+      "startLine": 84,
+      "endLine": 88,
+      "quote": "> 은행원 알고리즘(Banker's Algorithm)\n   >\n   > - 은행에서 모든 고객의 요구가 충족되도록 현금을 할당하는데서 유래함\n   > - 프로세스가 자원을 요구할 때, 시스템은 자원을 할당한 후에도 안정 상태로 남아있게 되는지 사전에 검사하여 교착 상태 회피\n   > - 안정 상태면 자원 할당, 아니면 다른 프로세스들이 자원 해지까지 대기"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/DeadLock.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/DeadLock.md",
+    "id": "1b106da2-861b-5ea7-84b0-2f6c5397a9d6",
+    "review": {
+      "blind": {
+        "slot": 21,
+        "correctOptionText": "요청한 자원을 할당한 뒤에도 전체 시스템이 '안정 상태(safe state)'인지 사전에 검사하여, 안정 상태이면 할당하고 아니면 기다리게 합니다.",
+        "unambiguous": true,
+        "reason": "본문의 은행원 알고리즘 설명: 자원 요청 시 할당 후에도 시스템이 안정 상태인지 검사하여 안정하면 할당하고 아니면 대기시킨다고 명시됨.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 21,
+        "passed": true,
+        "reason": "The chosen correct option matches the source description of the Banker's Algorithm; the three distractors are not supported by the source. Explanations reference the source lines; difficulty and learning objective fit the item."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 22,
+    "topic": "OPT(Optimal) 페이지 교체 알고리즘의 특성",
+    "learningObjective": "OPT 알고리즘이 무엇을 기준으로 victim page를 선택하는지와 현실적 한계를 비교 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "OPT(Optimal) 페이지 교체 알고리즘에 관한 다음 설명 중 출처 문서의 내용과 일치하는 것은 무엇입니까?",
+    "options": [
+      "OPT는 미래 예측이 필요 없으므로 실무에서 널리 사용됩니다.",
+      "OPT는 앞으로 가장 사용하지 않을 페이지를 우선적으로 내보내며, FIFO보다 페이지 결함을 줄일 수 있으나 미래 예측이 필요해 실제로 수행하기 어렵습니다.",
+      "OPT는 과거의 사용 기록만 보고 판단하므로 구현이 쉬운 알고리즘입니다.",
+      "OPT는 FIFO보다 페이지 결함이 더 많이 발생하므로 일반적으로 덜 효율적입니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 OPT가 '앞으로 가장 사용하지 않을 페이지를 가장 우선적으로 내보냄(Optimal)'이라고 설명하고 있으며, 이로 인해 'FIFO에 비해 페이지 결함의 횟수를 많이 감소시킬 수 있음'이라 했습니다. 그러나 동시에 '실질적으로 페이지가 앞으로 잘 사용되지 않을 것이라는 보장이 없기 때문에 수행하기 어려운 알고리즘'이라고 명시되어 있어, OPT가 결함을 줄일 수 있으나 미래 예측이 필요해 구현이 어렵다는 서술과 일치합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서에서는 OPT가 미래 예측을 필요로 하기 때문에 '수행하기 어렵다'고 하였으므로, 미래 예측이 필요 없어서 실무에서 널리 사용된다는 주장은 문서와 일치하지 않습니다.",
+      "정답입니다. 문서에서 OPT의 동작(앞으로 가장 사용하지 않을 페이지 제거), FIFO보다 결함을 줄일 수 있음, 그리고 실제로 수행하기 어렵다는 한계를 모두 서술하고 있습니다.",
+      "틀렸습니다. 문서에는 OPT가 미래 예측을 필요로 하므로 '수행하기 어렵다'고 되어 있으며, 과거 기록만 보는 방식이라는 내용은 OPT에 해당하지 않습니다.",
+      "틀렸습니다. 문서에는 OPT가 'FIFO에 비해 페이지 결함의 횟수를 많이 감소시킬 수 있음'이라고 되어 있으므로, FIFO보다 결함이 더 많다고 한 설명은 문서와 상반됩니다."
+    ],
+    "keywords": [
+      "OPT",
+      "Optimal Page Replacement",
+      "페이지 교체",
+      "페이지 결함",
+      "미래 예측"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Page Replacement Algorithm.md",
+      "startLine": 56,
+      "endLine": 63,
+      "quote": "2. ##### OPT 알고리즘\n\n   > Optimal Page Replacement 알고리즘, 앞으로 가장 사용하지 않을 페이지를 가장 우선적으로 내보냄\n\n   FIFO에 비해 페이지 결함의 횟수를 많이 감소시킬 수 있음\n\n   하지만, 실질적으로 페이지가 앞으로 잘 사용되지 않을 것이라는 보장이 없기 때문에 수행하기 어려운 알고리즘임"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Page Replacement Algorithm.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Page%20Replacement%20Algorithm.md",
+    "id": "f8a6a9c0-cc6f-5dff-b04f-a26c33a572d9",
+    "review": {
+      "blind": {
+        "slot": 22,
+        "correctOptionText": "OPT는 앞으로 가장 사용하지 않을 페이지를 우선적으로 내보내며, FIFO보다 페이지 결함을 줄일 수 있으나 미래 예측이 필요해 실제로 수행하기 어렵습니다.",
+        "unambiguous": true,
+        "reason": "Source states OPT evicts the page not needed for the longest future time, reduces faults compared to FIFO, but is hard to perform due to needing future prediction.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 22,
+        "passed": true,
+        "reason": "Option 2 is exactly supported by the source (OPT removes the page that will not be used for the longest time, reduces faults versus FIFO, but requires future prediction so is hard to perform). All three distractors contradict explicit source statements and are therefore provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 23,
+    "topic": "Named PIPE(FIFO)와 익명 파이프의 비교",
+    "learningObjective": "Named PIPE가 익명 파이프와 달리 부모-자식 관계가 아닌 프로세스들 사이 통신을 가능하게 하는 점을 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "Named PIPE(FIFO)에 대한 설명으로 옳지 않은 것은 무엇입니까?",
+    "options": [
+      "Named PIPE는 익명 파이프의 확장된 형태로 설명되고 있습니다.",
+      "Named PIPE는 부모 프로세스와 무관한 다른 프로세스들도 이름 있는 파일을 통해 통신할 수 있도록 해줍니다.",
+      "Named PIPE도 읽기와 쓰기를 동시에 지원하므로 전이중 통신을 위해 추가 파이프를 만들 필요가 없습니다.",
+      "익명 파이프는 통신 상대가 명확한 경우에 사용되는 반면 Named PIPE는 모르는 상태의 프로세스들 사이 통신에 사용됩니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 Named 파이프가 부모와 무관한 다른 프로세스도 통신할 수 있도록 이름 있는 파일을 사용한다고 하며, 그러나 Named 파이프 역시 읽기/쓰기 동시 불가능하므로 전이중을 위해서는 파이프를 2개 만들어야 한다고 명시합니다. 따라서 '동시 지원'이라는 보기는 본문과 모순됩니다.",
+    "optionExplanations": [
+      "맞습니다. 본문은 Named 파이프를 '익명 파이프의 확장된 상태'로 설명하고 있습니다. (라인 50-51)",
+      "맞습니다. 본문은 Named 파이프가 부모 프로세스와 무관한 다른 프로세스도 통신 가능하게 해주며 이름 있는 파일을 사용한다고 설명합니다. (라인 44-51)",
+      "틀렸습니다. 본문은 Named 파이프도 읽기/쓰기 동시에 불가능하므로 전이중 통신을 위해서는 익명 파이프처럼 2개를 만들어야 한다고 명시합니다. (라인 55-56)",
+      "맞습니다. 본문은 익명 파이프는 통신할 프로세스를 명확히 알 수 있는 경우에 사용하고, Named 파이프는 모르는 상태의 프로세스들 사이 통신에 사용된다고 설명합니다. (라인 44-49, 46-47)"
+    ],
+    "keywords": [
+      "Named PIPE",
+      "FIFO",
+      "익명 파이프",
+      "전이중"
+    ],
+    "sourceEvidence": {
+      "section": "IPC(Inter Process Communication).md",
+      "startLine": 44,
+      "endLine": 56,
+      "quote": "2. ##### Named PIPE(FIFO)\n\n   > 익명 파이프는 통신할 프로세스를 명확히 알 수 있는 경우에 사용한다. (부모-자식 프로세스 간 통신처럼)\n   >\n   > Named 파이프는 전혀 모르는 상태의 프로세스들 사이 통신에 사용한다.\n   >\n   > 즉, 익명 파이프의 확장된 상태로 **부모 프로세스와 무관한 다른 프로세스도 통신이 가능한 것** (통신을 위해 이름있는 파일을 사용)\n   >\n   > \n   >\n   >\n   > 하지만, Named 파이프 역시 읽기/쓰기 동시에 불가능함. 따라서 전이중 통신을 위해서는 익명 파이프처럼 2개를 만들어야 가능"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/IPC(Inter Process Communication).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/IPC%28Inter%20Process%20Communication%29.md",
+    "id": "c7b92d02-ba7a-50e6-aaac-1f8a1ad41e4d",
+    "review": {
+      "blind": {
+        "slot": 23,
+        "correctOptionText": "Named PIPE도 읽기와 쓰기를 동시에 지원하므로 전이중 통신을 위해 추가 파이프를 만들 필요가 없습니다.",
+        "unambiguous": true,
+        "reason": "Source explicitly says Named pipe also cannot read/write simultaneously, so the claim that it supports simultaneous R/W is incorrect.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 23,
+        "passed": true,
+        "reason": "The source explicitly supports options 1,2,4 and contradicts option 3; the provided correct answer and option explanations accurately reflect the source text about Named PIPE behavior and lack of simultaneous read/write."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 24,
+    "topic": "파일 접근 방식 — 직접 접근",
+    "learningObjective": "직접 접근(Direct Access)이 데이터베이스에 적합한 이유를 서술할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "파일 시스템의 직접 접근(Direct Access)에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "직접 접근은 항상 순차 접근보다 구현이 단순하여 대부분의 연산이 read와 write로만 이루어지는 가장 간단한 방법입니다.",
+      "직접 접근은 현재 위치를 가리키는 포인터를 유지할 수 없으므로 순차 파일 기능을 구현할 수 없습니다.",
+      "직접 접근은 파일 블록에 접근할 때 반드시 순서를 지켜야 하므로 테이프 모델 기반의 접근 방식입니다.",
+      "직접 접근은 무작위 파일 블록에 대한 임의 접근을 허용하므로 대규모 정보 탐색에 유리하여 데이터베이스에 활용됩니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "직접 접근은 '무작위 파일 블록에 대한 임의 접근을 허용'하므로 순서 제약이 없고, 따라서 대규모 정보 접근에 유용하여 데이터베이스에 활용된다고 문서에서 명시하고 있습니다. 이는 직접 접근의 무작위 접근 특성이 대규모 레코드 탐색에 적합하기 때문입니다.",
+    "optionExplanations": [
+      "이 설명은 순차 접근에 더 적합한 특징을 직접 접근에 적용한 것으로 문서에 맞지 않습니다. 문서에서는 가장 간단한 접근 방법이 순차 접근이라고 말합니다.",
+      "문서에는 직접 접근이 '현재 위치를 가리키는 cp 변수만 유지하면 직접 접근 파일을 가지고 순차 파일 기능을 쉽게 구현이 가능하다'고 되어 있어, 포인터를 유지할 수 없다는 주장은 잘못되었습니다.",
+      "이 설명은 테이프 모델 기반의 순차 접근의 특징을 직접 접근에 적용한 것으로 문서와 모순됩니다. 문서에서는 직접 접근은 '순서의 제약이 없음'이라고 명시하고 있습니다.",
+      "정답입니다. 문서에는 직접 접근이 '무작위 파일 블록에 대한 임의 접근을 허용'하고 '대규모 정보를 접근할 때 유용하기 때문에 데이터베이스에 활용된다'고 서술되어 있습니다."
+    ],
+    "keywords": [
+      "직접 접근",
+      "무작위 접근",
+      "데이터베이스",
+      "순서 제약 없음"
+    ],
+    "sourceEvidence": {
+      "section": "파일 시스템(File System)",
+      "startLine": 51,
+      "endLine": 62,
+      "quote": "2. ##### 직접 접근(Direct Access)\n\n   > 특별한 순서없이, 빠르게 레코드를 read, write 가능\n\n   <img src=\"https://noep.github.io/2016/02/23/10th-filesystem/10.2.png\">\n\n   현재 위치를 가리키는 cp 변수만 유지하면 직접 접근 파일을 가지고 순차 파일 기능을 쉽게 구현이 가능하다.\n\n   무작위 파일 블록에 대한 임의 접근을 허용한다. 따라서 순서의 제약이 없음\n\n   대규모 정보를 접근할 때 유용하기 때문에 '데이터베이스'에 활용된다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/File System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/File%20System.md",
+    "id": "c03ba2a1-9324-58e4-9b79-c88ee5f14596",
+    "review": {
+      "blind": {
+        "slot": 24,
+        "correctOptionText": "직접 접근은 무작위 파일 블록에 대한 임의 접근을 허용하므로 대규모 정보 탐색에 유리하여 데이터베이스에 활용됩니다.",
+        "unambiguous": true,
+        "reason": "Source states direct access allows random access to file blocks, has no order constraint, and is useful for large data access such as in databases.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 24,
+        "passed": true,
+        "reason": "제공된 원문(직접 접근 설명)이 옵션 4를 명확히 지지하고(무작위 파일 블록에 대한 임의 접근, 데이터베이스에 유용), 옵션 1·2·3은 원문과 직접적으로 모순되므로 오답으로 판정됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 25,
+    "topic": "파일 접근 방법 비교",
+    "learningObjective": "순차 접근과 직접 접근의 동작 방식과 적용 사례를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "순차 접근(Sequential Access)과 직접 접근(Direct Access)의 차이점으로 옳은 것은 무엇입니까?",
+    "options": [
+      "순차 접근은 현재 위치 포인터를 이동시키며 연속적으로 읽고 쓰고, 직접 접근은 임의의 파일 블록에 무작위 접근을 허용한다",
+      "순차 접근은 무작위 블록 접근을 허용하여 데이터베이스에 적합하고, 직접 접근은 테이프 모델 기반의 연속 처리에 적합하다",
+      "순차 접근은 색인 구조를 필요로 하고, 직접 접근은 색인을 사용하지 못한다",
+      "순차 접근은 항상 더 빠르며 직접 접근은 느려 파일 시스템에서 거의 사용되지 않는다"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 순차 접근이 현재 위치를 가리키는 포인터에서 포인터를 앞으로 보내면서 read와 write를 진행한다고 하고(테이프 모델 기반), 직접 접근은 무작위 파일 블록에 대한 임의 접근을 허용하여 순서 제약이 없고 데이터베이스에 유용하다고 설명합니다. 따라서 첫 번째 문장이 출처와 일치합니다.",
+    "optionExplanations": [
+      "정답입니다. 출처는 순차 접근의 포인터 기반 연속 처리와 직접 접근의 임의 블록 접근을 대조하여 설명하고 있습니다.",
+      "오답입니다. 문서는 직접 접근이 데이터베이스에 유용하다고 명시하고 순차 접근이 테이프 모델 기반이라고 했으나, 문장들의 주체가 뒤바뀌어 잘못된 설명입니다.",
+      "오답입니다. 문서에서는 색인이 '기타 접근'에서 직접 접근 파일에 기반하여 구축될 수 있다고 했으나, 순차 접근만 색인을 요구한다고 말하지 않습니다.",
+      "오답입니다. 문서에는 성능 일반화(항상 더 빠르다/느리다)에 대한 기술이 없으며, 직접 접근이 데이터베이스 등에서 유용하다고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "순차 접근",
+      "직접 접근",
+      "임의 접근",
+      "포인터"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/File System.md",
+      "startLine": 45,
+      "endLine": 61,
+      "quote": "> 가장 간단한 접근 방법으로, 대부분 연산은 read와 write\n\n   <img src=\"https://noep.github.io/2016/02/23/10th-filesystem/10.1.png\">\n\n   현재 위치를 가리키는 포인터에서 시스템 콜이 발생할 경우 포인터를 앞으로 보내면서 read와 write를 진행. 뒤로 돌아갈 땐 지정한 offset만큼 되감기를 해야 한다. (테이프 모델 기반)\n\n2. ##### 직접 접근(Direct Access)\n\n   > 특별한 순서없이, 빠르게 레코드를 read, write 가능\n\n   <img src=\"https://noep.github.io/2016/02/23/10th-filesystem/10.2.png\">\n\n   현재 위치를 가리키는 cp 변수만 유지하면 직접 접근 파일을 가지고 순차 파일 기능을 쉽게 구현이 가능하다.\n\n   무작위 파일 블록에 대한 임의 접근을 허용한다. 따라서 순서의 제약이 없음\n\n   대규모 정보를 접근할 때 유용하기 때문에 '데이터베이스'에 활용된다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/File System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/File%20System.md",
+    "id": "5afad5d3-e756-58e9-9807-f135a3b04ea6",
+    "review": {
+      "blind": {
+        "slot": 25,
+        "correctOptionText": "순차 접근은 현재 위치 포인터를 이동시키며 연속적으로 읽고 쓰고, 직접 접근은 임의의 파일 블록에 무작위 접근을 허용한다",
+        "unambiguous": true,
+        "reason": "Source describes sequential access moving a current-position pointer for read/write and direct access allowing random access to file blocks.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 25,
+        "passed": true,
+        "reason": "Correct choice accurately reflects the source's contrast between sequential (pointer-based, tape model) and direct (random block access) methods. The three distractors are provably wrong per the source (roles reversed, incorrect claims about indexing, and unsupported absolute performance claim). Difficulty, objective, and explanations align with the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 26,
+    "topic": "멀티프로세스 vs 멀티스레드 장단점",
+    "learningObjective": "멀티프로세스와 멀티스레드의 장단점을 비교하여 성능·안전성 측면의 차이를 구분할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 멀티스레드 구성의 핵심적인 '장점'으로 원문에서 직접 언급된 것은 무엇입니까?",
+    "options": [
+      "공유 메모리를 사용하지 않아 데이터 경쟁이 발생하지 않는다",
+      "공유 메모리로 인해 시간과 자원 손실이 감소한다",
+      "프로세스 간 메모리 침범 문제를 OS가 해결하므로 안전성이 높다",
+      "각 프로세스가 별도 주소 공간을 가져 캐시 초기화 오버헤드가 없다"
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 멀티스레드의 장점으로 '독립적인 프로세스에 비해 공유 메모리만큼의 시간과 자원 손실 감소' 및 전역·정적 변수 공유 가능을 명시합니다. 나머지 선택지는 멀티프로세스의 장점(안전성) 또는 사실과 반대되는 내용입니다.",
+    "optionExplanations": [
+      "오답: 원문은 멀티스레드가 공유 메모리를 사용하기 때문에 안전성 문제가 발생할 수 있다고 명시하고 있으므로 이 선택지는 사실과 반대입니다.",
+      "정답: 원문에 멀티스레드는 공유 메모리를 통해 시간과 자원 손실이 줄어든다고 명시되어 있습니다.",
+      "오답: '프로세스 간 메모리 침범 문제를 OS가 해결'하는 내용은 멀티프로세스의 장점으로 언급되어 있으며 멀티스레드의 장점이 아닙니다.",
+      "오답: 원문은 독립된 메모리를 갖는 프로세스가 캐시 초기화 등으로 오버헤드가 발생한다고 하였지, 멀티스레드가 캐시 초기화 오버헤드가 전혀 없다고 하지 않습니다."
+    ],
+    "keywords": [
+      "멀티스레드",
+      "공유 메모리",
+      "장점"
+    ],
+    "sourceEvidence": {
+      "section": "source",
+      "startLine": 76,
+      "endLine": 83,
+      "quote": "스레드들이 공유 메모리를 통해 다수의 작업을 동시에 처리하도록 해 준다.\n\n<br>\n\n**장점** : 독립적인 프로세스에 비해 공유 메모리만큼의 시간과 자원 손실 감소, 전역 변수와 정적 변수 공유 가능\n\n**단점** : 안전성 (공유 메모리를 갖기 때문에 하나의 스레드가 데이터 공간을 망가뜨리면, 모든 스레드 작동 불능)"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process vs Thread.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20vs%20Thread.md",
+    "id": "c46e4753-faeb-5533-a81a-5b80da958045",
+    "review": {
+      "blind": {
+        "slot": 26,
+        "correctOptionText": "공유 메모리로 인해 시간과 자원 손실이 감소한다",
+        "unambiguous": true,
+        "reason": "원문 장점에 '공유 메모리만큼의 시간과 자원 손실 감소'라고 직접 언급되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 26,
+        "passed": true,
+        "reason": "원문은 멀티스레드의 장점으로 '공유 메모리만큼의 시간과 자원 손실 감소'를 직접 언급합니다. 나머지 선택지는 원문 내용과 배치(공유 사용으로 안전성 문제 발생, 멀티프로세스의 장점 등)이므로 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 27,
+    "topic": "PCB 관리 자료구조",
+    "learningObjective": "PCB를 링크드 리스트로 관리하는 설계의 장단점을 메커니즘 관점에서 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 PCB를 Linked List 방식으로 관리할 때의 주된 이점은 무엇입니까?",
+    "options": [
+      "링크드 리스트는 PCB 검색 시 항상 O(1) 시간에 원하는 PCB에 접근할 수 있게 합니다.",
+      "링크드 리스트는 프로세스의 메타데이터를 디스크에 자동으로 스왑아웃하도록 만듭니다.",
+      "PCB의 삽입과 삭제가 용이하여 프로세스 생성·종료 시 효율적입니다.",
+      "링크드 리스트는 모든 PCB를 메모리의 연속된 영역에 배치하여 캐시 친화적입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에는 PCB를 Linked List 방식으로 관리한다고 명시하며, '주소값으로 연결이 이루어져 있는 연결리스트이기 때문에 삽입 삭제가 용이함'이라고 설명하고 있습니다. 따라서 링크드 리스트의 주된 장점은 삽입·삭제의 용이성입니다.",
+    "optionExplanations": [
+      "오답: 문서에는 링크드 리스트가 항상 O(1) 검색을 보장한다고 하지 않았습니다. 실제로 검색은 순차 탐색이므로 O(n)이 될 수 있으며 문서에 그런 설명은 없습니다. (lines 49-53)",
+      "오답: 문서에는 링크드 리스트가 PCB를 디스크로 스왑아웃한다고 언급하지 않았습니다. 스왑 동작에 대한 설명은 없습니다. (lines 49-53)",
+      "정답: 문서가 직접 '삽입 삭제가 용이함'이라고 기술하여 PCB 생성·제거와 관련된 효율성을 근거로 제시하고 있습니다. (lines 49-53)",
+      "오답: 문서에서는 PCB가 연속된 메모리 영역에 배치된다고 하지 않았고, 링크드 리스트의 캐시 친화성을 주장하지 않았습니다. 해당 내용은 문서에 없습니다. (lines 49-53)"
+    ],
+    "keywords": [
+      "PCB",
+      "Linked List",
+      "삽입",
+      "삭제",
+      "관리"
+    ],
+    "sourceEvidence": {
+      "section": "PCB & Context Switching.md",
+      "startLine": 49,
+      "endLine": 53,
+      "quote": "> Linked List 방식으로 관리함\n>\n> PCB List Head에 PCB들이 생성될 때마다 붙게 된다. 주소값으로 연결이 이루어져 있는 연결리스트이기 때문에 삽입 삭제가 용이함.\n>\n> 즉, 프로세스가 생성되면 해당 PCB가 생성되고 프로세스 완료시 제거됨"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/PCB & Context Switcing.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/PCB%20%26%20Context%20Switcing.md",
+    "id": "5076c15a-6063-5a0f-9e50-b8ca2c81252c",
+    "review": {
+      "blind": {
+        "slot": 27,
+        "correctOptionText": "PCB의 삽입과 삭제가 용이하여 프로세스 생성·종료 시 효율적입니다.",
+        "unambiguous": true,
+        "reason": "문서에 'Linked List 방식... 삽입 삭제가 용이함'이라 명시되어 있어 이 옵션이 정확히 일치함.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 27,
+        "passed": true,
+        "reason": "문서의 해당 문단(lines 49-53)은 링크드 리스트로 PCB를 관리하면 '삽입 삭제가 용이함'이라고 직접 서술하므로 정답(3)이 유일하게 근거 있고 다른 선택지는 문서에 언급되지 않아 오답으로 판정됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 28,
+    "topic": "PCB 관리 방식",
+    "learningObjective": "PCB를 링크드 리스트로 관리하는 설계의 이점을 메커니즘 관점에서 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 따르면 PCB를 연결 리스트(Linked List)로 관리하는 주된 장점은 무엇입니까?",
+    "options": [
+      "메모리 접근 속도가 항상 일정하여 실시간 보장이 가능하다",
+      "디스크 기반 정렬을 통해 대규모 프로세스 집합에서 검색이 빨라진다",
+      "각 PCB가 고정된 메모리 오프셋을 가져 캐시 성능이 최적화된다",
+      "삽입과 삭제가 용이하여 프로세스 생성·완료 시 효율적이다"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 PCB를 Linked List 방식으로 관리하며 주소값 연결로 인해 '삽입 삭제가 용이함'을 장점으로 명시합니다. 따라서 프로세스 생성 시 PCB를 붙이고 완료 시 제거하는 작업에 효율적입니다.",
+    "optionExplanations": [
+      "오답: 문서에서는 연결 리스트가 메모리 접근 속도를 일정하게 하거나 실시간 보장을 제공한다고 언급하지 않았습니다.",
+      "오답: 문서는 디스크 기반 정렬이나 검색 속도 향상에 대해 언급하지 않습니다; 연결 리스트는 일반적으로 검색이 빠르지 않습니다.",
+      "오답: 문서에는 PCB가 고정된 메모리 오프셋을 가진다는 내용이나 캐시 최적화 관련 설명이 나오지 않습니다.",
+      "정답: 소스는 '주소값으로 연결이 이루어져 있는 연결리스트이기 때문에 삽입 삭제가 용이함'이라 직접 설명합니다."
+    ],
+    "keywords": [
+      "PCB 관리",
+      "Linked List",
+      "삽입 삭제",
+      "프로세스 생성"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Management & PCB.md",
+      "startLine": 49,
+      "endLine": 53,
+      "quote": "> Linked List 방식으로 관리함\n>\n> PCB List Head에 PCB들이 생성될 때마다 붙게 된다. 주소값으로 연결이 이루어져 있는 연결리스트이기 때문에 삽입 삭제가 용이함.\n>\n> 즉, 프로세스가 생성되면 해당 PCB가 생성되고 프로세스 완료시 제거됨"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Management & PCB.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Management%20%26%20PCB.md",
+    "id": "002a41c3-5351-5d3e-ad0a-fa438d616ada",
+    "review": {
+      "blind": {
+        "slot": 28,
+        "correctOptionText": "삽입과 삭제가 용이하여 프로세스 생성·완료 시 효율적이다",
+        "unambiguous": true,
+        "reason": "문서에서 PCB를 Linked List로 관리하는 이유로 삽입 삭제가 용이함을 설명함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 28,
+        "passed": true,
+        "reason": "문서는 PCB를 Linked List로 관리하고 '삽입 삭제가 용이함'을 명시하므로 정답(삽입·삭제 용이)이 문서로 명확히 지지됩니다. 나머지 보기는 문서에 언급되지 않아 오답임이 입증됩니다. 난이도·학습목표·한국어 표현도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 29,
+    "topic": "인터럽트 분류와 발생 원인 비교",
+    "learningObjective": "외부·내부·소프트웨어 인터럽트의 발생 원인을 구분하여 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 외부 인터럽트·내부(Trap) 인터럽트·소프트웨어 인터럽트의 발생 원인에 대한 올바른 설명은 무엇입니까?",
+    "options": [
+      "외부/내부 인터럽트는 CPU 하드웨어 신호로 발생하고, 소프트웨어 인터럽트는 명령어 수행에 의해 발생합니다.",
+      "외부 인터럽트는 명령어 오류로 발생하고, 내부 인터럽트는 입출력 장치의 신호로 발생합니다.",
+      "모든 인터럽트는 오직 소프트웨어 호출(SVC)으로만 발생합니다.",
+      "내부 인터럽트는 사용자의 명령 호출에 의해 발생하며 외부는 오직 전원 이상으로만 발생합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에는 외부/내부 인터럽트는 'CPU의 하드웨어 신호에 의해 발생'하며 소프트웨어 인터럽트는 '명령어의 수행에 의해 발생'한다고 명시되어 있습니다. 또한 내부 인터럽트(Trap)는 잘못된 명령이나 데이터 사용 시 발생하고 소프트웨어 인터럽트는 SVC처럼 명령의 요청에 의해 발생한다고 되어 있습니다.",
+    "optionExplanations": [
+      "정답: 문서에서 외부/내부 인터럽트는 하드웨어 신호로, 소프트웨어 인터럽트는 명령어 수행으로 발생한다고 분명히 서술하고 있습니다.",
+      "오답: 문서와 반대로 기술되어 있습니다; 내부(Trap)는 잘못된 명령 등으로 발생하며 외부는 입출력·전원 등 외적 요인입니다.",
+      "오답: 문서는 소프트웨어 인터럽트뿐만 아니라 하드웨어 신호에 의한 인터럽트도 있음을 설명하고 있습니다.",
+      "오답: 내부 인터럽트는 명령 오류 등으로 발생한다는 점에서 틀렸고, 외부 인터럽트는 전원 이상뿐만 아니라 입출력 등 다양한 외부 요인으로 발생합니다."
+    ],
+    "keywords": [
+      "외부 인터럽트",
+      "내부 인터럽트",
+      "소프트웨어 인터럽트",
+      "하드웨어 신호",
+      "명령어 수행"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Interrupt.md",
+      "startLine": 12,
+      "endLine": 15,
+      "quote": "외부/내부 인터럽트는 `CPU의 하드웨어 신호에 의해 발생`\n\n소프트웨어 인터럽트는 `명령어의 수행에 의해 발생`"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Interrupt.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Interrupt.md",
+    "id": "644d9304-250c-5501-b5b4-755d4448b98a",
+    "review": {
+      "blind": {
+        "slot": 29,
+        "correctOptionText": "외부/내부 인터럽트는 CPU 하드웨어 신호로 발생하고, 소프트웨어 인터럽트는 명령어 수행에 의해 발생합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 외부/내부 인터럽트는 CPU의 하드웨어 신호에 의해, 소프트웨어 인터럽트는 명령어 수행에 의해 발생한다고 설명하고 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 29,
+        "passed": true,
+        "reason": "정답은 원문에서 '외부/내부는 하드웨어 신호, 소프트웨어는 명령어 수행'이라고 한 진술과 일치합니다. 다른 선택지들은 원문 내용과 반대이거나 과도하게 일반화된 주장으로 원문에 의해 반박됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 30,
+    "topic": "페이징과 세그먼테이션의 단편화 비교",
+    "learningObjective": "페이징과 세그먼테이션 각각이 어떠한 유형의 단편화를 발생시키는지 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다음 중 페이징(Paging)과 세그먼테이션(Segmentation)의 단편화 특성에 대한 올바른 설명은 무엇입니까?",
+    "options": [
+      "페이징은 가변 크기 단위를 사용하여 외부 단편화를 주로 줄이고 내부 단편화는 완전히 제거하며, 세그먼테이션은 고정 크기 단위를 사용해 내부 단편화를 유발합니다.",
+      "페이징은 고정 크기 페이지로 인해 소량의 내부 단편화가 발생하고 외부 단편화는 발생하지 않으며, 세그먼테이션은 가변 크기 세그먼트로 인해 외부 단편화가 발생하고 내부 단편화는 발생하지 않습니다.",
+      "페이징은 외부 단편화가 심하게 발생하고 내부 단편화는 전혀 없으며, 세그먼테이션은 내부 단편화가 심하게 발생하고 외부 단편화는 전혀 없습니다.",
+      "페이징과 세그먼테이션 모두 고정 크기 단위로 메모리를 나누므로 내부 단편화만 발생하고 외부 단편화는 발생하지 않습니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서에는 페이징이 '고정 크기' 기법이며 단순 페이징의 경우 '외부 단편화 X'와 '소량의 내부 단편화 존재'라고 설명되어 있습니다. 또한 세그먼테이션은 '가변 크기' 기법이며 단순 세그먼테이션은 '내부 단편화 X'와 '외부 단편화 존재'로 명시되어 있어, 페이징이 내부 단편화를 일부 발생시키고 외부 단편화는 없으며 세그먼테이션은 외부 단편화를 발생시키고 내부 단편화는 없다는 설명이 올바릅니다.",
+    "optionExplanations": [
+      "오답입니다. 문서는 페이징을 고정 크기(페이지) 기법으로, 세그먼테이션을 가변 크기 기법으로 분류합니다. 따라서 이 선택지는 페이징과 세그먼테이션의 크기 특성과 단편화 유형을 잘못 서술하고 있습니다.",
+      "정답입니다. 문서에는 페이징을 '고정 크기'로 분류하고 단순 페이징에서 '외부 단편화 X'와 '소량의 내부 단편화 존재'로, 세그먼테이션을 '가변 크기'로 분류하고 단순 세그먼테이션에서 '내부 단편화 X'와 '외부 단편화 존재'로 설명하고 있습니다.",
+      "오답입니다. 문서는 페이징이 외부 단편화는 없고 소량의 내부 단편화가 발생한다고 명시하며, 세그먼테이션은 내부 단편화가 없고 외부 단편화가 존재한다고 기술합니다. 따라서 이 선택지는 문서 내용과 반대입니다.",
+      "오답입니다. 문서에 따르면 페이징은 고정 크기이지만 세그먼테이션은 가변 크기입니다. 또한 페이징은 소량의 내부 단편화를 발생시키고 세그먼테이션은 외부 단편화를 발생시킨다고 명시되어 있어 양쪽이 동일하게 내부 단편화만 발생한다고 할 수 없습니다."
+    ],
+    "keywords": [
+      "페이징",
+      "세그먼테이션",
+      "내부 단편화",
+      "외부 단편화",
+      "고정 크기",
+      "가변 크기"
+    ],
+    "sourceEvidence": {
+      "section": "Paging and Segmentation.md",
+      "startLine": 35,
+      "endLine": 56,
+      "quote": "**고정 크기** : 페이징(Paging)\n\n   **가변 크기** : 세그먼테이션(Segmentation)\n   <br>\n\n   - 단순 페이징\n\n     > 각 프로세스는 프레임들과 같은 길이를 가진 균등 페이지로 나뉨\n     >\n     > 외부 단편화 X\n     >\n     > 소량의 내부 단편화 존재\n\n   - 단순 세그먼테이션\n\n     > 각 프로세스는 여러 세그먼트들로 나뉨\n     >\n     > 내부 단편화 X, 메모리 사용 효율 개선, 동적 분할을 통한 오버헤드 감소\n     >\n     > 외부 단편화 존재\n\n   - 가상 메모리 페이징"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Paging and Segmentation.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Paging%20and%20Segmentation.md",
+    "id": "6d5a869d-7c90-557f-a992-c9685d637940",
+    "review": {
+      "blind": {
+        "slot": 30,
+        "correctOptionText": "페이징은 고정 크기 페이지로 인해 소량의 내부 단편화가 발생하고 외부 단편화는 발생하지 않으며, 세그먼테이션은 가변 크기 세그먼트로 인해 외부 단편화가 발생하고 내부 단편화는 발생하지 않습니다.",
+        "unambiguous": true,
+        "reason": "Source states paging uses fixed-size pages with small internal fragmentation and no external fragmentation; segmentation uses variable-size segments with external fragmentation and no internal fragmentation.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 30,
+        "passed": true,
+        "reason": "All four options and their explanations correctly align with the supplied source: paging is fixed-size with some internal fragmentation and no external fragmentation; segmentation is variable-size with external fragmentation and no internal fragmentation. The provided correctAnswer (2), explanation, distractor refutations, difficulty, and learning objective match the source evidence."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 31,
+    "topic": "커널 모드 작업 중 인터럽트 처리",
+    "learningObjective": "커널 모드에서 작업 도중 발생하는 인터럽트로 인한 Race Condition을 방지하기 위한 적절한 대책을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "커널모드에서 데이터를 로드하여 작업하던 도중 인터럽트가 발생하여 같은 데이터를 조작할 가능성이 있을 때, 문서에서 권장하는 해결책은 무엇입니까?",
+    "options": [
+      "파일 시스템 레벨에서 트랜잭션을 도입하여 커널 작업의 원자성을 보장한다.",
+      "작업 우선순위를 높여 인터럽트 발생 시에도 해당 프로세스가 곧바로 CPU를 되찾도록 한다.",
+      "인터럽트를 비활성화하여 해당 작업이 완료될 때까지 다른 프로세스가 CPU 제어권을 갖지 못하도록 한다.",
+      "작업 중인 데이터를 복제하여 각 인터럽트 처리기가 복제본을 사용하게 한다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서의 첫 번째 발생 경우 설명에서, 커널모드에서 작업을 수행하는 동안 인터럽트가 발생하는 문제에 대해 '해결법 : 커널모드에서 작업을 수행하는 동안, 인터럽트를 disable 시켜 CPU 제어권을 가져가지 못하도록 한다.'고 명시되어 있습니다. 다른 보기들은 문서가 제시한 방법이 아닙니다.",
+    "optionExplanations": [
+      "오답: 문서에선 파일 시스템 트랜잭션을 언급하지 않으며 이 방법은 제시된 해결책이 아닙니다.",
+      "오답: 문서에서는 우선순위 변경으로 해결한다고 하지 않으며, 해당 방법은 제시되지 않았습니다.",
+      "정답: 문서에 명시된 해결책으로, 인터럽트를 disable하여 문제를 방지합니다.",
+      "오답: 문서에서는 데이터 복제 방법을 제시하지 않으며, 복제는 문서의 해결책이 아닙니다."
+    ],
+    "keywords": [
+      "인터럽트 비활성화",
+      "커널모드",
+      "Race Condition 방지"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Race Condition.md",
+      "startLine": 11,
+      "endLine": 15,
+      "quote": "1. ##### 커널 작업을 수행하는 중에 인터럽트 발생\n\n   - 문제점 : 커널모드에서 데이터를 로드하여 작업을 수행하다가 인터럽트가 발생하여 같은 데이터를 조작하는 경우\n   - 해결법 : 커널모드에서 작업을 수행하는 동안, 인터럽트를 disable 시켜 CPU 제어권을 가져가지 못하도록 한다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Race Condition.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Race%20Condition.md",
+    "id": "4535488c-89e4-5fbc-826a-deb4a8bbd26f",
+    "review": {
+      "blind": {
+        "slot": 31,
+        "correctOptionText": "인터럽트를 비활성화하여 해당 작업이 완료될 때까지 다른 프로세스가 CPU 제어권을 갖지 못하도록 한다.",
+        "unambiguous": true,
+        "reason": "Source advises disabling interrupts while performing kernel-mode work to prevent others from taking CPU and modifying the same data.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 31,
+        "passed": true,
+        "reason": "정답(3)은 출처의 '인터럽트를 disable' 해결책과 일치합니다. 다른 선택지는 출처에서 제시하지 않으므로 오답으로 판정할 수 있습니다. 문항 설명과 학습목표도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 32,
+    "topic": "코드 공유의 목적",
+    "learningObjective": "같은 프로그램의 코드가 별도 관리되어 공유되는 이유와 장점을 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "운영체제가 같은 프로그램의 코드(Code)를 별도로 관리하여 여러 프로세스에서 공유하게 하는 주된 이유는 무엇입니까?",
+    "options": [
+      "코드를 공유하면 함수 호출 시 스택 할당이 불필요해져 실행 속도가 빨라지기 때문입니다.",
+      "코드 세그먼트에 전역 변수를 함께 두어 접근을 통일하기 위해서입니다.",
+      "코드 공유는 스택의 LIFO 특성을 보장하기 위해 필요합니다.",
+      "동일한 내용이므로 공유하여 메모리 사용량을 줄이기 위해서입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에는 'Code는 같은 프로그램 자체에서는 모두 같은 내용이기 때문에 따로 관리하여 공유함'이라고 명시되어 있어, 동일한 내용을 공유함으로써 메모리를 절약하려는 목적임을 알 수 있습니다.",
+    "optionExplanations": [
+      "문서에는 코드 공유가 함수 호출 시 스택 할당을 줄이거나 실행 속도를 직접적으로 개선한다고 설명되어 있지 않습니다; 스택과 코드는 별개의 이유로 분리되어 있습니다 (라인 15-19,25-27).",
+      "전역 변수는 문서에서 데이터 세그먼트에 저장된다고 설명되어 있으며, 코드 세그먼트와 전역 변수를 함께 두는 이유는 언급되지 않았습니다 (라인 5,8,17).",
+      "스택의 LIFO 특성은 스택 세그먼트의 이유로 설명되어 있으며, 코드 공유는 LIFO 특성과 직접적인 관련이 없다고 명시되어 있습니다 (라인 19,25-27).",
+      "정답입니다. 문서에서 코드가 동일하므로 따로 관리하여 공유한다고 명시하며 이는 메모리 사용량 절감 목적임을 나타냅니다 (라인 15-18)."
+    ],
+    "keywords": [
+      "코드 공유",
+      "메모리 절약",
+      "코드 세그먼트"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Address Space.md",
+      "startLine": 15,
+      "endLine": 18,
+      "quote": "최대한 데이터를 공유하여 메모리 사용량을 줄여야 합니다. \n\nCode는 같은 프로그램 자체에서는 모두 같은 내용이기 때문에 따로 관리하여 공유함"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Address Space.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Address%20Space.md",
+    "id": "2dd93539-d1d2-590d-bc39-a2641cae4786",
+    "review": {
+      "blind": {
+        "slot": 32,
+        "correctOptionText": "동일한 내용이므로 공유하여 메모리 사용량을 줄이기 위해서입니다.",
+        "unambiguous": true,
+        "reason": "본문에서 코드가 같은 프로그램에서는 모두 같은 내용이므로 따로 관리하여 공유한다고 설명함, 목적은 메모리 절약.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 32,
+        "passed": true,
+        "reason": "원문(라인 15-18)에 'Code는 ... 같은 내용이기 때문에 따로 관리하여 공유함'이라 적혀 있어 정답(메모리 사용량 절감을 위한 공유)이 정확하며 다른 선택지는 원문 근거와 배치됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 33,
+    "topic": "페이지 교체의 기본 절차",
+    "learningObjective": "페이지 폴트 발생 시 빈 프레임 유무에 따른 처리 흐름을 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "페이지 폴트가 발생했을 때 시스템이 빈 프레임이 없음을 확인하면 다음으로 수행하는 일은 무엇입니까?",
+    "options": [
+      "victim 프레임을 선정하여 디스크에 기록하고 페이지 테이블을 업데이트한 뒤, 빈 프레임에 필요한 페이지를 올립니다.",
+      "프로세스를 즉시 종료해서 빈 프레임을 확보한 후 계속 실행합니다.",
+      "페이지 폴트가 발생한 페이지의 내용을 캐시에만 저장하고 디스크 접근을 생략합니다.",
+      "빈 프레임이 없더라도 아무 작업도 하지 않고 프로세스가 계속 실행되도록 합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문의 페이지 교체 절차에서 빈 프레임이 없으면 'victim 프레임을 선정해 디스크에 기록하고 페이지 테이블 업데이트'를 수행한 뒤(라인 99–101), 그 후에 빈 프레임에 페이지를 올리고 페이지 테이블을 업데이트한다고 설명합니다(라인 99–102). 따라서 옵션 1이 정답입니다.",
+    "optionExplanations": [
+      "올바름: 빈 프레임이 없을 때 시스템은 victim 프레임을 골라 디스크에 기록하고 페이지 테이블을 갱신한 뒤 필요한 페이지를 올리도록 서술되어 있습니다 (라인 99–102).",
+      "오답: 프로세스를 종료하는 방법은 본문에서 빈 프레임 확보 방법으로 언급되지만(라인 78–81), 페이지 교체 절차에서는 프로세스를 종료하기보다 victim 선정 및 교체를 수행한다고 명시합니다 (라인 99–104).",
+      "오답: 본문은 필요한 페이지를 디스크에서 찾아 메모리에 올리는 과정을 설명하며, 캐시에만 저장하여 디스크 접근을 생략하는 방식은 기술되어 있지 않습니다 (라인 95–103).",
+      "오답: 페이지 폴트가 발생한 상태에서 아무 작업도 하지 않고 계속 실행할 수는 없으며, 본문은 빈 프레임이 없을 때 교체 과정을 거친다고 설명합니다 (라인 97–104)."
+    ],
+    "keywords": [
+      "페이지 폴트",
+      "빈 프레임",
+      "victim 프레임",
+      "페이지 테이블 업데이트"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Memory.md",
+      "startLine": 97,
+      "endLine": 103,
+      "quote": "3. 메모리에 빈 프레임이 있는지 확인\n\n   - 빈 프레임이 있으면, 해당 프레임을 사용\n   - 빈 프레임이 없으면, victim 프레임을 선정해 디스크에 기록하고 페이지 테이블 업데이트\n\n4. 빈 프레임에 페이지 폴트가 발생한 페이지를 올리고 페이지 테이블 업데이트"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Memory.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Memory.md",
+    "id": "ce162e6b-75a4-511e-a2df-557e5493c707",
+    "review": {
+      "blind": {
+        "slot": 33,
+        "correctOptionText": "victim 프레임을 선정하여 디스크에 기록하고 페이지 테이블을 업데이트한 뒤, 빈 프레임에 필요한 페이지를 올립니다.",
+        "unambiguous": true,
+        "reason": "본문의 페이지 교체 절차에서는 빈 프레임이 없을 때 victim 프레임을 선정해 디스크에 기록하고 페이지 테이블을 갱신한 후 페이지를 올린다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 33,
+        "passed": true,
+        "reason": "원문 페이지 교체 절차에 따라 빈 프레임이 없을 경우엔 victim 선정 및 디스크 기록과 페이지 테이블 갱신이 다음 단계로 명확히 서술되어 있어(해당 보기 1이 유일하게 정당화됨) 나머지 선택지는 원문에 근거가 없습니다. 문항 구성과 설명도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 34,
+    "topic": "exec의 작동 방식 비교",
+    "learningObjective": "exec가 프로세스를 어떻게 바꾸는지와 새로운 프로세스를 생성하는지 여부를 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "execvp()가 호출되었을 때의 동작으로 옳은 설명은 무엇입니까?",
+    "options": [
+      "프로세스의 메모리를 보존한 채 단순히 함수 호출처럼 실행 파일을 연결한다.",
+      "현재 프로세스의 코드 영역을 실행 파일로 덮어쓰고 새로운 프로세스를 생성하지 않는다.",
+      "현재 프로세스를 유지한 채 동일한 프로그램의 다른 스레드를 생성한다.",
+      "새로운 자식 프로세스를 생성하여 그 안에서 실행 파일을 실행한다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 execvp가 실행 파일의 코드를 code segment에 읽어와 덮어씌운다고 설명합니다. 또한 새로운 프로세스를 생성하지 않고 현재 프로그램에서 파일을 실행한다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "본문은 메모리를 보존한다고 하지 않습니다; 오히려 heap, stack 등 다른 메모리 영역이 초기화된다고 설명합니다.",
+      "정답입니다. execvp는 코드 세그먼트를 덮어쓰고 새로운 프로세스를 만들지 않는다고 본문에서 설명합니다.",
+      "본문은 스레드를 생성한다는 내용을 전혀 언급하지 않습니다.",
+      "본문은 exec가 새로운 프로세스를 생성하지 않는다고 명확히 말합니다; 따라서 새 자식 생성은 잘못된 설명입니다."
+    ],
+    "keywords": [
+      "execvp",
+      "코드 세그먼트 덮어쓰기",
+      "새 프로세스 미생성"
+    ],
+    "sourceEvidence": {
+      "section": "[Operating System] System Call",
+      "startLine": 149,
+      "endLine": 153,
+      "quote": "exec가 실행되면, \n\nexecvp( 실행 파일, 전달 인자 ) 함수는, code segment 영역에 실행 파일의 코드를 읽어와서 덮어 씌운다.\n\n씌운 이후에는,  heap, stack, 다른 메모리 영역이 초기화되고, OS는 그냥 실행한다. 즉, 새로운 Process를 생성하지 않고, 현재 프로그램에 wc라는 파일을 실행한다. 그로인해서, execvp() 이후의 부분은 실행되지 않는다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/[OS] System Call (Fork Wait Exec).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/%5BOS%5D%20System%20Call%20%28Fork%20Wait%20Exec%29.md",
+    "id": "447122df-7ae8-579d-b6a3-6bb71a70a0ae",
+    "review": {
+      "blind": {
+        "slot": 34,
+        "correctOptionText": "현재 프로세스의 코드 영역을 실행 파일로 덮어쓰고 새로운 프로세스를 생성하지 않는다.",
+        "unambiguous": true,
+        "reason": "본문: 'execvp(...) 함수는, code segment 영역에 실행 파일의 코드를 읽어와서 덮어 씌운다.' 및 '새로운 Process를 생성하지 않고, 현재 프로그램에 wc라는 파일을 실행한다.'",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 34,
+        "passed": true,
+        "reason": "정답(코드 세그먼트를 덮어쓰고 새 프로세스를 생성하지 않음)과 오답 해설들이 출처의 execvp 설명에 근거해 올바르게 판정됨."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 35,
+    "topic": "다단계 피드백 큐의 동작",
+    "learningObjective": "다단계 피드백 큐에서 CPU 버스트가 긴 프로세스의 큐 이동과 영향(우선순위·Time Quantum)을 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "다단계 피드백 큐(Multilevel-Feedback-Queue)에서 한 프로세스가 자신의 Time Quantum을 매번 모두 소비하는 CPU-버스트 성향을 보인다면 어떤 일이 발생합니까?",
+    "options": [
+      "그 프로세스는 반복적으로 Time Quantum을 모두 쓰면 즉시 우선순위가 올라가 더 짧은 Time Quantum을 받습니다.",
+      "다단계 피드백 큐에서는 프로세스 동작에 따라 큐를 이동시키지 않으며, 모든 프로세스가 동일한 Time Quantum을 가집니다.",
+      "그 프로세스는 아래(우선순위가 낮은) 큐로 내려가며, 일반적으로 더 큰 Time Quantum을 가지는 낮은 우선순위 큐로 이동합니다.",
+      "그 프로세스는 항상 같은 큐에 머물며 우선순위가 유지됩니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에 따르면 다단계 피드백 큐에서는 자신의 Time Quantum을 다 채운 프로세스는 밑으로 내려가고(Time Quantum을 다 채운 것은 CPU burst 프로세스로 판단), 우선순위가 낮은 큐에는 더 큰 Time Quantum을 할당하는 방식이 사용됩니다. 따라서 CPU-버스트가 긴 프로세스는 하위 큐로 내려가 큰 Time Quantum을 갖게 됩니다.",
+    "optionExplanations": [
+      "문서에서는 Time Quantum을 다 채운 프로세스가 밑으로 내려간다고 설명하며, 우선순위가 올라간다는 설명은 없습니다. 오히려 밑으로 내려감으로써 우선순위가 낮아집니다.",
+      "문서에도 다단계 큐별로 다른 Time Quantum을 설정한다고 나오며, 다단계 피드백 큐는 프로세스를 큐 사이에서 이동시키는 것이 핵심이라고 서술되어 있습니다.",
+      "정답입니다. 문서에 '자신의 Time Quantum을 다 채운 프로세스는 밑으로 내려가고' 및 '우선순위가 낮은 큐는 큰 Time Quantum 할당'이라고 되어 있습니다.",
+      "문서와 상반됩니다. 문서에서는 Time Quantum을 다 채운 프로세스는 아래 큐로 이동한다고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "다단계 피드백 큐",
+      "Time Quantum",
+      "CPU burst",
+      "큐 이동",
+      "우선순위"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/CPU Scheduling.md",
+      "startLine": 68,
+      "endLine": 76,
+      "quote": "- 우선순위가 낮은 큐들이 실행 못하는 걸 방지하고자 각 큐마다 다른 `Time Quantum`을 설정 해주는 방식 사용\n        - 우선순위가 높은 큐는 작은 `Time Quantum` 할당. 우선순위가 낮은 큐는 큰 `Time Quantum` 할당.\n    4. Multilevel-Feedback-Queue (다단계 피드백 큐)\n\n        ![Untitled2](https://user-images.githubusercontent.com/13609011/91695489-2cb0b500-eba9-11ea-8578-6602fee742ed.png)\n\n        - 다단계 큐에서 자신의 `Time Quantum`을 다 채운 프로세스는 밑으로 내려가고 자신의 `Time Quantum`을 다 채우지 못한 프로세스는 원래 큐 그대로\n            - Time Quantum을 다 채운 프로세스는 CPU burst 프로세스로 판단하기 때문\n        - 짧은 작업에 유리, 입출력 위주(Interrupt가 잦은) 작업에 우선권을 줌"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/CPU Scheduling.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/CPU%20Scheduling.md",
+    "id": "a503c870-425c-5cf7-9555-f5591c00852b",
+    "review": {
+      "blind": {
+        "slot": 35,
+        "correctOptionText": "그 프로세스는 아래(우선순위가 낮은) 큐로 내려가며, 일반적으로 더 큰 Time Quantum을 가지는 낮은 우선순위 큐로 이동합니다.",
+        "unambiguous": true,
+        "reason": "다단계 피드백 큐 설명에 따르면 Time Quantum을 모두 채운 프로세스는 아래 큐로 내려가고 낮은 우선순위 큐에 더 큰 Time Quantum을 준다고 되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 35,
+        "passed": true,
+        "reason": "Correct answer matches the source passage describing Multilevel-Feedback-Queue behavior: processes using full Time Quantum move down to lower-priority queues with larger quanta. Other options are contradicted by that text. Difficulty, objective, and Korean are acceptable."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 36,
+    "topic": "뮤텍스의 기본 동작과 용어",
+    "learningObjective": "뮤텍스가 무엇이며 lock/unlock이 어떤 동작을 하는지 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "뮤텍스(Mutex)에 대해 옳은 설명은 무엇입니까?",
+    "options": [
+      "뮤텍스는 여러 프로세스가 동시에 임계 구역에 진입하도록 허용하는 동기화 기법입니다.",
+      "뮤텍스는 스레드 간 데이터를 복사하여 각자 독립적인 복제본을 제공하는 방식입니다.",
+      "뮤텍스는 우선순위 기반 스케줄링을 자동으로 수행하여 실시간성을 보장합니다.",
+      "뮤텍스는 임계 구역을 가진 스레드들의 실행이 겹치지 않도록 하며, 이를 위해 lock과 unlock을 사용합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료는 뮤텍스를 '임계 구역을 가진 스레드들의 실행시간이 서로 겹치지 않고 각각 단독으로 실행되게 하는 기술'이라고 정의하고, 이를 위해 lock(진입 권한 획득)과 unlock(사용 완료 알림)을 사용한다고 설명합니다.",
+    "optionExplanations": [
+      "자료는 뮤텍스가 동시 진입을 허용한다고 말하지 않습니다; 오히려 상호 배제(mutual exclusion)를 의미합니다.",
+      "자료에는 뮤텍스가 데이터 복제나 독립 복제본을 제공한다고 기술되어 있지 않습니다.",
+      "자료에는 뮤텍스가 우선순위 기반 스케줄링이나 실시간성 보장을 자동으로 수행한다고 언급되어 있지 않습니다.",
+      "정답입니다. 본문은 뮤텍스를 임계 구역을 겹치지 않게 하는 기술로 정의하고, 구체적으로 lock과 unlock을 통해 진입과 종료를 조율한다고 설명합니다."
+    ],
+    "keywords": [
+      "뮤텍스",
+      "lock",
+      "unlock",
+      "상호 배제"
+    ],
+    "sourceEvidence": {
+      "section": "Semaphore & Mutex.md",
+      "startLine": 69,
+      "endLine": 76,
+      "quote": "**뮤텍스** : 임계 구역을 가진 스레드들의 실행시간이 서로 겹치지 않고 각각 단독으로 실행되게 하는 기술\n\n> 상호 배제(**Mut**ual **Ex**clusion)의 약자임\n\n해당 접근을 조율하기 위해 lock과 unlock을 사용한다.\n\n- lock : 현재 임계 구역에 들어갈 권한을 얻어옴 ( 만약 다른 프로세스/스레드가 임계 구역 수행 중이면 종료할 때까지 대기 )\n- unlock : 현재 임계 구역을 모두 사용했음을 알림. ( 대기 중인 다른 프로세스/스레드가 임계 구역에 진입할 수 있음 )"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Semaphore & Mutex.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Semaphore%20%26%20Mutex.md",
+    "id": "c9c78e8c-1664-5fe8-bc0c-b2893293f206",
+    "review": {
+      "blind": {
+        "slot": 36,
+        "correctOptionText": "뮤텍스는 임계 구역을 가진 스레드들의 실행이 겹치지 않도록 하며, 이를 위해 lock과 unlock을 사용합니다.",
+        "unambiguous": true,
+        "reason": "Source describes mutex as ensuring threads' critical section executions do not overlap, using lock and unlock to coordinate access.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 36,
+        "passed": true,
+        "reason": "정답(옵션 4)은 원문에서 뮤텍스를 '임계 구역을 가진 스레드들의 실행시간이 서로 겹치지 않게 하는 기술'이고 'lock/unlock'을 사용한다고 서술한 것과 일치하며, 다른 선택지는 본문과 모순되거나 언급이 없어 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 37,
+    "topic": "교착 상태 예방 기법",
+    "learningObjective": "교착 상태 예방을 위해 각 발생 조건을 어떻게 제거하는지 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "데드락 예방 기법 중 '점유 대기(Hold and wait)' 조건을 제거하기 위한 방법으로 본문에서 제시한 것은 무엇입니까?",
+    "options": [
+      "프로세스 실행 전에 모든 필요한 자원을 미리 할당합니다.",
+      "자원 점유 중인 프로세스가 다른 자원을 요구할 때 가진 자원을 강제로 빼앗습니다.",
+      "자원에 고유번호를 할당한 후 번호 순서대로만 자원을 요구하도록 합니다.",
+      "여러 프로세스가 공유 자원을 동시에 사용하도록 허용하여 상호배제를 부정합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문의 예방 기법 설명에서 '점유대기 부정'을 위해 제안한 방법은 \"프로세스 실행전 모든 자원을 할당\"하는 것입니다. 이는 점유 대기 조건을 성립하지 않게 만들어 데드락을 예방하는 방법으로 명시되어 있습니다.",
+    "optionExplanations": [
+      "정답: 본문은 점유대기를 부정하는 방법으로 \"프로세스 실행전 모든 자원을 할당\"한다고 명시하고 있어 이 선택지가 맞습니다. (lines 73-78)",
+      "오답: 다른 선택지는 '비선점 부정' 또는 '순환대기 부정'에 해당하는 방법이나, '강제로 빼앗는다'는 표현은 본문에서 비선점 조건을 부정하기 위해 \"가진 자원 반납\"으로 설명되어 있고 강제 선점과는 다릅니다. (lines 73-78)",
+      "오답: 번호 순서대로 요구하는 방법은 본문에서 '순환대기 부정'으로 제시된 것으로, 점유대기 부정을 위한 방법은 아닙니다. (lines 73-78)",
+      "오답: 상호배제를 부정하여 여러 프로세스가 공유 자원을 사용하도록 하는 것은 '상호배정 부정'에 해당하며 점유대기 부정과 다릅니다. (lines 73-79)"
+    ],
+    "keywords": [
+      "점유 대기",
+      "예방",
+      "자원 할당"
+    ],
+    "sourceEvidence": {
+      "section": "DeadLock.md",
+      "startLine": 73,
+      "endLine": 78,
+      "quote": "교착 상태 발생 조건 중 하나를 제거하면서 해결한다 (자원 낭비 엄청 심함)\n\n   > - 상호배제 부정 : 여러 프로세스가 공유 자원 사용\n   > - 점유대기 부정 : 프로세스 실행전 모든 자원을 할당\n   > - 비선점 부정 : 자원 점유 중인 프로세스가 다른 자원을 요구할 때 가진 자원 반납\n   > - 순환대기 부정 : 자원에 고유번호 할당 후 순서대로 자원 요구"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/DeadLock.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/DeadLock.md",
+    "id": "5e61a9ff-b315-5d0e-a135-f09e91694ccd",
+    "review": {
+      "blind": {
+        "slot": 37,
+        "correctOptionText": "프로세스 실행 전에 모든 필요한 자원을 미리 할당합니다.",
+        "unambiguous": true,
+        "reason": "본문의 예방 기법에서 점유 대기 부정 방법으로 '프로세스 실행전 모든 자원을 할당'이라고 명시되어 있음.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 37,
+        "passed": true,
+        "reason": "Correct option corresponds to the '점유대기 부정' method in the source; other options correspond to different prevention techniques or incorrect claims. Explanations and metadata are consistent with the supplied text."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 38,
+    "topic": "Global vs Local 교체 방식",
+    "learningObjective": "Global 교체와 Local 교체의 차이와 실제 효율성 판단 근거를 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "페이지 교체 방식으로 Global 교체와 Local 교체를 비교할 때, 출처에서 주장하는 효율성에 관한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "출처는 두 방식의 효율성 차이에 대해 언급하지 않습니다.",
+      "Global 교체는 메모리 상의 모든 프로세스 페이지를 대상으로 하며, 실제로는 전체 기준 교체가 더 효율적이라고 합니다.",
+      "Local 교체는 전체 프로세스 페이지를 대상으로 하여 Global보다 더 효율적이라고 합니다.",
+      "Global 교체는 자기 프로세스 페이지만 교체하므로 효율적이라고 합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "출처는 Global 교체를 '메모리 상의 모든 프로세스 페이지에 대해 교체하는 방식'이라고 정의하고, 실제로는 전체를 기준으로 페이지를 교체하는 것이 더 효율적이라고 명시하고 있습니다. 반면 Local은 자기 프로세스 페이지에서만 교체하는 방식이라고 설명합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 출처는 명시적으로 두 방식의 정의와 함께 전체 기준 교체가 더 효율적이라고 언급하고 있습니다.",
+      "정답입니다. 출처에서 Global과 Local을 정의하고, 전체를 기준으로 하는 Global 방식이 더 효율적이라고 명시하고 있습니다.",
+      "틀렸습니다. 출처는 Local이 자기 프로세스 페이지에서만 교체하는 방식이라고 설명하며, 전체 기준 교체가 더 효율적이라고 말합니다.",
+      "틀렸습니다. 출처는 Global을 '모든 프로세스 페이지' 대상으로 하는 방식으로 정의하고 있습니다."
+    ],
+    "keywords": [
+      "Global 교체",
+      "Local 교체",
+      "효율성"
+    ],
+    "sourceEvidence": {
+      "section": "Page Replacement Algorithm.md",
+      "startLine": 86,
+      "endLine": 102,
+      "quote": "- Global 교체\n\n  > 메모리 상의 모든 프로세스 페이지에 대해 교체하는 방식\n\n- Local 교체\n\n  > 메모리 상의 자기 프로세스 페이지에서만 교체하는 방식\n\n\n\n다중 프로그래밍의 경우, 메인 메모리에 다양한 프로세스가 동시에 올라올 수 있음\n\n따라서, 다양한 프로세스의 페이지가 메모리에 존재함\n\n페이지 교체 시, 다양한 페이지 교체 알고리즘을 활용해 victim page를 선정하는데, 선정 기준을 Global로 하느냐, Local로 하느냐에 대한 차이\n\n→ 실제로는 전체를 기준으로 페이지를 교체하는 것이 더 효율적이라고 함. 자기 프로세스 페이지에서만 교체를 하면, 교체를 해야할 때 각각 모두 교체를 진행해야 하므로 비효율적"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Page Replacement Algorithm.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Page%20Replacement%20Algorithm.md",
+    "id": "3a0ff862-facd-51cc-86a5-b3a298f2ac7e",
+    "review": {
+      "blind": {
+        "slot": 38,
+        "correctOptionText": "Global 교체는 메모리 상의 모든 프로세스 페이지를 대상으로 하며, 실제로는 전체 기준 교체가 더 효율적이라고 합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 '전체를 기준으로 페이지를 교체하는 것이 더 효율적이라고 함'이라 명시함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 38,
+        "passed": true,
+        "reason": "출처에 Global·Local 정의와 함께 '전체를 기준으로 페이지를 교체하는 것이 더 효율적이라고 함'이라고 명시되어 있어 정답(보기가 말하는 내용)이 근거되고, 나머지 보기는 출처 내용과 상충하여 오답임."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 39,
+    "topic": "공유 메모리의 성능적 특징",
+    "learningObjective": "공유 메모리가 다른 IPC 방법에 비해 왜 빠른지 근거를 들어 설명할 수 있다.",
+    "difficulty": "MEDIUM",
+    "question": "공유 메모리(shared memory)에 대한 설명으로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "공유 메모리는 네트워크 소켓처럼 클라이언트-서버 구조로 원격 프로세스와 데이터를 주고받는 데 사용됩니다.",
+      "공유 메모리는 메시지 큐처럼 데이터에 번호를 붙여 여러 프로세스가 동시에 다루기 쉽게 설계되어 있습니다.",
+      "공유 메모리는 데이터 자체를 여러 프로세스가 직접 공유하도록 허용하므로 중개자 없이 바로 메모리에 접근해 IPC 중 가장 빠르게 작동합니다.",
+      "공유 메모리는 열린 파일을 메모리에 맵핑해서 공유하므로 주로 소규모 데이터를 교환할 때만 효율적입니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 공유 메모리를 '데이터 자체를 공유하도록 지원'하며, 프로세스들이 중개자 없이 곧바로 메모리에 접근할 수 있기 때문에 IPC 중 가장 빠르게 작동한다고 설명합니다. 이는 다른 선택지들의 설명과 맞지 않습니다.",
+    "optionExplanations": [
+      "틀렸습니다. 네트워크를 통한 원격 통신은 소켓의 설명에 해당하며 공유 메모리는 로컬 프로세스들 간의 메모리 공유를 의미합니다. (라인 96-103)",
+      "틀렸습니다. 메시지 큐는 데이터에 번호를 붙여 여러 프로세스가 동시에 다루기 쉽게 하는 설비로 설명되어 있으며 공유 메모리와는 다른 방식입니다. (라인 59-69)",
+      "정답입니다. 본문은 공유 메모리가 프로세스 간 메모리 영역을 공유하도록 허용하고, 중개자 없이 곧바로 메모리에 접근할 수 있어 가장 빠르다고 명시합니다. (라인 74-85)",
+      "틀렸습니다. 열린 파일을 메모리에 맵핑해서 공유하는 방식은 '메모리 맵'에 대한 설명이며, 본문은 이를 대용량 파일 공유에 주로 사용한다고 합니다. (라인 88-93, 90-92)"
+    ],
+    "keywords": [
+      "공유 메모리",
+      "속도",
+      "메모리 직접 접근"
+    ],
+    "sourceEvidence": {
+      "section": "IPC(Inter Process Communication).md",
+      "startLine": 72,
+      "endLine": 85,
+      "quote": "4. ##### 공유 메모리\n\n   > 파이프, 메시지 큐가 통신을 이용한 설비라면, **공유 메모리는 데이터 자체를 공유하도록 지원하는 설비**다.\n   > \n   >\n   > 프로세스의 메모리 영역은 독립적으로 가지며 다른 프로세스가 접근하지 못하도록 반드시 보호돼야한다. 하지만 다른 프로세스가 데이터를 사용하도록 해야하는 상황도 필요할 것이다. 파이프를 이용해 통신을 통해 데이터 전달도 가능하지만, 스레드처럼 메모리를 공유하도록 해준다면 더욱 편할 것이다.\n   > \n   >\n   > 공유 메모리는 **프로세스간 메모리 영역을 공유해서 사용할 수 있도록 허용**해준다.\n   >\n   > 프로세스가 공유 메모리 할당을 커널에 요청하면, 커널은 해당 프로세스에 메모리 공간을 할당해주고 이후 모든 프로세스는 해당 메모리 영역에 접근할 수 있게 된다.\n   >\n   > - **중개자 없이 곧바로 메모리에 접근할 수 있어서 IPC 중에 가장 빠르게 작동함**"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/IPC(Inter Process Communication).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/IPC%28Inter%20Process%20Communication%29.md",
+    "id": "7c45b6ba-deb8-57e3-83af-ed688b27c7ad",
+    "review": {
+      "blind": {
+        "slot": 39,
+        "correctOptionText": "공유 메모리는 데이터 자체를 여러 프로세스가 직접 공유하도록 허용하므로 중개자 없이 바로 메모리에 접근해 IPC 중 가장 빠르게 작동합니다.",
+        "unambiguous": true,
+        "reason": "Source describes shared memory as allowing direct memory sharing without intermediary and being the fastest IPC method.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 39,
+        "passed": true,
+        "reason": "The source plainly describes shared memory as direct memory sharing and the fastest IPC (supporting option 3) and attributes the other descriptions to sockets, message queues, and memory-mapped files, making the three distractors provably wrong."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 40,
+    "topic": "디바이스 드라이버와 추상화",
+    "learningObjective": "디바이스 드라이버가 왜 필요한지와 운영체제가 드라이버를 어떻게 다루는지 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "운영체제가 디바이스 드라이버 계층을 갖는 주된 이유로 가장 타당한 것은 무엇입니까?",
+    "options": [
+      "운영체제가 각 하드웨어를 직접 설계하기 위해서입니다.",
+      "디바이스 드라이버는 네트워크 프로토콜을 제공하는 전용 계층이기 때문에 필요합니다.",
+      "디바이스 드라이버를 사용하면 사용자 계정 관리가 자동으로 이루어지기 때문입니다.",
+      "다양한 하드웨어를 운영체제 수준에서 추상화하여 응용 프로그램이 하드웨어를 사용할 수 있게 하기 위해서입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "원문은 여러 하드웨어를 운영체제에서 인식하고 관리하여 응용 프로그램이 하드웨어를 사용할 수 있게 하기 위해 하드웨어를 추상화하는 계층이 필요하며, 그 계층을 디바이스 드라이버라 부른다고 설명합니다. 또한 다양한 하드웨어만큼 많은 드라이버가 존재하고 운영체제가 이들을 관리한다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "잘못된 보기입니다. 원문은 운영체제가 하드웨어를 설계한다거나 직접 제작한다는 내용을 포함하지 않습니다; 드라이버는 하드웨어를 추상화해 사용하는 역할입니다.",
+      "잘못된 보기입니다. 네트워크 프로토콜 제공은 네트워킹 역할에 해당하며, 디바이스 드라이버의 주된 목적은 하드웨어 추상화입니다.",
+      "잘못된 보기입니다. 사용자 계정 관리는 사용자 관리 항목에 해당하며, 디바이스 드라이버와 직접적인 관련이 없습니다.",
+      "정답입니다. 출처는 하드웨어를 추상화해 주는 계층이 디바이스 드라이버이며, 운영체제가 이를 통해 응용 프로그램이 하드웨어를 사용하게 만든다는 설명입니다."
+    ],
+    "keywords": [
+      "디바이스 드라이버",
+      "하드웨어 추상화",
+      "운영체제 관리"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Operation System.md",
+      "startLine": 101,
+      "endLine": 105,
+      "quote": "운영체제는 시스템의 자원, 하드웨어를 관리한다. 시스템에는 여러 하드웨어가 붙어있는데, 이들을 운영체제에서 인식하고 관리하게 만들어 응용 프로그램이 하드웨어를 사용할 수 있게 만들어야 한다.\n\n따라서, 운영체제 안에 하드웨어를 추상화 해주는 계층이 필요하다. 이 계층이 바로 디바이스 드라이버라고 불린다. 하드웨어의 종류가 많은 만큼, 운영체제 내부의 디바이스 드라이버도 많이 존재한다.\n\n이러한 수많은 디바이스 드라이버를 관리하는 기능 또한 운영체제가 맡고 있다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Operation System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Operation%20System.md",
+    "id": "941fa10d-6a76-58dd-83a9-1c672b7f145d",
+    "review": {
+      "blind": {
+        "slot": 40,
+        "correctOptionText": "다양한 하드웨어를 운영체제 수준에서 추상화하여 응용 프로그램이 하드웨어를 사용할 수 있게 하기 위해서입니다.",
+        "unambiguous": true,
+        "reason": "Matches the source explanation that device drivers provide an abstraction layer so applications can use diverse hardware.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 40,
+        "passed": true,
+        "reason": "정답(4), 오답 근거, 난이도, 학습 목표 및 출처 인용 모두 원문 내용과 일관되며 오답들이 원문으로 반증 가능합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 41,
+    "topic": "디렉터리 구조와 순환 방지",
+    "learningObjective": "그래프 구조 디렉터리에서 순환을 방지하기 위한 설계 선택을 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "파일 시스템에서 그래프 구조 디렉터리가 순환이 발생하지 않도록 하기 위한 설계 대책으로 문서에서 제시된 것은 무엇입니까?",
+    "options": [
+      "하위 디렉터리로의 링크는 허용하지 않고 파일에 대한 링크만 허용하거나, 전체 파일 시스템을 순회하는 가비지 컬렉션을 이용해 접근 가능한 것만 표시하는 방법",
+      "디렉터리와 일반 파일을 구분하는 1비트만 추가하면 순환이 완전히 방지된다",
+      "링크를 무제한 허용하되 사용자가 순환을 수동으로 감지하도록 하는 방법",
+      "트리 구조로만 설계하면 가비지 컬렉션이 불필요하므로 항상 바람직하다"
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 그래프 구조 디렉터리에서 '순환이 발생하지 않도록 하위 디렉터리가 아닌 파일에 대한 링크만 허용하거나, 가비지 컬렉션을 이용해 전체 파일 시스템을 순회하고 접근 가능한 모든 것을 표시'하는 두 가지 방안을 명시하고 있어, 첫 번째 옵션이 문서의 기술과 일치합니다.",
+    "optionExplanations": [
+      "정답입니다. 출처는 문헌에서 직접적으로 '하위 디렉터리가 아닌 파일에 대한 링크만 허용하거나, 가비지 컬렉션을 이용'한다고 설명하는 부분입니다.",
+      "오답입니다. 문서는 1비트로 파일과 디렉터리를 구분하는 점을 다른 곳에서 언급하지만, 그 자체로 순환을 완전히 방지한다고 주장하지는 않습니다.",
+      "오답입니다. 문서에는 사용자가 수동으로 순환을 감지하도록 한다는 설명이 없으며, 대신 링크 제한이나 가비지 컬렉션 같은 예방책을 제시합니다.",
+      "오답입니다. 문서는 트리 구조를 별도로 설명하지만, 항상 바람직하다고 단정하지 않으며 가비지 컬렉션을 대안으로 제시하는 맥락과 직접 연결되지 않습니다."
+    ],
+    "keywords": [
+      "그래프 구조",
+      "디렉터리",
+      "순환 방지",
+      "가비지 컬렉션",
+      "링크 제한"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/File System.md",
+      "startLine": 104,
+      "endLine": 109,
+      "quote": "- 그래프 구조 디렉터리\n\n  > 순환이 발생하지 않도록 하위 디렉터리가 아닌 파일에 대한 링크만 허용하거나, 가비지 컬렉션을 이용해 전체 파일 시스템을 순회하고 접근 가능한 모든 것을 표시\n\n  링크가 있으면 우회하여 순환을 피할 수 있음"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/File System.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/File%20System.md",
+    "id": "130f4499-f90f-5d72-b61a-df1490b1f3d1",
+    "review": {
+      "blind": {
+        "slot": 41,
+        "correctOptionText": "하위 디렉터리로의 링크는 허용하지 않고 파일에 대한 링크만 허용하거나, 전체 파일 시스템을 순회하는 가비지 컬렉션을 이용해 접근 가능한 것만 표시하는 방법",
+        "unambiguous": true,
+        "reason": "Source explicitly lists disallowing subdirectory links (only file links) or using garbage collection to traverse and show reachable items to avoid cycles.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 41,
+        "passed": true,
+        "reason": "Correct option exactly matches the source's stated measures to avoid cycles in graph-directory designs (disallow links to subdirectories or use garbage collection). All three distractors are not supported by the source (1-bit does not guarantee cycle prevention, manual detection is not described, and tree-only claims are not made). Difficulty and learning objective are suitable; explanations are faithful."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 42,
+    "topic": "아키텍처 선택: 안전성 vs 성능 트레이드오프",
+    "learningObjective": "프로세스와 스레드의 특성을 결합해 주어진 안전성·성능 요구를 만족하는 아키텍처를 선택할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "어떤 시스템에서 하나의 작업이 다른 작업의 메모리 공간을 침범하면 전체 동작이 중단될 위험이 크고, 그 시스템의 신뢰성이 최우선이며 성능(오버헤드)은 어느 정도 감수 가능하다고 가정할 때, 원문에 근거하여 어떤 구성 방식을 선택하는 것이 가장 적절합니까?",
+    "options": [
+      "하나의 단일 스레드로만 모든 작업을 처리한다",
+      "멀티프로세스: 각 프로세스가 독립된 주소 공간을 갖도록 구성한다",
+      "멀티스레드: 공유 메모리를 사용하여 성능을 최대화한다",
+      "멀티스레드에 Critical Section 없이 공유 자원만 사용한다"
+    ],
+    "correctAnswer": 2,
+    "explanation": "원문은 멀티프로세스의 장점으로 '안전성(메모리 침범 문제를 OS 차원에서 해결)'을 명시하고 있으며, 멀티프로세스는 독립된 메모리를 갖기에 메모리 침범으로부터 더 안전합니다. 다만 독립 메모리 때문에 오버헤드와 Context Switching 비용이 증가한다고도 명시되어 있어 신뢰성을 우선시하는 조건에 부합합니다.",
+    "optionExplanations": [
+      "오답: 단일 스레드는 안전성 측면에서 문제는 줄일 수 있으나 원문은 신뢰성 확보를 위해 프로세스 독립성을 강조하며, 단일 스레드가 요구하는 병렬성이나 관리 측면을 충족하지 못할 수 있습니다.",
+      "정답: 원문에서 멀티프로세스는 메모리 침범 문제를 OS 차원에서 해결하므로 안전성이 장점으로 제시되어 있어 신뢰성 우선 시스템에 적합합니다.",
+      "오답: 멀티스레드는 성능 이점이 있으나 공유 메모리 때문에 하나의 스레드가 데이터 공간을 망가뜨리면 모든 스레드가 불능이 될 수 있다고 명시되어 있어 안전성 요구와 어긋납니다.",
+      "오답: Critical Section 없이 공유 자원만 사용하면 원문에 적힌 것처럼 공유 메모리로 인한 안전성 문제가 발생하므로 적절하지 않습니다."
+    ],
+    "keywords": [
+      "멀티프로세스",
+      "안전성",
+      "Context Switching"
+    ],
+    "sourceEvidence": {
+      "section": "source",
+      "startLine": 54,
+      "endLine": 66,
+      "quote": "**장점** : 안전성 (메모리 침범 문제를 OS 차원에서 해결)\n\n**단점** : 각각 독립된 메모리를 갖고 있어 작업량이 많을수록 오버헤드 발생, Context Switching으로 인한 성능 저하\n\n<br>\n\n***Context Switching* 이란?**\n\n> 프로세스의 상태 정보를 저장하고 복원하는 일련의 과정\n> - 동작 중인 프로세스가 대기하면서 해당 프로세스 상태를 보관\n> - 대기하고 있던 다음 순번의 프로세스가 동작하면서 이전에 보관했던 프로세스 상태를 복구\n>\n> 문제점: 프로세스는 독립된 메모리 영역을 할당받으므로, 캐시 메모리 초기화와 같은 무거운 작업이 진행되면 오버헤드가 발생할 수 있음"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process vs Thread.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20vs%20Thread.md",
+    "id": "cb0d93bb-3699-5220-92a7-6f2a39ec235e",
+    "review": {
+      "blind": {
+        "slot": 42,
+        "correctOptionText": "멀티프로세스: 각 프로세스가 독립된 주소 공간을 갖도록 구성한다",
+        "unambiguous": true,
+        "reason": "원문에서 멀티프로세스의 장점으로 '안전성 (메모리 침범 문제를 OS 차원에서 해결)'을 들고 있어 신뢰성이 우선일 때 적합함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 42,
+        "passed": true,
+        "reason": "원문은 멀티프로세스의 장점으로 '안전성(메모리 침범 문제를 OS 차원에서 해결)'을 명시하고 있으며 Context Switching 오버헤드도 함께 언급하므로, 신뢰성 우선의 경우 멀티프로세스 선택이 원문에 부합합니다. 다른 선택지는 원문 설명과 상충합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 43,
+    "topic": "컨텍스트 스위칭 동작",
+    "learningObjective": "인터럽트나 상태 전이에 따른 컨텍스트 스위칭에서 레지스터와 PCB 간의 구체적 저장/복원 동작을 문서에 근거하여 적용해 설명할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "문서에 따르면 인터럽트 발생으로 프로세스 전환이 일어날 때 컨텍스트 스위칭 과정에서 운영체제가 수행하는 동작은 무엇입니까?",
+    "options": [
+      "운영체제는 현재 PCB를 삭제하고 새로운 PCB를 생성하여 레지스터 내용을 그대로 유지한 채로 실행을 전환합니다.",
+      "컨텍스트 스위칭 시에는 레지스터를 보존하지 않으며, 전환된 프로세스는 항상 초기 레지스터 상태로 시작합니다.",
+      "현재 프로세스의 CPU 레지스터 값을 PCB에 저장하고, 전환할 다른 프로세스의 PCB에서 레지스터 값을 읽어 레지스터에 적재합니다.",
+      "현재 프로세스의 코드와 데이터를 디스크로 모두 스왑아웃한 뒤, 새 프로세스의 코드와 데이터를 디스크에서 로드합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 'CPU가 이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재하는 과정'을 컨텍스트 스위칭으로 정의하고 있습니다. 따라서 레지스터 값을 PCB에 저장하고 다른 PCB에서 읽어 레지스터에 적재하는 동작이 정확합니다.",
+    "optionExplanations": [
+      "오답: 문서에는 PCB를 삭제하고 새로 생성한다고만 하지 않으며, 레지스터 내용을 '그대로 유지'한다거나 PCB를 삭제하는 방식으로 설명하지 않습니다. 실제로 전환 대상의 레지스터 값을 PCB에서 읽어 적재한다고 되어 있습니다. (lines 22-29, 59-64)",
+      "오답: 문서에서는 컨텍스트 스위칭 시 레지스터를 PCB에 보관한다고 명확히 서술되어 있으므로, 레지스터를 보존하지 않는다는 선택지는 문서와 모순됩니다. (lines 59-66)",
+      "정답: 문서에 정확히 '이전의 프로세스 상태를 PCB에 보관'하고 '다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재'한다고 기술되어 있습니다. (lines 59-64)",
+      "오답: 문서에는 컨텍스트 스위칭을 설명하면서 레지스터 저장·복원을 언급하지만, 코드·데이터를 디스크로 스왑아웃/로딩하는 전 과정에 대한 설명은 없습니다. 따라서 문서 근거로는 과장된 설명입니다. (lines 59-66)"
+    ],
+    "keywords": [
+      "Context Switching",
+      "레지스터",
+      "PCB",
+      "인터럽트",
+      "저장/복원"
+    ],
+    "sourceEvidence": {
+      "section": "PCB & Context Switching.md",
+      "startLine": 59,
+      "endLine": 66,
+      "quote": "이렇게 수행 중인 프로세스를 변경할 때, CPU의 레지스터 정보가 변경되는 것을 `Context Switching`이라고 한다.\n\n#### Context Switching\n\n> CPU가 이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재하는 과정\n\n보통 인터럽트가 발생하거나, 실행 중인 CPU 사용 허가시간을 모두 소모하거나, 입출력을 위해 대기해야 하는 경우에 Context Switching이 발생"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/PCB & Context Switcing.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/PCB%20%26%20Context%20Switcing.md",
+    "id": "809ea614-263a-5ee8-8236-5cf091c60c20",
+    "review": {
+      "blind": {
+        "slot": 43,
+        "correctOptionText": "현재 프로세스의 CPU 레지스터 값을 PCB에 저장하고, 전환할 다른 프로세스의 PCB에서 레지스터 값을 읽어 레지스터에 적재합니다.",
+        "unambiguous": true,
+        "reason": "문서의 Context Switching 정의에 '이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재'라고 설명되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 43,
+        "passed": true,
+        "reason": "문서(lines 59-66)는 컨텍스트 스위칭을 '이전 프로세스 상태를 PCB에 보관하고, 다른 프로세스의 정보를 PCB에서 읽어 레지스터에 적재'한다고 명확히 기술하므로 정답(3)이 유일하게 근거 있고 다른 선택지는 문서 내용과 모순되거나 언급이 없어 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 44,
+    "topic": "Context Switching 동작",
+    "learningObjective": "인터럽트나 상태 전이 발생 시 문서에 따라 컨텍스트 스위칭이 레지스터와 PCB 간에 어떤 동작을 하는지 적용해서 설명할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "실행 중인 프로세스가 입출력 이벤트로 Waiting 상태로 전환될 때 문서에 따르면 컨텍스트 스위칭 동안 어떤 일이 발생합니까?",
+    "options": [
+      "현재 프로세스의 전체 주소 공간을 디스크로 교체하고 스케줄러가 즉시 새 프로세스를 디스크에서 로드한다",
+      "프로세스의 PCB를 즉시 삭제하고 동일한 메모리 위치를 다른 프로세스가 재사용한다",
+      "컨텍스트 스위칭에서는 레지스터를 유지한 채로 프로세스 우선순위만 변경한다",
+      "현재 프로세스의 레지스터 상태를 PCB에 저장하고, 다른 프로세스의 PCB에서 레지스터를 읽어 적재한다"
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 Context Switching을 'CPU가 이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재하는 과정'이라고 정의합니다. 또한 입출력으로 대기 상태 전환 시 컨텍스트 스위칭이 발생한다고 명시되어 있어, 현재 레지스터를 PCB에 저장하고 다른 PCB로부터 레지스터를 로드하는 동작이 일어납니다.",
+    "optionExplanations": [
+      "오답: 문서에서는 전체 주소 공간을 디스크로 교체하거나 디스크 로드를 즉시 수행한다고 언급하지 않았습니다; 컨텍스트 스위칭은 주로 레지스터와 메타데이터 교체를 의미합니다.",
+      "오답: 문서에는 프로세스가 Waiting 상태가 되면 PCB에 값을 저장한다고 했고, 프로세스 완료 시에만 PCB가 제거된다고 했습니다; 즉 즉시 PCB를 삭제한다고 하지 않았습니다.",
+      "오답: 문서는 컨텍스트 스위칭이 레지스터 저장·적재를 포함한다고 명시했으며, 단순히 우선순위만 변경한다고만 하지 않았습니다.",
+      "정답: 출처는 컨텍스트 스위칭을 이전 프로세스 상태를 PCB에 저장하고 다른 프로세스의 정보를 PCB에서 읽어 레지스터에 적재하는 과정으로 설명합니다."
+    ],
+    "keywords": [
+      "Context Switching",
+      "레지스터 저장",
+      "PCB 읽기",
+      "입출력 대기"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Management & PCB.md",
+      "startLine": 59,
+      "endLine": 66,
+      "quote": "이렇게 수행 중인 프로세스를 변경할 때, CPU의 레지스터 정보가 변경되는 것을 `Context Switching`이라고 한다.\n\n#### Context Switching\n\n> CPU가 이전의 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재하는 과정\n\n보통 인터럽트가 발생하거나, 실행 중인 CPU 사용 허가시간을 모두 소모하거나, 입출랙을 위해 대기해야 하는 경우에 Context Switching이 발생"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Management & PCB.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Management%20%26%20PCB.md",
+    "id": "d3f2d619-1ad9-5f83-b286-cb7b5cfac208",
+    "review": {
+      "blind": {
+        "slot": 44,
+        "correctOptionText": "현재 프로세스의 레지스터 상태를 PCB에 저장하고, 다른 프로세스의 PCB에서 레지스터를 읽어 적재한다",
+        "unambiguous": true,
+        "reason": "문서의 컨텍스트 스위칭 정의에 '이전 프로세스 상태를 PCB에 보관하고, 또 다른 프로세스의 정보를 PCB에 읽어 레지스터에 적재'라고 명시되어 있음.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 44,
+        "passed": true,
+        "reason": "문서는 컨텍스트 스위칭을 '이전 프로세스 상태를 PCB에 보관하고, 다른 프로세스의 정보를 PCB에서 읽어 레지스터에 적재하는 과정'으로 정의하므로 정답(레지스터 저장/적재)이 문서 근거로 명확합니다. 다른 선택지들은 문서 내용과 상충하거나 언급되지 않아 오답임이 확실합니다. 난이도·학습목표·한국어 표현도 적절합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 45,
+    "topic": "폴링과 인터럽트의 실시간 대응 비교 및 처리 과정 적용",
+    "learningObjective": "실시간 대응이 필요한 장치가 있을 때 인터럽트 방식이 왜 유리하며, 인터럽트 발생 시의 처리 흐름을 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "실시간 대응이 필요한 장치에서 하드웨어 인터럽트를 지원하는 시스템의 동작과, 폴링 방식의 단점으로 옳은 설명은 무엇입니까?",
+    "options": [
+      "하드웨어 인터럽트가 발생하면 현재 상태(레지스터·PC 등)를 저장하고 ISR로 이동하여 신속히 처리하며, 폴링은 컨트롤러가 계속 체크하므로 원래 작업에 집중하지 못하게 됩니다.",
+      "하드웨어 인터럽트는 폴링보다 더 느리므로 실시간 환경에서는 폴링이 선호되며, 폴링은 CPU 자원을 거의 사용하지 않습니다.",
+      "인터럽트 기능이 없으면 컨트롤러는 자동으로 우선순위 하드웨어를 사용하므로 폴링과 차이가 없습니다.",
+      "인터럽트 처리 시 이전 상태를 전혀 저장하지 않기 때문에 인터럽트 서비스 루틴이 끝난 뒤 원래 작업으로 복귀할 수 없습니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서에 따르면 인터럽트 발생 시 현재 수행 중인 프로그램을 멈추고 상태 레지스터와 PC 등을 스택에 잠시 저장한 뒤 인터럽트 서비스 루틴으로 간다고 설명되어 있습니다. 또한 인터럽트가 없었다면 컨트롤러는 특정 일을 알기 위해 계속 체크(폴링)를 해야 하고, 폴링하는 시간에는 원래 하던 일에 집중할 수 없어 많은 기능 수행에 단점이 있다고 되어 있습니다. 따라서 하드웨어 인터럽트는 신속 대응이 가능하고 실시간 대응에 필수적입니다.",
+    "optionExplanations": [
+      "정답: 인터럽트는 상태를 저장하고 ISR로 이동해 처리하며, 폴링은 계속 체크하므로 작업 집중을 방해한다는 설명이 문서에 명시되어 있습니다.",
+      "오답: 문서는 인터럽트 방식이 폴링보다 신속하게 대응할 수 있다고 설명하며, 폴링이 더 빠르다거나 CPU 자원을 거의 사용하지 않는다고 하지 않습니다.",
+      "오답: 문서에는 인터럽트 기능이 없을 때 컨트롤러가 폴링을 해야 한다고 되어 있어 자동으로 우선순위 하드웨어를 사용한다고 하지 않습니다.",
+      "오답: 문서에는 상태를 저장하는 이유가 인터럽트 서비스 루틴 종료 후 원래 작업으로 돌아오기 위함이라고 명시되어 있어 이전 상태를 저장하지 않는다는 설명은 틀렸습니다."
+    ],
+    "keywords": [
+      "폴링",
+      "인터럽트",
+      "실시간 대응",
+      "상태 저장",
+      "인터럽트 서비스 루틴"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Interrupt.md",
+      "startLine": 46,
+      "endLine": 51,
+      "quote": "현재 수행 중인 프로그램을 멈추고, 상태 레지스터와 PC 등을 스택에 잠시 저장한 뒤에 인터럽트 서비스 루틴으로 간다. (잠시 저장하는 이유는, 인터럽트 서비스 루틴이 끝난 뒤 다시 원래 작업으로 돌아와야 하기 때문)\n\n만약 **인터럽트 기능이 없었다면**, 컨트롤러는 특정한 어떤 일을 할 시기를 알기 위해 계속 체크를 해야 한다. (이를 **폴링(Polling)**이라고 한다)\n\n폴링을 하는 시간에는 원래 하던 일에 집중할 수가 없게 되어 많은 기능을 제대로 수행하지 못하는 단점이 있었다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Interrupt.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Interrupt.md",
+    "id": "6b68b804-2377-5162-a14c-275f981c03e0",
+    "review": {
+      "blind": {
+        "slot": 45,
+        "correctOptionText": "하드웨어 인터럽트가 발생하면 현재 상태(레지스터·PC 등)를 저장하고 ISR로 이동하여 신속히 처리하며, 폴링은 컨트롤러가 계속 체크하므로 원래 작업에 집중하지 못하게 됩니다.",
+        "unambiguous": true,
+        "reason": "본문은 하드웨어 인터럽트가 상태 저장 후 ISR로 빠르게 처리한다고 하고, 폴링은 계속 체크하므로 원래 작업에 집중할 수 없다고 설명함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 45,
+        "passed": true,
+        "reason": "정답은 원문에서 인터럽트 발생 시 상태 저장과 ISR 이동, 폴링의 단점을 직접 기술한 부분을 근거로 합니다. 나머지 선택지들은 원문 서술과 모순되어 모두 틀립니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 46,
+    "topic": "가상 메모리 페이징의 적용 결정",
+    "learningObjective": "시스템 요구(외부 단편화 회피, 내부 단편화 허용, 동적 로딩 허용, 오버헤드 수용)에 맞추어 가상 메모리 페이징을 선택할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "운영체제 설계자가 다음 조건을 만족하는 메모리 기법을 선택하려 합니다: 외부 단편화를 피하고, 내부 단편화는 소량 허용 가능하며, 프로세스의 모든 페이지를 처음부터 메모리에 적재할 필요는 없고 복잡한 관리 오버헤드를 감수할 수 있습니다. 문서의 설명에 따라 가장 적절한 선택은 무엇입니까?",
+    "options": [
+      "가상 메모리 세그먼테이션(Virtual memory segmentation)",
+      "가상 메모리 페이징(Virtual memory paging)",
+      "단순 세그먼테이션(Simple segmentation)",
+      "단순 페이징(Simple paging) — 단지 모든 페이지를 항상 로드하는 방식"
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서는 가상 메모리 페이징이 '프로세스 페이지 전부를 로드시킬 필요 없음', '필요한 페이지가 있으면 나중에 자동으로 불러들여짐', '외부 단편화 X' 및 '복잡한 메모리 관리로 오버헤드 발생'이라고 설명합니다(라인 56-64). 또한 단순 페이징은 내부 단편화가 소량 존재한다고 했으므로(라인 40-46), 주어진 조건과 가장 잘 맞는 것은 가상 메모리 페이징입니다.",
+    "optionExplanations": [
+      "오답: 가상 메모리 세그먼테이션은 필요할 때 세그먼트를 불러오지만 문서는 내부 단편화가 없고 복잡한 오버헤드가 발생한다고 하여(라인 66-74) '내부 단편화 소량 허용'이라는 조건과는 부합하지 않습니다.",
+      "정답: 문서는 가상 메모리 페이징이 필요할 때만 페이지를 불러오며 외부 단편화가 없고 복잡한 오버헤드가 발생한다고 명시합니다(라인 56-64). 내부 단편화 소량 존재는 단순 페이징 특성(라인 40-46)과 일치할 수 있습니다.",
+      "오답: 단순 세그먼테이션은 내부 단편화가 없고 외부 단편화가 존재한다고 문서에 나와 있어(라인 48-54) '외부 단편화 회피' 조건을 만족하지 못합니다.",
+      "오답: 단순 페이징은 외부 단편화는 없지만 문맥에서 '모든 페이지를 항상 로드'하는 방식이라는 전제는 문서에서 단순 페이징의 특징으로 말하지 않습니다; 또한 설계 조건은 동적 로딩을 요구합니다(라인 40-46, 56-60)."
+    ],
+    "keywords": [
+      "가상 메모리",
+      "페이징",
+      "오버헤드",
+      "단편화",
+      "동적 로딩"
+    ],
+    "sourceEvidence": {
+      "section": "Paging and Segmentation.md",
+      "startLine": 56,
+      "endLine": 64,
+      "quote": "- 가상 메모리 페이징\n\n     > 단순 페이징과 비교해 프로세스 페이지 전부를 로드시킬 필요X\n     >\n     > 필요한 페이지가 있으면 나중에 자동으로 불러들어짐\n     >\n     > 외부 단편화 X\n     >\n     > 복잡한 메모리 관리로 오버헤드 발생"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Paging and Segmentation.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Paging%20and%20Segmentation.md",
+    "id": "c9b9ff7e-7475-573d-ba6c-29287c06a3d9",
+    "review": {
+      "blind": {
+        "slot": 46,
+        "correctOptionText": "가상 메모리 페이징(Virtual memory paging)",
+        "unambiguous": true,
+        "reason": "문서에 가상 메모리 페이징은 '외부 단편화 X', '소량의 내부 단편화', '필요한 페이지만 나중에 불러들임', '복잡한 메모리 관리로 오버헤드 발생'이라 설명되어 있어 조건에 부합함.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 46,
+        "passed": true,
+        "reason": "정답(가상 메모리 페이징)은 소스의 관련 부분(라인 56-64: 동적 로딩, 외부 단편화 X, 오버헤드 발생)을 정확히 반영합니다. 보기별 설명들도 소스 근거에 부합합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 47,
+    "topic": "멀티프로세서 환경의 공유 데이터 보호",
+    "learningObjective": "멀티프로세서 환경에서 커널 내부의 공유 데이터를 보호하기 위한 적절한 동기화 수단을 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "멀티프로세서 환경에서 서로 다른 CPU들이 커널 내부의 동일한 공유 데이터를 동시에 조작하여 Race Condition이 발생할 가능성이 있을 때, 문서가 권장하는 해결책은 무엇입니까?",
+    "options": [
+      "프로세스의 타임 슬라이스를 길게 하여 문맥 교환 빈도를 줄인다.",
+      "사용자 프로세스에서 시스템 호출을 줄이도록 애플리케이션 설계를 강제한다.",
+      "공유 데이터에 접근할 때마다 해당 데이터에 대해 lock/unlock을 수행한다.",
+      "모든 CPU에서 인터럽트를 비활성화하여 단일 CPU처럼 동작하게 만든다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서의 세 번째 경우에서 멀티프로세서 환경에서는 2개의 CPU가 동시에 커널 내부의 공유 데이터에 접근하여 조작하는 문제가 있으며, 그 해결법으로 '커널 내부에 있는 각 공유 데이터에 접근할 때마다, 그 데이터에 대한 lock/unlock을 하는 방법'을 명시하고 있습니다. 인터럽트 비활성화는 단일 CPU에서의 해결책으로 제시되었을 뿐 멀티프로세서 간 동기화 대책으로 문서에 제시되지 않았습니다. 나머지 보기들도 문서에서 제안한 방법이 아닙니다.",
+    "optionExplanations": [
+      "오답: 문서에는 타임 슬라이스 변경으로 문제를 해결한다고 하지 않습니다.",
+      "오답: 문서에서는 애플리케이션 설계 강제를 통한 해결을 제시하지 않습니다.",
+      "정답: 문서에서 멀티프로세서 환경의 해결책으로 명시한 방법입니다(데이터별 lock/unlock).",
+      "오답: 문서에서는 인터럽트 비활성화는 커널모드 작업 중의 해결책으로 언급되었으나, 멀티프로세서 환경 전체에 적용하는 해결책으로 제시하지 않았습니다."
+    ],
+    "keywords": [
+      "멀티프로세서",
+      "lock/unlock",
+      "공유 데이터 동기화"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Race Condition.md",
+      "startLine": 21,
+      "endLine": 24,
+      "quote": "3. ##### 멀티 프로세서 환경에서 공유 메모리 내의 커널 데이터에 접근할 때\n\n   - 문제점 : 멀티 프로세서 환경에서 2개의 CPU가 동시에 커널 내부의 공유 데이터에 접근하여 조작하는 경우\n   - 해결법 : 커널 내부에 있는 각 공유 데이터에 접근할 때마다, 그 데이터에 대한 lock/unlock을 하는 방법"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Race Condition.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Race%20Condition.md",
+    "id": "ebc09ad9-c9c7-513f-bf7b-221ec9b6e4a2",
+    "review": {
+      "blind": {
+        "slot": 47,
+        "correctOptionText": "공유 데이터에 접근할 때마다 해당 데이터에 대해 lock/unlock을 수행한다.",
+        "unambiguous": true,
+        "reason": "Source recommends using lock/unlock for each shared kernel data access in multiprocessor environments.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 47,
+        "passed": true,
+        "reason": "정답(3)은 출처에 명시된 '데이터별 lock/unlock' 해결책과 일치합니다. 다른 보기들은 출처에서 제안되지 않아 오답으로 판정 가능합니다. 난이도 및 학습목표도 출처 내용과 구별됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 48,
+    "topic": "스택과 전역 변수 분리 설계의 적용",
+    "learningObjective": "스택의 LIFO 특성과 전역 변수 공유의 장점을 결합해 메모리 절약 설계를 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "함수들이 빈번히 동일한 전역 변수를 공유하여 사용하고, 동시에 여러 함수 호출로 스택 사용 패턴이 강한 프로그램을 설계할 때 메모리 사용을 최소화하려면 어떻게 주소 공간을 구성해야 합니까?",
+    "options": [
+      "전역 변수와 지역 변수를 모두 스택에 두어 LIFO 접근만으로 메모리를 통합 관리합니다.",
+      "전역 변수를 코드 세그먼트에 포함시켜 모든 프로세스가 실행 코드처럼 공유하도록 합니다.",
+      "함수의 지역 변수들을 데이터 세그먼트로 옮겨 전역 변수와 함께 공유하여 스택 사용을 없앱니다.",
+      "전역 변수는 별도의 데이터 세그먼트에 두고 함수 호출용 지역 변수는 스택 세그먼트에 두어 데이터는 공유하고 스택은 LIFO로 유지합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서는 전역 변수를 데이터 세그먼트에 두고 스택은 함수와 지역 변수를 위한 LIFO 구조로 설명합니다. 전역 변수를 데이터로 분리하면 여러 프로세스나 함수가 같은 데이터를 공유하여 메모리를 절약할 수 있고, 스택은 LIFO 특성에 맞게 유지되어 함수 호출 동작에 적합합니다. 따라서 데이터는 데이터 세그먼트에, 지역 변수는 스택에 두는 설계가 메모리 절약과 실행 모델을 모두 만족합니다.",
+    "optionExplanations": [
+      "문서에 따르면 스택은 함수와 지역 변수용 LIFO 구조로 사용되므로 전역 변수를 스택에 두면 공유가 어려워 메모리 절약 목적에 맞지 않습니다 (라인 25-28,15-18).",
+      "코드 세그먼트는 실행 코드 저장용이며 전역 데이터를 보관하도록 설계되어 있지 않습니다; 문서는 코드와 데이터를 구분하여 관리한다고 명시합니다 (라인 5-9,15-18).",
+      "지역 변수를 데이터 세그먼트로 옮기면 LIFO 기반의 함수 동작과 스코프 규칙을 해치게 되며 문서에서는 지역 변수를 스택에서 관리한다고 명시되어 있습니다 (라인 5,9,25-27).",
+      "정답입니다. 문서에서 전역 변수는 데이터 세그먼트에 저장하고 함수와 지역 변수는 LIFO 특성을 가진 스택에서 실행된다고 명시하여(라인 5-9,25-27) 이 구성이 메모리 절약과 스택 특성 유지에 부합합니다 (라인 17,19,25-28)."
+    ],
+    "keywords": [
+      "데이터 세그먼트",
+      "스택 세그먼트",
+      "전역 변수",
+      "LIFO"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Process Address Space.md",
+      "startLine": 19,
+      "endLine": 28,
+      "quote": "Stack과 데이터를 나눈 이유는, 스택 구조의 특성과 전역 변수의 활용성을 위한 것!\n\n<br>\n\n<img src=\"https://t1.daumcdn.net/cfile/tistory/2174013858F1BED70A\">\n\n```\n프로그램의 함수와 지역 변수는, LIFO(가장 나중에 들어간게 먼저 나옴)특성을 가진 스택에서 실행된다. \n따라서 이 함수들 안에서 공통으로 사용하는 '전역 변수'는 따로 지정해주면 메모리를 아낄 수 있다.\n```"
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Process Address Space.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Address%20Space.md",
+    "id": "f2ce9a64-d227-58f8-b2cb-465d8973ef70",
+    "review": {
+      "blind": {
+        "slot": 48,
+        "correctOptionText": "전역 변수는 별도의 데이터 세그먼트에 두고 함수 호출용 지역 변수는 스택 세그먼트에 두어 데이터는 공유하고 스택은 LIFO로 유지합니다.",
+        "unambiguous": true,
+        "reason": "본문은 전역 변수는 따로 지정(데이터 세그먼트)하여 메모리를 아끼고, 함수와 지역 변수는 스택(LIFO)에 둔다고 설명함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 48,
+        "passed": true,
+        "reason": "원문(라인 19-28)에서 전역 변수는 데이터 세그먼트에, 함수/지역 변수는 LIFO 특성의 스택에서 관리한다고 설명하므로 정답(데이터는 데이터 세그먼트, 지역 변수는 스택 유지)이 근거 있고 나머지 선택지는 원문과 모순됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 49,
+    "topic": "페이지 교체 시 오버헤드 감소 방법의 적용",
+    "learningObjective": "수정 비트 활용과 적절한 교체 알고리즘 선택을 결합하여 디스크 입출력 오버헤드를 줄이는 방법을 적용할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "시스템에서 페이지 교체로 인한 디스크 입출력 오버헤드를 최소화하려면 어떤 두 가지 접근을 결합하는 것이 본문에서 권장하는 방법에 가장 부합합니까?",
+    "options": [
+      "victim 페이지의 변경(수정) 비트를 확인하여 쓰기 작업을 줄이고, 페이지 폴트 확률을 낮추는 교체 알고리즘(LRU나 OPT 등)을 선택합니다.",
+      "모든 victim 페이지를 항상 디스크에 기록하고, FIFO만을 사용해 교체 결정의 단순성을 유지합니다.",
+      "메모리 과할당을 그대로 두어 페이지 교체를 피하고, 캐시를 비활성화하여 디스크 접근을 분산시킵니다.",
+      "페이지 변경 비트를 무시하고 랜덤으로 victim을 골라 디스크 접근을 예측불가능하게 합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "본문은 오버헤드를 줄이는 두 가지 방법으로 '변경 비트를 활용해 디스크에 기록하는 횟수를 줄여 오버헤드를 감소'(방법 1, 라인 118–126,127–129)하고, '페이지 폴트 발생 확률을 줄일 수 있는 교체 알고리즘을 선택'(방법 2, 라인 133–136,137–139)하는 것을 제시합니다. 따라서 두 방법을 결합한 옵션 1이 본문의 권장 방법과 일치합니다.",
+    "optionExplanations": [
+      "올바름: 본문은 변경 비트를 확인하여 디스크 기록 횟수를 줄이는 방법과(라인 118–126,127–129), 페이지 폴트 확률을 낮출 수 있는 교체 알고리즘 선택을 별도로 제시하고 있어 두 방법을 결합하는 것이 오버헤드 감소에 부합합니다 (라인 118–126,133–136).",
+      "오답: 본문은 항상 디스크에 기록하는 것은 오버헤드를 증가시키므로 권장하지 않으며, FIFO만 고집하는 것도 페이지 폴트 확률 최소화 측면에서 최적이라는 언급이 없습니다 (관련 서술 없음; 라인 137–139에는 여러 알고리즘 제시).",
+      "오답: 본문은 과할당 문제를 해결하기 위해 페이지 교체를 수행해야 한다고 하며(라인 85–91), 캐시를 비활성화하여 디스크 접근을 분산시키는 방안은 언급되어 있지 않습니다 (관련 서술 없음).",
+      "오답: 변경 비트를 무시하거나 랜덤 선택을 권장하지 않습니다; 본문은 변경 비트 활용으로 디스크 기록을 줄이라고 명시하고 있습니다 (라인 118–129)."
+    ],
+    "keywords": [
+      "페이지 교체",
+      "변경 비트",
+      "교체 알고리즘",
+      "오버헤드 감소"
+    ],
+    "sourceEvidence": {
+      "section": "Computer Science/Operating System/Memory.md",
+      "startLine": 118,
+      "endLine": 136,
+      "quote": "**방법 1**\n\n비트를 활용해 디스크에 기록하는 횟수를 줄이면서 오버헤드를 최대 절반으로 감소시키는 방법이다.\n\n모든 페이지마다 변경 비트를 두고, victim 페이지가 정해지면 해당 페이지의 변경 비트를 확인한다.\n\n- 변경 비트가 set 상태라면?\n    * 메모리상의 페이지 내용이 디스크상의 페이지 내용과 달라졌다는 뜻\n    * 페이지가 메모리로 올라온 이후 수정돼서 내려갈 때 디스크에 기록해야 함\n- 변경 비트가 clear 상태라면?\n    * 메모리상의 페이지 내용이 디스크상의 페이지 내용과 정확히 일치한다는 뜻\n    * 페이지가 디스크상의 페이지 내용과 같아서 내려갈 때 기록할 필요가 없음\n\n<br>\n\n**방법 2**\n\n현재 상황에서 페이지 폴트가 발생할 확률을 최대한 줄일 수 있는 교체 알고리즘을 선택한다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/Memory.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Memory.md",
+    "id": "8a90a620-240a-5232-b928-449e704f205f",
+    "review": {
+      "blind": {
+        "slot": 49,
+        "correctOptionText": "victim 페이지의 변경(수정) 비트를 확인하여 쓰기 작업을 줄이고, 페이지 폴트 확률을 낮추는 교체 알고리즘(LRU나 OPT 등)을 선택합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 오버헤드를 줄이는 방법으로(1) 변경 비트로 디스크 기록 횟수 절감(2) 페이지 폴트 확률을 줄이는 교체 알고리즘(FIFO, OPT, LRU 등) 선택을 제시함.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 49,
+        "passed": true,
+        "reason": "원문이 오버헤드 감소 방법으로 변경 비트 활용과 교체 알고리즘 선택을 각각 제시하고 있으므로(방법1·방법2) 이 둘을 결합한 보기1이 원문과 일치합니다. 다른 보기는 원문 근거가 없거나 반대되는 내용이라 오답임이 입증됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 50,
+    "topic": "fork+exec 실행 흐름 적용",
+    "learningObjective": "fork와 exec의 동작을 조합하여 exec 이후의 코드 실행 여부를 판단할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "다음 코드에서 child가 execvp를 성공적으로 호출하면 \"this shouldn't print out\" 메시지는 출력됩니까?",
+    "options": [
+      "네, 항상 출력됩니다; exec는 단순히 다른 프로그램을 호출하는 함수에 불과합니다.",
+      "아니요. exec가 코드 영역을 덮어쓰므로 이후 코드는 실행되지 않습니다.",
+      "네. exec는 새로운 프로세스를 생성하므로 기존 코드도 계속 실행됩니다.",
+      "부분적으로만 출력됩니다; exec가 실패할 때만 출력되고 성공 시에는 출력되지 않습니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문 예제에서 execvp 호출 이후에 \"this shouldn't print out\"이 나오는데, 본문은 execvp가 code segment를 덮어쓰고 이후 메모리 영역을 초기화하므로 execvp 이후의 부분은 실행되지 않는다고 명시합니다. 따라서 성공적으로 exec가 수행되면 해당 출력은 발생하지 않습니다.",
+    "optionExplanations": [
+      "본문은 exec가 단순 호출이 아니라 코드 세그먼트를 덮어쓴다고 분명히 설명하므로 \"항상 출력된다\"는 설명은 잘못되었습니다.",
+      "정답입니다. exec는 코드 세그먼트를 덮어써서 이후의 코드는 실행되지 않는다고 본문이 설명합니다.",
+      "본문은 exec가 새로운 프로세스를 생성하지 않는다고 하므로 기존 코드가 계속 실행된다는 설명은 틀립니다.",
+      "이 옵션은 부분적으로 맞는 진술(실패 시 출력된다)은 있으나, 질문은 execvp가 성공적으로 호출되었을 때를 묻고 있으므로 틀립니다."
+    ],
+    "keywords": [
+      "fork",
+      "execvp",
+      "코드 덮어쓰기",
+      "후속 코드 미실행"
+    ],
+    "sourceEvidence": {
+      "section": "[Operating System] System Call",
+      "startLine": 139,
+      "endLine": 153,
+      "quote": "execvp(myarges[0], myargs);\t\t// wc 파일 실행.\n        printf(\"this shouldn't print out\") // 실행되지 않음.\n    }\n    else {\t\t\t\t\t\t\t\t// (3) parent case\n        int wc = wait(NULL)\t\t\t\t// 추가된 부분\n        printf(\"parent of %d (wc : %d / pid : %d)\", wc, rc, (int)getpid());\n    }\n}\n```\n\nexec가 실행되면, \n\nexecvp( 실행 파일, 전달 인자 ) 함수는, code segment 영역에 실행 파일의 코드를 읽어와서 덮어 씌운다.\n\n씌운 이후에는,  heap, stack, 다른 메모리 영역이 초기화되고, OS는 그냥 실행한다. 즉, 새로운 Process를 생성하지 않고, 현재 프로그램에 wc라는 파일을 실행한다. 그로인해서, execvp() 이후의 부분은 실행되지 않는다."
+    },
+    "category": "OPERATING_SYSTEM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Computer Science/Operating System/[OS] System Call (Fork Wait Exec).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/%5BOS%5D%20System%20Call%20%28Fork%20Wait%20Exec%29.md",
+    "id": "de7c4939-2f70-5d05-97bb-df91a551e7a3",
+    "review": {
+      "blind": {
+        "slot": 50,
+        "correctOptionText": "아니요. exec가 코드 영역을 덮어쓰므로 이후 코드는 실행되지 않습니다.",
+        "unambiguous": true,
+        "reason": "본문: 'execvp() 이후의 부분은 실행되지 않는다.' 및 예제에 'this shouldn't print out // 실행되지 않음.'",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 50,
+        "passed": true,
+        "reason": "정답(성공하면 이후 코드 실행되지 않음)과 오답 판정들이 출처의 execvp 이후 코드 미실행 설명에 의해 검증 가능함."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  }
+]
