@@ -911,7 +911,7 @@
             "$ref": "#/components/responses/InternalError"
           }
         },
-        "description": "Returns one state per quiz version ever answered incorrectly. Use the attempts API for retries.",
+        "description": "One state per owned quiz version ever answered incorrectly; last_wrong_at DESC,quiz_id DESC cursor bound to filters. Actual server grading alone resolves or reopens review. Retries use existing quiz attempts API with retry_of_attempt_id.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Cursor"
@@ -927,6 +927,32 @@
               "enum": [
                 "NEEDS_REVIEW",
                 "RESOLVED"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OPERATING_SYSTEM",
+                "NETWORK",
+                "DATABASE",
+                "DATA_STRUCTURE",
+                "ALGORITHM",
+                "COMPUTER_ARCHITECTURE"
+              ]
+            }
+          },
+          {
+            "name": "origin",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CURATED",
+                "AI_GENERATED"
               ]
             }
           }
@@ -1587,12 +1613,37 @@
           "latest_attempt_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "first_wrong_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_wrong_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_reviewed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "wrong_attempts": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "retryable": {
+            "type": "boolean"
           }
         },
         "required": [
           "quiz",
           "status",
-          "latest_attempt_id"
+          "latest_attempt_id",
+          "first_wrong_at",
+          "last_wrong_at",
+          "last_reviewed_at",
+          "wrong_attempts",
+          "retryable"
         ]
       },
       "Stats": {
@@ -1642,13 +1693,28 @@
                 "accuracy"
               ]
             }
+          },
+          "unique_quizzes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "needs_review": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "resolved_reviews": {
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": [
           "total_attempts",
           "correct_attempts",
           "accuracy",
-          "by_category"
+          "by_category",
+          "unique_quizzes",
+          "needs_review",
+          "resolved_reviews"
         ]
       },
       "Error": {
@@ -1770,11 +1836,16 @@
           "next_cursor": {
             "type": "string",
             "nullable": true
+          },
+          "total_count": {
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": [
           "items",
-          "next_cursor"
+          "next_cursor",
+          "total_count"
         ]
       },
       "SignupRequest": {

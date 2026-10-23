@@ -22,3 +22,7 @@ Status: active
 ### C28
 
 전용 PostgreSQL에서 HistoryIntegrationTest 4개와 GenerationIntegrationTest 6개 통과. 빈 이력/401·사용자 격리·필터/상한·동률 커서/사용자 및 필터 바인딩·과거 문제 수정/retire 이후 snapshot 복원과 AI 생성 문제의 동일 이력 조회를 확인했다. 명령: Docker checks의 `gradle --no-daemon spotlessApply test --tests com.csas.HistoryIntegrationTest --tests com.csas.GenerationIntegrationTest`.
+
+### C29
+
+Docker 전용 PostgreSQL의 ReviewIntegrationTest 5개·QuizAttemptIntegrationTest 5개·HistoryIntegrationTest 4개 통과. 오답→정답→오답 재개, 중복 키 재생의 상태 불변, 최초 정답 미등록, 0건 accuracy=null, 분야·출처·상태/커서/사용자 격리, 잘못된 retry 참조, retired 차단, 복습 쓰기 실패의 시도 롤백과 기존 동시 제출을 검사했다. 별도 재채점 테이블/로직 없이 기존 attempts POST를 사용한다.

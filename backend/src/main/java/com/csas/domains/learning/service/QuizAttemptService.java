@@ -36,6 +36,8 @@ public class QuizAttemptService {
   public AttemptResultResponse submit(
       UUID userId, UUID quizId, UUID idempotencyKey, AttemptRequest request) {
     String requestHash = hash(quizId, request);
+    jdbc.query(
+        "SELECT pg_advisory_xact_lock(hashtextextended(?,0))", rs -> {}, userId + ":" + quizId);
     AttemptRow replay = findByKey(userId, idempotencyKey);
     if (replay != null) {
       return replay(userId, replay, requestHash);
@@ -78,7 +80,32 @@ public class QuizAttemptService {
     if (inserted.isEmpty()) {
       return replay(userId, findRequiredByKey(userId, idempotencyKey), requestHash);
     }
+    updateReview(userId, quizId, attemptId, selected.isCorrect(), submittedAt);
     return result(userId, findRequiredByKey(userId, idempotencyKey));
+  }
+
+  private void updateReview(UUID user, UUID quiz, UUID attempt, boolean correct, Instant at) {
+    if (correct) {
+      jdbc.update(
+          "UPDATE csas.review_states SET status='RESOLVED',latest_attempt_id=?,last_reviewed_at=? WHERE user_id=? AND quiz_id=?",
+          attempt,
+          Timestamp.from(at),
+          user,
+          quiz);
+    } else {
+      jdbc.update(
+          """
+        INSERT INTO csas.review_states(user_id,quiz_id,status,latest_attempt_id,first_wrong_at,last_wrong_at)
+        VALUES (?,?,'NEEDS_REVIEW',?,?,?)
+        ON CONFLICT (user_id,quiz_id) DO UPDATE SET status='NEEDS_REVIEW',latest_attempt_id=excluded.latest_attempt_id,
+          last_wrong_at=excluded.last_wrong_at,last_reviewed_at=excluded.last_wrong_at
+        """,
+          user,
+          quiz,
+          attempt,
+          Timestamp.from(at),
+          Timestamp.from(at));
+    }
   }
 
   private QuizRow loadQuiz(UUID userId, UUID quizId) {

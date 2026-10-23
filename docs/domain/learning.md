@@ -23,6 +23,12 @@ V10은 기존 quiz_attempts에 quiz_snapshot/evidence_snapshot을 추가한다. 
 
 ## 통계·오답
 
+C29 구현은 기존 NEEDS_REVIEW/RESOLVED 정책을 적용한다. 첫 정답만으로 오답노트를 만들지 않는다. 한 번 틀린 문제 버전은 최근 실제 채점이 정답이면 RESOLVED, 다시 오답이면 NEEDS_REVIEW로 전환한다. review_states는 사용자·문제 복합 키와 본인/같은 문제의 latest_attempt FK를 가지며 최초/최근 오답 시각과 마지막 복습 시각을 보존한다. V11은 기존 시도에서 상태를 backfill한다.
+
+기존 POST /quizzes/{quiz_id}/attempts의 retry_of_attempt_id와 새 Idempotency-Key로 재풀이한다. 타인/다른 문제의 시도 참조는 404, RETIRED 새 풀이는 409다. 같은 사용자·문제의 advisory transaction lock 안에서 시도 저장과 상태 변경을 원자적으로 수행한다. 중복 키 재생은 복습 상태를 다시 변경하지 않는다. 상태를 사용자가 직접 완료 처리하는 API는 제공하지 않는다.
+
+GET /me/wrong-answers는 최근 오답 시각·quiz_id 내림차순 커서, category/status/origin과 total_count, latest_attempt_id·최초/최근 오답·복습 시각·오답 시도 수·현재 retryable을 반환한다. GET /me/stats는 재풀이 포함 시도/정답/accuracy, 서로 다른 문제 수, 복습 필요/해결 수, 분야별 집계를 반환한다. 시도 0건의 accuracy는 null이다.
+
 모든 시도는 불변 이력이다. 잘못된 문제 수정은 새 버전이며, 과거 정오답을 최신 정답으로 다시 채점하지 않는다. 오답노트에는 한 번이라도 틀린 (사용자, 문제 버전) 조합을 표시한다. 최근 풀이가 오답이면 미복습, 이후 정답이면 해결 상태다. 해결된 문제도 필터로 조회할 수 있다.
 
 전체·분야별 정답률은 모든 시도를 기준으로 계산한다. 별도 개념 집계는 문제에 연결된 각 개념에 반영한다. “문제 수”, “시도 수”, “해결한 오답 수”는 서로 다른 값으로 표시한다. 초기에는 집계 쿼리를 사용하고 성능 문제가 확인된 뒤 별도 집계 저장소를 도입한다.
