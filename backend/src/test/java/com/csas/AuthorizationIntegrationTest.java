@@ -75,9 +75,10 @@ class AuthorizationIntegrationTest extends HttpTestSupport {
     assertThat(denied.body().toString()).doesNotContain(first.id().toString());
     assertThat(first.browser().request("GET", "/api/v1/test-admin", null, false).status())
         .isEqualTo(403);
-    // Real learning handlers do not exist: authenticated requests reach routing, not a fake 200.
-    assertThat(first.browser().request("GET", "/api/v1/me/attempts", null, false).status())
-        .isEqualTo(404);
+    var history = first.browser().request("GET", "/api/v1/me/attempts", null, false);
+    assertThat(history.status()).isEqualTo(200);
+    assertThat(history.body().path("items").isEmpty()).isTrue();
+    assertThat(history.body().path("total_count").asInt()).isZero();
   }
 
   @Test

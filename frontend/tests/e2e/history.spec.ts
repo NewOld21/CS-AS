@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
 
 const quiz = {
   id: 'quiz-1',
@@ -64,6 +65,10 @@ test('history uses server pagination and filters, and fits mobile', async ({ pag
   await expect.poll(() => seen.at(-1)).toContain('origin=AI_GENERATED')
   expect(seen.at(-1)).not.toContain('cursor=')
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  const accessibility = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze()
+  expect(accessibility.violations).toEqual([])
 })
 
 test('notebook opens an ungraded retry and reuses the key after a lost response', async ({

@@ -1,6 +1,6 @@
 # 06. ERD — 데이터 모델과 관계
 
-상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5), chat_sessions·chat_messages·message_citations(V6), 대화 복원·멱등·실패 상태(V7)를 구현했다. review_states와 생성 모델은 논리 설계 제안이며, 문서·청크·임베딩은 파일 manifest와 ChromaDB가 관리한다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
+상태: users(V2), concepts·quizzes·quiz_options·quiz_concepts(V3), 검수 시드(V4), quiz_attempts(V5), chat_sessions·chat_messages·message_citations(V6), 대화 복원·멱등·실패 상태(V7), 근거 snapshot(V8), 생성·검증 이력(V9), 풀이 표시 snapshot(V10), review_states(V11)를 구현했다. 문서·청크·임베딩은 파일 manifest와 ChromaDB가 관리한다. 범위는 [PRD](01_PRD.md), API 표현은 [OpenAPI](api/openapi.yaml)가 기준이다.
 
 현재 [수집 구현](domain/ingestion.md)은 불변 JSON 원본/정제본·청크와 로컬 SQLite 재개 catalog를 staging으로 사용한다. 버전별 ChromaDB BUILDING 인덱스 적재·검색 어댑터도 구현했지만 승인 코퍼스 평가 전 ACTIVE로 전환하지 않는다.
 
@@ -64,8 +64,8 @@ erDiagram
 | quizzes | id PK, family_id, version, stem, category, difficulty, origin, status, owner_user_id FK?, explanation, source_url, reviewed_at, created_at/updated_at | (family_id, version) UNIQUE. origin=CURATED/AI_GENERATED, status=DRAFT/READY/RETIRED. V3 구현 |
 | quiz_options | id PK, quiz_id FK, position, text, is_correct | (quiz_id, position) UNIQUE, (quiz_id, id) UNIQUE. 정답은 서버 전용. V3 구현 |
 | quiz_concepts | quiz_id FK, concept_id FK, is_primary | 복합 PK, 대표 개념 1개와 추가 개념 허용. V3 구현 |
-| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, correct_option_id, is_correct, explanation/source URL snapshot, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택/정답 선택지와 문제의 복합 FK. V5 구현 |
-| review_states | user_id FK, quiz_id FK, status, latest_attempt_id FK, last_reviewed_at? | (user_id, quiz_id) PK. NEEDS_REVIEW/RESOLVED |
+| quiz_attempts | id PK, user_id FK, quiz_id FK, selected_option_id, correct_option_id, is_correct, explanation/source URL snapshot, quiz_snapshot, evidence_snapshot, submitted_at, idempotency_key, request_hash, retry_of_attempt_id? | (user_id, idempotency_key) UNIQUE. 선택/정답 선택지와 문제의 복합 FK. V5/V10 구현 |
+| review_states | user_id FK, quiz_id FK, status, latest_attempt_id FK, first_wrong_at, last_wrong_at, last_reviewed_at? | (user_id, quiz_id) PK. 본인·같은 문제의 attempt 복합 FK. NEEDS_REVIEW/RESOLVED. V11 구현 |
 | chat_sessions | id PK, user_id FK, context_attempt_id FK?, title, created_at, updated_at | 문제 문맥은 본인 풀이만. 일반 대화는 문맥 null |
 | chat_messages | id PK, session_id FK, role, content, status?, sequence_no, concept_ids, request_id, request_key?, request_hash?, user_message_id?, failure_code?, model_version?, index_version?, created_at | USER/ASSISTANT. pending/answered/insufficient_evidence/failed 상태. 대화 순서는 sequence_no |
 | message_citations | message_id FK, chunk_id, revision, index_version, ordinal | 원문 메타데이터 스냅샷(title/url/source_id/document_id/locator)을 보존 |

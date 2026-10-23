@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import com.csas.common.exception.ApiException;
 import com.csas.integrations.rag.HttpRagGateway;
+import com.csas.integrations.rag.RagGateway;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
@@ -122,6 +123,156 @@ class GenerationIntegrationTest extends HttpTestSupport {
         Map.of("concept_ids", List.of("concept:database-index"), "difficulty", "EASY"),
         true,
         Map.of("Idempotency-Key", key));
+  }
+
+  @Test
+  void questionGenerationWrongReviewRetryAndReloginPreserveHistory() throws Exception {
+    doAnswer(
+            call -> {
+              RagGateway.AnswerRequest request = call.getArgument(0);
+              var chunk =
+                  new RagGateway.RetrievedChunk(
+                      "fixture",
+                      "doc:1",
+                      "r1",
+                      "chunk:1",
+                      "Indexes",
+                      "https://example.org/index",
+                      "section:1",
+                      "Indexes incur maintenance costs.",
+                      "DATABASE",
+                      "17");
+              return new RagGateway.Answer(
+                  request.requestId(),
+                  "answered",
+                  List.of("concept:database-index"),
+                  "Indexes incur maintenance costs.",
+                  List.of(chunk),
+                  List.of("chunk:1"),
+                  "test-v1",
+                  "mock-gms",
+                  "answer-v1");
+            })
+        .when(rag)
+        .answer(any());
+    var credentials =
+        Map.of("email", UUID.randomUUID() + "@example.com", "password", "correct-horse-battery");
+    var owner = browser();
+    owner.refreshCsrf();
+    assertThat(owner.request("POST", "/api/v1/auth/signup", credentials, true).status())
+        .isEqualTo(201);
+    assertThat(owner.request("POST", "/api/v1/auth/login", credentials, true).status())
+        .isEqualTo(200);
+    owner.refreshCsrf();
+    var session =
+        owner.request("POST", "/api/v1/chat/sessions", Map.of("title", "Index review"), true);
+    assertThat(session.status()).isEqualTo(201);
+    var chatId = session.body().path("id").asText();
+    var answer =
+        owner.request(
+            "POST",
+            "/api/v1/chat/sessions/" + chatId + "/messages",
+            Map.of("question", "What are index maintenance costs?"),
+            true,
+            Map.of("Idempotency-Key", UUID.randomUUID().toString()));
+    assertThat(answer.status()).isEqualTo(200);
+    assertThat(answer.body().path("concept_ids").get(0).asText())
+        .isEqualTo("concept:database-index");
+    var generation =
+        owner.request(
+            "POST",
+            "/api/v1/quiz-generations",
+            Map.of(
+                "concept_ids",
+                List.of("concept:database-index"),
+                "difficulty",
+                "EASY",
+                "chat_session_id",
+                chatId),
+            true,
+            Map.of("Idempotency-Key", UUID.randomUUID().toString()));
+    assertThat(generation.status()).isEqualTo(200);
+    var quiz = generation.body().path("quiz");
+    assertThat(quiz.has("correct_option_id")).isFalse();
+    String submitPath = "/api/v1/quizzes/" + quiz.path("id").asText() + "/attempts";
+    var wrong =
+        owner.request(
+            "POST",
+            submitPath,
+            Map.of("selected_option_id", quiz.path("options").get(1).path("id").asText()),
+            true,
+            Map.of("Idempotency-Key", UUID.randomUUID().toString()));
+    assertThat(wrong.status()).isEqualTo(200);
+    assertThat(wrong.body().path("is_correct").asBoolean()).isFalse();
+    var wrongId = wrong.body().path("id").asText();
+    var notebook =
+        owner.request(
+            "GET", "/api/v1/me/wrong-answers?origin=AI_GENERATED&status=NEEDS_REVIEW", null, false);
+    assertThat(notebook.body().path("total_count").asInt()).isEqualTo(1);
+    assertThat(notebook.body().path("items").get(0).path("latest_attempt_id").asText())
+        .isEqualTo(wrongId);
+    var retryBody =
+        Map.of(
+            "selected_option_id",
+            quiz.path("options").get(0).path("id").asText(),
+            "retry_of_attempt_id",
+            wrongId);
+    var key = Map.of("Idempotency-Key", UUID.randomUUID().toString());
+    var retry = owner.request("POST", submitPath, retryBody, true, key);
+    assertThat(retry.status()).isEqualTo(200);
+    assertThat(retry.body().path("is_correct").asBoolean()).isTrue();
+    assertThat(owner.request("POST", submitPath, retryBody, true, key).body())
+        .isEqualTo(retry.body());
+    assertThat(
+            owner
+                .request("GET", "/api/v1/me/wrong-answers?status=NEEDS_REVIEW", null, false)
+                .body()
+                .path("total_count")
+                .asInt())
+        .isZero();
+    assertThat(
+            owner
+                .request("GET", "/api/v1/me/wrong-answers?status=RESOLVED", null, false)
+                .body()
+                .path("total_count")
+                .asInt())
+        .isEqualTo(1);
+    var before = owner.request("GET", "/api/v1/me/attempts", null, false).body();
+    assertThat(before.path("total_count").asInt()).isEqualTo(2);
+    assertThat(owner.request("POST", "/api/v1/auth/logout", null, true).status()).isEqualTo(204);
+    assertThat(owner.request("GET", "/api/v1/me/attempts", null, false).status()).isEqualTo(401);
+    owner.refreshCsrf();
+    assertThat(owner.request("POST", "/api/v1/auth/login", credentials, true).status())
+        .isEqualTo(200);
+    owner.refreshCsrf();
+    assertThat(owner.request("GET", "/api/v1/me/attempts", null, false).body()).isEqualTo(before);
+    assertThat(
+            owner
+                .request("GET", "/api/v1/me/attempts/" + wrongId, null, false)
+                .body()
+                .path("is_correct")
+                .asBoolean())
+        .isFalse();
+    var stats = owner.request("GET", "/api/v1/me/stats", null, false).body();
+    assertThat(stats.path("total_attempts").asInt()).isEqualTo(2);
+    assertThat(stats.path("correct_attempts").asInt()).isEqualTo(1);
+    assertThat(stats.path("accuracy").asDouble()).isEqualTo(0.5);
+    assertThat(stats.path("resolved_reviews").asInt()).isEqualTo(1);
+    var stranger = account();
+    assertThat(stranger.request("GET", "/api/v1/me/attempts/" + wrongId, null, false).status())
+        .isEqualTo(404);
+    assertThat(
+            stranger
+                .request("GET", "/api/v1/me/wrong-answers", null, false)
+                .body()
+                .path("total_count")
+                .asInt())
+        .isZero();
+    assertThat(
+            stranger
+                .request("GET", "/api/v1/quizzes/" + quiz.path("id").asText(), null, false)
+                .status())
+        .isEqualTo(404);
   }
 
   @Test

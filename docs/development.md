@@ -26,6 +26,8 @@ PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- tests/e2e/ui.spec.ts
 
 Python은 generation/quiz의 GMS mock·독립 검증·내부 HTTP를 unittest로 검사한다. 실제 생성은 설정된 GMS·ACTIVE manifest·Chroma가 필요하다. 관련 퀴즈 버튼은 모델 생성과 검증 후에만 개인 문제를 표시하며 새로고침은 기존 생성 키로 복구한다. 실패 확정 후 새 요청은 새 키를 사용하고 불명확한 네트워크 실패는 같은 키의 결과를 먼저 조회한다. 운영 공개 전 실제 표본 검수 결과를 별도로 남긴다.
 
+C28~C31: /me에서 이력·통계, /me/wrong-answers에서 복습 상태, /me/attempts/:attemptId에서 당시 결과를 확인한다. 전용 DB 전체 검사는 위 Gradle 명령을 사용한다. Chrome 학습 회귀는 frontend/에서 `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- tests/e2e/ui.spec.ts tests/e2e/history.spec.ts`로 실행한다. HTTP/PostgreSQL의 재로그인·소유권·멱등 흐름은 GenerationIntegrationTest/HistoryIntegrationTest/ReviewIntegrationTest, 브라우저 화면은 fixture API로 검증하므로 실제 GMS/검색 검증과 구분한다.
+
 일상 개발 실행은 저장소 루트의 Compose를 기준으로 한다. 호스트에 Node.js·JDK·Python을 설치하지 않아도 frontend, Spring Boot backend, 로컬 RAG adapter, PostgreSQL, ChromaDB가 함께 실행된다.
 
 ```sh

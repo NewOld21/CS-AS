@@ -142,21 +142,6 @@ async function start() {
     if (typeof route.query.quiz_id === 'string') {
       quizzes.value = [await getQuiz(route.query.quiz_id)]
       resetQuestion()
-      const saved = sessionStorage.getItem(attemptStorageKey())
-      if (saved) {
-        try {
-          const value = JSON.parse(saved)
-          if (
-            typeof value.key === 'string' &&
-            quizzes.value[0]?.options.some((o) => o.id === value.option)
-          ) {
-            pendingAttempt.value = value
-            selected.value = value.option
-          }
-        } catch {
-          sessionStorage.removeItem(attemptStorageKey())
-        }
-      }
     } else if (categories.value.length) await chooseCategory(categories.value[0]!.id)
     if (typeof route.query.chat_session_id === 'string') {
       await loadSessions()
@@ -187,6 +172,21 @@ function resetQuestion() {
   chatOpen.value = false
   chatSession.value = ''
   messages.value = []
+  const saved = sessionStorage.getItem(attemptStorageKey())
+  if (saved) {
+    try {
+      const value = JSON.parse(saved)
+      if (
+        typeof value.key === 'string' &&
+        quiz.value?.options.some((option) => option.id === value.option)
+      ) {
+        pendingAttempt.value = value
+        selected.value = value.option
+      } else sessionStorage.removeItem(attemptStorageKey())
+    } catch {
+      sessionStorage.removeItem(attemptStorageKey())
+    }
+  }
 }
 async function submit() {
   if (!quiz.value || !selected.value || busy.value) return
@@ -199,7 +199,7 @@ async function submit() {
       quiz.value.id,
       pendingAttempt.value.option,
       pendingAttempt.value.key,
-      typeof route.query.retry_of_attempt_id === 'string'
+      quiz.value.id === route.query.quiz_id && typeof route.query.retry_of_attempt_id === 'string'
         ? route.query.retry_of_attempt_id
         : undefined,
     )
