@@ -37,7 +37,11 @@ class QuizCatalogIntegrationTest extends HttpTestSupport {
     var filtered =
         browser.request("GET", "/api/v1/quizzes?category=DATABASE&difficulty=MEDIUM", null, false);
     assertThat(filtered.status()).isEqualTo(200);
-    assertThat(filtered.body().get("items")).hasSize(2);
+    int matching =
+        jdbc.queryForObject(
+            "SELECT count(*) FROM csas.quizzes WHERE status='READY' AND origin='CURATED' AND category='DATABASE' AND difficulty='MEDIUM'",
+            Integer.class);
+    assertThat(filtered.body().get("items")).hasSize(Math.min(20, matching));
     filtered
         .body()
         .get("items")
