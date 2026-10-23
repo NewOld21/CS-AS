@@ -25,6 +25,8 @@ export function errorMessage(error: unknown) {
     RAG_FAILED: 'AS가 근거를 확인하지 못했어요. 답변은 저장되지 않았습니다.',
     RAG_UNAVAILABLE: 'AS가 아직 연결되지 않았어요. 퀴즈와 해설은 계속 이용할 수 있습니다.',
     RAG_TIMEOUT: 'AS의 문서 검색이 늦어지고 있어요. 잠시 후 다시 질문해 주세요.',
+    GMS_KEY_MISSING: 'AI 서비스의 GMS 키가 설정되지 않았습니다. 관리자 설정이 필요합니다.',
+    INDEX_MISSING: '검색할 CS 문서 인덱스가 준비되지 않았습니다. 관리자에게 알려 주세요.',
   }
   return messages[error.code] ?? '요청을 완료하지 못했어요. 잠시 후 다시 시도해 주세요.'
 }

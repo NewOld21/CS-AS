@@ -99,11 +99,12 @@ export const getChatMessages = (sessionId: string, page = 0, limit = 50) =>
   request<{ items: ChatMessage[]; next_page: number | null }>(
     `/chat/sessions/${sessionId}/messages?page=${page}&limit=${limit}`,
   )
-export const ask = (sessionId: string, question: string) =>
+export const ask = (sessionId: string, question: string, key: string = crypto.randomUUID()) =>
   post<ChatAnswer>(
     `/chat/sessions/${sessionId}/messages`,
     { question },
-    { 'Idempotency-Key': crypto.randomUUID() },
+    { 'Idempotency-Key': key },
+    125000,
   )
 
 export interface GenerationResult {

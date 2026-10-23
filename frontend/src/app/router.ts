@@ -4,6 +4,11 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
+      path: '/chat',
+      component: () => import('../domains/chat/ChatPage.vue'),
+      meta: { title: 'CS 학습 챗봇' },
+    },
+    {
       path: '/me',
       component: () => import('../domains/learning/LearningPage.vue'),
       meta: { title: '나의 학습' },
