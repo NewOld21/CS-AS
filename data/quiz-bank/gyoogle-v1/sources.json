@@ -1,0 +1,517 @@
+{
+  "repository": "gyoogle/tech-interview-for-developer",
+  "commit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+  "documents": [
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/Binary Search.md",
+      "sha256": "73a1a6407dd0ba6f64fddea178595cc3a4cdf9e3d5d68c451705869419b1996e",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Binary%20Search.md",
+      "characters": 820
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/DFS & BFS.md",
+      "sha256": "ed4a7f5e885ded4dbea5b682fcbac5b2115f22bb675467e49f63a54390ae68ca",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/DFS%20%26%20BFS.md",
+      "characters": 2331
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/Hash Table 구현하기.md",
+      "sha256": "a92bc3542f5cd46ad548f7e18d75790a8dc846272a4ca9f3d23215f43bb57280",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Hash%20Table%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md",
+      "characters": 7018
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/HeapSort.md",
+      "sha256": "cc42eb6edd3f1ba4295416f4f670ef2d62aeb657d3c7453a46fb0b4ac569d4e0",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/HeapSort.md",
+      "characters": 2807
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/LCA(Lowest Common Ancestor).md",
+      "sha256": "3cf426989ee3edb489beba3e0549db1887bfab2b130cbe0a74bfec089b2d36e9",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/LCA%28Lowest%20Common%20Ancestor%29.md",
+      "characters": 909
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/LIS (Longest Increasing Sequence).md",
+      "sha256": "c5fa16456e537ed9a5207aa225dc9db770355a99125dd61f6c32c329efac4393",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/LIS%20%28Longest%20Increasing%20Sequence%29.md",
+      "characters": 734
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/MergeSort.md",
+      "sha256": "a7e252c3744d91c8b7804e791f85a7541ae51af15e25e61fed1d8954daa4d9b4",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/MergeSort.md",
+      "characters": 2816
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/professional/프로 준비법.md",
+      "sha256": "fc891fdffd1a6f4d6638215117e77b4b1a12c9d304a9e928adef924decb4b0e3",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/professional/%ED%94%84%EB%A1%9C%20%EC%A4%80%EB%B9%84%EB%B2%95.md",
+      "characters": 1785
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/QuickSort.md",
+      "sha256": "3bc8a81b1e154d00086b39c3ac0e850a85f4ea66664cbb196e137402b8c1fb4b",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/QuickSort.md",
+      "characters": 2511
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/SAMSUNG Software PRO등급 준비.md",
+      "sha256": "c6d3412b871b0ef7cc944ec0d77dfb1296335da3c982d7034514866489526045",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/SAMSUNG%20Software%20PRO%EB%93%B1%EA%B8%89%20%EC%A4%80%EB%B9%84.md",
+      "characters": 3558
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/Sort_Counting.md",
+      "sha256": "6ac67eb0d0aac40837af56dc9609fe16aeb7146b703cfb950a140e24e2b72b55",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Sort_Counting.md",
+      "characters": 1168
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/Sort_Radix.md",
+      "sha256": "c2a79fed71a30ae3e5c81bdb3145413c845463d721740b08fd872253f1049512",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Sort_Radix.md",
+      "characters": 2281
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/간단하지만 알면 좋은 최적화들.md",
+      "sha256": "9624aeb9e8833586c93e6905d5b8eea45ed7fa6e87c1b6aa40668f69e06506af",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EA%B0%84%EB%8B%A8%ED%95%98%EC%A7%80%EB%A7%8C%20%EC%95%8C%EB%A9%B4%20%EC%A2%8B%EC%9D%80%20%EC%B5%9C%EC%A0%81%ED%99%94%EB%93%A4.md",
+      "characters": 767
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/다익스트라(Dijkstra).md",
+      "sha256": "d64c577f665cdfa4953337b45c309b59d82eb981b271a15d54263624013d515d",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC%28Dijkstra%29.md",
+      "characters": 1983
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/동적 계획법 (Dynamic Programming).md",
+      "sha256": "ef3ab1556841db7ed5b740e72c50531aa1fffeb09da9ac92f0836007668d6b19",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%8F%99%EC%A0%81%20%EA%B3%84%ED%9A%8D%EB%B2%95%20%28Dynamic%20Programming%29.md",
+      "characters": 1557
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/비트마스크(BitMask).md",
+      "sha256": "31ca4ba2670a00f15ca54e1b4182182aae4e6b5b000e86376af68a14bc6bd1a3",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%B9%84%ED%8A%B8%EB%A7%88%EC%8A%A4%ED%81%AC%28BitMask%29.md",
+      "characters": 3111
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/순열 & 조합.md",
+      "sha256": "31e84096e538794ebd1fcc1277efb2b5e6c337f786f3200f8a3c86d18fb88b67",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EC%88%9C%EC%97%B4%20%26%20%EC%A1%B0%ED%95%A9.md",
+      "characters": 1913
+    },
+    {
+      "category": "ALGORITHM",
+      "path": "Algorithm/최대공약수 & 최소공배수.md",
+      "sha256": "1ec08d2d49ca73a72b4d64d4c75ecf8f96d5ca968711429ea1d04565725f1e37",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98%20%26%20%EC%B5%9C%EC%86%8C%EA%B3%B5%EB%B0%B0%EC%88%98.md",
+      "characters": 691
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/ARM 프로세서.md",
+      "sha256": "a6c3aa14495bece92e6e40468709383e5dc92e2f9d702abf8337d6077872c3e0",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/ARM%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%84%9C.md",
+      "characters": 1717
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/고정 소수점 & 부동 소수점.md",
+      "sha256": "2e7bda84d0530d65c27a9dfe6f3bc4e38d0f7e1c0b0bbd1c87d4ebdf091b8649",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%EA%B3%A0%EC%A0%95%20%EC%86%8C%EC%88%98%EC%A0%90%20%26%20%EB%B6%80%EB%8F%99%20%EC%86%8C%EC%88%98%EC%A0%90.md",
+      "characters": 1892
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/명령어 Cycle.md",
+      "sha256": "d661855aff2d6499d589aac8997d4e7d5b5365c9eb40f0b35aadbe23b256fb19",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%EB%AA%85%EB%A0%B9%EC%96%B4%20Cycle.md",
+      "characters": 491
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/중앙처리장치(CPU) 작동 원리.md",
+      "sha256": "a04add4843764cf970a98d72da618919c568596a46401e595be8cb03c92a37ae",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%EC%A4%91%EC%95%99%EC%B2%98%EB%A6%AC%EC%9E%A5%EC%B9%98%28CPU%29%20%EC%9E%91%EB%8F%99%20%EC%9B%90%EB%A6%AC.md",
+      "characters": 2356
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/캐시 메모리(Cache Memory).md",
+      "sha256": "49997a18612ad41a379ebad2d20473b3288dc281fdc72f05099c3d820f42c28a",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%EC%BA%90%EC%8B%9C%20%EB%A9%94%EB%AA%A8%EB%A6%AC%28Cache%20Memory%29.md",
+      "characters": 2831
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/컴퓨터의 구성.md",
+      "sha256": "4cd2360abdc0e2d9815cb42672ca6db7a6e7eb1f96f165a17744a5001fcaef0b",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%EC%BB%B4%ED%93%A8%ED%84%B0%EC%9D%98%20%EA%B5%AC%EC%84%B1.md",
+      "characters": 11672
+    },
+    {
+      "category": "COMPUTER_ARCHITECTURE",
+      "path": "Computer Science/Computer Architecture/패리티 비트 & 해밍 코드.md",
+      "sha256": "72e4969ae34415a67540ffbec503ce93242472c58f7b772621d224473bbe5221",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Computer%20Architecture/%ED%8C%A8%EB%A6%AC%ED%8B%B0%20%EB%B9%84%ED%8A%B8%20%26%20%ED%95%B4%EB%B0%8D%20%EC%BD%94%EB%93%9C.md",
+      "characters": 828
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/[Database SQL] JOIN.md",
+      "sha256": "d2f9ff37f91f800d72f5159b746603d30328479a6b2b05008bcec5e11a519f9b",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDatabase%20SQL%5D%20JOIN.md",
+      "characters": 2361
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/[DB] Anomaly.md",
+      "sha256": "2f49306d36c18addfa7d55bf734758b5c8db4099fd0aa804fb8dab686b092b4d",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Anomaly.md",
+      "characters": 887
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/[DB] Index.md",
+      "sha256": "7cbbef95d9f27bb98031a4d77a7421bdcd2d51e96b892444fded65b9fd040231",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Index.md",
+      "characters": 2091
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/[DB] Key.md",
+      "sha256": "dfbd4d877b767684de2d5748a4a627818ae92f5e373efead6515ad05610be457",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%5BDB%5D%20Key.md",
+      "characters": 535
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/Redis.md",
+      "sha256": "58de0b527dc1ab96bb4d78fc679792e3e24a41ae5971c035a78c786ad32ea9e6",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Redis.md",
+      "characters": 565
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/SQL Injection.md",
+      "sha256": "de696a6070730fe49b5c5a396ebe29cfdeab60ad30dd63f0e09fd14489bd1582",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%20Injection.md",
+      "characters": 1266
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/SQL과 NOSQL의 차이.md",
+      "sha256": "2960dd75093503c1c3ea6155fc7cbbb7c24c0a32b4b6e480db1ca178417e44d8",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/SQL%EA%B3%BC%20NOSQL%EC%9D%98%20%EC%B0%A8%EC%9D%B4.md",
+      "characters": 2911
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/Transaction Isolation Level.md",
+      "sha256": "433408a31fd230dc7c2997c4f6e32cfc4a627d3d32d18057029cc4b9dd610f6c",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction%20Isolation%20Level.md",
+      "characters": 2195
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/Transaction.md",
+      "sha256": "4e6aacd31d1988e0494c5a5bcc0a250b8737d630ad24457bad8cab2cab593d50",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/Transaction.md",
+      "characters": 2721
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/저장 프로시저(Stored PROCEDURE).md",
+      "sha256": "4189b8b2012fe81b0cd8b7c9a0022654c9a770816631dcbf8e840d4a0349bce0",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%80%EC%9E%A5%20%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80%28Stored%20PROCEDURE%29.md",
+      "characters": 1945
+    },
+    {
+      "category": "DATABASE",
+      "path": "Computer Science/Database/정규화(Normalization).md",
+      "sha256": "8929904976a023b27489ed0cb6459de960eed5d502150001093c670798d65f4d",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Database/%EC%A0%95%EA%B7%9C%ED%99%94%28Normalization%29.md",
+      "characters": 2303
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Array vs ArrayList vs LinkedList.md",
+      "sha256": "aa0ad2135adf917098fb03511fe4f71e8ed45f987b92d2cb322b38275348bbb7",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Array%20vs%20ArrayList%20vs%20LinkedList.md",
+      "characters": 1541
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Array.md",
+      "sha256": "5d207e3690366a695ab08cf81a947af71d25f92c977de76c65cc01a5e13c4785",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Array.md",
+      "characters": 4839
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/B Tree & B+ Tree.md",
+      "sha256": "7586aff20e7e81f0345c08036f612b7c7bd64121a921795b5ae6df000a6eec95",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/B%20Tree%20%26%20B%2B%20Tree.md",
+      "characters": 1764
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Binary Search Tree.md",
+      "sha256": "cb7b6faf3a710d8946f6b686da3093ed99f34a4b329233865540ea41967c955a",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Binary%20Search%20Tree.md",
+      "characters": 1350
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Hash.md",
+      "sha256": "ff7b7056edb76d06d81349f58bf07b0112b4c64d8c3d5f17b6953691e21942e3",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Hash.md",
+      "characters": 1181
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Heap.md",
+      "sha256": "eed29d871331fc78a97049f67403d0a170180149175ba70bd7b96a4fd17e9a9e",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Heap.md",
+      "characters": 2486
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Linked List.md",
+      "sha256": "5e101e1b6382f37733a3779ae934c76216ce3a7ae2b6e7629e22c9630e9c1a8c",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Linked%20List.md",
+      "characters": 2059
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Stack & Queue.md",
+      "sha256": "090c19700b671491c287ef3ee74442eb30bf5e4f8e1dfd935dd871e904151768",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Stack%20%26%20Queue.md",
+      "characters": 7011
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Tree.md",
+      "sha256": "369c1124e62970ff2d33ce5998c24255fdda5853ca372538d95ee1f3f933a4df",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Tree.md",
+      "characters": 2169
+    },
+    {
+      "category": "DATA_STRUCTURE",
+      "path": "Computer Science/Data Structure/Trie.md",
+      "sha256": "c370c70244e136eacac0152c1dfb09fe2d95f38439527410d0ff051016bbce07",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Data%20Structure/Trie.md",
+      "characters": 1203
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/[Network] Blocking Non-Blocking IO.md",
+      "sha256": "afb3c7f4780c84230bf4366ba4081625f6a35469d90de6c9657c6dd6a0328d77",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%20Non-Blocking%20IO.md",
+      "characters": 1174
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/[Network] Blocking,Non-blocking & Synchronous,Asynchronous.md",
+      "sha256": "e79846264f594ef069fb9c31d806328ab9519279f639f49dc7b693531f938571",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%5BNetwork%5D%20Blocking%2CNon-blocking%20%26%20Synchronous%2CAsynchronous.md",
+      "characters": 2528
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/DNS.md",
+      "sha256": "f6627dc718447584c4a7946b3c449432c4da173048053aa07e8f963bd0f592a7",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/DNS.md",
+      "characters": 820
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/HTTP & HTTPS.md",
+      "sha256": "918bf395078ab55c47ef88608ce51135516813d1492a8a26f064ac1af94f963b",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/HTTP%20%26%20HTTPS.md",
+      "characters": 2053
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/OSI 7 계층.md",
+      "sha256": "481ecf6aabd1eb69aa5012c4630986652a280c02d5a34fbfa32105a8d67347f0",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/OSI%207%20%EA%B3%84%EC%B8%B5.md",
+      "characters": 1136
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/TCP (흐름제어혼잡제어).md",
+      "sha256": "2f426b451a0deefc08d0365ae891188710451dfbd3ed746b57e6973db62bddfc",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%20%28%ED%9D%90%EB%A6%84%EC%A0%9C%EC%96%B4%ED%98%BC%EC%9E%A1%EC%A0%9C%EC%96%B4%29.md",
+      "characters": 5216
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/TCP 3 way handshake & 4 way handshake.md",
+      "sha256": "988a35c65df44c46f6bf354e6e592358fa249e80e8805b67965ea76ea7c88447",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TCP%203%20way%20handshake%20%26%204%20way%20handshake.md",
+      "characters": 1121
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/TLS HandShake.md",
+      "sha256": "284ee1f2b52dc6c08df1c673d085504bd82a1242181bf15147a6b10e38b94528",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/TLS%20HandShake.md",
+      "characters": 1460
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/UDP.md",
+      "sha256": "4afc66d0edef99694377cd055e5535fffac1e022943749a69842b2ac57497458",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/UDP.md",
+      "characters": 2680
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/대칭키 & 공개키.md",
+      "sha256": "d9f736f8039c9ce0544b7fa9e9e14504b964a1540bb89c05fbf19fbf15c7623b",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%8C%80%EC%B9%AD%ED%82%A4%20%26%20%EA%B3%B5%EA%B0%9C%ED%82%A4.md",
+      "characters": 1112
+    },
+    {
+      "category": "NETWORK",
+      "path": "Computer Science/Network/로드 밸런싱(Load Balancing).md",
+      "sha256": "747ce27b4e98d9bcb48b83047d9670c81e98dd849475b6f34b1346aa679d0dce",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Network/%EB%A1%9C%EB%93%9C%20%EB%B0%B8%EB%9F%B0%EC%8B%B1%28Load%20Balancing%29.md",
+      "characters": 1182
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/[OS] System Call (Fork Wait Exec).md",
+      "sha256": "97b5a2990428ffceeabc14732360ae6a47e1ef91c5134c98372691a88e98d892",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/%5BOS%5D%20System%20Call%20%28Fork%20Wait%20Exec%29.md",
+      "characters": 3575
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/CPU Scheduling.md",
+      "sha256": "18c430d437bcfed421808d907c458e96752215238833339106ea75bdc720a07f",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/CPU%20Scheduling.md",
+      "characters": 3397
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/DeadLock.md",
+      "sha256": "a5705aca09ba97e5ea18ea295f449484c5355afc15bde0af2519b77b9a5082d1",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/DeadLock.md",
+      "characters": 2736
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/File System.md",
+      "sha256": "c24e52b78576c3388e156c59d5bc464fd92d5abedd3c51ac76a5abf936ab2cfb",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/File%20System.md",
+      "characters": 2009
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Interrupt.md",
+      "sha256": "5c1c201bd72c8dc7d091f5d6dc9df5e3c4a518b1d7e6ccb2380c1f4a28d33ac6",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Interrupt.md",
+      "characters": 1545
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/IPC(Inter Process Communication).md",
+      "sha256": "2e449c439d48146ec95172e4b719db423fb030c3750f3f1a89f5f23167dab1cc",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/IPC%28Inter%20Process%20Communication%29.md",
+      "characters": 2260
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Memory.md",
+      "sha256": "8a4866ecc199d610c9b8a52c4aaea978e8f47cfa4a40f0effea33b0696e72d5d",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Memory.md",
+      "characters": 4029
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Operation System.md",
+      "sha256": "9c75da130cc59db471e4212afa4a6a5a92ac8c2a1be1b91a7bdde57570a5ea87",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Operation%20System.md",
+      "characters": 2170
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Page Replacement Algorithm.md",
+      "sha256": "fd8782551c651425278ab95d573024b98c86c1d431467242ab822de80b35626f",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Page%20Replacement%20Algorithm.md",
+      "characters": 2519
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Paging and Segmentation.md",
+      "sha256": "13eb77cfeb7668d386e339b1bb358cc2cebd2aa6a8e9c98a75dfdf5a49125f15",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Paging%20and%20Segmentation.md",
+      "characters": 1138
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/PCB & Context Switcing.md",
+      "sha256": "876394a3b709b6b6872cdc31a39f91d81e8e1a53bba4f1d8c8a5f8dd28e268e2",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/PCB%20%26%20Context%20Switcing.md",
+      "characters": 1694
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Process Address Space.md",
+      "sha256": "21a820c18beb8c76ff79c86deaca3bb6ed67cdcbffe62cb000aa3849e7404a6d",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Address%20Space.md",
+      "characters": 570
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Process Management & PCB.md",
+      "sha256": "7f7b19d85b2a3c24a405f4ecf2f2431adebf4ce841d63463c975d610b63bd311",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20Management%20%26%20PCB.md",
+      "characters": 1692
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Process vs Thread.md",
+      "sha256": "6a97431b54dd4d905b20829f6b7b7c9eeb606b4f57cc5afcec51c0a2d4f69a4e",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Process%20vs%20Thread.md",
+      "characters": 1736
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Race Condition.md",
+      "sha256": "a74600009e400111f5ccffbe6d28ce603b5a08ff1138265af8b3f62096e974c0",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Race%20Condition.md",
+      "characters": 752
+    },
+    {
+      "category": "OPERATING_SYSTEM",
+      "path": "Computer Science/Operating System/Semaphore & Mutex.md",
+      "sha256": "74ac6f608c92f53a1957b7434b1835450f804ad45604e3aceea67504c12b2736",
+      "url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Computer%20Science/Operating%20System/Semaphore%20%26%20Mutex.md",
+      "characters": 3259
+    }
+  ]
+}
