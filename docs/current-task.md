@@ -1,5 +1,7 @@
 # Current task
 
+현재 작업: [018 C28~C31 학습 이력·오답 복습](exec-plans/active/018-c28-c31-learning-history.md). C28 이력/상세·스냅샷부터 C29 복습·통계, C30 UI, C31 생성 문제 포함 E2E 순서로 구현·검증·개별 커밋한다. 017의 실제 GMS/코퍼스 미검증 사항은 별도로 유지한다.
+
 현재 구현: [017 C24~C27 근거 패널·관련 퀴즈](exec-plans/active/017-c24-c27-evidence-quizzes.md). Citation 본문 snapshot·접근 가능한 패널, 근거 기반 후보 생성·독립 검증·개인 저장·기존 채점과 새로고침 복구를 구현했다. 테스트와 라이브 검증 여부는 해당 계획에서 구분한다.
 
 현재 작업: C21~C23을 완료했으며 다음 구현 범위는 [005 학습 루프 완성](exec-plans/active/005-complete-learning-loop.md)의 복습 상태·학습 이력·관련 문제 생성이다.

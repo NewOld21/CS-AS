@@ -2,6 +2,12 @@
 
 상태: 1차 개발 설계 제안. [PRD FR-03/04/06/07/09/10](../01_PRD.md)와 [ERD](../06_ERD.md)를 구현 단위로 연결한다.
 
+## C28 이력 조회
+
+GET /api/v1/me/attempts와 /{attempt_id}는 인증 사용자 조건을 모든 조회에 적용한다. 기본 limit=20, 최대 100이며 category(기존 대문자 enum)/correct/origin 필터를 지원한다. items/next_cursor/total_count를 반환하며 total_count는 커서 이전 전체 필터 일치 건수다. (submitted_at DESC,id DESC) 키셋 커서를 사용자·필터에 묶어 시간 동률·추가 풀이에도 중복 이동을 방지한다.
+
+V10은 기존 quiz_attempts에 quiz_snapshot/evidence_snapshot을 추가한다. 새 풀이부터 당시 문제·선택지·개념·근거를 저장하고 정답/정오답/해설은 기존 채점 snapshot을 재사용한다. RETIRED 또는 내용이 바뀐 문제도 본인 이력은 당시 snapshot으로 복원한다. 기존 행의 migration은 적용 시점 문제/근거로 backfill하며 이전에 덮어쓴 원문을 복구했다고 주장하지 않는다. 이력은 정적/AI 문제를 같은 테이블에서 조회한다.
+
 ## 책임
 
 - Quiz: 접근 가능한 READY 문제 조회와 정답 비노출 DTO, 서버 채점.

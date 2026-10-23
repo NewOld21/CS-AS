@@ -810,8 +810,42 @@
           },
           {
             "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OPERATING_SYSTEM",
+                "NETWORK",
+                "DATABASE",
+                "DATA_STRUCTURE",
+                "ALGORITHM",
+                "COMPUTER_ARCHITECTURE"
+              ]
+            }
+          },
+          {
+            "name": "correct",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "origin",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CURATED",
+                "AI_GENERATED"
+              ]
+            }
           }
-        ]
+        ],
+        "description": "Owned immutable result snapshots, newest submitted_at then UUID descending. Cursor is bound to user and filters."
       }
     },
     "/api/v1/me/attempts/{attempt_id}": {
@@ -1673,11 +1707,17 @@
           "next_cursor": {
             "type": "string",
             "nullable": true
+          },
+          "total_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "All owned attempts matching filters, before the cursor boundary"
           }
         },
         "required": [
           "items",
-          "next_cursor"
+          "next_cursor",
+          "total_count"
         ]
       },
       "ChatSessionPage": {

@@ -173,6 +173,11 @@ class GenerationIntegrationTest extends HttpTestSupport {
             true,
             Map.of("Idempotency-Key", UUID.randomUUID().toString()));
     assertThat(wrong.body().path("is_correct").asBoolean()).isFalse();
+    var history = owner.request("GET", "/api/v1/me/attempts?origin=AI_GENERATED", null, false);
+    assertThat(history.status()).isEqualTo(200);
+    assertThat(history.body().path("total_count").asLong()).isEqualTo(2);
+    assertThat(history.body().path("items").get(0).path("quiz").path("origin").asText())
+        .isEqualTo("AI_GENERATED");
   }
 
   @Test
