@@ -77,6 +77,7 @@ def chunk_document(document: dict, config: ChunkConfig) -> list[dict]:
             "source_id": document["source_id"], "revision": document["revision"],
             "source_url": document["source_url"], "title": document["title"],
             "category": document.get("category"), "concept_ids": document.get("concept_ids", []),
+            "version": document.get("version", ""),
             "language": document["language"], "chunk_index": index, "content": content,
             "locator": document["locator"] + ("#" + heading.lstrip("# ") if heading else ""),
             "chunk_config_version": config.version,

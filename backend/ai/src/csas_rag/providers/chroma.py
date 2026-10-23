@@ -42,6 +42,7 @@ class ChromaVectorStore:
             "url": chunk["source_url"],
             "locator": chunk["locator"],
             "category": chunk.get("category") or "",
+            "version": chunk.get("version") or "",
             "language": chunk["language"],
             "concept_ids": json.dumps(sorted(chunk.get("concept_ids", [])), separators=(",", ":")),
             "chunk_index": chunk["chunk_index"],

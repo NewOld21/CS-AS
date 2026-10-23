@@ -17,6 +17,7 @@ from csas_rag.providers.chroma import ChromaVectorStore
 from csas_rag.providers.embeddings import OpenAIEmbedding
 from csas_rag.providers.llm import OpenAIAnswerGenerator
 from csas_rag.retrieval.vector import VectorRetriever
+from csas_rag.retrieval.planning import QueryPlanner
 
 
 def main(argv=None):
@@ -34,7 +35,7 @@ def main(argv=None):
     embedding = OpenAIEmbedding(model=manifest["model"], dimensions=manifest["dimensions"])
     retriever = VectorRetriever(ChromaVectorStore(manifest["index_version"]), embedding, manifest)
     generator = OpenAIAnswerGenerator()
-    serve(AnswerService(retriever, generator), token, manifest["index_version"], args.host, args.port,
+    serve(AnswerService(retriever, generator, planner=QueryPlanner()), token, manifest["index_version"], args.host, args.port,
           quiz_service=QuizService(retriever, generator, validate_candidate))
 
 
