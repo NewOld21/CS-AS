@@ -28,7 +28,7 @@
 | 항목 | 선택 |
 |---|---|
 | Color | bg #0d131b, panel #151e29, ink #f0f1eb, muted #b1bac5, accent #d6f599, error #ffb8ae |
-| Typography | 본문 15px/1.7, 보조 13px, 제목 20/28px, 큰 제목 fluid 42~70px. 한국어 sans·기술 라벨 mono |
+| Typography | Pretendard Variable 로컬 제공. 본문 15px/1.7, 보조 13px, 제목 20/28px, 큰 제목 fluid 42~70px. 기술 라벨·코드는 mono |
 | Spacing | 4/8/12/16/24/32/48/64/96px, fluid page gutter |
 | Border/Radius | 1px line, 6/14/24px, pill. 상태는 글자/속성도 함께 제공 |
 | Shadow/Depth | 패널 그림자·glyph 입체 바닥. 폼은 고정 |
@@ -39,7 +39,7 @@
 | Animation | press/hover 140ms, 선택 220ms, 페이지 260ms, 부유 5000ms. 대비 교정으로 텍스트 전체 fade 제거 |
 | Breakpoints | 980px tablet 보정, 680px 단일 열/모바일 메뉴. media query는 공통 CSS 하단에 집중. 320px까지 검사 |
 
-`prefers-reduced-motion`에서 부유·회전·페이지 움직임·smooth scroll을 제거하고 지도 멈춤 버튼도 제공한다. 애니메이션이 입력을 막지 않는다. 외부 폰트/이미지·canvas·무거운 animation 라이브러리는 사용하지 않는다. 모든 사용자 텍스트는 Vue 이스케이프 렌더링을 사용한다.
+`prefers-reduced-motion`에서 부유·회전·페이지 움직임·smooth scroll을 제거하고 지도 멈춤 버튼도 제공한다. 애니메이션이 입력을 막지 않는다. 사용자 요청으로 Pretendard Variable v1.3.9를 OFL과 함께 로컬 제공하며 런타임 폰트 CDN은 호출하지 않는다. 본문·버튼·입력은 공통 글꼴을 쓰고 코드·기술 라벨의 monospace는 유지한다. 모든 사용자 텍스트는 Vue 이스케이프 렌더링을 사용한다.
 
 ## 화면 범위와 후속 계획
 

@@ -32,7 +32,7 @@ const concepts = [
     code: '04',
     name: '알고리즘',
     en: 'ALGORITHM',
-    glyph: '{ }',
+    glyph: '{}',
     description: '더 나은 풀이로 가는 길. 문제를 나누고, 규칙을 발견해요.',
   },
   {

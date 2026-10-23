@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Pretendard Variable';
+  src: url('/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+}
 * {
   box-sizing: border-box;
 }
@@ -10,6 +17,9 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font: var(--text-base) / 1.7 var(--font-body);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.015em;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -771,7 +781,8 @@ main:focus {
   width: 66%;
   height: 63%;
   display: grid;
-  place-content: center;
+  place-items: center;
+  white-space: nowrap;
   position: relative;
   z-index: 2;
   border: 2px solid var(--node-color);
@@ -782,6 +793,7 @@ main:focus {
     inset 0 0 12px #ffffff09,
     6px 6px 0 var(--color-panel-raised);
   font: 700 clamp(1.2rem, 2.4vw, 2rem) var(--font-mono);
+  line-height: 1;
   transform: rotate(-9deg) skewY(7deg);
   transition: transform var(--duration-base);
 }
@@ -793,6 +805,9 @@ main:focus {
   border-radius: 50%;
 }
 .concept-node--algorithm .node-glyph {
+  font-size: clamp(1.1rem, 2.1vw, 1.75rem);
+  letter-spacing: -0.1em;
+  padding-right: 0.1em;
   transform: rotate(7deg);
 }
 .node-base {

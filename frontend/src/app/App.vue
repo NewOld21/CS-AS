@@ -12,7 +12,9 @@ function closeMenu() {
   menuToggle.value?.focus()
 }
 function focusMain() {
-  document.querySelector<HTMLElement>('main')?.focus({ preventScroll: true })
+  const main = document.querySelector<HTMLElement>('main')
+  if (document.activeElement !== main && main?.contains(document.activeElement)) return
+  main?.focus({ preventScroll: true })
 }
 watch(
   () => route.fullPath,

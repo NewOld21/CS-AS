@@ -1,5 +1,7 @@
 # Current task
 
+최신 UI 수정 완료: [020 알고리즘 아이콘·글꼴](exec-plans/completed/020-icon-typography.md). 중괄호를 네모 내부 한 줄로 고정하고 로컬 Pretendard Variable을 적용했다. Chrome 네 화면 폭·글꼴 로딩/텍스트 경계·UI 8개와 frontend build/lint/format을 확인했다. 아래 019의 실제 생성 검증 후속은 유지한다.
+
 현재 작업: [019 독립 CS 챗봇·27항목](exec-plans/active/019-standalone-rag-checklist.md). PDF 원본과 재생성된 GMS 설정을 확인했으며, 실제 모델·Chroma 결과와 테스트 대역 증거를 구분해 기록한다.
 
 실행 결과: `/chat` 독립 멀티턴·LangGraph·실제 GMS/Chroma를 연결했다. 12문서/673청크, paired 5문항, 실제 browser 일반/퀴즈 AS, Python 85·Java 56·Vue 17·fixture browser 13을 검사했다. [제출 결과](submission/checklist-results.md)는 19 통과/1 실패/6 미확인/1 해당없음이다. 실제 생성 후보의 독립 근거 검증 거부로 생성→제출 happy path는 남아 있으며, 사람/상호 점검·전체 캡처도 후속이다. 전체 완료로 표시하지 않는다.
