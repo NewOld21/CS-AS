@@ -108,4 +108,6 @@ quiz_attempts(user_id, submitted_at DESC, id), (user_id, quiz_id); review_states
 
 ## Graph 확장
 
+quizzes.source_metadata(JSONB)는 gyoogle-v1의 원문 SHA·경로·인용·학습 목표·키워드·선택지별 해설·자동 검토를 보존하는 서버 전용 필드다. 공개 출제 응답에는 포함하지 않는다. 기존 quiz_attempts의 채점·해설 snapshot과 quiz_evidence를 그대로 사용한다. 신규 테이블로 풀이 이력을 나누지 않는다.
+
 관계 모델은 [Graph RAG](domain/knowledge-graph.md)를 따른다. PostgreSQL concepts가 개념 식별자의 원장이고 Graph 노드는 그 ID의 투영이다. Graph 도입 시 quiz_attempts의 키를 교체하지 않는다. 관계·근거 변경은 버전 manifest와 재구축 가능한 배치로 반영한다.

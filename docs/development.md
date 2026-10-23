@@ -1,5 +1,7 @@
 # Development
 
+gyoogle 문제은행의 수량·난이도·출처·인용·자동 검토는 `python scripts/gyoogle_quiz_bank.py validate`로 검사하고 `python scripts/build_gyoogle_seed.py`로 V13을 재현한다. 신규 240문항과 기존 15문항은 별개다. 분야별 예시와 원문 목록은 [문제은행 보고서](gyoogle-question-bank.md)를 따른다. 생성 명령은 실제 모델 비용이 발생하므로 재검증 시 validate만 실행한다.
+
 ## Retrieval 평가 실행
 
 ```sh

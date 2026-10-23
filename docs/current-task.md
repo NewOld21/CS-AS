@@ -1,6 +1,6 @@
 # Current task
 
-현재 작업: [021 gyoogle 240문항·존댓말](exec-plans/active/021-gyoogle-240-questions.md). 고정 SHA의 gyoogle 원문만으로 신규 데이터셋을 생성·검증·시드하며, 기존 문제/기록을 보존하고 일반/퀴즈 AS의 공통 존댓말 규칙을 적용한다.
+최신 완료: [021 gyoogle 240문항·존댓말](exec-plans/completed/021-gyoogle-240-questions.md). 신규 240 + 기존 15문항, 난이도 72/120/48, 원문 69개를 검증·시드했다. Java 59·Python 87·Vue 17·Chrome fixture 11·Linux 하네스 19 통과. Docker 5서비스 healthy, 새 ACTIVE 검색 인덱스 82문서/1043청크를 반영했다. 일반/퀴즈 AS의 공통 존댓말 규칙을 적용했다. 사람 검수와 아래 019의 실제 생성 후속은 미완료다. [상세 결과](gyoogle-question-bank.md).
 
 최신 UI 수정 완료: [020 알고리즘 아이콘·글꼴](exec-plans/completed/020-icon-typography.md). 중괄호를 네모 내부 한 줄로 고정하고 로컬 Pretendard Variable을 적용했다. Chrome 네 화면 폭·글꼴 로딩/텍스트 경계·UI 8개와 frontend build/lint/format을 확인했다. 아래 019의 실제 생성 검증 후속은 유지한다.
 
