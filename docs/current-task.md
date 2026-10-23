@@ -1,5 +1,9 @@
 # Current task
 
+현재 작업: [019 독립 CS 챗봇·27항목](exec-plans/active/019-standalone-rag-checklist.md). PDF 원본과 재생성된 GMS 설정을 확인했으며, 실제 모델·Chroma 결과와 테스트 대역 증거를 구분해 기록한다.
+
+실행 결과: `/chat` 독립 멀티턴·LangGraph·실제 GMS/Chroma를 연결했다. 12문서/673청크, paired 5문항, 실제 browser 일반/퀴즈 AS, Python 85·Java 56·Vue 17·fixture browser 13을 검사했다. [제출 결과](submission/checklist-results.md)는 19 통과/1 실패/6 미확인/1 해당없음이다. 실제 생성 후보의 독립 근거 검증 거부로 생성→제출 happy path는 남아 있으며, 사람/상호 점검·전체 캡처도 후속이다. 전체 완료로 표시하지 않는다.
+
 최신 완료: [018 C28~C31 학습 이력·오답 복습](exec-plans/completed/018-c28-c31-learning-history.md). 본인 이력/상세 snapshot·복습 상태·통계와 마이페이지/오답노트/재풀이를 구현했다. Spring/PostgreSQL 55개·Vue 17개·Chrome fixture 11개·Python 76개(Chroma 2개 skip)·하네스 19개를 검증했다. 실제 HTTP에서 생성→오답→해결→재로그인 기록 보존을 확인했으며 RAG는 대역이다. 다음은 017의 실제 GMS/코퍼스·생성 표본 검수다.
 
 현재 구현: [017 C24~C27 근거 패널·관련 퀴즈](exec-plans/active/017-c24-c27-evidence-quizzes.md). Citation 본문 snapshot·접근 가능한 패널, 근거 기반 후보 생성·독립 검증·개인 저장·기존 채점과 새로고침 복구를 구현했다. 테스트와 라이브 검증 여부는 해당 계획에서 구분한다.

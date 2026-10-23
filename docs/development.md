@@ -52,6 +52,8 @@ docker compose run --rm --no-deps ai python scripts/rag_e2e.py \
 
 ## Vue 로컬 UI (012, C17)
 
+독립 CS 학습은 `/chat`이다. 실제 GMS 경로는 ACTIVE manifest와 backend/.env의 설정을 요구하며 누락 시 canned 답변으로 대체하지 않는다. `/api/v1/chat/status`는 인증 사용자에게 provider/모델/인덱스 상태만 제공한다. 실제 모델 회귀는 전용 테스트 DB backend에 `CSAS_CHAT_E2E_API`를 지정하고 Chrome `tests/e2e/chat-live.spec.ts`를 실행한다. 생성 후보의 독립 검증 실패는 READY 성공으로 간주하지 않는다. 27항목 재현과 제출 자료는 [패키지](submission/README.md)를 따른다.
+
 Node 22.12+(검증 24.18.0)/npm, 설치는 frontend/에서 `npm ci`다. 버전은 package.json/package-lock.json으로 고정한다. 루트 공통 명령:
 
 ```sh

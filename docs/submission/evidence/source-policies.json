@@ -1,0 +1,92 @@
+[
+  {
+    "id": "gyoogle",
+    "license": "MIT",
+    "attribution": "Copyright (c) 2019 Gyuseok Kim; source file URL and commit retained",
+    "storage_policy": "full-text",
+    "usage_review": "approved",
+    "enabled": true,
+    "review": {
+      "license_url": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/LICENSE",
+      "terms_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "robots_url": "https://github.com/robots.txt",
+      "reviewed_at": "2026-10-22",
+      "body_storage_allowed": true
+    },
+    "allowed_urls": [
+      "https://github.com/gyoogle/tech-interview-for-developer/blob/"
+    ]
+  },
+  {
+    "id": "wikipedia-ko",
+    "license": "CC BY-SA 4.0; page-specific exceptions may apply",
+    "attribution": "Korean Wikipedia contributors; article URL, revision ID and history URL retained; modifications indicated by CS-AS parsing/chunking",
+    "storage_policy": "full-text",
+    "usage_review": "approved",
+    "enabled": true,
+    "review": {
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
+      "robots_url": "https://ko.wikipedia.org/robots.txt",
+      "reviewed_at": "2026-10-22",
+      "body_storage_allowed": true
+    },
+    "allowed_urls": [
+      "https://ko.wikipedia.org/wiki/"
+    ]
+  },
+  {
+    "id": "rfc-editor",
+    "license": "IETF Trust Legal Provisions",
+    "attribution": "RFC 9110 authors and IETF Trust; original RFC URL and embedded copyright notice retained",
+    "storage_policy": "full-text",
+    "usage_review": "approved",
+    "enabled": true,
+    "review": {
+      "license_url": "https://trustee.ietf.org/documents/trust-legal-provisions/tlp-5/",
+      "terms_url": "https://www.rfc-editor.org/series/rfc-use/",
+      "robots_url": "https://www.rfc-editor.org/robots.txt",
+      "reviewed_at": "2026-10-22",
+      "body_storage_allowed": true
+    },
+    "allowed_urls": [
+      "https://www.rfc-editor.org/rfc/"
+    ]
+  },
+  {
+    "id": "mdn-http",
+    "license": "CC BY-SA 2.5 or later for prose; code samples CC0 or MIT as described by MDN",
+    "attribution": "MDN Web Docs by Mozilla Contributors; source file URL and commit retained; CS-AS parsing/chunking noted",
+    "storage_policy": "full-text",
+    "usage_review": "approved",
+    "enabled": true,
+    "review": {
+      "license_url": "https://github.com/mdn/content/blob/4f62576d552b13a897c03ae8d4caeb58ccd01392/LICENSE.md",
+      "terms_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "robots_url": "https://github.com/robots.txt",
+      "reviewed_at": "2026-10-22",
+      "body_storage_allowed": true
+    },
+    "allowed_urls": [
+      "https://github.com/mdn/content/blob/"
+    ]
+  },
+  {
+    "id": "postgresql",
+    "license": "PostgreSQL License",
+    "attribution": "Portions Copyright 1996-2026 PostgreSQL Global Development Group; Portions Copyright 1994 University of California; source URL retained",
+    "storage_policy": "full-text",
+    "usage_review": "approved",
+    "enabled": true,
+    "review": {
+      "license_url": "https://www.postgresql.org/about/licence/",
+      "terms_url": "https://www.postgresql.org/about/policies/",
+      "robots_url": "https://www.postgresql.org/robots.txt",
+      "reviewed_at": "2026-10-22",
+      "body_storage_allowed": true
+    },
+    "allowed_urls": [
+      "https://www.postgresql.org/docs/"
+    ]
+  }
+]

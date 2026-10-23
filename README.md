@@ -10,6 +10,10 @@ CS/AS는 퀴즈를 푼 뒤 모르는 개념을 근거 기반 AI에게 질문하�
 
 ## 핵심 기능
 
+독립 CS 학습 챗봇은 `/chat`에서 바로 사용할 수 있습니다. 일반 질문과 퀴즈 AS는 같은 LangGraph retrieve→generate, GMS 검색 계획/답변, Chroma 근거 검색을 공유합니다. 현재 실행 환경과 검증 범위는 [제출 패키지](docs/submission/README.md)와 [27항목 결과표](docs/submission/requirements-matrix.md)에 기록합니다. 개발 예제 모드는 화면에서 명시하며 실제 GMS 답변으로 표시하지 않습니다.
+
+이번 검증은 승인된 gyoogle(MIT), 한국어 Wikipedia(CC BY-SA), MDN(CC BY-SA), PostgreSQL(PostgreSQL License), RFC Editor의 등록부 조건을 적용한 12문서/673청크 샘플입니다. 원문 URL·리비전·저작자/이용 조건은 [출처 증거](docs/submission/evidence/source-policies.json)와 `docs/data-sources.json`에 보존합니다. 원문/정제본은 승인된 로컬 staging, 검색 청크는 Chroma에 저장하며 승인되지 않은 출처는 수집하지 않습니다. 재수집은 내용 hash로 증분 반영하고 삭제는 출처별 완전 동기화·요청 검토 정책을 따릅니다. 이 샘플이 모든 CS 주제를 포함하지는 않습니다.
+
 | 영역 | 구현 내용 | 상태 |
 |---|---|---|
 | 인증 | 회원가입, 로그인, 로그아웃, 세션·CSRF, 사용자별 접근 제어 | 구현 |
@@ -18,8 +22,8 @@ CS/AS는 퀴즈를 푼 뒤 모르는 개념을 근거 기반 AI에게 질문하�
 | Vector RAG | 구조 기반 청킹, 증분 Chroma 인덱스, 검색 근거·인용 검증, 20문항 품질 평가 | 구현 |
 | 학습 UI | 랜딩, 인증, 계정, 퀴즈 풀이·결과, 문맥 AS 채팅·출처·이전 대화 복원 | 구현 |
 | 데이터 수집 | GitHub, 한·영 Wikipedia, 공식 HTML/Markdown/RFC/sitemap 수집·정규화 | 구현·출처 승인 대기 |
-| AI 관련 문제 | 검색 근거 기반 생성·독립 검증·개인 문제 저장 | 후속 |
-| 복습·마이페이지 | 대화 복원 구현; 통계, 오답 상태와 재풀이는 후속 | 일부 구현 |
+| AI 관련 문제 | 검색 근거 기반 생성·독립 검증·개인 문제 저장 | 구현·실제 후보 품질 검증 후속 |
+| 복습·마이페이지 | 사용자별 통계·이력·오답 상태·재풀이 | 구현 |
 | Graph RAG | 개념 관계·근거 기반 지식 지도와 하이브리드 검색 | 2차 확장 |
 
 ## 동작 구조

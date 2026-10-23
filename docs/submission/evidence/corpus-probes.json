@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "query_count": 5,
+  "evaluated_at": "2026-10-23T01:23:34.036574+00:00",
+  "index_version": "csas-checklist-live-v1",
+  "results": [
+    {
+      "question": "운영 체제의 역할과 프로세스 관리를 설명해줘",
+      "expected_sources": [
+        "gyoogle",
+        "wikipedia-ko"
+      ],
+      "matched_sources": [
+        "wikipedia-ko"
+      ],
+      "passed": true,
+      "top_sources": [
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko",
+        "wikipedia-ko"
+      ]
+    },
+    {
+      "question": "자료 구조와 알고리즘의 차이는 무엇인가?",
+      "expected_sources": [
+        "gyoogle",
+        "wikipedia-ko"
+      ],
+      "matched_sources": [
+        "gyoogle"
+      ],
+      "passed": true,
+      "top_sources": [
+        "gyoogle",
+        "gyoogle",
+        "gyoogle",
+        "gyoogle",
+        "gyoogle",
+        "gyoogle",
+        "gyoogle",
+        "gyoogle"
+      ]
+    },
+    {
+      "question": "HTTP 메시지와 메서드의 의미를 설명해줘",
+      "expected_sources": [
+        "mdn-http",
+        "rfc-editor"
+      ],
+      "matched_sources": [
+        "rfc-editor"
+      ],
+      "passed": true,
+      "top_sources": [
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor"
+      ]
+    },
+    {
+      "question": "HTTP 상태 코드와 요청 응답 의미를 알려줘",
+      "expected_sources": [
+        "mdn-http",
+        "rfc-editor"
+      ],
+      "matched_sources": [
+        "rfc-editor"
+      ],
+      "passed": true,
+      "top_sources": [
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor",
+        "rfc-editor"
+      ]
+    },
+    {
+      "question": "PostgreSQL MVCC와 트랜잭션 격리 수준을 설명해줘",
+      "expected_sources": [
+        "postgresql"
+      ],
+      "matched_sources": [
+        "postgresql"
+      ],
+      "passed": true,
+      "top_sources": [
+        "postgresql",
+        "postgresql",
+        "postgresql",
+        "postgresql",
+        "postgresql",
+        "postgresql",
+        "postgresql",
+        "postgresql"
+      ]
+    }
+  ]
+}

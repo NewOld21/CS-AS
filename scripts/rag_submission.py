@@ -11,7 +11,7 @@ OUT = ROOT/'docs/submission'
 
 def main():
     evidence = OUT/'evidence'; evidence.mkdir(parents=True, exist_ok=True)
-    for name in ('isolated.json', 'live-comparison.json', 'live-probe.json', 'corpus-probes.json'):
+    for name in ('isolated.json', 'live-comparison.json', 'live-probe.json', 'corpus-probes.json', 'generation-validation.json'):
         source = ROOT/'reports/checklist'/name
         if source.exists(): shutil.copy2(source, evidence/name)
     for source in (ROOT/'reports/checklist/evidence').glob('*.png'):
@@ -32,7 +32,7 @@ def main():
       ('F2007/F2008','Abstention','PASS','Future PostgreSQL question returns insufficient_evidence with zero cited IDs; browser empty-source notice verified.','live-comparison.json'),
       ('F2009','Conversation isolation','PASS','Real browser new chat clears transcript; Spring owner-scoped history test and foreign-user 404.','live-gms-multiturn.png'),
       ('F2011','Metadata filters','PASS','Live source_id=postgresql restriction rechecked against all returned chunks.','live-probe.json'),
-      ('F2010','Domain evidence','PASS','Live quiz AS evidence; generated quiz grading/history regression uses GMS mock unless live-generated-history.png is present.','live-quiz-as.png'),
+      ('F2010','Domain evidence','FAIL','Live quiz AS has evidence. Actual generated quiz failed independent evidence audit (EXPLANATION_OR_DISTRACTOR_UNSUPPORTED), so live generation/submission/history happy path did not complete. Existing mock regressions passed.','generation-validation.json'),
       ('F2012','Progress/configuration errors','UNVERIFIED','Request progress and mocked missing-key UI verified. Actual missing-key/index deletion runtime probes still need an isolated configuration run. Never delete active index.','fixture-standalone-mobile.png'),
       ('F2012','High-risk disclaimer','NOT_APPLICABLE','CS learning; no clinical or financial decision domain.',''),
       ('F2013','Web UI','PASS','Actual Vue -> dedicated Spring/PostgreSQL -> Python LangGraph -> GMS/Chroma browser execution.','live-gms-multiturn.png'),
@@ -71,7 +71,7 @@ def main():
     for i,row in enumerate(comparison['model_comparison']['results'],1):
         experiment+=f"## {i}. {row['question']}\n\nRAG status: {row['rag']['status']}; graph latency {row['rag']['diagnostics']['elapsed_ms']} ms.\n\n{row['rag'].get('answer') or 'Insufficient evidence; no cited documents.'}\n\nNo-RAG:\n\n{row['no_rag'].get('answer','')}\n\n"
     experiment+='## Review limits\n\nAgent comparison: core conclusions in pairs 1, 3, 4 match the saved PostgreSQL/RFC evidence. Pair 2 correctly recommends full transaction retry, but language implying retry always eliminates all conflicts is too strong: another concurrent conflict can recur. Pair 5 abstains in both conditions. No-RAG answers in this sample did not invent source URLs, so this run does not establish a hallucination-rate advantage. Evidence presence is not full semantic correctness. Historical collection_events=0 diagnostic fields in early raw traces were constants, not measured counters; use collection counts and actual graph separation instead.\n'
-    (OUT/'rag-vs-no-rag.md').write_text(experiment,encoding='utf-8')
+    (OUT/'rag-vs-no-rag.md').write_text('\n'.join(line.rstrip() for line in experiment.splitlines())+'\n',encoding='utf-8')
     (OUT/'README.md').write_text('# Submission package\n\nRead [requirements](requirements.md), [architecture](rag-architecture.md), [test results](test-results.md), [27-item matrix](requirements-matrix.md), [RAG comparison](rag-vs-no-rag.md), [self/peer checklist](checklist-results.md). Source code is the parent Git repository. This is a self-executed package, not a signed peer review.\n\nEvidence JSON uses actual GMS/Chroma runs except explicitly labeled isolated deterministic fixtures. Screenshot names beginning fixture- use routed API fixtures; live- use actual GMS and a dedicated test DB. Active development DB contains no test accounts from these runs.\n\nReproduce: Docker AI `python scripts/rag_checklist.py --output reports/checklist/live-comparison.json --compare-manifest data/processed/indexes/csas-checklist-live-v1.json`; repeat/filter probe uses `--probe-manifest`. Package after execution with `python scripts/rag_submission.py`. Never replace missing evidence with invented responses.\n',encoding='utf-8')
     print(json.dumps(counts))
 
