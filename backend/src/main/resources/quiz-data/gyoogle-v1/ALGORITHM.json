@@ -1,0 +1,1088 @@
+[
+  {
+    "slot": 1,
+    "topic": "해시 테이블의 기본 목적",
+    "learningObjective": "해시 테이블을 사용하여 탐색 비용을 줄이는 기본 동작을 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "입력 문자열이 최대 100,000개일 때, 본 문서에서 제안하는 이유로 해시 테이블을 사용하는 주된 목적은 무엇입니까?",
+    "options": [
+      "전체 데이터(모든 입력 문자열)를 매번 탐색하지 않고, 해당 키에 해당하는 배열 영역만 확인하여 탐색 시간을 크게 줄이기 위해서입니다.",
+      "문자열들을 사전순으로 정렬하여 출력하기 위해서입니다.",
+      "해시를 사용하면 서로 다른 문자열이 동일한 키를 못 갖도록 충돌을 완전히 제거할 수 있기 때문에입니다.",
+      "해시 테이블을 사용하면 입력의 수를 줄여 문제의 N을 실제로 작게 만들어 시간복잡도를 낮출 수 있기 때문에입니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서는 브루트 포스가 N^2가 되어 시간초과가 발생하므로 해시 테이블을 사용한다고 설명하며, 해시를 통해 input에 대한 key 값을 얻어 관리하면 '모든 곳을 탐색할 필요 없이 이 key에 해당하는 배열에서만 확인'하여 시간을 절약할 수 있다고 명시합니다.",
+    "optionExplanations": [
+      "정답입니다. 문서에서 해시 테이블을 통해 key에 해당하는 배열에서만 확인해서 탐색을 크게 줄인다고 설명합니다.",
+      "문서에는 정렬을 목적으로 한다고 나오지 않습니다; 목표는 탐색 비용 절감이며 예제 출력도 정렬과 관련이 없습니다.",
+      "문서에서는 충돌을 완전히 피할 수 없다고 설명하며 충돌을 줄이려 노력한다고 되어 있으므로 잘못된 진술입니다.",
+      "해시 테이블은 입력 수 N을 줄이지 않으며, 문서에서는 실제로 입력을 같은 키 버킷 안에서만 확인한다고만 설명합니다."
+    ],
+    "keywords": [
+      "탐색 시간 절감",
+      "키 버킷",
+      "해시 테이블"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/Hash Table 구현하기.md",
+      "startLine": 60,
+      "endLine": 63,
+      "quote": "해시 테이블은 탐색을 최대한 줄여주기 위해, input에 대한 key 값을 얻어내서 관리하는 방식이다.\n\n현재 최대 N 값은 10만이다. 이차원 배열로 1000/100으로 나누어 관리하면, 더 효율적일 것이다."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/Hash Table 구현하기.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Hash%20Table%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md",
+    "id": "f67aeaa4-aff3-58aa-9ca0-bd78d5d784c7",
+    "review": {
+      "blind": {
+        "slot": 1,
+        "correctOptionText": "전체 데이터(모든 입력 문자열)를 매번 탐색하지 않고, 해당 키에 해당하는 배열 영역만 확인하여 탐색 시간을 크게 줄이기 위해서입니다.",
+        "unambiguous": true,
+        "reason": "문서에서는 N이 최대 100,000이므로 전체를 매번 탐색하면 시간초과가 나므로, 해시로 키를 얻어 해당 버킷만 검사해 탐색 시간을 절약한다고 설명하고 있습니다.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 1,
+        "passed": true,
+        "reason": "정답(옵션1)은 소스의 '해시 테이블은... 이 key에 해당하는 배열에서만 확인' 문장과 checking 흐름에 근거해 정확하며, 나머지 보기들은 문서에서 명시적으로 반박(정렬 목적 아님, 충돌은 완전히 제거 불가, N을 줄이지 않음)되므로 오답임이 증명됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 2,
+    "topic": "DFS 정의",
+    "learningObjective": "DFS의 기본 탐색 순서(다음 브랜치로 넘어가기 전 현재 브랜치를 모두 탐색)를 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "DFS(깊이 우선 탐색)의 탐색 순서에 대한 설명으로 가장 알맞은 것은 무엇입니까?",
+    "options": [
+      "탐색 시 모든 간선을 두 번씩만 검사합니다.",
+      "다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색합니다.",
+      "항상 인접한 노드부터 레벨 순서로 탐색합니다.",
+      "방문할 노드를 큐에 넣어 먼저 들어온 순서대로 처리합니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "자료에서 DFS는 '다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색'하는 방법으로 정의되어 있습니다. 즉, 한 경로를 끝까지 따라서 내려간 뒤 되돌아가 다른 브랜치를 탐색하는 방식이며 스택이나 재귀를 통해 구현한다고 명시되어 있습니다.",
+    "optionExplanations": [
+      "오답: \"모든 간선을 두 번씩만 검사\"라는 표현은 자료에 명시된 DFS의 기본 설명과 일치하지 않습니다.",
+      "정답: 자료의 정의와 일치합니다: \"다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색\".",
+      "오답: 이는 BFS의 특징입니다. 자료에서 BFS는 \"인접한 노드부터 먼저 탐색\"한다고 설명합니다.",
+      "오답: 큐를 사용해 먼저 들어온 순서대로 처리하는 방식은 BFS의 구현 방식으로 자료에 명시되어 있습니다."
+    ],
+    "keywords": [
+      "DFS",
+      "깊이 우선",
+      "탐색 순서",
+      "스택/재귀"
+    ],
+    "sourceEvidence": {
+      "section": "DFS",
+      "quote": "루트 노드 혹은 임의 노드에서 **다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색**하는 방법"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/DFS & BFS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/DFS%20%26%20BFS.md",
+    "id": "ef239a9c-b2e1-535b-a706-e5428127de4f",
+    "review": {
+      "blind": {
+        "slot": 2,
+        "position": 2,
+        "unambiguous": true,
+        "reason": "Source definition of DFS: '다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색' (exact match)."
+      },
+      "evidenceAudit": {
+        "slot": 2,
+        "passed": true,
+        "reason": "정답(옵션 2)은 소스의 정의 문구와 정확히 일치하고, 나머지 선택지(옵션 1,3,4)는 소스에서 DFS로 설명하지 않거나(옵션1은 언급 없음) BFS의 특성으로 명시되어 있어(옵션3,4) 모두 오답으로 판정 가능합니다. 난이도·학습목표·설명도 소스 내용에 부합하며 한국어 표현도 자연스럽습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 3,
+    "topic": "합병정렬의 안정성",
+    "learningObjective": "합병 정렬이 안정 정렬인지 여부를 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "다음 중 합병 정렬(Merge Sort)에 관한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "합병 정렬의 최악 시간복잡도는 O(n^2)입니다.",
+      "합병 정렬은 항상 불안정하게 요소의 상대적 순서를 변경합니다.",
+      "합병 정렬은 안정 정렬에 속합니다.",
+      "합병 정렬은 피벗을 이용한 분할(partition)로 정렬을 진행합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "자료에서 합병 정렬은 '안정 정렬'에 속한다고 명시되어 있습니다. 따라서 합병 정렬은 동일한 키를 가진 요소들의 상대적 순서를 보존합니다(안정성). (근거: '퀵소트와는 반대로 `안정 정렬`에 속함')",
+    "optionExplanations": [
+      "틀렸습니다. 문서에 합병 정렬의 시간복잡도 표는 평균·최선·최악 모두 Θ(nlogn)/Ω(nlogn)/O(nlogn)으로 되어 있어 O(n^2)가 아닙니다.",
+      "틀렸습니다. 합병 정렬은 안정 정렬이므로 동일 키의 상대적 순서를 보존하며 항상 불안정하지 않습니다.",
+      "정답입니다. 문서에 합병 정렬이 '안정 정렬'에 속한다고 명확히 적혀 있습니다.",
+      "틀렸습니다. 피벗을 통한 partition 방식은 퀵정렬의 특징이며, 문서에서도 퀵정렬의 동작으로 설명되어 있습니다."
+    ],
+    "keywords": [
+      "안정 정렬",
+      "합병 정렬"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/MergeSort.md",
+      "startLine": 19,
+      "endLine": 19,
+      "quote": "퀵소트와는 반대로 `안정 정렬`에 속함"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/MergeSort.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/MergeSort.md",
+    "id": "c9b4531c-0ee7-543a-9f5c-f8d9dc1bd328",
+    "review": {
+      "blind": {
+        "slot": 3,
+        "correctOptionText": "합병 정렬은 안정 정렬에 속합니다.",
+        "unambiguous": true,
+        "reason": "본문에서 합병정렬은 '안정 정렬'에 속한다고 명시하고 있습니다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 3,
+        "passed": true,
+        "reason": "정답(합병 정렬은 안정 정렬)은 소스에 명시되어 있고, 나머지 선택지들은 소스의 시간복잡도 표(최악 O(nlogn)) 및 퀵정렬 설명과 명백히 배치되어 있어 모두 잘못임이 근거로 증명됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 4,
+    "topic": "힙 소트의 기본 개념",
+    "learningObjective": "힙 소트가 어떤 자료구조를 바탕으로 하는지 설명할 수 있습니다.",
+    "difficulty": "EASY",
+    "question": "힙 소트(Heap Sort)는 어떤 자료구조를 기반으로 한 정렬 방식입니까?",
+    "options": [
+      "정렬된 순서를 유지하는 연결 리스트",
+      "키 기반의 이진 탐색 트리(Binary Search Tree)",
+      "균형을 유지하는 이진 탐색 트리(예: AVL 트리)",
+      "완전 이진 트리를 기본으로 하는 힙(Heap) 자료구조"
+    ],
+    "correctAnswer": 4,
+    "explanation": "본문에서는 힙 소트를 \"완전 이진 트리를 기본으로 하는 힙(Heap) 자료구조를 기반으로한 정렬 방식\"이라고 직접 설명하고 있습니다. 따라서 힙 소트의 기반 자료구조는 완전 이진 트리를 기반으로 한 힙입니다. 다른 선택지들은 본문에서 힙 소트의 기반으로 명시되지 않았습니다.",
+    "optionExplanations": [
+      "오답입니다. 본문은 연결 리스트를 힙 소트의 기반 자료구조로 언급하지 않습니다.",
+      "오답입니다. 본문은 이진 탐색 트리를 힙 소트의 기반으로 설명하지 않습니다.",
+      "오답입니다. 본문은 AVL 등 균형 이진 탐색 트리를 힙 소트의 기반으로 언급하지 않습니다.",
+      "정답입니다. 본문에 \"완전 이진 트리를 기본으로 하는 힙(Heap) 자료구조를 기반으로한 정렬 방식\"이라고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "힙 소트",
+      "힙",
+      "완전 이진 트리"
+    ],
+    "sourceEvidence": {
+      "section": "#### 힙 소트(Heap Sort)",
+      "quote": "완전 이진 트리를 기본으로 하는 힙(Heap) 자료구조를 기반으로한 정렬 방식"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/HeapSort.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/HeapSort.md",
+    "id": "0c3d67ff-c5ff-50b8-8a92-86a29a96edf2",
+    "review": {
+      "blind": {
+        "slot": 4,
+        "position": 4,
+        "unambiguous": true,
+        "reason": "본문 첫 문단에 '완전 이진 트리를 기본으로 하는 힙(Heap) 자료구조를 기반으로한 정렬 방식'이라 명시되어 있음."
+      },
+      "evidenceAudit": {
+        "slot": 4,
+        "passed": true,
+        "reason": "The source explicitly states that heap sort is based on a heap using a complete binary tree, uniquely supporting option 4; the other three options contradict that statement and are thus provably incorrect. Explanations, difficulty, and learning objective match the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 5,
+    "topic": "퀵소트 시간복잡도",
+    "learningObjective": "퀵소트의 평균 및 최악 시간복잡도를 설명할 수 있다",
+    "difficulty": "EASY",
+    "question": "퀵소트의 시간복잡도에 대해 올바른 설명은 무엇입니까?",
+    "options": [
+      "평균적으로 Θ(nlogn)을 가지며, 최악의 경우 O(n^2)이 됩니다.",
+      "평균적으로 O(n^2)을 가지며, 최악의 경우 Θ(nlogn)이 됩니다.",
+      "항상 Θ(nlogn)의 시간복잡도를 가집니다.",
+      "항상 O(n^3)의 시간복잡도를 가집니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "자료에 따르면 퀵소트는 평균적으로 Θ(nlogn)을 가지지만, 특정한 피벗 선택(예: 피벗이 최솟값 또는 최댓값으로 지정되어 제대로 분할되지 않을 때)에서는 최악의 경우 O(n^2)을 보인다고 명시되어 있으므로 첫 번째 보기가 옳습니다. (출처: '퀵소트는 최악의 경우 O(n^2), 평균적으로 Θ(nlogn)을 가짐' 및 '피벗 값이 최소나 최대값으로 지정되어 파티션이 나누어지지 않았을 때 O(n^2)에 대한 시간복잡도를 가짐')",
+    "optionExplanations": [
+      "정답입니다. 주어진 자료에 따르면 퀵소트는 평균적으로 Θ(nlogn)을 가지며, 피벗이 극단값으로 선택되어 분할이 되지 않는 경우 최악의 경우 O(n^2)이 된다고 명시되어 있습니다.",
+      "오답입니다. 자료는 퀵소트의 평균 복잡도가 Θ(nlogn)이고 최악의 경우가 O(n^2)라고 설명하고 있으므로, '평균 O(n^2), 최악 Θ(nlogn)'은 자료와 일치하지 않습니다.",
+      "오답입니다. 자료에서는 특정 상황(피벗 선택 문제)에서 최악의 경우 O(n^2)가 발생한다고 명시하고 있어 '항상 Θ(nlogn)'이라고 단정할 수 없습니다.",
+      "오답입니다. 자료 어디에도 퀵소트가 항상 O(n^3)를 가진다고 하지 않으며, 실제로 평균적으로 Θ(nlogn)이라고 기술되어 있습니다."
+    ],
+    "keywords": [
+      "퀵소트",
+      "시간복잡도",
+      "최악",
+      "평균"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/QuickSort.md",
+      "startLine": 11,
+      "endLine": 11,
+      "quote": "퀵소트는 최악의 경우 O(n^2), 평균적으로 Θ(nlogn)을 가짐"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/QuickSort.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/QuickSort.md",
+    "id": "c47b3de9-4beb-598a-8221-f8b6bf80e49a",
+    "review": {
+      "blind": {
+        "slot": 5,
+        "correctOptionText": "평균적으로 Θ(nlogn)을 가지며, 최악의 경우 O(n^2)이 됩니다.",
+        "unambiguous": true,
+        "reason": "Source states: '퀵소트는 최악의 경우 O(n^2), 평균적으로 Θ(nlogn)을 가짐', which matches the option exactly.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 5,
+        "passed": true,
+        "reason": "정답(1번)과 오답(2,3,4번) 모두 원문(“퀵소트는 최악의 경우 O(n^2), 평균적으로 Θ(nlogn)을 가짐”)에 의해 명확히 검증되며, 각 선택지 설명도 출처 내용과 일치하고 과도한 절대 주장(오답 설명에서의 부정확한 절대화)은 없음."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 6,
+    "topic": "DFS 구현 방법",
+    "learningObjective": "DFS를 구현할 때 주로 사용하는 자료구조(또는 기법)를 식별할 수 있다",
+    "difficulty": "EASY",
+    "question": "다음 중 본문에서 DFS를 구현할 때 명시적으로 사용한다고 설명한 것은 무엇입니까?",
+    "options": [
+      "해시 테이블",
+      "스택 또는 재귀함수",
+      "큐",
+      "우선순위 큐"
+    ],
+    "correctAnswer": 2,
+    "explanation": "본문은 DFS를 \"스택 or 재귀함수\"로 구현한다고 명시하고 있습니다. 따라서 DFS 구현에 대해 문서에서 분명히 언급한 것은 스택 또는 재귀함수입니다.",
+    "optionExplanations": [
+      "오답입니다. 본문은 해시 테이블을 DFS 구현 방법으로 언급하지 않으며, DFS 구현은 스택 또는 재귀함수로 설명되어 있습니다.",
+      "정답입니다. 본문에 \"스택 or 재귀함수\"를 통해 구현한다고 명시되어 있습니다.",
+      "오답입니다. 본문에서는 큐를 BFS 구현과 연결하여 설명하고 있으며(큐를 통해 구현), 이는 DFS 구현에 대한 설명이 아닙니다.",
+      "오답입니다. 본문에는 우선순위 큐를 DFS 구현에 사용한다고 언급하지 않습니다; 대신 DFS는 스택 또는 재귀로 구현한다고 명시되어 있습니다."
+    ],
+    "keywords": [
+      "DFS",
+      "스택",
+      "재귀",
+      "구현"
+    ],
+    "sourceEvidence": {
+      "section": "DFS & BFS.md",
+      "startLine": 13,
+      "endLine": 16,
+      "quote": "> 루트 노드 혹은 임의 노드에서 **다음 브랜치로 넘어가기 전에, 해당 브랜치를 모두 탐색**하는 방법\n\n**스택 or 재귀함수**를 통해 구현한다."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/DFS & BFS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/DFS%20%26%20BFS.md",
+    "id": "1892234a-97cc-536d-828a-8b4b0383bb7f",
+    "review": {
+      "blind": {
+        "slot": 6,
+        "correctOptionText": "스택 또는 재귀함수",
+        "unambiguous": true,
+        "reason": "본문의 DFS 설명에 '스택 or 재귀함수'로 구현한다고 명시되어 있음.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 6,
+        "passed": true,
+        "reason": "The source explicitly states \"스택 or 재귀함수\" for DFS; the correct option matches and all three distractors are not mentioned or are linked to BFS in the source, so they are provably incorrect."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 7,
+    "topic": "Radix sort의 LSD와 MSD 비교",
+    "learningObjective": "Radix sort에서 LSD(하위-자리수 우선) 방식이 MSD보다 갖는 일관성·분기 특성상의 장점을 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "Radix sort에서 LSD(Least-Significant-Digit) 방식이 MSD(Most-Significant-Digit) 방식보다 가지는 장점으로 옳은 것은 무엇입니까?",
+    "options": [
+      "MSD보다 중간에 정렬되었는지 확인하는 과정 때문에 메모리를 더 적게 사용합니다.",
+      "자릿수가 정해지지 않은(예: 부동 소수점) 데이터도 그대로 정렬할 수 있습니다.",
+      "알고리즘이 일관적이고 분기(branch)가 적어 구현상 branch-free에 가깝습니다.",
+      "중간 단계에서 중요 숫자를 발견해 정렬 완료를 조기에 판정할 수 있어 시간을 줄일 수 있습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "본문은 LSD가 \"알고리즘이 일관됨 (Branch Free algorithm)\"이라고 명시하여, LSD 방식이 분기·비일관성 측면에서 유리하다고 설명하고 있습니다. 반면 MSD는 일관되지 못함을 언급하여 LSD의 일관성 장점을 대비하고 있습니다.",
+    "optionExplanations": [
+      "오답: 본문은 MSD에 대해 \"정렬이 되었는지 확인하는 과정이 필요하고, 이 때문에 메모리를 더 사용\"한다고 명시하여, 메모리 사용이 더 많은 것은 MSD의 단점이지 MSD가 더 적게 사용한다는 주장은 근거가 없습니다.",
+      "오답: 본문은 Radix sort의 단점으로 \"자릿수가 없는 것은 정렬할 수 없음. (부동 소숫점)\"을 명시하므로, 자릿수가 정해지지 않은 데이터는 그대로 정렬할 수 없다는 점을 부정합니다.",
+      "정답: 본문에 \"LSD는 알고리즘이 일관됨 (Branch Free algorithm)\"이라고 명시되어 있어 LSD가 분기와 비일관성 측면에서 유리함을 근거로 합니다. (출처 참조)",
+      "오답: 본문은 \"MSD는 중간에 중요한 숫자를 알 수 있어 시간을 줄일 수 있음\"이라고 하여, 중간 판정으로 인한 시간 단축은 MSD의 특징임을 명시합니다."
+    ],
+    "keywords": [
+      "Radix sort",
+      "LSD",
+      "MSD",
+      "branch-free",
+      "일관성"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/Sort_Radix.md",
+      "startLine": 91,
+      "endLine": 99,
+      "quote": "MSD는 가장 큰 자리수부터 Counting sort 하는 것을 의미하고, LSD는 가장 낮은 자리수부터 Counting sort 하는 것을 의미함. (즉, 둘 다 할 수 있음)\n\n* LSD의 경우 1600000 과 1을 비교할 때, Digit의 갯수만큼 따져야하는 단점이 있음.\n  그에 반해 MSD는 마지막 자리수까지 확인해 볼 필요가 없음.\n* LSD는 중간에 정렬 결과를 알 수 없음. (예) 10004와 70002의 비교)\n  반면, MSD는 중간에 중요한 숫자를 알 수 있음. 따라서 시간을 줄일 수 있음. 그러나, 정렬이 되었는지 확인하는 과정이 필요하고, 이 때문에 메모리를 더 사용\n* LSD는 알고리즘이 일관됨 (Branch Free algorithm)\n  그러나 MSD는 일관되지 못함. --> 따라서 Radix sort는 주로 LSD를 언급함.\n* LSD는 자릿수가 정해진 경우 좀 더 빠를 수 있음."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/Sort_Radix.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Sort_Radix.md",
+    "id": "827a3597-55dc-5ba2-9eb9-6fd7b8c28816",
+    "review": {
+      "blind": {
+        "slot": 7,
+        "correctOptionText": "알고리즘이 일관적이고 분기(branch)가 적어 구현상 branch-free에 가깝습니다.",
+        "unambiguous": true,
+        "reason": "Source states: \"LSD는 알고리즘이 일관됨 (Branch Free algorithm)\", indicating this is an advantage of LSD over MSD.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 7,
+        "passed": true,
+        "reason": "The source explicitly states LSD is '일관됨 (Branch Free algorithm)', supporting option 3 uniquely; the other three distractors contradict source statements (memory use, floating-point handling, and early termination are attributed to MSD or denied)."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 8,
+    "topic": "다익스트라 구현 방식 선택",
+    "learningObjective": "인접 행렬과 인접 리스트 구현의 시간 복잡도 차이와, 언제 인접 리스트(우선순위 큐)를 선택해야 하는지 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "다익스트라 알고리즘을 구현할 때 인접 행렬 대신 인접 리스트(우선순위 큐)를 선택해야 하는 상황으로 가장 적절한 것은 무엇입니까?",
+    "options": [
+      "그래프에 음수 간선이 존재하므로 인접 리스트를 사용해야 합니다.",
+      "그래프가 조밀(dense)하여 간선 수가 거의 정점 수의 제곱에 가깝다면 인접 리스트를 사용해야 합니다.",
+      "다익스트라가 DP를 활용하므로 항상 인접 리스트를 사용해야 합니다.",
+      "정점 수가 커서 선형 탐색 방식으로는 시간 초과가 발생할 가능성이 있는 문제일 때 인접 리스트를 사용해야 합니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "제공된 자료는 인접 행렬 구현의 시간 복잡도가 O(N^2)이고, 인접 리스트(우선순위 큐) 구현은 O(N*logN)이라고 명시합니다. 또한 선형 탐색(인접 행렬 방식)으로 시간 초과가 발생하는 문제에서는 인접 리스트로 접근해야 한다고 직접 권고하고 있으므로, 정점 수가 커서 선형 탐색으로 시간 초과가 날 가능성이 있을 때 인접 리스트를 선택하는 것이 타당합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 자료에는 다익스트라가 적용될 수 있는 조건으로 \"간선의 값이 양수일 때만 가능하다\"고 명시되어 있어 음수 간선 존재 시 다익스트라 자체가 적용 불가임을 알 수 있으나, 음수 간선 때문에 인접 리스트를 선택해야 한다는 근거는 없습니다 (line 101).",
+      "틀렸습니다. 조밀한 그래프에서는 인접 행렬이 간단하고 효율적일 수 있으나, 자료에서 인접 리스트를 권하는 근거는 선형 탐색으로 시간 초과가 날 때라는 점이지 그래프의 밀도 때문이라는 언급은 없습니다 (lines 95-99).",
+      "틀렸습니다. 자료는 다익스트라에 대해 DP 성질을 설명하지만, 그것이 곧 항상 인접 리스트를 사용해야 한다는 의미는 아니며 구현 선택은 시간 복잡도와 문제 특성에 따라 달라진다고 명시하고 있습니다 (lines 19, 95-99).",
+      "정답입니다. 자료에 \"인접 행렬로 구현하면 시간 복잡도는 O(N^2)이다\"와 \"인접 리스트로 구현하면 시간 복잡도는 O(N*logN)이다\", 그리고 \"선형 탐색으로 시간 초과가 나는 문제는 인접 리스트로 접근해야한다. (우선순위 큐)\"라고 명시되어 있습니다 (lines 95-99)."
+    ],
+    "keywords": [
+      "인접 행렬",
+      "인접 리스트",
+      "우선순위 큐",
+      "시간 복잡도",
+      "시간 초과"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/다익스트라(Dijkstra).md",
+      "startLine": 95,
+      "endLine": 99,
+      "quote": "- 인접 행렬로 구현하면 시간 복잡도는 O(N^2)이다.\n\n- 인접 리스트로 구현하면 시간 복잡도는 O(N*logN)이다.\n\n  > 선형 탐색으로 시간 초과가 나는 문제는 인접 리스트로 접근해야한다. (우선순위 큐)"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/다익스트라(Dijkstra).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC%28Dijkstra%29.md",
+    "id": "bbb2ad1a-ea85-52ad-b5c9-94e751dde810",
+    "review": {
+      "blind": {
+        "slot": 8,
+        "correctOptionText": "정점 수가 커서 선형 탐색 방식으로는 시간 초과가 발생할 가능성이 있는 문제일 때 인접 리스트를 사용해야 합니다.",
+        "unambiguous": true,
+        "reason": "Source states 인접 행렬 O(N^2), 인접 리스트 O(N*logN) and recommends using adjacency list (priority queue) when linear search causes timeouts.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 8,
+        "passed": true,
+        "reason": "All four options and their explanations are directly supported or contradicted by statements in the supplied source: the source states Dijkstra requires nonnegative edges, contrasts O(N^2) (adjacency matrix) vs O(N log N) (adjacency list with PQ) and explicitly recommends switching to adjacency list when linear scan causes TLE, and it does not claim DP implies always using adjacency list. The difficulty, Korean phrasing, and learning objective align with the source content."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 9,
+    "topic": "퀵소트 피벗 선택과 파티션",
+    "learningObjective": "피벗을 배열 중간 요소로 선택하는 방식이 최악 시간복잡도 상황에 미치는 영향 비교",
+    "difficulty": "MEDIUM",
+    "question": "퀵소트 구현에서 파티션을 시작하기 전에 중간 인덱스에 있는 요소를 왼쪽으로 교환하는 코드를 추가한 목적은 무엇입니까?",
+    "options": [
+      "피벗이 배열의 극단값(최솟값 또는 최댓값)으로 선택되는 상황을 줄여 최악의 시간복잡도 O(n^2) 발생 가능성을 완화한다.",
+      "퀵소트를 안정 정렬로 만들어 같은 값들의 기존 순서를 보장한다.",
+      "항상 교환 횟수를 줄여 전체 수행시간을 O(nlogn)에서 더 낮춘다.",
+      "왼쪽으로 교환하면 파티션 단계에서 요소 비교 횟수가 항상 절반으로 줄어든다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "소스는 피벗이 최소나 최대값으로 지정되어 파티션이 나누어지지 않았을 때 O(n^2)가 발생한다고 설명하고, 이런 상황을 해결하기 위해 \"중간 요소\"를 피벗으로 선택한다고 명시합니다. 즉 중간 요소를 왼쪽으로 교환하면 극단값이 피벗으로 선택될 가능성을 줄여 최악의 경우를 완화하는 것이 목적입니다.",
+    "optionExplanations": [
+      "정답: 소스에 \"But, 피벧 값이 최소나 최대값으로 지정되어 파티션이 나누어지지 않았을 때 O(n^2)에 대한 시간복잡도를 가짐\"과 \"이런 상황에서는... 피벧을 선택할 때 `중간 요소`로 선택하면 해결이 가능함\"이라 적혀 있어 이 설명을 뒷받침합니다.",
+      "오답: 소스는 안정/불안정 정렬의 예시를 들지만 퀵소트는 불안정 정렬로 분류되어 있으며 중간 피벗 선택이 정렬을 안정으로 바꾼다는 언급은 없습니다.",
+      "오답: 소스는 중간 피벗 선택으로 최악 상황을 해결한다고 설명하지만 항상 교환 횟수를 줄여 전체 수행시간을 기존 O(nlogn)보다 더 낮춘다고 주장하지 않습니다.",
+      "오답: 소스에는 비교 횟수가 항상 절반으로 줄어든다는 언급이 없고, 중간 피벗 선택이 비교 횟수를 항상 절감한다고 보장하지 않습니다."
+    ],
+    "keywords": [
+      "퀵소트",
+      "피벗 선택",
+      "중간 요소",
+      "최악 시간복잡도",
+      "파티션"
+    ],
+    "sourceEvidence": {
+      "section": "퀵소트",
+      "quote": "이런 상황에서는 퀵소트 장점이 사라지므로, 피벗을 선택할 때 `중간 요소`로 선택하면 해결이 가능함"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/QuickSort.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/QuickSort.md",
+    "id": "da61425a-998e-5674-bc6a-1d48b8a8ec57",
+    "review": {
+      "blind": {
+        "slot": 9,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "The source explicitly states swapping the middle element to the left selects a middle pivot to avoid the pivot being an extreme value, mitigating the worst-case O(n^2) behavior."
+      },
+      "evidenceAudit": {
+        "slot": 9,
+        "passed": true,
+        "reason": "정답(선택지 1)은 소스의 명시(피벗이 최소/최댓값일 때 O(n^2) 발생, 중간 요소 선택으로 해결 가능함)를 정확히 반영합니다. 선택지 2는 소스에서 퀵소트가 불안정 정렬로 분류되어 있어 잘못되었고, 선택지 3·4는 소스에 근거한 절대적 주장(항상 수행시간을 더 낮춤, 비교 횟수가 항상 절반)이 없어 근거가 없습니다. 모든 옵션 설명이 소스 내용과 일치하며 난이도(MEDIUM)와 학습목표도 중복 없이 명확합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 10,
+    "topic": "동적 계획법 구현 방식 비교",
+    "learningObjective": "Bottom-up과 Top-down의 구현 메커니즘과 대표적인 장단점을 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "동적 계획법을 구현할 때 Bottom-up과 Top-down의 차이점을 묻습니다. 다음 중 설명이 옳습니까?",
+    "options": [
+      "Top-down은 작은 문제들을 처음부터 모두 계산해 표를 채운 뒤 큰 문제를 해결하는 방식이며, Bottom-up은 큰 문제에서 시작해서 필요한 작은 문제만 계산하는 방식입니다.",
+      "Bottom-up은 작은 문제부터 차근차근 구해가는 방식이고, Top-down은 큰 문제를 풀다가 필요한 작은 문제를 재귀적으로 해결하는 방식입니다. Bottom-up은 해결이 용이하지만 가독성이 떨어지고, Top-down은 가독성이 좋지만 코드 작성이 어렵습니다.",
+      "Bottom-up은 재귀 호출을 주로 사용하여 필요할 때만 작은 문제를 해결하고, Top-down은 반복문으로 모든 작은 문제를 처음부터 채워나가는 방식이며 Top-down이 가독성이 떨어집니다.",
+      "Bottom-up과 Top-down은 내부적으로 동일하게 모든 작은 문제를 한 번씩만 계산하므로 구현 상 장단점이 거의 없습니다; 선택은 개인 취향에 따릅니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "정답 설명: 출처에 따르면 Bottom-up은 '작은 문제부터 차근차근 구하는 방법'이고, Top-down은 '큰 문제를 풀다가 풀리지 않은 작은 문제가 있다면 그때 해결하는 방법 (재귀 방식)'으로 정의되어 있습니다. 또한 Bottom-up은 '해결이 용이하지만, 가독성이 떨어짐'이고 Top-down은 '가독성이 좋지만, 코드 작성이 힘듬'이라고 명시되어 있으므로 정답 문장이 출처 내용과 일치합니다.",
+    "optionExplanations": [
+      "오답입니다. 설명이 완전히 뒤바뀌어 있습니다. 출처는 Top-down이 필요할 때 작은 문제를 재귀적으로 해결하고, Bottom-up이 작은 문제부터 모두 채워나가는 방식이라고 명시합니다.",
+      "정답입니다. 출처는 Bottom-up을 작은 문제부터 차근차근 푸는 방식으로, Top-down을 큰 문제에서 필요한 작은 문제를 그때그때 재귀로 해결하는 방식으로 설명하며 각 방식의 장단점을 제시합니다 (출처: 구현 방식 관련 설명).",
+      "오답입니다. 이 설명은 Bottom-up과 Top-down의 역할을 뒤집어 잘못 서술하고 있습니다. 출처는 Bottom-up이 반복문으로 작은 문제부터 푸는 방식, Top-down이 재귀로 필요한 작은 문제를 해결하는 방식이라 밝히고 있습니다.",
+      "오답입니다. 출처는 두 방식의 구현 및 장단점 차이를 명확히 기술하고 있어 '거의 없음'이라는 설명과 모순됩니다. 실제로 출처는 가독성·작성 난이도 등 차이를 언급합니다."
+    ],
+    "keywords": [
+      "Bottom-up",
+      "Top-down",
+      "재귀",
+      "가독성",
+      "구현 방식"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/동적 계획법 (Dynamic Programming).md",
+      "startLine": 60,
+      "endLine": 66,
+      "quote": "- Bottom-up : 작은 문제부터 차근차근 구하는 방법\n- Top-down : 큰 문제를 풀다가 풀리지 않은 작은 문제가 있다면 그때 해결하는 방법 (재귀 방식)\n\n> Bottom-up은 해결이 용이하지만, 가독성이 떨어짐\n>\n> Top-down은 가독성이 좋지만, 코드 작성이 힘듬"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/동적 계획법 (Dynamic Programming).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%8F%99%EC%A0%81%20%EA%B3%84%ED%9A%8D%EB%B2%95%20%28Dynamic%20Programming%29.md",
+    "id": "6b6fb2c9-44d7-545c-b949-d31ebc518591",
+    "review": {
+      "blind": {
+        "slot": 10,
+        "correctOptionText": "Bottom-up은 작은 문제부터 차근차근 구해가는 방식이고, Top-down은 큰 문제를 풀다가 필요한 작은 문제를 재귀적으로 해결하는 방식입니다. Bottom-up은 해결이 용이하지만 가독성이 떨어지고, Top-down은 가독성이 좋지만 코드 작성이 어렵습니다.",
+        "unambiguous": true,
+        "reason": "This matches the source: Bottom-up builds from small problems; Top-down solves big problem and recurses to needed small ones. The described pros/cons also match the text.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 10,
+        "passed": true,
+        "reason": "정답(2)은 출처의 '구현 방식' 문단과 장단점 설명과 정확히 일치하고, 나머지 보기들은 출처 내용과 명백히 모순됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 11,
+    "topic": "Counting Sort의 시간/공간 절충",
+    "learningObjective": "Counting Sort의 시간 복잡도와 추가 공간 요구량을 비교하여, 입력 크기와 값 범위(k)에 따른 장단점을 설명할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "Counting Sort에 대해 문서에 근거한 올바른 설명은 무엇입니까?",
+    "options": [
+      "추가 공간 요구량은 상수 O(1) 수준이므로 메모리 사용이 매우 적습니다.",
+      "값의 개수를 세는 과정이 필요 없으므로 입력을 직접 비교만 하여 정렬합니다.",
+      "시간 복잡도는 O(n + k)이고 추가 공간으로 O(k)를 필요로 하므로 값의 범위 k가 크면 메모리 비용이 커지는 단점이 있습니다.",
+      "시간 복잡도는 O(n log n)이며 추가 공간은 거의 필요하지 않습니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에는 Counting Sort의 시간 복잡도가 O(n + k)이고, Counting 배열을 만들기 때문에 공간 복잡도가 O(k)라고 명시되어 있습니다. 따라서 값의 범위 k가 클 경우 Counting 배열의 크기가 커져 메모리 낭비가 심하다는 단점이 발생한다고 설명합니다.",
+    "optionExplanations": [
+      "문서에는 공간 복잡도가 O(k)라고 명시되어 있어 추가 공간이 상수 O(1)이라는 주장은 문서와 모순됩니다.",
+      "문서에는 \"Counting이 필요 : 각 숫자가 몇 번 등장했는지 센다.\"라고 되어 있으므로, 값을 세우지 않고 비교만 한다는 설명은 문서에 근거가 없습니다.",
+      "정답입니다. 문서에 \"시간 복잡도 : O(n + k) -> k는 배열에서 등장하는 최대값\"과 \"공간 복잡도 : O(k) -> k만큼의 배열을 만들어야 함.\"이라고 명시되어 있어 이 설명이 맞습니다.",
+      "문서에는 시간 복잡도가 O(n + k)라고 되어 있으므로 O(n log n)이라는 설명은 문서 내용과 일치하지 않습니다."
+    ],
+    "keywords": [
+      "Counting Sort",
+      "시간 복잡도",
+      "공간 복잡도",
+      "k 값 범위",
+      "메모리 낭비"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/Sort_Counting.md",
+      "startLine": 17,
+      "endLine": 21,
+      "quote": "시간 복잡도 : O(n + k) -> k는 배열에서 등장하는 최대값\n\n공간 복잡도 : O(k) -> k만큼의 배열을 만들어야 함.\n\nCounting이 필요 : 각 숫자가 몇 번 등장했는지 센다."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/Sort_Counting.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Sort_Counting.md",
+    "id": "52e63b30-4c04-5248-9f4b-dbd51faab737",
+    "review": {
+      "blind": {
+        "slot": 11,
+        "correctOptionText": "시간 복잡도는 O(n + k)이고 추가 공간으로 O(k)를 필요로 하므로 값의 범위 k가 크면 메모리 비용이 커지는 단점이 있습니다.",
+        "unambiguous": true,
+        "reason": "문서에 Counting Sort의 시간 복잡도가 O(n + k), 추가 공간 복잡도가 O(k)이며 k가 크면 메모리 낭비가 심하다고 명시되어 있음.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 11,
+        "passed": true,
+        "reason": "All four options and their explanations correctly follow only the supplied source: option 3 matches the quoted lines '시간 복잡도 : O(n + k)' and '공간 복잡도 : O(k)'; the three distractors contradict those lines and are therefore provably wrong. The difficulty (MEDIUM) and the learning objective align with the content, and the prompt/explanations are presented in natural polite Korean consistent with the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 12,
+    "topic": "LCA 알고리즘 - depth 정렬 전략",
+    "learningObjective": "두 정점의 depth를 먼저 같게 맞춘 다음 동시에 부모로 올라가는 방식의 정확성·효율성 차이를 설명할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "제시된 LCA 알고리즘에서 먼저 더 깊은 정점의 depth를 부모로 올려 두 정점의 depth를 같게 만드는 주된 이유는 무엇입니까?",
+    "options": [
+      "깊이를 맞추면 트리의 전체 높이가 줄어들어 parent 배열의 공간 사용량이 줄어들기 때문입니다.",
+      "깊이를 같게 하면 정점들 간의 거리(이동 횟수)를 바로 계산할 수 있으므로 추가 연산 없이 LCA를 바로 얻을 수 있습니다.",
+      "먼저 깊이를 맞추면 루트에서부터의 경로가 균형을 이루어 이후 부모 접근 시 메모리 접근 패턴이 캐시 친화적으로 바뀌어 성능이 좋아집니다.",
+      "두 정점의 depth가 다를 때 바로 동시에 부모로 올리면 두 정점이 같은 레벨에서 만나지 못하거나 불필요한 반복이 발생하므로, 동일한 depth에서 부모를 비교해야 최초 공통 조상을 정확히 찾을 수 있습니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "소스의 의사코드에서는 depth가 불일치할 경우 '더 depth가 깊은 정점을 해당 정점의 parent 정점으로 변경(depth가 감소됨)'을 먼저 수행하고(depth를 일치시킨 뒤) 두 정점의 부모를 비교하여 LCA를 찾는 흐름을 보입니다. 즉 깊이를 먼저 맞춰 동일한 레벨에서 부모를 순차 비교해야 최초 공통 조상을 정확히 찾을 수 있으므로, 깊이 정렬은 정확성(그리고 불필요한 반복 회피)을 위한 단계입니다.",
+    "optionExplanations": [
+      "잘못된 선택입니다. 소스에는 parent 배열을 저장하는 방법만 설명되어 있을 뿐(라인 28-33), depth 정렬이 parent 배열의 공간 사용량을 줄인다는 내용이나 그런 효과를 언급하지 않습니다.",
+      "잘못된 선택입니다. 소스의 흐름은 깊이를 맞춘 뒤 부모를 반복 비교하여 LCA를 찾는 과정(라인 41-47)을 설명하지만, '깊이를 같게 하면 추가 연산 없이 바로 LCA를 얻는다'는 식의 기술(즉 즉시 거리 계산으로 LCA 확보)은 기술되어 있지 않습니다.",
+      "잘못된 선택입니다. 소스에는 캐시나 메모리 접근 패턴에 따른 성능 향상에 대한 언급이 없으며(라인 39-47), 깊이 정렬을 메모리·캐시 최적화 목적으로 수행한다는 근거가 제시되어 있지 않습니다.",
+      "정답입니다. 소스의 의사코드는 depth 불일치 시 더 깊은 정점을 부모로 올려 depth를 맞춘 다음(라인 45-46) depth가 일치하면 부모를 비교해 LCA를 찾는 구조(라인 41-44)를 제시하고 있어, 동일 레벨에서 비교해야 올바른 최초 공통 조상을 찾는다는 근거가 있습니다."
+    ],
+    "keywords": [
+      "depth 정렬",
+      "부모로 올리기",
+      "동일 레벨 비교",
+      "LCA 정확성"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/LCA(Lowest Common Ancestor).md",
+      "startLine": 39,
+      "endLine": 47,
+      "quote": "```java\n// 두 정점의 depth 확인하기\nwhile(true){\n\tif(depth가 일치)\n\t\tif(두 정점의 parent 일치?) LCA 찾음(종료)\n        else 두 정점을 자신의 parent 정점 값으로 변경\n    else // depth 불일치\n        더 depth가 깊은 정점을 해당 정점의 parent 정점으로 변경(depth가 감소됨)\n}"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/LCA(Lowest Common Ancestor).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/LCA%28Lowest%20Common%20Ancestor%29.md",
+    "id": "a0fc7227-3767-5679-a654-a8150d3d7c5c",
+    "review": {
+      "blind": {
+        "slot": 12,
+        "correctOptionText": "두 정점의 depth가 다를 때 바로 동시에 부모로 올리면 두 정점이 같은 레벨에서 만나지 못하거나 불필요한 반복이 발생하므로, 동일한 depth에서 부모를 비교해야 최초 공통 조상을 정확히 찾을 수 있습니다.",
+        "unambiguous": true,
+        "reason": "Source explains algorithm first raises the deeper node to make depths equal so that parent-by-parent comparison at same depth finds the LCA; this matches the option exactly.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 12,
+        "passed": true,
+        "reason": "정답(옵션 4)은 소스의 의사코드(while 루프에서 깊이 불일치 시 더 깊은 정점을 부모로 올려 depth를 맞춘 뒤 동일 레벨에서 부모들을 비교하여 LCA를 찾음)를 정확히 반영합니다. 세 개의 오답 보기도 소스에 근거가 없거나 모순되므로 모두 잘못되었습니다: (1) 부모 배열의 공간 절약에 대한 언급 없음, (2) 깊이 일치만으로 즉시 LCA를 얻는다는 기술 없음(추가로 부모 비교 반복이 필요함), (3) 캐시/메모리 접근 패턴 최적화 언급 없음. 난이도·학습목표·설명도 소스 내용과 일치하며 한국어 표현도 자연스럽습니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 13,
+    "topic": "for문의 ++i와 i++ 성능·컴파일러 영향 비교",
+    "learningObjective": "++i와 i++의 내부 동작 차이가 성능에 미치는 영향과 최신 컴파일러가 그 차이를 어떻게 완화하는지 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "for 루프에서 증가 연산자로 ++i와 i++ 중 어느 것을 쓰는 것이 더 빠르고, 최신 컴파일러에서는 그 차이가 어떻게 되는지 가장 정확하게 설명한 것은 무엇입니까?",
+    "options": [
+      "내부 operator 로직 때문에 i++은 추가 연산이 필요하므로 ++i가 미세하게 더 빠르지만, 요즘 컴파일러는 거의 차이가 없어지게 한다.",
+      "i++가 내부에서 덧셈을 덜 수행하므로 i++가 명확히 더 빠르고, 컴파일러로도 이 차이가 사라지지 않는다.",
+      "++i와 i++는 항상 큰 성능 차이를 보이므로 ++i만 사용해야 한다.",
+      "두 연산자는 완전히 동일하게 컴파일되므로 성능 차이가 전혀 없으니 아무거나 써도 된다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "정답은 1번입니다. 원문은 i++이 내부적으로 한 번 더 연산을 거쳐 ++i보다 느리다고 설명하고 있으며, 그럼에도 불구하고 최근 컴파일러는 이 차이를 거의 없게 만든다고 명시하고 있습니다. 따라서 ++i가 미세하게 빠르다는 내부 동작상의 이유와, 최신 컴파일러가 그 차이를 완화한다는 두 가지 사실을 모두 포함한 1번 설명이 원문과 일치합니다.",
+    "optionExplanations": [
+      "정답입니다. 원문에 \"i++은 한번더 연산을 거친다. 따라서 ++i가 미세하게 조금더 빠르다. 하지만 요즘 컴파일러는 거의 차이가 없어지게 되었다고 한다.\"라고 되어 있어 1번 설명이 정확합니다.",
+      "틀렸습니다. 원문은 i++이 추가 연산을 거친다고 하여 i++가 더 빠르다고 주장하지 않습니다; 반대로 i++이 더 느리다고 설명합니다.",
+      "틀렸습니다. 원문은 차이가 '미세하게' 존재한다고 말하고 최신 컴파일러가 '거의 차이가 없어지게' 만든다고 했으며, '항상 큰 성능 차이'가 있다는 주장은 원문과 맞지 않습니다.",
+      "틀렸습니다. 원문은 최신 컴파일러가 차이를 거의 없게 만든다고 했지만, '완전히 동일'이라고 단정하지는 않았습니다; 따라서 전혀 신경 쓸 필요가 있다는 표현은 과장입니다."
+    ],
+    "keywords": [
+      "++i",
+      "i++",
+      "연산 비용",
+      "컴파일러 최적화"
+    ],
+    "sourceEvidence": {
+      "section": "1. for문의 ++i와 i++ 차이",
+      "quote": "내부 operator 로직을 보면 i++은 한번더 연산을 거친다.\n\n따라서 ++i가 미세하게 조금더 빠르다.\n\n하지만 요즘 컴파일러는 거의 차이가 없어지게 되었다고 한다."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/간단하지만 알면 좋은 최적화들.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EA%B0%84%EB%8B%A8%ED%95%98%EC%A7%80%EB%A7%8C%20%EC%95%8C%EB%A9%B4%20%EC%A2%8B%EC%9D%80%20%EC%B5%9C%EC%A0%81%ED%99%94%EB%93%A4.md",
+    "id": "dd214f51-75e9-5061-a960-7cc798c5a5dc",
+    "review": {
+      "blind": {
+        "slot": 13,
+        "position": 1,
+        "unambiguous": true,
+        "reason": "Source states i++ does an extra operation so ++i is slightly faster, but modern compilers make the difference negligible, matching option 1."
+      },
+      "evidenceAudit": {
+        "slot": 13,
+        "passed": true,
+        "reason": "All items (correct answer, three distractors, main explanation, and option explanations) are directly supported by the quoted source text: the source states i++ does one extra operation so ++i is '미세하게' faster, and modern compilers make the difference '거의' disappear, which makes option 1 correct and the other options contradict the source."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 14,
+    "topic": "재귀함수에서의 변수 사용 방식 성능 비교",
+    "learningObjective": "재귀 호출을 많이 수행할 때 전역 변수로 선언한 값과 매 호출마다 파라미터로 넘겨주는 방식의 성능 차이와 그 원인을 비교할 수 있다",
+    "difficulty": "MEDIUM",
+    "question": "재귀 호출을 매우 많이 수행하는 프로그램에서, 어떤 변수를 모든 재귀 호출에 사용해야 할 때 전역 변수로 선언하는 것과 매 호출마다 파라미터로 넘겨주는 것의 성능 차이에 대한 설명으로 옳은 것은 무엇입니까?",
+    "options": [
+      "전역 변수를 사용하면 항상 프로그램의 전체 실행 시간이 더 길어지지만, 재귀에서는 예외적으로 전역 변수가 빨라집니다.",
+      "전역으로 선언한 변수가 파라미터로 넘기는 것보다 더 빠르며(예: 약 6.8초 vs 9.6초), 그 이유는 파라미터는 각 호출마다 스택에 할당되기 때문입니다.",
+      "파라미터로 넘겨주는 방식이 전역 변수보다 더 빠르며, 함수 호출 시 컴파일러가 파라미터를 레지스터에 자동으로 넣어 시간을 절약하기 때문입니다.",
+      "두 방식은 성능 차이가 거의 없으며, 구현의 가독성 외에는 고려할 점이 거의 없습니다."
+    ],
+    "correctAnswer": 2,
+    "explanation": "문서의 실험 결과에서 전역으로 선언했을 때 약 6.8초, 파라미터로 넘겼을 때 약 9.6초가 나왔습니다. 또한 문서에서는 파라미터는 함수를 호출할 때마다 스택에 쌓이며 메모리 할당이 반복되기 때문에 성능 손실이 발생한다고 설명하고 있습니다. 따라서 전역 변수가 더 빠른 이유는 파라미터 전달로 인한 반복적 스택 할당 때문입니다.",
+    "optionExplanations": [
+      "문서에는 '전역 변수가 항상 느리다'라는 일반 규칙이나 재귀에서만 예외가 된다는 설명이 없으며, 오히려 전역 사용이 더 빠르다는 실험 결과를 제시하고 있으므로 이 선택지는 근거가 없습니다 (라인 49–55).",
+      "정답입니다. 문서에 전역으로 선언했을 때 약 6.8초, 파라미터로 넘겼을 때 약 9.6초라는 측정값이 나오며, 파라미터는 호출마다 스택에 할당된다고 명시되어 있습니다 (라인 45–55).",
+      "문서에는 파라미터가 레지스터에 할당되어 더 빠르다는 언급이 없고, 실제로는 파라미터 전달 시 스택에 메모리 할당이 반복된다고 서술되어 있어 이 선택지는 문서 내용과 맞지 않습니다 (라인 49–55).",
+      "문서의 측정 결과는 두 방식에 명확한 실행 시간 차이가 있음을 보여주므로 '차이가 거의 없다'는 설명은 문서와 맞지 않습니다 (라인 47–51)."
+    ],
+    "keywords": [
+      "재귀",
+      "전역 변수",
+      "파라미터 전달",
+      "스택 할당",
+      "성능"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/간단하지만 알면 좋은 최적화들.md",
+      "startLine": 45,
+      "endLine": 55,
+      "quote": "**4. 재귀함수 파라미터를 전역으로 선언한 것 vs 재귀함수를 모두 파라미터로 넘겨준 것**\n\n> '10억번의 연산을 했을 때?' \n\n전역으로 선언 : 약 6.8초\n\n파라미터로 넘겨준 것 : 약 9.6초\n\n \n\n함수를 계속해서 호출할 때, 스택에서 쌓인다. 파라미터들은 함수를 호출할 때마다 메모리 할당하는 동작을 반복하게 된다. 따라서 지역 변수로 사용하지 않는 것들은 전역 변수로 빼야한다."
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/간단하지만 알면 좋은 최적화들.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EA%B0%84%EB%8B%A8%ED%95%98%EC%A7%80%EB%A7%8C%20%EC%95%8C%EB%A9%B4%20%EC%A2%8B%EC%9D%80%20%EC%B5%9C%EC%A0%81%ED%99%94%EB%93%A4.md",
+    "id": "bbb93dfb-540c-5c6b-8d01-a3e803e50095",
+    "review": {
+      "blind": {
+        "slot": 14,
+        "correctOptionText": "전역으로 선언한 변수가 파라미터로 넘기는 것보다 더 빠르며(예: 약 6.8초 vs 9.6초), 그 이유는 파라미터는 각 호출마다 스택에 할당되기 때문입니다.",
+        "unambiguous": true,
+        "reason": "Source gives measured times (전역 6.8s vs 파라미터 9.6s) and explains parameters are allocated on the stack each call, making globals faster for heavy recursion.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 14,
+        "passed": true,
+        "reason": "All four options and their explanations are directly supported or contradicted by the supplied source: option 2 matches the documented timings and the stack-allocation explanation; options 1, 3, and 4 are contradicted by the source's measured results and stated reasoning. Explanations correctly reference the source without adding unsupported claims."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 15,
+    "topic": "LIS DP 배열의 의미",
+    "learningObjective": "DP 구현에서 dp 배열이 저장하는 값의 정의(값이 의미하는 길이)를 설명할 수 있습니다",
+    "difficulty": "MEDIUM",
+    "question": "제공된 DP 구현에서 dp 배열의 각 요소 dp[i]는 무엇을 나타냅니까?",
+    "options": [
+      "arr[i]를 끝으로 하는 증가 부분 수열의 정확한 길이",
+      "arr[i]보다 작은 이전 원소들의 개수",
+      "arr[i]를 끝으로 하는 증가 부분 수열의 길이에서 1을 뺀 값",
+      "arr[i]를 시작으로 하는 증가 부분 수열의 최대 길이"
+    ],
+    "correctAnswer": 3,
+    "explanation": "코드와 주석에서 dp 배열 값 예시가 [0, 0, 1, 2, 2, 3]로 주어지고, 최종 LIS는 dp 배열의 최대값에 1을 더한 값이라고 명시되어 있습니다. 따라서 dp[i]는 arr[i]를 끝으로 하는 증가 부분 수열 길이에서 1을 뺀 값으로 해석됩니다.",
+    "optionExplanations": [
+      "잘못된 보기입니다. 만약 dp[i]가 정확한 길이라면 주석에서 최종 LIS가 \"max + 1\"이 될 이유가 없으므로 소스 내용과 모순됩니다.",
+      "잘못된 보기입니다. dp[i]가 단순히 이전 원소 중 작은 원소의 개수라면 예시 주석과 최종 계산 방식(최대값 + 1)이 설명되지 않습니다.",
+      "정답입니다. 소스의 주석에서 \"저장된 dp 배열 값 : [0, 0, 1, 2, 2, 3]\"와 \"LIS : dp배열에 저장된 값 중 최대 값 + 1\"을 통해 dp값이 길이에서 1을 뺀 형태임을 확인할 수 있습니다.",
+      "잘못된 보기입니다. 소스 어디에도 dp가 '시작으로 하는' 길이를 나타낸다고 하지 않으며, 예시 및 주석은 끝을 기준으로 계산했음을 보여줍니다."
+    ],
+    "keywords": [
+      "LIS",
+      "DP",
+      "dp 배열 의미",
+      "길이 - 1"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/LIS (Longest Increasing Sequence).md",
+      "startLine": 20,
+      "endLine": 36,
+      "quote": "int dp[] = new int[arr.length]; // LIS 저장 배열\n\n\nfor(int i = 1; i < dp.length; i++) {\n    for(int j = i-1; j>=0; j--) {\n        if(arr[i] > arr[j]) {\n            dp[i] = (dp[i] < dp[j]+1) ? dp[j]+1 : dp[i];\n        }\n    }\n}\n\nfor (int i = 0; i < dp.length; i++) {\n\tif(max < dp[i]) max = dp[i];\n}\n\n// 저장된 dp 배열 값 : [0, 0, 1, 2, 2, 3]\n// LIS : dp배열에 저장된 값 중 최대 값 + 1"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/LIS (Longest Increasing Sequence).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/LIS%20%28Longest%20Increasing%20Sequence%29.md",
+    "id": "26ec2a4f-1a43-5fd2-8594-4c76090078cf",
+    "review": {
+      "blind": {
+        "slot": 15,
+        "correctOptionText": "arr[i]를 끝으로 하는 증가 부분 수열의 길이에서 1을 뺀 값",
+        "unambiguous": true,
+        "reason": "코드와 주석에서 dp 배열의 최대값에 1을 더해 LIS를 구하고 있으며 예시 dp 값([0,0,1,2,2,3])로 보아 dp는 길이에서 1을 뺀 값을 저장한다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 15,
+        "passed": true,
+        "reason": "The source shows dp initialized to 0, dp[i] updated as dp[j]+1, gives example dp [0,0,1,2,2,3], and states LIS = max(dp) + 1 — this uniquely supports that dp[i] is the LIS length ending at arr[i] minus 1. All three distractors contradict these explicit lines and are therefore provably incorrect."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 16,
+    "topic": "최대공약수와 최소공배수 구현",
+    "learningObjective": "주어진 구현에서 최소공배수를 (a*b)/gcd로 계산하는 근거를 이해하고, 다른 수식들과의 차이를 비교할 수 있습니다.",
+    "difficulty": "MEDIUM",
+    "question": "문서에 제시된 방법으로 최소공배수를 구할 때 (a*b)/gcd를 사용하는 이유로 옳은 것은 무엇입니까?",
+    "options": [
+      "최소공배수는 항상 두 수의 합에서 최대공약수를 뺀 값과 같기 때문입니다.",
+      "최소공배수는 두 수의 곱에 최대공약수를 곱한 값이기 때문입니다.",
+      "최소공배수는 두 수 중 큰 값을 최대공약수로 나눈 값과 같기 때문입니다.",
+      "두 수의 곱을 최대공약수로 나누면 공통 배수들 중 가장 작은 값이 되기 때문입니다."
+    ],
+    "correctAnswer": 4,
+    "explanation": "문서에서는 \"최소 공배수는 간단하다. 주어진 값들끼리 곱한 값을 '최대공약수'로 나누면 끝!\"이라고 명시하고 있습니다(라인 19). 즉 두 수의 곱을 최대공약수로 나누는 것이 최소공배수를 구하는 방법임을 직접 제시합니다.",
+    "optionExplanations": [
+      "문서에 그런 식의 정의나 관계는 없습니다. 문서에서는 합에서 최대공약수를 빼는 방법을 언급하지 않습니다.",
+      "문서와 반대로 곱에 최대공약수를 '곱하는' 방식은 제시되지 않습니다. 문서에서는 곱을 최대공약수로 '나눈다'고 명확히 적고 있습니다(라인 19).",
+      "문서에서는 큰 값을 최대공약수로 나누는 방식으로 최소공배수를 구한다고 하지 않습니다. 제시된 방법은 두 수의 곱을 최대공약수로 나누는 것입니다(라인 19).",
+      "정답입니다. 문서에 그대로 제시된 방법으로, 두 수의 곱을 최대공약수로 나누면 최소공배수가 된다고 설명하고 있습니다(라인 19)."
+    ],
+    "keywords": [
+      "최소공배수",
+      "최대공약수",
+      "a*b/gcd"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/최대공약수 & 최소공배수.md",
+      "startLine": 13,
+      "endLine": 19,
+      "quote": "> 주어진 값에서 큰 값 % 작은 값으로 나머지를 구한다.\n>\n> 나머지가 0이 아니면, 작은 값 % 나머지 값을 재귀함수로 계속 진행\n>\n> 나머지가 0이 되면, 그때의 작은 값이 '최대공약수'이다.\n>\n> **최소 공배수**는 간단하다. 주어진 값들끼리 곱한 값을 '최대공약수'로 나누면 끝!"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/최대공약수 & 최소공배수.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98%20%26%20%EC%B5%9C%EC%86%8C%EA%B3%B5%EB%B0%B0%EC%88%98.md",
+    "id": "b5952302-4b3d-50f5-9140-c6cd356c84b1",
+    "review": {
+      "blind": {
+        "slot": 16,
+        "correctOptionText": "두 수의 곱을 최대공약수로 나누면 공통 배수들 중 가장 작은 값이 되기 때문입니다.",
+        "unambiguous": true,
+        "reason": "문서에서 '최소 공배수는 ... 주어진 값들끼리 곱한 값을 '최대공약수'로 나누면 끝!'이라고 설명하여 해당 선택지가 정확히 그 이유를 표현함.",
+        "position": 4
+      },
+      "evidenceAudit": {
+        "slot": 16,
+        "passed": true,
+        "reason": "The source explicitly states '두 수의 곱한 값을 최대공약수로 나누면 끝' (lines 13–19), which uniquely supports option 4. The three distractors are not present in the source and thus are provably incorrect relative to the provided text. Difficulty, learning objective, and explanations align with the source and make no unsupported absolute claims."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 17,
+    "topic": "충돌이 발생한 버킷에서의 처리 절차",
+    "learningObjective": "해시 키가 같게 나왔을 때 문서에 제시된 충돌 처리 흐름을 여러 사실을 적용해 서술할 수 있다",
+    "difficulty": "HARD",
+    "question": "문서에서 getHashKey로 얻은 동일한 key에 대해 checking(key)를 호출했을 때, 그 버킷에 이미 다른 문자열들이 저장되어 있는 상황입니다. 문서의 구현에 따르면 새로운 입력 문자열이 그 버킷의 어느 요소와 일치하는지를 확인한 뒤의 올바른 처리 순서는 무엇입니까?",
+    "options": [
+      "버킷에 저장된 각 문자열과 입력 문자열을 순회하며 일치하면 해당 data[key][i]를 1 증가시키고 그 값을 반환하고, 일치하는 것이 없으면 s_data[key][length[key]++]에 저장하고 -1을 반환합니다.",
+      "버킷의 길이만 보고 0이 아니면 무조건 이미 들어온 데이터로 간주하여 바로 data[key][0]을 1 증가시키고 그 값을 반환합니다.",
+      "충돌 가능성을 피하려고 해당 key에 대해 전체 해시테이블을 재해싱(rehash)한 후에 입력 문자열을 새로 삽입합니다.",
+      "버킷 내 문자열과 비교하지 않고 항상 s_data[key][length[key]++]에 새 문자열을 추가한 뒤 OK를 출력합니다."
+    ],
+    "correctAnswer": 1,
+    "explanation": "문서의 checking 함수는 해당 key의 length만큼 반복문으로 저장된 문자열들을 비교하고, 일치하면 data[key][i]를 증가시켜 그 값을 반환하며(중복된 입력일 경우), 일치하는 것이 없으면 s_data[key][length[key]++]에 저장하고 -1을 반환하도록 구현되어 있습니다.",
+    "optionExplanations": [
+      "정답입니다. 문서의 checking 구현은 버킷을 순회하며 일치하면 data[][]를 증가시키고 반환하며, 없으면 s_data에 저장하고 -1을 반환한다고 기술되어 있습니다.",
+      "문서에는 길이가 0이 아니면 바로 data[key][0]을 증가시키는 동작은 없고, 실제로는 버킷을 순회해 일치 여부를 검사한다고 되어 있으므로 틀렸습니다.",
+      "문서에는 재해싱을 수행한다는 설명이나 코드가 없으며, 구현은 버킷 내부 비교와 삽입으로만 처리한다고 되어 있습니다.",
+      "문서의 구현은 항상 추가만 하는 것이 아니라 먼저 버킷 내 비교로 중복을 찾은 뒤에만 추가하지 않도록 되어 있으므로 잘못된 절차입니다."
+    ],
+    "keywords": [
+      "충돌 처리",
+      "버킷 순회",
+      "s_data / data 배열"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/Hash Table 구현하기.md",
+      "startLine": 165,
+      "endLine": 185,
+      "quote": "```java\npublic static int checking(int key) {\n    \n    int len = length[key]; // 현재 key에 담긴 수 (같은 key 값으로 들어오는 문자열이 있을 수 있다)\n    \n    if(len != 0) { // 이미 들어온 적 있음\n        \n        for (int i = 0; i < len; i++) { // 이미 들어온 문자열이 해당 key 배열에 있는지 확인\n            if(str.equals(s_data[key][i])) {\n                data[key][i]++;\n                return data[key][i];\n            }\n        }\n        \n    }\n    \n    // 들어온 적이 없었으면 해당 key배열에서 문자열을 저장하고 길이 1 늘리기\n    s_data[key][length[key]++] = str;\n\n    return -1; // 처음으로 들어가는 경우 -1 리턴\n}"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/Hash Table 구현하기.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/Hash%20Table%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md",
+    "id": "a1d0fc96-da5b-521c-8e4e-e7f2aeca0e52",
+    "review": {
+      "blind": {
+        "slot": 17,
+        "correctOptionText": "버킷에 저장된 각 문자열과 입력 문자열을 순회하며 일치하면 해당 data[key][i]를 1 증가시키고 그 값을 반환하고, 일치하는 것이 없으면 s_data[key][length[key]++]에 저장하고 -1을 반환합니다.",
+        "unambiguous": true,
+        "reason": "제시된 checking(key) 구현은 버킷의 각 항목과 비교해 일치하면 data[key][i]++ 후 반환하고, 일치하지 않으면 새로운 문자열을 s_data에 저장하고 -1을 리턴하도록 되어 있습니다.",
+        "position": 1
+      },
+      "evidenceAudit": {
+        "slot": 17,
+        "passed": true,
+        "reason": "정답(옵션1)은 제공된 checking 메소드의 코드와 정확히 일치하고(버킷 순회, 일치 시 data 증가 및 반환, 일치 없으면 s_data에 저장 후 -1 반환), 다른 보기는 코드/본문에서 명시적으로 존재하지 않으므로 오답입니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 18,
+    "topic": "비트마스크 연산(삽입·삭제 적용)",
+    "learningObjective": "주어진 삽입과 삭제 연산 순서를 적용하여 최종 비트열과 그 10진수 값을 계산할 수 있습니다",
+    "difficulty": "HARD",
+    "question": "초기 비트열이 10101이라고 가정합니다. 다음 연산을 순서대로 적용했을 때 최종 비트열(2진)과 그 10진수 값은 무엇입니까?\n1) i = 3을 삽입(해당 비트를 1로 변경)\n2) i = 4를 삭제(해당 비트를 0으로 변경)\n(비트 인덱스는 0부터 오른쪽에서 왼쪽으로 센다고 가정합니다.)",
+    "options": [
+      "10011 (10진수 19)",
+      "01101 (10진수 13)",
+      "11101 (10진수 29)",
+      "10101 (10진수 21)"
+    ],
+    "correctAnswer": 2,
+    "explanation": "삽입은 OR 연산을 이용하여 i번째 비트를 1로 만듭니다; 예시에서 i=3 삽입으로 10101 → 11101이 됩니다. 그 다음 삭제는 AND와 NOT을 활용하여 i번째 비트를 0으로 만드는데, i=4에 대해 (~(1<<4))와 AND하면 11101 & 01111 = 01101이 되어 최종은 01101이고 10진수로 13입니다.",
+    "optionExplanations": [
+      "오답입니다. 10011(19)은 삽입·삭제 순서를 문서에 제시된 방식대로 적용한 결과와 일치하지 않습니다; 문서의 삽입(OR)과 삭제(AND + NOT) 예시를 적용하면 다른 값이 나옵니다.",
+      "정답입니다. 문서의 삽입 예시(OR 연산으로 10101 → 11101)와 삭제 예시(AND 및 NOT을 사용하여 특정 비트를 0으로 만들기)를 순서대로 적용하면 01101(=13)이 됩니다.",
+      "오답입니다. 11101(29)은 삽입 직후의 상태지만, 문제는 i=4를 삭제한 이후의 최종 값을 묻고 있습니다. 문서에 따르면 삭제는 AND와 NOT으로 수행하므로 추가 연산이 필요합니다.",
+      "오답입니다. 10101(21)은 초기값으로, i=3 삽입 연산이 적용되지 않은 상태입니다. 문서에 따르면 삽입 시 OR과 shift를 사용하여 비트를 1로 변경합니다."
+    ],
+    "keywords": [
+      "삽입(OR)",
+      "삭제(AND+NOT)",
+      "비트 시프트",
+      "비트마스크 계산"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/비트마스크(BitMask).md",
+      "startLine": 144,
+      "endLine": 179,
+      "quote": "#### 1.삽입\n\n현재 이진수로 `10101`로 표현되고 있을 때, i번째 비트 값을 1로 변경하려고 한다.\n\ni = 3일 때 변경 후에는 `11101`이 나와야 한다. 이때는 **OR연산을 활용**한다.\n\n```\n10101 | 1 << 3\n```\n\n`1 << 3`은 `1000`이므로 `10101 | 01000`이 되어 `11101`을 만들 수 있다.\n\n<br>\n\n#### 2.삭제\n\n반대로 0으로 변경하려면, **AND연산과 NOT 연산을 활용**한다.\n\n```\n11101 & ~1 << 3\n```\n\n`~1 << 3`은 `10111`이므로, `11101 & 10111`이 되어 `10101`을 만들 수 있다.\n\n<br>\n\n#### 3.조회\n\ni번째 비트가 무슨 값인지 알려면, **AND연산을 활용**한다.\n\n```\n10101 & 1 << i\n\n3번째 비트 값 : 10101 & (1 << 3) = 10101 & 01000 → 0\n4번째 비트 값 : 10101 & (1 << 4) = 10101 & 10000 → 10000\n```"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/비트마스크(BitMask).md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/%EB%B9%84%ED%8A%B8%EB%A7%88%EC%8A%A4%ED%81%AC%28BitMask%29.md",
+    "id": "0da866c9-3168-5aed-81a5-21ab69bddc9b",
+    "review": {
+      "blind": {
+        "slot": 18,
+        "correctOptionText": "01101 (10진수 13)",
+        "unambiguous": true,
+        "reason": "Start 10101. Set bit i=3 → 11101. Clear bit i=4 → 01101, which equals decimal 13.",
+        "position": 2
+      },
+      "evidenceAudit": {
+        "slot": 18,
+        "passed": true,
+        "reason": "The source shows inserting i=3 makes 10101 → 11101 using OR (1<<3) and deleting a bit uses AND with NOT (i.e. AND ~(1<<k)); applying delete at i=4 to 11101 yields 01101 (decimal 13), uniquely matching option 2 while all other options are contradicted by the source steps."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 19,
+    "topic": "LinkedList 정렬에서 합병정렬 선택 근거",
+    "learningObjective": "LinkedList 자료구조에 대해 합병 정렬이 퀵정렬보다 실무적으로 유리한 이유(순차 접근성·삽입/삭제 특성)를 근거로 설명할 수 있습니다.",
+    "difficulty": "HARD",
+    "question": "연결 리스트(LinkedList)를 정렬해야 할 때 문서에서 제시한 근거에 따라 합병 정렬을 사용하는 것이 퀵정렬보다 더 적절한 이유로 옳은 것은 무엇입니까?",
+    "options": [
+      "합병 정렬은 최악의 경우 시간복잡도가 O(n^2)이므로 LinkedList에서는 더 빠릅니다.",
+      "퀵정렬은 LinkedList에서도 임의 접근을 필요로 하지 않으므로 LinkedList에서 오버헤드가 발생하지 않습니다.",
+      "합병 정렬은 순차적 비교로 정렬하므로 LinkedList의 순차 접근 특성에 적합하고, LinkedList는 삽입·삭제에 유리하여 합병 과정에서 효율적입니다.",
+      "퀵정렬은 항상 분할 단계에서 추가 메모리를 많이 사용하므로 LinkedList에서는 사용하지 못합니다."
+    ],
+    "correctAnswer": 3,
+    "explanation": "문서에서는 합병정렬이 '순차적'인 비교로 정렬을 진행하므로 LinkedList 정렬에 효율적이라고 명시합니다. 또한 LinkedList는 삽입·삭제에 유용하지만 접근 연산에서는 비효율적이며(Head부터 탐색해야 함), 퀵정렬은 임의 접근을 필요로 하여 오버헤드가 커진다고 설명되어 있습니다. 따라서 순차 접근을 이용하는 합병정렬이 LinkedList에 더 적합합니다.",
+    "optionExplanations": [
+      "틀렸습니다. 문서에 따르면 합병정렬의 시간복잡도는 평균·최선·최악이 모두 Θ(nlogn)/Ω(nlogn)/O(nlogn)으로 O(n^2)가 아닙니다.",
+      "틀렸습니다. 문서에서는 퀵정렬이 '임의 접근'을 요구하므로 LinkedList에서 오버헤드가 발생한다고 명시하고 있어, 퀵정렬이 LinkedList에서 임의 접근을 필요로 하지 않는다는 주장은 문서와 모순됩니다.",
+      "정답입니다. 문서에는 합병정렬이 순차적 비교로 진행되어 LinkedList 정렬에 효율적이라고 쓰여 있고, LinkedList의 삽입·삭제 유리성도 함께 언급되어 있습니다.",
+      "틀렸습니다. 문서에서는 퀵정렬의 문제로 '임의 접근' 때문에 오버헤드가 발생한다고 설명하지만, 퀵정렬이 항상 추가 메모리를 많이 사용한다고 단정하지는 않습니다. 문서의 근거와 맞지 않습니다."
+    ],
+    "keywords": [
+      "LinkedList",
+      "순차 접근",
+      "합병 정렬",
+      "퀵정렬"
+    ],
+    "sourceEvidence": {
+      "section": "Algorithm/MergeSort.md",
+      "startLine": 95,
+      "endLine": 114,
+      "quote": "**★★★합병정렬은 순차적**인 비교로 정렬을 진행하므로, **LinkedList의 정렬이 필요할 때 사용하면 효율적**이다.★★★\n\n\n\n*LinkedList를 퀵정렬을 사용해 정렬하면?*\n\n> 성능이 좋지 않음\n>\n> 퀵정렬은, 순차 접근이 아닌 **임의 접근이기 때문**\n\n\n\n**LinkedList는 삽입, 삭제 연산에서 유용**하지만 **접근 연산에서는 비효율적**임\n\n따라서 임의로 접근하는 퀵소트를 활용하면 오버헤드 발생이 증가하게 됨\n\n> 배열은 인덱스를 이용해서 접근이 가능하지만, LinkedList는 Head부터 탐색해야 함\n>\n> 배열[O(1)] vs LinkedList[O(n)]"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/MergeSort.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/MergeSort.md",
+    "id": "691779bb-b0da-5cc4-871c-e9956b5b347b",
+    "review": {
+      "blind": {
+        "slot": 19,
+        "correctOptionText": "합병 정렬은 순차적 비교로 정렬하므로 LinkedList의 순차 접근 특성에 적합하고, LinkedList는 삽입·삭제에 유리하여 합병 과정에서 효율적입니다.",
+        "unambiguous": true,
+        "reason": "본문은 합병정렬이 '순차적 비교'로 작동해 LinkedList의 순차 접근에 적합하고, LinkedList가 삽입·삭제에 유리해 합병정렬이 효율적이라고 설명합니다.",
+        "position": 3
+      },
+      "evidenceAudit": {
+        "slot": 19,
+        "passed": true,
+        "reason": "정답(합병정렬이 LinkedList에 적합함)은 소스의 '순차적 비교' 및 LinkedList의 접근 특성 설명에 직접 근거하고 있으며, 다른 선택지들은 소스의 시간복잡도 표와 '퀵정렬은 임의 접근' 설명과 모순되어 모두 오답으로 판명됩니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  },
+  {
+    "slot": 20,
+    "topic": "시간 복잡도 비교(인접 리스트)",
+    "learningObjective": "그래프가 인접 리스트로 표현되었을 때 DFS와 BFS의 시간 복잡도를 적용된 표현법으로 정확히 판단할 수 있다",
+    "difficulty": "HARD",
+    "question": "정점 수를 V, 간선 수를 E로 나타낼 때, 그래프를 인접 리스트로 표현한 경우 DFS 또는 BFS의 시간 복잡도로 옳은 것은 무엇입니까?",
+    "options": [
+      "O(V^2)",
+      "O(E^2)",
+      "O(V·E)",
+      "O(V+E)"
+    ],
+    "correctAnswer": 4,
+    "explanation": "자료에서 DFS와 BFS 각각의 시간 복잡도 항목에 대해 인접 리스트의 경우 O(V+E)라고 명시되어 있습니다. 따라서 그래프를 인접 리스트로 표현했을 때 두 탐색 방법 모두 정점과 간선의 합에 비례하는 시간 복잡도를 가집니다.",
+    "optionExplanations": [
+      "오답: O(V^2)는 자료에서 인접 행렬의 시간 복잡도로 명시되어 있으며 인접 리스트의 경우가 아닙니다.",
+      "오답: 자료에는 O(E^2)에 대한 설명이 없으며, 인접 리스트 표현의 표준 복잡도로 제시되지 않습니다.",
+      "오답: 자료는 O(V·E)라는 복잡도를 제시하지 않으며, 인접 리스트의 경우에는 O(V+E)로 명시되어 있습니다.",
+      "정답: 자료의 두 섹션(DFS와 BFS) 모두 인접 리스트의 시간 복잡도로 \"O(V+E)\"를 명시하고 있습니다."
+    ],
+    "keywords": [
+      "시간 복잡도",
+      "인접 리스트",
+      "DFS",
+      "BFS",
+      "V+E"
+    ],
+    "sourceEvidence": {
+      "section": "DFS",
+      "quote": "인접 리스트 : O(V+E)"
+    },
+    "category": "ALGORITHM",
+    "sourceRepository": "gyoogle/tech-interview-for-developer",
+    "sourceCommit": "41a7e91356adae7ee598d5ee3c27438449ce55d8",
+    "sourcePath": "Algorithm/DFS & BFS.md",
+    "sourceUrl": "https://github.com/gyoogle/tech-interview-for-developer/blob/41a7e91356adae7ee598d5ee3c27438449ce55d8/Algorithm/DFS%20%26%20BFS.md",
+    "id": "3ab90d32-f4f3-5dc4-9dc2-389c77e32c60",
+    "review": {
+      "blind": {
+        "slot": 20,
+        "position": 4,
+        "unambiguous": true,
+        "reason": "Source states time complexity for adjacency list: 'O(V+E)'."
+      },
+      "evidenceAudit": {
+        "slot": 20,
+        "passed": true,
+        "reason": "정답(옵션 4 O(V+E))은 소스의 인접 리스트 항목과 일치합니다. 나머지 선택지(옵션1 O(V^2), 옵션2 O(E^2), 옵션3 O(V·E))는 소스에 인접 리스트 복잡도로 제시되지 않아 모두 오답으로 판정 가능합니다. 난이도·학습목표·설명도 소스와 일치합니다."
+      },
+      "humanReview": "NOT_PERFORMED",
+      "model": "gpt-5-mini"
+    }
+  }
+]
