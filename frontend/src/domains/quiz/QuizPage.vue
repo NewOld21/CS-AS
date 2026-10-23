@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '../auth/store'
 import { errorMessage } from '../auth/validation'
 import { ApiError } from '../../shared/api/client'
@@ -13,6 +13,7 @@ import {
   createContextChat,
   createGeneralChat,
   getChatMessages,
+  getQuiz,
   generateQuiz,
   recoverGeneration,
   listChatSessions,
@@ -29,6 +30,11 @@ import {
 
 const auth = useAuth()
 const router = useRouter()
+const route = useRoute()
+const pendingAttempt = ref<{ key: string; option: string } | null>(null)
+function attemptStorageKey() {
+  return `csas:attempt:${auth.user?.id}:${quiz.value?.id}:${route.query.retry_of_attempt_id ?? ''}`
+}
 const categories = ref<Category[]>([])
 const category = ref('')
 const quizzes = ref<Quiz[]>([])
@@ -133,7 +139,33 @@ async function start() {
       return
     }
     categories.value = await listCategories()
-    if (categories.value.length) await chooseCategory(categories.value[0]!.id)
+    if (typeof route.query.quiz_id === 'string') {
+      quizzes.value = [await getQuiz(route.query.quiz_id)]
+      resetQuestion()
+      const saved = sessionStorage.getItem(attemptStorageKey())
+      if (saved) {
+        try {
+          const value = JSON.parse(saved)
+          if (
+            typeof value.key === 'string' &&
+            quizzes.value[0]?.options.some((o) => o.id === value.option)
+          ) {
+            pendingAttempt.value = value
+            selected.value = value.option
+          }
+        } catch {
+          sessionStorage.removeItem(attemptStorageKey())
+        }
+      }
+    } else if (categories.value.length) await chooseCategory(categories.value[0]!.id)
+    if (typeof route.query.chat_session_id === 'string') {
+      await loadSessions()
+      const session = chatSessions.value.find((item) => item.id === route.query.chat_session_id)
+      if (session) {
+        chatOpen.value = true
+        await selectChat(session)
+      }
+    }
   } catch (error) {
     failure.value = errorMessage(error)
   } finally {
@@ -149,6 +181,7 @@ async function chooseCategory(value: string) {
   resetQuestion()
 }
 function resetQuestion() {
+  pendingAttempt.value = null
   selected.value = ''
   result.value = null
   chatOpen.value = false
@@ -160,7 +193,18 @@ async function submit() {
   busy.value = true
   failure.value = ''
   try {
-    result.value = await submitAttempt(quiz.value.id, selected.value)
+    pendingAttempt.value ??= { key: crypto.randomUUID(), option: selected.value }
+    sessionStorage.setItem(attemptStorageKey(), JSON.stringify(pendingAttempt.value))
+    result.value = await submitAttempt(
+      quiz.value.id,
+      pendingAttempt.value.option,
+      pendingAttempt.value.key,
+      typeof route.query.retry_of_attempt_id === 'string'
+        ? route.query.retry_of_attempt_id
+        : undefined,
+    )
+    sessionStorage.removeItem(attemptStorageKey())
+    pendingAttempt.value = null
   } catch (error) {
     failure.value = errorMessage(error)
   } finally {
@@ -287,7 +331,7 @@ onMounted(start)
     </div>
     <StatusMessage v-else-if="failure && !quiz" kind="error">{{ failure }}</StatusMessage>
     <template v-else>
-      <nav class="category-tabs" aria-label="CS 분야 선택">
+      <nav v-if="!route.query.quiz_id" class="category-tabs" aria-label="CS 분야 선택">
         <button
           v-for="item in categories"
           :key="item.id"
@@ -305,7 +349,7 @@ onMounted(start)
             ><span>{{ quiz.difficulty }}</span>
           </div>
           <h2 id="quiz-stem">{{ quiz.stem }}</h2>
-          <fieldset :disabled="busy || !!result">
+          <fieldset :disabled="busy || !!result || !!pendingAttempt">
             <legend class="sr-only">답안 선택</legend>
             <label
               v-for="option in quiz.options"
@@ -344,12 +388,14 @@ onMounted(start)
           </div>
           <div class="quiz-actions">
             <BaseButton variant="secondary" @click="openHistory">이전 대화</BaseButton>
-            <BaseButton v-if="!result" :disabled="!selected" :loading="busy" @click="submit"
-              >답안 제출</BaseButton
-            >
+            <BaseButton v-if="!result" :disabled="!selected" :loading="busy" @click="submit">{{
+              pendingAttempt ? '제출 결과 다시 확인' : '답안 제출'
+            }}</BaseButton>
             <template v-else
               ><BaseButton @click="openChat">AS에게 질문하기</BaseButton
-              ><BaseButton variant="secondary" @click="next">다음 문제</BaseButton></template
+              ><BaseButton v-if="!route.query.quiz_id" variant="secondary" @click="next"
+                >다음 문제</BaseButton
+              ><RouterLink v-else to="/me/wrong-answers">오답노트 확인</RouterLink></template
             >
           </div>
         </article>

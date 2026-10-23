@@ -3,6 +3,21 @@ import LandingPage from './pages/LandingPage.vue'
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: '/me',
+      component: () => import('../domains/learning/LearningPage.vue'),
+      meta: { title: '나의 학습' },
+    },
+    {
+      path: '/me/wrong-answers',
+      component: () => import('../domains/learning/LearningPage.vue'),
+      meta: { title: '오답노트' },
+    },
+    {
+      path: '/me/attempts/:attemptId',
+      component: () => import('../domains/learning/AttemptPage.vue'),
+      meta: { title: '저장된 풀이' },
+    },
     { path: '/', component: LandingPage, meta: { title: '지식의 궤도를, 나만의 속도로' } },
     {
       path: '/login',

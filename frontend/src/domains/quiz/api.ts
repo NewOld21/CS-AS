@@ -73,13 +73,19 @@ export interface ChatAnswer {
 export const listCategories = () => request<Category[]>('/quiz/categories')
 export const listQuizzes = (category: string) =>
   request<{ items: Quiz[]; next_cursor: string | null }>(
-    `/quizzes?category=${encodeURIComponent(category)}&limit=20`,
+    `/quizzes?category=${encodeURIComponent(category.toUpperCase().replaceAll('-', '_'))}&limit=20`,
   )
-export const submitAttempt = (quizId: string, optionId: string) =>
+export const getQuiz = (id: string) => request<Quiz>(`/quizzes/${encodeURIComponent(id)}`)
+export const submitAttempt = (
+  quizId: string,
+  optionId: string,
+  key: string = crypto.randomUUID(),
+  retryOf?: string,
+) =>
   post<Attempt>(
     `/quizzes/${quizId}/attempts`,
-    { selected_option_id: optionId },
-    { 'Idempotency-Key': crypto.randomUUID() },
+    { selected_option_id: optionId, ...(retryOf ? { retry_of_attempt_id: retryOf } : {}) },
+    { 'Idempotency-Key': key },
   )
 export const createContextChat = (quizId: string, attemptId: string) =>
   post<ChatSession>('/chat/sessions', { title: null, quiz_id: quizId, attempt_id: attemptId })

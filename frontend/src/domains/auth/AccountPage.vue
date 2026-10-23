@@ -65,6 +65,7 @@ onMounted(load)
         <h2>퀴즈에서 발견한 빈틈을 바로 질문해 보세요.</h2>
         <p>분야를 고르고 문제를 푼 뒤, 왜 틀렸는지 출처가 있는 답변으로 확인할 수 있어요.</p>
         <RouterLink to="/learn" class="button button--primary">퀴즈 시작하기 ↗</RouterLink>
+        <RouterLink to="/me" class="button button--secondary">나의 학습 기록 ↗</RouterLink>
       </section></template
     >
   </main>

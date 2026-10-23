@@ -26,3 +26,7 @@ Status: active
 ### C29
 
 Docker 전용 PostgreSQL의 ReviewIntegrationTest 5개·QuizAttemptIntegrationTest 5개·HistoryIntegrationTest 4개 통과. 오답→정답→오답 재개, 중복 키 재생의 상태 불변, 최초 정답 미등록, 0건 accuracy=null, 분야·출처·상태/커서/사용자 격리, 잘못된 retry 참조, retired 차단, 복습 쓰기 실패의 시도 롤백과 기존 동시 제출을 검사했다. 별도 재채점 테이블/로직 없이 기존 attempts POST를 사용한다.
+
+### C30
+
+Vue 타입 검사·production build 및 Vitest 17개 통과. Chrome history.spec.ts 3개 통과: 실제 화면의 서버 커서/필터 초기화·390px overflow 없음, 오답노트→답 비노출 재풀이·응답 유실 후 reload와 동일 키 재확인, 빈 이력/통계 503·retired 당시 해설·401 로그인 이동. 브라우저 API는 fixture이며 DB 영속성은 C31의 실제 Spring HTTP/PostgreSQL 검사로 구분한다. 사용자 추가 응답의 재로그인 기록 보존·학습 루프 요구를 C31에 반영한다.
